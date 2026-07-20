@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.wmp.downloader.ui.task.createTask.CreateTaskPanel">
+  <grid id="27dc6" binding="MainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <scrollpane id="9a332">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none" title-resource-bundle="com/wmp/downloader/laug/zh_cn/task" title-key="task.create_task.download_url_content"/>
+        <children>
+          <grid id="40375" binding="linkInfoPanel" custom-create="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties/>
+            <border type="empty">
+              <size top="5" left="5" bottom="5" right="5"/>
+            </border>
+            <children/>
+          </grid>
+        </children>
+      </scrollpane>
+      <grid id="7b4ad" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none" title-resource-bundle="com/wmp/downloader/laug/zh_cn/task" title-key="task.create_task.download_settings"/>
+        <children>
+          <nested-form id="5b70f" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="PathSelectionPanel" custom-create="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </nested-form>
+          <component id="e6110" class="javax.swing.JLabel" binding="tipLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <grid id="6e939" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="ab027" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="com/wmp/downloader/laug/zh_cn/task" key="task.create_task.download_settings.download_mode_settings"/>
+                </properties>
+              </component>
+              <component id="79a71" class="javax.swing.JComboBox" binding="modeComboBox">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <model>
+                    <item value="多线程"/>
+                    <item value="单线程"/>
+                  </model>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="863b2" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="9f6b8" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="com/wmp/downloader/laug/zh_cn/settings" key="settings.web.thread_num"/>
+                </properties>
+              </component>
+              <component id="aa820" class="javax.swing.JSlider" binding="ThreadNumSlider">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <maximum value="512"/>
+                  <minimum value="1"/>
+                  <value value="64"/>
+                  <valueIsAdjusting value="false"/>
+                </properties>
+              </component>
+              <component id="8cb09" class="javax.swing.JTextField" binding="ThreadNumLabel">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <text value="Label"/>
+                </properties>
+              </component>
+              <hspacer id="20d33">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="2cb48" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none" title-resource-bundle="com/wmp/downloader/laug/zh_cn/task" title-key="task.create_task.download_url.text_area"/>
+        <children>
+          <component id="8bc91" class="javax.swing.JLabel">
+            <constraints border-constraint="South"/>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <scrollpane id="a4100">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="e5cae" class="javax.swing.JTextArea" binding="DownloaderURLTextArea">
+                <constraints/>
+                <properties>
+                  <rows value="3"/>
+                  <toolTipText resource-bundle="com/wmp/downloader/laug/zh_cn/task" key="task.create_task.download_url.text_area.tool_tip_text"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
