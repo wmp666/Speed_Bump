@@ -26,8 +26,7 @@ public class HTTPParser extends Parser {
         } catch (Exception e) {
             logger.error("Error parsing HTTP link: "+link, e);
         }
-        return LinkFileInfoPanel
-                .createBasicLinkFileInfoPanel("", 0, "HTTP", link);
+        return null;
     }
 
 

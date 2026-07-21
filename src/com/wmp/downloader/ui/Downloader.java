@@ -13,12 +13,14 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.net.HttpURLConnection;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +79,9 @@ public class Downloader extends JFrame implements WindowListener {
     private JTabbedPane SpecialSettingsTabbedPane;
     private JPanel SpecialSettingsPanel;
     private JButton deleteTempFolderDataButton;
+    private JCheckBox isUseClipBoardListenerCheckBox;
+    private String lastClipboardContent = "";
+
 
     public Downloader() {
         taskListener.start();
@@ -116,6 +121,8 @@ public class Downloader extends JFrame implements WindowListener {
         initSpecialSettingsComponents();
         //关于
         initAboutComponents();
+
+        startClipboardListener();
     }
 
     private void initSpecialSettingsComponents() {
@@ -169,6 +176,14 @@ public class Downloader extends JFrame implements WindowListener {
         windowMenu.add(alwaysOnTopCheckBox);
 
         windowMenu.addSeparator();
+
+        var refreshMenuItem = new JMenuItem("刷新");
+        refreshMenuItem.setToolTipText("只能刷新应用数据和界面UI，部分组件内已有的数据不做更新");
+        refreshMenuItem.addActionListener(e -> {
+            DataControl.load();
+            ThemeChanger.easyChanger();
+        });
+        windowMenu.add(refreshMenuItem);
 
         var exitMenuItem = new JMenuItem("退出程序");
         exitMenuItem.addActionListener(e -> System.exit(0));
@@ -327,6 +342,7 @@ public class Downloader extends JFrame implements WindowListener {
 
 
         isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
+        isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
 
@@ -368,6 +384,8 @@ public class Downloader extends JFrame implements WindowListener {
         refreshButton.addActionListener(e -> {
             DataControl.load();
             isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
+            isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
+
             ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
             pathSelectionPanel.setPath(DataControl.getDownloadFilePath().getAbsolutePath());
@@ -406,6 +424,7 @@ public class Downloader extends JFrame implements WindowListener {
 
         saveButton.addActionListener(e -> {
             DataControl.put("isUseSSL", isUseSSLCheckBox.isSelected());
+            DataControl.put("isUseClipBoardListener", isUseClipBoardListenerCheckBox.isSelected());
             DataControl.put("ThreadNum", ThreadNumSlider.getValue());
             DataControl.put("DownloadFilePath", pathSelectionPanel.getPath());
             DataControl.put("TempFilePath", tempPathSelectionPanel.getPath());
@@ -418,6 +437,134 @@ public class Downloader extends JFrame implements WindowListener {
         });
 
 
+    }
+
+
+    private void startClipboardListener() {
+        Thread.ofVirtual().name("clipboard-listener").start(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1500);
+                    if (DataControl.get("isUseClipBoardListener", false)) {
+                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                        if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
+                            String content = (String) clipboard.getData(DataFlavor.stringFlavor);
+                            if (content != null && !content.equals(lastClipboardContent)) {
+                                lastClipboardContent = content;
+                                String url = extractUrl(content);
+                                if (url != null) {
+                                    Thread.ofVirtual().start(() -> {
+                                        if (isValidUrl(url)) {
+                                            SwingUtilities.invokeLater(() -> showLinkDetectedDialog(url));
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                } catch (Exception _) {}
+            }
+        });
+    }
+
+    private String extractUrl(String text) {
+        if (text == null) return null;
+        for (String line : text.split("[\\r\\n]+")) {
+            line = line.strip();
+            if (line.startsWith("BV") || line.contains("bilibili.com")) {
+                return line;
+            }
+            if (line.startsWith("http://") || line.startsWith("https://")) {
+                return line;
+            }
+        }
+        return null;
+    }
+
+    private void showLinkDetectedDialog(String url) {
+        this.setVisible(true);
+        this.setState(JFrame.NORMAL);
+        this.toFront();
+
+        var createTaskPanel = new CreateTaskPanel();
+        createTaskPanel.setLink(url);
+
+        FunctionDialog.showDialog(this, "检测到下载链接", createTaskPanel.MainPanel,
+                result -> {
+                    if (result == FunctionDialog.RESULT_OK) {
+                        createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
+                            taskList.add(taskPanel);
+                            var name = taskPanel.getFileName();
+                            if (name != null) {
+                                if (name.length() > 9) {
+                                    name = name.substring(0, 6) + "...";
+                                }
+                            } else {
+                                name = "未设置名称的文件";
+                            }
+                            TasksPanel.addTab(name, taskPanel);
+                            TasksPanel.revalidate();
+                            TasksPanel.repaint();
+                        });
+                    }
+                    this.pack();
+                },
+                FunctionDialog.OK_CANCEL_BUTTONS, 0,
+                null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+    }
+
+    private boolean isValidUrl(String url) {
+        try {
+            if (url.startsWith("BV") || url.contains("bilibili.com")) {
+                return isValidBiliUrl(url);
+            }
+            return isHttpReachable(url);
+        } catch (Exception e) {
+            logger.debug("链接验证失败: " + url, e);
+            return false;
+        }
+    }
+
+    private boolean isValidBiliUrl(String url) {
+        try {
+            String bvId = null;
+            if (url.strip().startsWith("BV")) {
+                bvId = url.strip();
+            } else {
+                var matcher = java.util.regex.Pattern.compile("(BV[A-Za-z0-9]+)").matcher(url);
+                if (matcher.find()) {
+                    bvId = matcher.group(1);
+                }
+            }
+            if (bvId == null) return false;
+
+            var conn = (HttpURLConnection) URI.create("https://api.bilibili.com/x/web-interface/view?bvid=" + bvId).toURL().openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0");
+            conn.setConnectTimeout(5000);
+            String jsonText = new String(conn.getInputStream().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            var json = com.alibaba.fastjson.JSON.parseObject(jsonText);
+            return json.getIntValue("code") == 0;
+        } catch (Exception e) {
+            logger.debug("B站链接验证失败: " + url, e);
+            return false;
+        }
+    }
+
+    private boolean isHttpReachable(String url) {
+        try {
+            var conn = (HttpURLConnection) URI.create(url).toURL().openConnection();
+            conn.setRequestMethod("HEAD");
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(5000);
+            int code = conn.getResponseCode();
+            conn.disconnect();
+            return code >= 200 && code < 400;
+        } catch (Exception e) {
+            logger.debug("HTTP链接验证失败: " + url, e);
+            return false;
+        }
     }
 
     private void updateDefaultButton() {

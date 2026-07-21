@@ -165,4 +165,8 @@ public class CreateTaskPanel {
         }
         return downloadTasks;
     }
+
+    public void setLink(String link) {
+        SwingUtilities.invokeLater(() -> DownloaderURLTextArea.setText(link));
+    }
 }
