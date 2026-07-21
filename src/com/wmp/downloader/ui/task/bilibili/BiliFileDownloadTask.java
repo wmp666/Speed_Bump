@@ -114,7 +114,8 @@ public class BiliFileDownloadTask extends DownloadTask {
                     var isConverged = ConvergenceTool.converge(new File(tempDir, "video.m4s"), new File(tempDir, "audio.m4s"), new File(savePath, fileName), jProgressBar);
                     infoLabel.setText("合并" + (isConverged? "成功": "失败"));
 
-
+                    //删除文件
+                    DataControl.deleteFolder(tempDir);
                 }
 
                 isFinally = true;

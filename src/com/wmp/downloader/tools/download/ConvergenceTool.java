@@ -1,5 +1,6 @@
 package com.wmp.downloader.tools.download;
 
+import com.wmp.downloader.tools.DataControl;
 import org.apache.log4j.Logger;
 import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -36,6 +37,9 @@ public class ConvergenceTool {
             }
         }
 
+        if (DataControl.get("ffmpeg_isUseLocal", false)){
+            return LocalConvergeWithStreamCopy(DataControl.get("ffmpeg_appPath", ""), videoPath, audioPath, destPath, progressBar);
+        }
 
         // ---------- 初始化进度条（建议调用前设置好 min/max） ----------
         if (progressBar != null) {
@@ -125,6 +129,88 @@ public class ConvergenceTool {
             }
         }
     }
+
+    /**
+     * 本地流拷贝模式（最快，不重新编码）
+     * 通过调用本地 FFmpeg 实现 -c copy，速度远超帧级重编码
+     *
+     * @param appPath FFmpeg 可执行文件所在的 bin 目录路径
+     */
+    private static boolean LocalConvergeWithStreamCopy(String appPath, File videoPath, File audioPath,
+                                                       File destPath, JProgressBar progressBar) {
+        try {
+            FFmpegLogCallback.set();
+
+            if (progressBar != null) {
+                progressBar.setIndeterminate(true);
+                progressBar.setString("正在合并...");
+            }
+
+            String ffmpegExe = findFFmpeg(appPath);
+
+            ProcessBuilder pb = new ProcessBuilder(
+                    ffmpegExe, "-y",
+                    "-i", videoPath.getAbsolutePath(),
+                    "-i", audioPath.getAbsolutePath(),
+                    "-c", "copy",
+                    "-map", "0:v:0",
+                    "-map", "1:a:0",
+                    "-movflags", "+faststart",
+                    destPath.getAbsolutePath()
+            );
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+
+            StringBuilder output = new StringBuilder();
+            try (var reader = new java.io.BufferedReader(new java.io.InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                logger.error("FFmpeg 流拷贝失败，退出码: " + exitCode + "\n" + output);
+                return false;
+            }
+
+            if (progressBar != null) {
+                SwingUtilities.invokeLater(() -> {
+                    progressBar.setIndeterminate(false);
+                    progressBar.setValue(100);
+                    progressBar.setString("100%");
+                });
+            }
+
+            logger.info("流拷贝模式合并完成");
+            return true;
+
+        } catch (Exception e) {
+            logger.error("流拷贝模式合并失败: ", e);
+            return false;
+        }
+    }
+
+    /**
+     * 在 appPath 目录中查找 FFmpeg 可执行文件，找不到则回退到系统 PATH
+     */
+    private static String findFFmpeg(String appPath) {
+        boolean isWindows = System.getProperty("os.name", "").toLowerCase().contains("win");
+        String exeName = isWindows ? "ffmpeg.exe" : "ffmpeg";
+
+        if (appPath != null) {
+            File localExe = new File(appPath, exeName);
+            if (localExe.isFile()) {
+                logger.info("使用本地 FFmpeg: " + localExe.getAbsolutePath());
+                return localExe.getAbsolutePath();
+            }
+        }
+
+        logger.info("本地未找到 FFmpeg，使用系统 PATH");
+        return exeName;
+    }
+
 
     static void main() {
         var progressBar = new JProgressBar();

@@ -128,6 +128,8 @@ public class Downloader extends JFrame implements WindowListener {
     private void initSpecialSettingsComponents() {
         var biliSettings = new BiliSettings();
         SpecialSettingsTabbedPane.addTab(biliSettings.getSettingsName(), biliSettings.getSettings());
+        var fFmpegSettings = new FFmpegSettings();
+        SpecialSettingsTabbedPane.addTab(fFmpegSettings.getSettingsName(), fFmpegSettings.getSettings());
     }
 
     private void initTrayIcon() {
