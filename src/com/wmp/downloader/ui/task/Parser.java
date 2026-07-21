@@ -22,9 +22,8 @@ public abstract class Parser {
         //}
         return new Parser() {
             @Override
-            public LinkFileInfoPanel parse(String content) {
-                return LinkFileInfoPanel
-                        .createBasicLinkFileInfoPanel("", 0, "", "");
+            public JPanel parse(String content) {
+                return null;
             }
         };
     }

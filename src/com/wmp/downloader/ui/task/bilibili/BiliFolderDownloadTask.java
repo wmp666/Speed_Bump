@@ -138,9 +138,9 @@ public class BiliFolderDownloadTask extends DownloadTask {
                 try {
                     var downloadingInfo = URLDownloadTool.download(url, savePath, fileName, fileSize, threadNum, 10, fileProgressBars, pc, dp, headers);
 
-            var latch = downloadingInfo.latch();
-            var executor = downloadingInfo.executor();
-            var tasks = downloadingInfo.downloadTasks();
+                    var latch = downloadingInfo.latch();
+                    var executor = downloadingInfo.executor();
+                    var tasks = downloadingInfo.downloadTasks();
 
 
 
@@ -183,8 +183,6 @@ public class BiliFolderDownloadTask extends DownloadTask {
             progressPanel.revalidate();
             Thread.ofVirtual().start(() -> {
                 try {
-
-
                     URLDownloadTool.singleThreadDownload(url, new File(savePath, this.fileName), fileName, fileSize, 10, progressBar, pc, dp, headers);
                 } catch (Exception e) {
                     logger.error("文件[" + fileName + "]单线程下载异常", e);

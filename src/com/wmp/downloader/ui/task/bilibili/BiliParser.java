@@ -1,20 +1,20 @@
 package com.wmp.downloader.ui.task.bilibili;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.task.Parser;
-import com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel;
+import com.wmp.downloader.ui.task.bilibili.info.BiliAudioInfo;
+import com.wmp.downloader.ui.task.bilibili.info.BiliDownloadInfo;
+import com.wmp.downloader.ui.task.bilibili.info.BiliVideoInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,7 +64,7 @@ public class BiliParser extends Parser {
             int code = json.getIntValue("code");
             if (code != 0) {
                 logger.error("API返回错误: " + json.getString("message"));
-                return new BiliLinkFileInfoPanel("", 0, "", 0, "");
+                return null;
             }
 
             JSONObject data = json.getJSONObject("data");
@@ -80,7 +80,35 @@ public class BiliParser extends Parser {
             logger.info("CIDs: " + Arrays.toString(cids));
             logger.info("Titles: " + Arrays.toString(titles));
 
-            String videoInfoUrl = "https://api.bilibili.com/x/player/playurl?otype=json&fnver=0&fnval=2&player=1&qn=64&bvid=" + BVId + "&cid=" + cids[0];
+
+
+            //仅用BV号获取的
+            String title = data.getString("title");
+            logger.info("视频/合集标题: " + title);
+
+
+
+            if (cids.length == 1){
+                var downloadInfo = getDownloadInfo(BVId, cids[0], sessdata);
+                logger.info("下载信息: " + downloadInfo);
+                return new BiliLinkFileInfoPanel(title + ".mp4", downloadInfo);
+            }else{
+                return new BiliLinkFolderInfoPanel(title, BVId, cids, titles);
+            }
+
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "获取视频信息出错", "错误", JOptionPane.ERROR_MESSAGE);
+            logger.error("获取视频信息出错", e);
+        }
+
+            return null;
+    }
+
+    private static BiliDownloadInfo getDownloadInfo(String BVId, long cid, String sessdata){
+        try {
+            //获取每个视频中的数据
+            String videoInfoUrl = "https://api.bilibili.com/x/player/playurl?otype=json&fnver=0&fnval=16&player=1&qn=64&bvid=" + BVId + "&cid=" + cid;
 
 
             HttpURLConnection conn2 = (HttpURLConnection) URI.create(videoInfoUrl).toURL().openConnection();
@@ -94,29 +122,42 @@ public class BiliParser extends Parser {
             JSONObject videoInfoJson = JSON.parseObject(videoInfoJsonText);
             logger.info("视频信息: " + videoInfoJson.toJSONString());
 
-            //仅用BV号获取的
-            String title = data.getString("title");
-            logger.info("视频/合集标题: " + title);
+            JSONObject dashObj = videoInfoJson.getJSONObject("data").getJSONObject("dash");
 
+            //获取分流的视频，音频数据
+            ArrayList<BiliVideoInfo> videoInfoList = new ArrayList<>();
+            ArrayList<BiliAudioInfo> audioInfoList = new ArrayList<>();
 
+            double duration = dashObj.getDouble("duration");
 
-            if (cids.length == 1){
-                JSONObject durlObj = videoInfoJson.getJSONObject("data").getJSONArray("durl").getJSONObject(0);
-                long size = durlObj.getLongValue("size");
-                String videoUrl = durlObj.getString("url");
-                logger.info("文件大小: " + size + " bytes");
-                return new BiliLinkFileInfoPanel(title + ".mp4", size, BVId, cids[0], videoUrl);
-            }else{
-                return new BiliLinkFolderInfoPanel(title, BVId, cids, titles);
+            var videoArray = dashObj.getJSONArray("video");
+            for (int i = 0; i < videoArray.size(); i++) {
+                JSONObject jsonObject = videoArray.getJSONObject(i);
+                var baseUrl = jsonObject.getString("base_url");
+                BiliVideoInfo videoInfo = new BiliVideoInfo(jsonObject.getIntValue("codecid"),
+                        jsonObject.getIntValue("id"),
+                        baseUrl, getFileSize(duration, jsonObject.getIntValue("bandwidth")));
+                videoInfoList.add(videoInfo);
             }
 
+            var audioArray = dashObj.getJSONArray("audio");
+            for (int i = 0; i < audioArray.size(); i++) {
+                JSONObject jsonObject = audioArray.getJSONObject(i);
+                var baseUrl = jsonObject.getString("baseUrl");
+                BiliAudioInfo audioInfo = new BiliAudioInfo(jsonObject.getIntValue("codecid"),
+                        jsonObject.getIntValue("id"),
+                        baseUrl, getFileSize(duration, jsonObject.getIntValue("bandwidth")));
+                audioInfoList.add(audioInfo);
+            }
 
-        } catch (IOException e) {
-            logger.error("获取视频信息出错: " + e.getMessage());
+            return new BiliDownloadInfo(videoInfoList.toArray(BiliVideoInfo[]::new), audioInfoList.toArray(BiliAudioInfo[]::new));
+        } catch (Exception e) {
+            throw new RuntimeException("获取视频数据失败！BV=" + BVId + " CID=" + cid, e);
         }
-
-            return new BiliLinkFileInfoPanel("", 0, "", 0, "");
     }
 
+    private static long getFileSize(double duration, int bandwidth) {
+        return (long) (duration * bandwidth / 8.0);
+    }
 
 }

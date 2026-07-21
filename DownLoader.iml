@@ -15,5 +15,7 @@
     <orderEntry type="library" name="jsoup" level="project" />
     <orderEntry type="library" name="google.zxing.core" level="project" />
     <orderEntry type="library" name="google.zxing.javase" level="project" />
+    <orderEntry type="library" name="bytedeco.javacv.platform" level="project" />
+    <orderEntry type="library" name="bytedeco.ffmpeg.platform.gpl" level="project" />
   </component>
 </module>

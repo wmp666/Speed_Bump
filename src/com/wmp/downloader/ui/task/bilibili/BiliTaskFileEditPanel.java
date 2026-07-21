@@ -1,59 +1,99 @@
 package com.wmp.downloader.ui.task.bilibili;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.BiliInfoFormat;
+import com.wmp.downloader.ui.task.bilibili.info.BiliDownloadInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import static com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel.formatFileSize;
 
-public class BiliTaskFileEditPanel extends JPanel {
+public class BiliTaskFileEditPanel extends JPanel{
 
     private static final Logger logger = Logger.getLogger(BiliTaskFileEditPanel.class);
 
     private JTextField NameTextField;
     private JPanel mainPanel;
-    private JComboBox<String> QualityComboBox;
     private JLabel sizeLabel;
+    private JComboBox<String> VideoQualityComboBox;
+    private JComboBox<String> SoundQualityComboBox;
+    private JComboBox<String> VideoCodecsComboBox;
+    //
+//    private String BVID = ""    ;
+//    private long cid;
+//    private int[] quality_int = new int[0];
 
-    private String BVID = ""    ;
-    private long cid;
-    private int[] quality_int = new int[0];
-
-    private String videoUrl = "";
     private long size = 0;
 
 
-    public BiliTaskFileEditPanel(String name, String BVID, long cid) {
+    public BiliTaskFileEditPanel(String name, BiliDownloadInfo downloadInfo, int videoInfoIndex, int audioInfoIndex) {
         this.setLayout(new BorderLayout());
         this.add(mainPanel);
-
-        this.BVID = BVID;
-        this.cid = cid;
+//
+//        this.BVID = BVID;
+//        this.cid = cid;
 
         NameTextField.setText(name);
 
-        initSelectedVideoInfo(cid);
+        size = downloadInfo.videoInfos()[videoInfoIndex].size() +
+                downloadInfo.audioInfos()[audioInfoIndex].size();
+        sizeLabel.setText(formatFileSize(size));
+
+        //添加值
+        for (var i = 0; i < downloadInfo.videoInfos().length; i++) {
+            VideoQualityComboBox.addItem(
+                    BiliInfoFormat.VideoFormat(downloadInfo.videoInfos()[i].quality()) + " "
+            + BiliInfoFormat.getVideoCode(downloadInfo.videoInfos()[i].codecid())) ;
+
+        }
+        VideoQualityComboBox.setSelectedIndex(videoInfoIndex);
+        for (var i = 0; i < downloadInfo.audioInfos().length; i++) {
+            SoundQualityComboBox.addItem(
+                    BiliInfoFormat.AudioFormat(downloadInfo.audioInfos()[i].bitrate())) ;
+
+        }
+        SoundQualityComboBox.setSelectedIndex(audioInfoIndex);
+        //添加监听
+        VideoQualityComboBox.addItemListener(e ->{
+            if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                int qualityIndex = VideoQualityComboBox.getSelectedIndex();
+                if (qualityIndex >= 0 && qualityIndex < downloadInfo.videoInfos().length) {
+                    size = downloadInfo.videoInfos()[qualityIndex].size() +
+                            downloadInfo.audioInfos()[SoundQualityComboBox.getSelectedIndex()].size();
+                    sizeLabel.setText(formatFileSize(size));
+                }
+            }
+        });
+
+        SoundQualityComboBox.addItemListener(e ->{
+            if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                int audioIndex = SoundQualityComboBox.getSelectedIndex();
+                if (audioIndex >= 0 && audioIndex < downloadInfo.audioInfos().length) {
+                    size = downloadInfo.videoInfos()[VideoQualityComboBox.getSelectedIndex()].size() +
+                            downloadInfo.audioInfos()[audioIndex].size();
+                    sizeLabel.setText(formatFileSize(size));
+                }
+            }
+        });
+
+
+        /*initSelectedVideoInfo(cid);
         initSelectedQualityInfo(cid, quality_int[0]);
 
-        QualityComboBox.addItemListener(e -> {
+        VideoQualityComboBox.addItemListener(e -> {
             if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-                int qualityIndex = QualityComboBox.getSelectedIndex();
+                int qualityIndex = VideoQualityComboBox.getSelectedIndex();
                 if (qualityIndex >= 0 && qualityIndex < quality_int.length) {
                     initSelectedQualityInfo(cid, quality_int[qualityIndex]);
                 }
             }
-        });
+        });*/
     }
 
-    public void initSelectedVideoInfo(long cid){
+    /*public void initSelectedVideoInfo(long cid){
         try {
 
             String sessdata = DataControl.get("bili_sessdata", "");
@@ -73,10 +113,10 @@ public class BiliTaskFileEditPanel extends JPanel {
             logger.info("视频信息: " + videoInfoJson.toJSONString());
 
             var supportQuality = videoInfoJson.getJSONArray("support_formats");
-            QualityComboBox.removeAllItems();
+            VideoQualityComboBox.removeAllItems();
             quality_int = new int[supportQuality.size()];
             for (int i = 0; i < supportQuality.size(); i++) {
-                QualityComboBox.addItem(supportQuality.getJSONObject(i).getString("display_desc"));
+                VideoQualityComboBox.addItem(supportQuality.getJSONObject(i).getString("display_desc"));
                 quality_int[i] = supportQuality.getJSONObject(i).getIntValue("quality");
             }
 
@@ -114,7 +154,7 @@ public class BiliTaskFileEditPanel extends JPanel {
         } catch (Exception e) {
             logger.error("获取视频信息失败", e);
         }
-    }
+    }*/
 
     public String getFileName() {
         return NameTextField.getText();
@@ -127,8 +167,11 @@ public class BiliTaskFileEditPanel extends JPanel {
     public long getFileSizeNum() {
         return this.size;
     }
-
-    public String getVideoUrl() {
-        return this.videoUrl;
+    public int getVideoInfoIndex(){
+        return VideoQualityComboBox.getSelectedIndex();
     }
+    public int getAudioInfoIndex(){
+        return SoundQualityComboBox.getSelectedIndex();
+    }
+
 }

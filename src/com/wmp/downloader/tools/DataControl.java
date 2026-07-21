@@ -54,7 +54,7 @@ public class DataControl {
     public static void load() {
 
         try {
-            configureLogPath(new File(getDataPath(), new SimpleDateFormat("yy.MM.dd HH:mm:ss").format(new Date()) + ".log").getAbsolutePath());
+            configureLogPath(getDataPath().getAbsolutePath());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "日志路径配置失败\n因此出现问题后无法查看日志", "错误", JOptionPane.ERROR_MESSAGE);
         }
@@ -115,7 +115,7 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.put("version", "0.0.3");
+        tempDataMap.put("version", "0.0.4");
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {
                 tempDataMap.put("theme_type", "light");
@@ -156,6 +156,24 @@ public class DataControl {
     public static File getTempPath() {
         var file = data.containsKey("TempFilePath") ? new File(data.get("TempFilePath").toString()) : getDefaultTempPath();
         return file;
+    }
+
+    public static void deleteFolder(File file){
+        //删除整个文件夹里的内容
+        try {
+            Files.walk(Paths.get(file.toURI()))
+                    .sorted((o1, o2) -> -o1.compareTo(o2))
+                    .forEach(path -> {
+                        try {
+                            Files.deleteIfExists(path);
+                        } catch (IOException ex) {
+                            logger.error("删除失败", ex);
+                        }
+                    });
+            JOptionPane.showMessageDialog(null, "删除成功");
+        } catch (IOException e) {
+            logger.error("删除文件夹失败", e);
+        }
     }
 
     public static File getDefaultTempPath() {

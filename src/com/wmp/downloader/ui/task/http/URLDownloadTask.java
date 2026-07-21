@@ -154,7 +154,10 @@ public class URLDownloadTask extends DownloadTask {
                         URLDownloadTool.deletePartFiles(fileName, progressBar);
                     }
                 } catch (Exception e) {
+                    if (progressTimer != null) progressTimer.stop();
                     logger.error("多线程下载发生异常", e);
+                    JOptionPane.showMessageDialog(this, "下载失败\n多线程下载异常", "错误", JOptionPane.ERROR_MESSAGE);
+                    isStart = false;
                 }
             });
 
@@ -197,6 +200,8 @@ public class URLDownloadTask extends DownloadTask {
                 } catch (Exception e) {
                     if (progressTimer != null) progressTimer.stop();
                     logger.error("单线程下载发生异常", e);
+                    JOptionPane.showMessageDialog(this, "下载失败\n单线程下载异常", "错误", JOptionPane.ERROR_MESSAGE);
+                    isStart = false;
                 }
             });
         }

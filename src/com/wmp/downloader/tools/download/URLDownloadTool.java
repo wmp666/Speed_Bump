@@ -55,7 +55,23 @@ public class URLDownloadTool {
         return download(uri, destFile, fileName, fileSize, numThreads, maxRetries, progressBarList, pauseController, progress, null);
     }
 
+    /**
+     * 多线程下载
+     * @param uri 下载链接
+     * @param destFile 保存路径（暂时不用）
+     * @param fileName 文件名
+     * @param fileSize 文件大小
+     * @param numThreads 线程数
+     * @param maxRetries 最大重试次数
+     * @param progressBarList 进度列表
+     * @param pauseController 暂停管理
+     * @param progress 进度文字处理
+     * @param headers 头部信息
+     * @return 下载信息
+     */
     public static DownloadingInfo download(URI uri, File destFile, String fileName, long fileSize, int numThreads, int maxRetries, List<JProgressBar> progressBarList, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) throws Exception {
+
+        logger.info("下载的链接：" + uri);
 
         File partsFile = new File(DataControl.getTempPath(), fileName);
         var files = partsFile.listFiles(File::isFile);
@@ -88,25 +104,63 @@ public class URLDownloadTool {
         return new DownloadingInfo(latch, executor, tasks, 2, pauseController, progress);
     }
 
+    /**
+     * 单线程下载
+     * @param uri 下载链接
+     * @param destPath 保存路径
+     * @param fileName 文件名
+     * @param fileSize 文件大小
+     * @param maxRetries 最大重试次数
+     * @param progressBar 进度条
+     * @param pauseController 暂停管理
+     * @param progress 进度文字处理
+     * @return 是否下载成功
+     */
     public static boolean singleThreadDownload(URI uri, File destPath, String fileName, long fileSize, int maxRetries, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws Exception {
         return singleThreadDownload(uri, destPath, fileName, fileSize, maxRetries, progressBar, pauseController, progress, null);
     }
 
+    /**
+     * 单线程下载
+     * @param uri 下载链接
+     * @param destPath 保存路径
+     * @param fileName 文件名
+     * @param fileSize 文件大小
+     * @param maxRetries 最大重试次数
+     * @param progressBar 进度条
+     * @param pauseController 暂停管理
+     * @param progress 进度文字处理
+     * @param headers 头部信息
+     * @return 是否下载成功
+     */
     public static boolean singleThreadDownload(URI uri, File destPath, String fileName, long fileSize, int maxRetries, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) throws Exception {
+
+        logger.info("下载的链接：" + uri);
+
         File destFile = new File(destPath, fileName);
-        long downloaded = destFile.exists() ? destFile.length() : 0;
+        long downloaded = destFile.exists() && (destFile.length() < fileSize) ? destFile.length() : 0;
 
         URL url = uri.toURL();
         HttpURLConnection conn;
 
         if (fileSize <= 0) {
-            return fullDownload(uri, destFile, progressBar);
+            return fullDownload(uri, destFile, progressBar, pauseController);
         }
 
-        if (destFile.exists() && destFile.length() == fileSize) {
-            logger.debug("文件已完整下载。");
-            progressBar.setValue(100);
-            return true;
+        if (destFile.exists()) {
+            if (destFile.length() == fileSize){
+                logger.debug("文件已完整下载。");
+                progressBar.setValue(100);
+                return true;
+            }else if (destFile.length() > fileSize){
+                var i = JOptionPane.showConfirmDialog(null, "本地文件似乎存在问题（大于要下载的文件大小），继续下载将删除文件，是否继续下载？");
+                if (i == JOptionPane.YES_OPTION){
+                    destFile.delete();
+                }else{
+                    return true;
+                }
+            }
+
         }else{
             destFile.getParentFile().mkdirs();
             destFile.createNewFile();
@@ -141,14 +195,18 @@ public class URLDownloadTool {
                             long finalTotalRead = totalRead;
                             SwingUtilities.invokeLater(() -> progressBar.setValue((int) ((double) finalTotalRead / fileSize * 100)));
                         }
-                        if (totalRead == fileSize) {
-                            System.out.println("单线程下载完成。");
+                        if (totalRead >= fileSize) {
+                            logger.debug("单线程下载完成。");
+                            progressBar.setValue(100);
                             return true;
                         } else {
                             downloaded = totalRead;
                         }
                     }
                 } else {
+
+                    if (responseCode == 416) return true;
+
                     throw new IOException("服务器返回非预期状态码: " + responseCode);
                 }
             } catch (Exception e) {
@@ -163,7 +221,9 @@ public class URLDownloadTool {
         return true;
     }
 
-    private static boolean fullDownload(URI uri, File destPath, JProgressBar progressBar) throws Exception {
+    private static boolean fullDownload(URI uri, File destPath, JProgressBar progressBar, PauseController pauseController) throws Exception {
+
+        logger.info("下载的链接：" + uri);
 
         if (!destPath.exists()){
             destPath.getParentFile().mkdirs();
@@ -177,6 +237,7 @@ public class URLDownloadTool {
             byte[] buffer = new byte[8192];
             int len;
             while ((len = in.read(buffer)) != -1) {
+                if (pauseController != null) pauseController.checkPause();
                 fos.write(buffer, 0, len);
             }
             logger.debug("全量下载完成。");
@@ -185,8 +246,19 @@ public class URLDownloadTool {
             return false;
         }
     }
-
+    /**
+     * 文件合并
+     * @param destPath 保存路径
+     * @param fileName 文件名
+     * @param partCount 分段数
+     * @param fileSize 文件大小
+     * @param progressBar 进度条
+     * @param pauseController 暂停管理
+     * @param progress 进度文字处理
+     */
     public static void mergeParts(File destPath, String fileName, int partCount, long fileSize, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws IOException {
+        logger.info("合并的路径：" + destPath);
+
         File destFile = new File(destPath, fileName);
         if (destFile.exists()) {
             destFile.delete();

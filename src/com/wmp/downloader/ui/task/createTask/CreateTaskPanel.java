@@ -6,6 +6,7 @@ import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.Parser;
 import com.wmp.downloader.ui.task.bilibili.BiliFileDownloadTask;
 import com.wmp.downloader.ui.task.bilibili.BiliFolderDownloadTask;
+import com.wmp.downloader.ui.task.bilibili.BiliLinkFileInfoPanel;
 import com.wmp.downloader.ui.task.http.URLDownloadTask;
 import org.apache.log4j.Logger;
 
@@ -33,6 +34,7 @@ public class CreateTaskPanel {
     private JComboBox<String> modeComboBox;
     private JSlider ThreadNumSlider;
     private JTextField ThreadNumLabel;
+    private JProgressBar tipProgressBar;
 
     public CreateTaskPanel() {
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
@@ -48,11 +50,16 @@ public class CreateTaskPanel {
                 Thread.ofVirtual().start(() -> {
                     synchronized (this) {
                         tipLabel.setText("正在解析链接...");
+                        tipProgressBar.setVisible(true);
+                        tipProgressBar.setIndeterminate(true);
+
+
                         linkFileInfoPanels.clear();
                         linkFileInfoPanels.clear();
                         linkInfoPanel.removeAll();
                         parseLinks(DownloaderURLTextArea.getText().split("\n"));
                         tipLabel.setText("");
+                        tipProgressBar.setVisible(false);
                     }
                 });
             }
@@ -63,11 +70,14 @@ public class CreateTaskPanel {
                 Thread.ofVirtual().start(() -> {
                     synchronized (this) {
                         tipLabel.setText("正在解析链接...");
+                        tipProgressBar.setVisible(true);
+                        tipProgressBar.setIndeterminate(true);
                         linkFileInfoPanels.clear();
                         linkFileInfoPanels.clear();
                         linkInfoPanel.removeAll();
                         parseLinks(DownloaderURLTextArea.getText().split("\n"));
                         tipLabel.setText("");
+                        tipProgressBar.setVisible(false);
                     }
                 });
 
@@ -111,12 +121,18 @@ public class CreateTaskPanel {
 
         try{
             var linkFileInfoPanel = Parser.getParser(link).parse(link);
-            linkFileInfoPanels.add(linkFileInfoPanel);
-            linkInfoPanel.add(linkFileInfoPanel);
+
+            if (linkFileInfoPanel != null) {
+                linkFileInfoPanels.add(linkFileInfoPanel);
+                linkInfoPanel.add(linkFileInfoPanel);
+            }else{
+                throw new LayerInstantiationException("链接解析出错");
+            }
             MainPanel.revalidate();
             MainPanel.repaint();
         } catch (Exception e) {
             tipLabel.setText("存在错误链接");
+            tipProgressBar.setVisible(false);
             logger.error("Error parsing link: " + link, e);
         }
     }
@@ -132,7 +148,10 @@ public class CreateTaskPanel {
                 if (linkFileInfoPanel1.getMode().equals("HTTP"))
                     downloadTasks.add(new URLDownloadTask(linkFileInfoPanel1.getFileName(), linkFileInfoPanel1.getFileSizeNum(), URI.create(linkFileInfoPanel1.getUrl()), new File(path), threadNum, mode));
                 else if (linkFileInfoPanel1.getMode().equals("bilibili")) {
-                    downloadTasks.add(new BiliFileDownloadTask(linkFileInfoPanel1.getFileName(), linkFileInfoPanel1.getFileSizeNum(), URI.create(linkFileInfoPanel1.getUrl()), new File(path), threadNum, mode));
+                    if (linkFileInfoPanel1 instanceof BiliLinkFileInfoPanel biliLinkFileInfoPanel)
+                        downloadTasks.add(new BiliFileDownloadTask(
+                                biliLinkFileInfoPanel.getFileName(), biliLinkFileInfoPanel.getFileSize(),
+                                biliLinkFileInfoPanel.getBiliDownloadUrl(), new File(path), threadNum, mode));
                 }
             } else if (panel instanceof LinkFolderInfoPanel linkFolderPanel) {
                 if (linkFolderPanel.getMode().equals("bilibili")) {

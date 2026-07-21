@@ -9,7 +9,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="初始化" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="初始化">
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/exception/BiliDownloadTaskException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/exception/LinkParserException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/BiliVideoInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/BiliInfoFormat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/info/BiliAudioInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/info/BiliDownloadInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/info/BiliVideoInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DownLoader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DownLoader.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/common.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/common.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/task.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/task.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFileDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFolderDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliLinkFileInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliLinkFileInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliTaskFileEditPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliTaskFileEditPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliTaskFileEditPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliTaskFileEditPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/http/URLDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/http/URLDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +49,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Record" />
+        <option value="Exception" />
         <option value="Class" />
       </list>
     </option>
@@ -25,18 +58,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "wmp666"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;wmp666&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/wmp666/Speed_Bump.git",
-    "accountId": "c51a7f04-ee90-4407-b229-192e7c709c13"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/wmp666/Speed_Bump.git&quot;,
+    &quot;accountId&quot;: &quot;c51a7f04-ee90-4407-b229-192e7c709c13&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
@@ -59,7 +92,10 @@
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "false",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "300",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "master",
@@ -73,9 +109,11 @@
     "project.structure.last.edited": "工件",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "cn.yiiguxing.plugin.translate",
+    "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
     "应用程序.BilibiliUserInfo.executor": "Run",
+    "应用程序.ConvergenceTool.executor": "Run",
     "应用程序.Run.executor": "Run"
   }
 }]]></component>
@@ -90,6 +128,19 @@
     </key>
   </component>
   <component name="RunManager" selected="应用程序.Run">
+    <configuration name="BiliVideoInfo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.BiliVideoInfo" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BilibiliQRLoginWithJsoup" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.BilibiliQRLoginWithJsoup" />
       <module name="DownLoader" />
@@ -116,6 +167,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ConvergenceTool" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.ConvergenceTool" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
       <module name="DownLoader" />
@@ -132,6 +196,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.Run" />
+        <item itemvalue="应用程序.ConvergenceTool" />
+        <item itemvalue="应用程序.BiliVideoInfo" />
         <item itemvalue="应用程序.BilibiliUserInfo" />
         <item itemvalue="应用程序.BilibiliQRLoginWithJsoup" />
       </list>
@@ -154,6 +220,11 @@
       <updated>1784310353189</updated>
     </task>
     <servers />
+  </component>
+  <component name="TerminalProjectNonSharedOptionsProvider">
+    <envs>
+      <env key="Git" value="C:\Program Files\Git\bin\" />
+    </envs>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
@@ -178,10 +249,14 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFolderDownloadTask.java</url>
-          <line>187</line>
+          <line>185</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

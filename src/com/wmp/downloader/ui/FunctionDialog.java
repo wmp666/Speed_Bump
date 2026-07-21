@@ -24,10 +24,11 @@ public class FunctionDialog extends JDialog {
     public static final CustomButtons CANCEL_BUTTON = new CustomButtons("取消", RESULT_CANCEL);
     public static final CustomButtons[] OK_CANCEL_BUTTONS = {OK_BUTTON, CANCEL_BUTTON};
     public static final CustomButtons[] SAVE_CANCEL_BUTTONS = {SAVE_BUTTON, CANCEL_BUTTON};
-    private final Timer packTimer = new Timer(100, e -> {
+    private final Timer packTimer = new Timer(50, e -> {
         this.revalidate();
         this.repaint();
-        pack();
+        this.pack();
+        this.setLocationRelativeTo(this.getOwner());
     });
     private JPanel UIPanel;
     private JPanel taskPanel;

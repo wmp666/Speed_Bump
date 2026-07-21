@@ -269,7 +269,8 @@ public class Downloader extends JFrame implements WindowListener {
                 var panel = new JPanel();
                 var textArea = new JTextArea("""
                         支持：哔哩哔哩，HTTP
-                        由于还处于开发阶段，哔哩哔哩链接解析出的视频在使用单线程下载时，似乎不会自行暂停，同时不能显示速度
+                        由于还处于开发阶段，哔哩哔哩链接解析出的视频只能使用单线程下载
+                        同时合并文件速度很慢，暂不支持分P下载！
                         
                         """);
                 panel.add(textArea);
@@ -400,21 +401,7 @@ public class Downloader extends JFrame implements WindowListener {
 
         deleteTempFolderDataButton.addActionListener(e -> {
             var tempPath = DataControl.getTempPath();
-            try {
-                //删除整个文件夹里的内容
-                Files.walk(Paths.get(tempPath.toURI()))
-                        .sorted((o1, o2) -> -o1.compareTo(o2))
-                        .forEach(path -> {
-                            try {
-                                Files.deleteIfExists(path);
-                            } catch (IOException ex) {
-                                logger.error("删除失败", ex);
-                            }
-                        });
-                JOptionPane.showMessageDialog(this, "删除成功");
-            } catch (Exception ex) {
-                logger.error("删除失败", ex);
-            }
+            DataControl.deleteFolder(tempPath);
         });
 
         saveButton.addActionListener(e -> {
