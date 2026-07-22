@@ -15,10 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class DataControl {
     public static final ArrayList<String> themeList = new ArrayList<>();
@@ -33,6 +30,7 @@ public class DataControl {
 
     static {
         themeList.addAll(List.of("Mac Light", "Mac Dark", "Light", "Dark", "Darcula", "IntelliJ", "System", "Windows Classic", "Metal"));
+        load();
     }
 
     public static void configureLogPath(String logDir) throws IOException {
@@ -103,6 +101,11 @@ public class DataControl {
         DataControl.data.putAll(tempDataMap);
     }
 
+    public static void putAndSave(String key, Object value){
+        put(key, value);
+        save();
+    }
+
     /**
      * 刷新数据,用于当部分软件数据改变而没有发生数据存储行为时,更新加工数据
      */
@@ -115,7 +118,7 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.put("version", "0.0.6");
+        tempDataMap.put("version", "0.0.7");
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {
                 tempDataMap.put("theme_type", "light");
@@ -130,6 +133,13 @@ public class DataControl {
                     tempDataMap.put("theme_type", "light");
                 }
             }
+        }else if(key.equals("laug")){
+            // 1. 修改全局默认区域
+            var strings = value.toString().split("_");
+            if (strings.length == 1)
+                Locale.setDefault(Locale.of(strings[0]));
+            else if (strings.length == 2)
+                Locale.setDefault(Locale.of(strings[0], strings[1]));
         }
     }
 
@@ -158,11 +168,9 @@ public class DataControl {
         return file;
     }
 
-    public static void deleteFolder(File file){
-        //删除整个文件夹里的内容
-        try {
-            Files.walk(Paths.get(file.toURI()))
-                    .sorted((o1, o2) -> -o1.compareTo(o2))
+    public static void deleteFolder(File file, boolean isShowMessage){
+        try (var paths = Files.walk(Paths.get(file.toURI()))) {
+            paths.sorted((o1, o2) -> -o1.compareTo(o2))
                     .forEach(path -> {
                         try {
                             Files.deleteIfExists(path);
@@ -170,10 +178,15 @@ public class DataControl {
                             logger.error("删除失败", ex);
                         }
                     });
-            JOptionPane.showMessageDialog(null, "删除成功");
+            if (isShowMessage)
+                JOptionPane.showMessageDialog(null, "删除成功");
         } catch (IOException e) {
             logger.error("删除文件夹失败", e);
         }
+    }
+
+    public static void deleteFolder(File file){
+        deleteFolder(file, true);
     }
 
     public static File getDefaultTempPath() {

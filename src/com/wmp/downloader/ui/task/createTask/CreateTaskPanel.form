@@ -10,7 +10,7 @@
       <scrollpane id="9a332">
         <constraints border-constraint="Center"/>
         <properties/>
-        <border type="none" title-resource-bundle="com/wmp/downloader/laug/zh_cn/task" title-key="task.create_task.download_url_content"/>
+        <border type="none" title-resource-bundle="com/wmp/downloader/laug/task" title-key="task.create_task.download_url_content"/>
         <children>
           <grid id="40375" binding="linkInfoPanel" custom-create="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints/>
@@ -26,7 +26,7 @@
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="South"/>
         <properties/>
-        <border type="none" title-resource-bundle="com/wmp/downloader/laug/zh_cn/task" title-key="task.create_task.download_settings"/>
+        <border type="none" title-resource-bundle="com/wmp/downloader/laug/task" title-key="task.create_task.download_settings"/>
         <children>
           <nested-form id="5b70f" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="PathSelectionPanel" custom-create="true">
             <constraints>
@@ -54,7 +54,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="com/wmp/downloader/laug/zh_cn/task" key="task.create_task.download_settings.download_mode_settings"/>
+                  <text resource-bundle="com/wmp/downloader/laug/task" key="task.create_task.download_settings.download_mode_settings"/>
                 </properties>
               </component>
               <component id="79a71" class="javax.swing.JComboBox" binding="modeComboBox">
@@ -83,7 +83,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="com/wmp/downloader/laug/zh_cn/settings" key="settings.web.thread_num"/>
+                  <text resource-bundle="com/wmp/downloader/laug/settings" key="settings.web.thread_num"/>
                 </properties>
               </component>
               <component id="aa820" class="javax.swing.JSlider" binding="ThreadNumSlider">
@@ -124,7 +124,7 @@
       <grid id="2cb48" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="North"/>
         <properties/>
-        <border type="none" title-resource-bundle="com/wmp/downloader/laug/zh_cn/task" title-key="task.create_task.download_url.text_area"/>
+        <border type="none" title-resource-bundle="com/wmp/downloader/laug/task" title-key="task.create_task.download_url.text_area"/>
         <children>
           <component id="8bc91" class="javax.swing.JLabel">
             <constraints border-constraint="South"/>
@@ -141,7 +141,7 @@
                 <constraints/>
                 <properties>
                   <rows value="3"/>
-                  <toolTipText resource-bundle="com/wmp/downloader/laug/zh_cn/task" key="task.create_task.download_url.text_area.tool_tip_text"/>
+                  <toolTipText resource-bundle="com/wmp/downloader/laug/task" key="task.create_task.download_url.text_area.tool_tip_text"/>
                 </properties>
               </component>
             </children>

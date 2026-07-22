@@ -4,9 +4,10 @@ import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.Parser;
-import com.wmp.downloader.ui.task.bilibili.BiliFileDownloadTask;
-import com.wmp.downloader.ui.task.bilibili.BiliFolderDownloadTask;
-import com.wmp.downloader.ui.task.bilibili.BiliLinkFileInfoPanel;
+import com.wmp.downloader.ui.task.bilibili.file.BiliFileDownloadTask;
+import com.wmp.downloader.ui.task.bilibili.folder.BiliFolderDownloadTask;
+import com.wmp.downloader.ui.task.bilibili.file.BiliLinkFileInfoPanel;
+import com.wmp.downloader.ui.task.bilibili.folder.BiliLinkFolderInfoPanel;
 import com.wmp.downloader.ui.task.http.URLDownloadTask;
 import org.apache.log4j.Logger;
 
@@ -35,6 +36,8 @@ public class CreateTaskPanel {
     private JSlider ThreadNumSlider;
     private JTextField ThreadNumLabel;
     private JProgressBar tipProgressBar;
+
+
 
     public CreateTaskPanel() {
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
@@ -154,9 +157,17 @@ public class CreateTaskPanel {
                                 biliLinkFileInfoPanel.getBiliDownloadUrl(), new File(path), threadNum, mode));
                 }
             } else if (panel instanceof LinkFolderInfoPanel linkFolderPanel) {
-                if (linkFolderPanel.getMode().equals("bilibili")) {
-                    downloadTasks.add(new BiliFolderDownloadTask(linkFolderPanel.getFolderName(), linkFolderPanel.getSelectedFileSize(), linkFolderPanel.getSelectedFileSizes(), Arrays.stream(linkFolderPanel.getSelectedUrls()).map(URI::create).toArray(URI[]::new), linkFolderPanel.getSelectionFileNames(), new File(path), threadNum, mode));
-                }
+                if (linkFolderPanel instanceof BiliLinkFolderInfoPanel biliLinkFolderInfoPanel)
+                    downloadTasks.add(new BiliFolderDownloadTask(
+                            biliLinkFolderInfoPanel.getFolderName(),
+                            biliLinkFolderInfoPanel.getSelectedBiliTotalSize(),
+                            biliLinkFolderInfoPanel.getSelectedBiliFileSizes(),
+                            biliLinkFolderInfoPanel.getSelectedVideoSizes(),
+                            biliLinkFolderInfoPanel.getSelectedAudioSizes(),
+                            biliLinkFolderInfoPanel.getBiliDownloadUrls(),
+                            biliLinkFolderInfoPanel.getSelectionFileNames(),
+                            new File(path), threadNum, mode));
+
             }
 
 

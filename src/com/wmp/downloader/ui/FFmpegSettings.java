@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui;
 
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.settings.BasicSpecialSettings;
@@ -22,7 +23,7 @@ public class FFmpegSettings extends BasicSpecialSettings {
 
     @Override
     public String getSettingsName() {
-        return "FFmpeg设置";
+        return StringFormat.translate("special_settings", "ffmpeg_special_settings");
     }
 
     @Override
@@ -32,7 +33,7 @@ public class FFmpegSettings extends BasicSpecialSettings {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        localFFmpegPathPanel = new PathSelectionPanel("选择本地FFmpeg路径", new File(DataControl.get("ffmpeg_appPath", "")));
+        localFFmpegPathPanel = new PathSelectionPanel(StringFormat.translate("special_settings", "ffmpeg_special_settings.setLocalPath"), new File(DataControl.get("ffmpeg_appPath", "")));
     }
 
     class FFmpegSpecialSettingsPanel extends SpecialSettingsPanel {
@@ -45,9 +46,9 @@ public class FFmpegSettings extends BasicSpecialSettings {
             localFFmpegPathPanel.setPath(DataControl.get("ffmpeg_appPath", ""));
 
             isUseLocalFFmpegCheckBox.addActionListener(e -> {
-                DataControl.put("ffmpeg_isUseLocal", isUseLocalFFmpegCheckBox.isSelected());
+                DataControl.putAndSave("ffmpeg_isUseLocal", isUseLocalFFmpegCheckBox.isSelected());
             });
-            localFFmpegPathPanel.setPathChangeListener(path -> DataControl.put("ffmpeg_appPath", path));
+            localFFmpegPathPanel.setPathChangeListener(path -> DataControl.putAndSave("ffmpeg_appPath", path));
             downloadButton.addActionListener(e -> {
                 try {
                     Desktop.getDesktop().browse(URI.create("https://ffmpeg.org/download.html"));

@@ -1,6 +1,7 @@
 package com.wmp.downloader.ui.settings;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.ui.FunctionDialog;
@@ -30,7 +31,7 @@ public class BiliSettings extends BasicSpecialSettings {
 
     @Override
     public String getSettingsName() {
-        return "哔哩哔哩";
+        return StringFormat.translate("special_settings", "bili_special_settings");
     }
 
     @Override
@@ -56,7 +57,7 @@ public class BiliSettings extends BasicSpecialSettings {
 
             //初始化监听
             ScanCodeButton.addActionListener(e -> {
-                FunctionDialog.showDialog(this, "扫码登录",
+                FunctionDialog.showDialog(this, StringFormat.translate("special_settings", "bili_special_settings.login.scan_code"),
                         new BiliScanCodePanel(),
                         result -> {
                             if (result == FunctionDialog.RESULT_OK){
@@ -66,8 +67,7 @@ public class BiliSettings extends BasicSpecialSettings {
                         null, 0);
             });
             loggedOutButton.addActionListener(e -> {
-                DataControl.put("bili_sessdata", "");
-                DataControl.save();
+                DataControl.putAndSave("bili_sessdata", "");
                 initUserInfo();
             });
             /*qualityComboBox.addItemListener(e -> {

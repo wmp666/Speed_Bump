@@ -36,6 +36,7 @@ public class ConvergenceTool {
                 return false;
             }
         }
+        logger.info("保存路径：" + destPath.getAbsolutePath());
 
         if (DataControl.get("ffmpeg_isUseLocal", false)){
             return LocalConvergeWithStreamCopy(DataControl.get("ffmpeg_appPath", ""), videoPath, audioPath, destPath, progressBar);

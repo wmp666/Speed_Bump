@@ -3,24 +3,66 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="DownLoader:jar" />
-      <artifact name="DownLoader_Mult:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加剪切板监听，默认关闭（还在测试）">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="支持使用本地FFmpeg">
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/StringFormat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/about_en_us.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/about_ja_JP.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/about_ru_RU.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/common_en_us.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/common_ja_JP.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/common_ru_RU.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/download_menu_bar.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/download_menu_bar_en_US.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/download_menu_bar_ja_JP.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/download_menu_bar_ru_RU.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_en_us.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_ja_JP.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_ru_RU.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/special_settings_en_us.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/special_settings_ja_JP.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/special_settings_ru_RU.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/task_en_us.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/task_ja_JP.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/task_ru_RU.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/common.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/common.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/special_settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/special_settings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/about.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/about.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/common.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/common.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/special_settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/special_settings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/zh_cn/task.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/task.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/test/BiliVideoInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/BiliVideoInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/PathSelectionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/PathSelectionPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFileDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/PathSelectionPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/PathSelectionPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BiliSettings.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BiliSettings.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BiliSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BiliSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/file/BiliFileDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliFolderDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliLinkFileInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/file/BiliLinkFileInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliLinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliLinkFolderInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliTaskFileEditPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/file/BiliTaskFileEditPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliTaskFileEditPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/file/BiliTaskFileEditPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliTaskFolderEditPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliTaskFolderEditPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliTaskFolderEditPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliTaskFolderEditPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFileChoosePanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFileChoosePanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFolderInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/TaskFileEditPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/TaskFileEditPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +100,6 @@
   <component name="ProjectId" id="3GdnVjhWbgsY6hnknjOE1D1U8OT" />
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
-    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
     <option name="showScratchesAndConsoles" value="false" />
@@ -85,8 +126,10 @@
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/src/com/wmp/downloader/ui/task/bilibili",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "工件",
@@ -104,6 +147,11 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\task\bilibili" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\task\createTask" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\laug" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\task\bilibili\file" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\task\bilibili\folder" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.wmp.downloader.ui.task.bilibili" />
@@ -227,16 +275,31 @@
     <MESSAGE value="初始化" />
     <MESSAGE value="将哔哩哔哩下载改为分流式，因此只完成了单文件下载功能" />
     <MESSAGE value="增加剪切板监听，默认关闭（还在测试）" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加剪切板监听，默认关闭（还在测试）" />
+    <MESSAGE value="支持使用本地FFmpeg" />
+    <option name="LAST_COMMIT_MESSAGE" value="支持使用本地FFmpeg" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFolderDownloadTask.java</url>
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliFolderDownloadTask.java</url>
           <line>185</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
+          <line>587</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.MissingResourceException" package="java.util" />
+          <option name="timeStamp" value="15" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

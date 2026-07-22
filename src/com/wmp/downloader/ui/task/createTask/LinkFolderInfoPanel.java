@@ -96,7 +96,7 @@ public abstract class LinkFolderInfoPanel extends JPanel {
                             selectedFileSize = linkFileChoosePanel.getSelectedFilesSize();
 
                             //调用文件选择内容更改方法
-                            fileChangeAction();
+                            selectionFileListChangeAction();
                         }
                     },
                     FunctionDialog.OK_CANCEL_BUTTONS, 0, null, 0);
@@ -187,7 +187,7 @@ public abstract class LinkFolderInfoPanel extends JPanel {
 
     public abstract void editButtonAction(ActionEvent e);
 
-    public abstract void fileChangeAction();
+    public abstract void selectionFileListChangeAction();
 
     public static LinkFolderInfoPanel createBasicLinkFileInfoPanel(String folderName, long size, String mode, String url, String[] fileTypes) {
         return new LinkFolderInfoPanel(folderName, new long[]{size}, mode, new String[]{url}, new String[]{folderName}, fileTypes) {
@@ -203,7 +203,7 @@ public abstract class LinkFolderInfoPanel extends JPanel {
             }
 
             @Override
-            public void fileChangeAction() {
+            public void selectionFileListChangeAction() {
                 long newSelectedFileSize = 0;
                 for (int i = 0; i < fileSelectionStatus.length; i++) {
                     if (fileSelectionStatus[i]) {

@@ -1,4 +1,4 @@
-package com.wmp.downloader.ui.task.bilibili;
+package com.wmp.downloader.ui.task.bilibili.file;
 
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.download.ConvergenceTool;
@@ -10,10 +10,7 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,7 +40,7 @@ public class BiliFileDownloadTask extends DownloadTask {
         if (!tempDir.exists()) {
             tempDir.mkdirs();
         }else{
-           DataControl.deleteFolder(tempDir);
+           DataControl.deleteFolder(tempDir, false);
         }
     }
 
@@ -115,7 +112,7 @@ public class BiliFileDownloadTask extends DownloadTask {
                     infoLabel.setText("合并" + (isConverged? "成功": "失败"));
 
                     //删除文件
-                    DataControl.deleteFolder(tempDir);
+                    DataControl.deleteFolder(tempDir, false);
                 }
 
                 isFinally = true;

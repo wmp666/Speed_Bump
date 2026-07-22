@@ -3,8 +3,6 @@ package com.wmp.downloader.test;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wmp.downloader.tools.DataControl;
-import com.wmp.downloader.ui.task.bilibili.BiliLinkFileInfoPanel;
-import com.wmp.downloader.ui.task.bilibili.BiliLinkFolderInfoPanel;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

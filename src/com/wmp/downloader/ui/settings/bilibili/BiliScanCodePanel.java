@@ -69,8 +69,7 @@ public class BiliScanCodePanel extends JPanel {
                 if (sessData != null) {
                     logger.info("登录成功！SESSDATA: " + sessData);
                     //保存
-                    DataControl.put("bili_sessdata", sessData);
-                    DataControl.save();
+                    DataControl.putAndSave("bili_sessdata", sessData);
                     // 现在可以使用 cookies 调用其他 API
                 } else {
                     logger.error("登录失败或超时");

@@ -10,7 +10,7 @@
       <component id="b260f" class="javax.swing.JLabel" binding="DownloadFileLocationLabel">
         <constraints border-constraint="West"/>
         <properties>
-          <text resource-bundle="com/wmp/downloader/laug/zh_cn/task" key="task.create_task.download_settings.download_file_location"/>
+          <text resource-bundle="com/wmp/downloader/laug/task" key="task.create_task.download_settings.download_file_location"/>
         </properties>
       </component>
       <component id="7e55" class="javax.swing.JTextField" binding="FileTextField">

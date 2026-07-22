@@ -2,6 +2,7 @@ package com.wmp.downloader.ui;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.util.ColorFunctions;
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.ThemeChanger;
@@ -18,10 +19,10 @@ public class FunctionDialog extends JDialog {
     public static final int NORTH_DIRECTION_LEFT = 0;
     public static final int NORTH_DIRECTION_CENTER = 1;
     public static final int NORTH_DIRECTION_RIGHT = 2;
-    public static final CustomButtons OK_BUTTON = new CustomButtons("确定", RESULT_OK);
+    public static final CustomButtons OK_BUTTON = new CustomButtons(StringFormat.translate("common", "enter"), RESULT_OK);
     public static final CustomButtons[] DEFAULT_BUTTONS = {OK_BUTTON};
-    public static final CustomButtons SAVE_BUTTON = new CustomButtons("保存", RESULT_SAVE);
-    public static final CustomButtons CANCEL_BUTTON = new CustomButtons("取消", RESULT_CANCEL);
+    public static final CustomButtons SAVE_BUTTON = new CustomButtons(StringFormat.translate("common", "save"), RESULT_SAVE);
+    public static final CustomButtons CANCEL_BUTTON = new CustomButtons(StringFormat.translate("common", "cancel"), RESULT_CANCEL);
     public static final CustomButtons[] OK_CANCEL_BUTTONS = {OK_BUTTON, CANCEL_BUTTON};
     public static final CustomButtons[] SAVE_CANCEL_BUTTONS = {SAVE_BUTTON, CANCEL_BUTTON};
     private final Timer packTimer = new Timer(50, e -> {
@@ -51,9 +52,17 @@ public class FunctionDialog extends JDialog {
      * @param northButtons          上方部按钮列表
      * @param northButtonsDirection 上方按钮方向，0表示居左，1表示居中，2表示居右
      */
-    private FunctionDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection) {
+    private FunctionDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop) {
         AtomicInteger result = new AtomicInteger(RESULT_EXIT);
 
+        //判断组件c所在的窗体或c是窗体本身是否置顶
+        if (c instanceof JFrame frame) {
+            this.setAlwaysOnTop(isAlwaysTop || frame.isAlwaysOnTop());
+        } else if (c instanceof JDialog dialog) {
+            this.setAlwaysOnTop(isAlwaysTop || dialog.isAlwaysOnTop());
+        }else {
+            this.setAlwaysOnTop(isAlwaysTop);
+        }
         this.setResizable(false);
         this.setTitle(title);
         this.setMinimumSize(new Dimension(400, 300));
@@ -115,6 +124,7 @@ public class FunctionDialog extends JDialog {
 
         packTimer.start();
 
+        this.requestFocus();
         this.setVisible(true);
 
         resultCallback.onResult(result.get());
@@ -125,10 +135,17 @@ public class FunctionDialog extends JDialog {
     }
 
     /**
-     * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int)
+     * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int, boolean)
      */
     public static void showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection) {
-        new FunctionDialog(c, title, functionPanel, resultCallback, buttons, defaultButtonIndex, northButtons, northButtonsDirection);
+        new FunctionDialog(c, title, functionPanel, resultCallback, buttons, defaultButtonIndex, northButtons, northButtonsDirection, false);
+    }
+
+    /**
+     * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int, boolean)
+     */
+    public static void showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop) {
+        new FunctionDialog(c, title, functionPanel, resultCallback, buttons, defaultButtonIndex, northButtons, northButtonsDirection, isAlwaysTop);
     }
 
     static void main() {

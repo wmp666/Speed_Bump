@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.task.Parser;
+import com.wmp.downloader.ui.task.bilibili.file.BiliLinkFileInfoPanel;
+import com.wmp.downloader.ui.task.bilibili.folder.BiliLinkFolderInfoPanel;
 import com.wmp.downloader.ui.task.bilibili.info.BiliAudioInfo;
 import com.wmp.downloader.ui.task.bilibili.info.BiliDownloadInfo;
 import com.wmp.downloader.ui.task.bilibili.info.BiliVideoInfo;
@@ -93,7 +95,11 @@ public class BiliParser extends Parser {
                 logger.info("下载信息: " + downloadInfo);
                 return new BiliLinkFileInfoPanel(title + ".mp4", downloadInfo);
             }else{
-                return new BiliLinkFolderInfoPanel(title, BVId, cids, titles);
+                BiliDownloadInfo[] downloadInfos = new BiliDownloadInfo[cids.length];
+                for (int i = 0; i < cids.length; i++) {
+                    downloadInfos[i] = getDownloadInfo(BVId, cids[i], sessdata);
+                }
+                return new BiliLinkFolderInfoPanel(title, titles, downloadInfos);
             }
 
 

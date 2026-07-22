@@ -31,21 +31,21 @@
           <component id="b7934" class="javax.swing.JButton" binding="selectionAllbutton">
             <constraints/>
             <properties>
-              <label resource-bundle="com/wmp/downloader/laug/zh_cn/common" key="selection_all"/>
+              <label resource-bundle="com/wmp/downloader/laug/common" key="selection_all"/>
               <text value="全选"/>
             </properties>
           </component>
           <component id="87650" class="javax.swing.JButton" binding="selectionNoneButton">
             <constraints/>
             <properties>
-              <label resource-bundle="com/wmp/downloader/laug/zh_cn/common" key="selection_none"/>
+              <label resource-bundle="com/wmp/downloader/laug/common" key="selection_none"/>
               <text value="全不选"/>
             </properties>
           </component>
           <component id="893d2" class="javax.swing.JButton" binding="selectionReverseButton">
             <constraints/>
             <properties>
-              <text resource-bundle="com/wmp/downloader/laug/zh_cn/common" key="selection_reverse"/>
+              <text resource-bundle="com/wmp/downloader/laug/common" key="selection_reverse"/>
             </properties>
           </component>
         </children>

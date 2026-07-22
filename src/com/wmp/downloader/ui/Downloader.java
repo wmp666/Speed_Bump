@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui;
 
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.ui.IconControl;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -23,10 +25,12 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Downloader extends JFrame implements WindowListener {
 
-    public static final TrayIcon trayIcon = new TrayIcon(IconControl.getImage("download", 256), "Speed Bump");
+    public static TrayIcon trayIcon;
     private static final Logger logger = Logger.getLogger(Downloader.class);
     private final List<DownloadTask> taskList = new ArrayList<>();
     private final List<DownloadTask> taskFinalyTipList = new ArrayList<>();
@@ -80,19 +84,23 @@ public class Downloader extends JFrame implements WindowListener {
     private JPanel SpecialSettingsPanel;
     private JButton deleteTempFolderDataButton;
     private JCheckBox isUseClipBoardListenerCheckBox;
+    private JComboBox<String> laugComboBox;
     private String lastClipboardContent = "";
 
+    private ActionListener actionListener = (ActionListener) e -> {
+        this.setVisible(true);
+        this.setState(JFrame.NORMAL);
+    };
 
     public Downloader() {
         taskListener.start();
 
-        this.setTitle("减速带 V" + DataControl.get("version", "0.0.1"));
+        this.setTitle(StringFormat.translate("common", "app_name") + " V" + DataControl.get("version", "0.0.1"));
         this.setContentPane(UIPanel);
         this.setMinimumSize(new Dimension(800, 550));
 
-        this.pack();
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+
         IconControl.addInDynamicConverter(
                 () -> this.setIconImage(IconControl.getImage("icon", 256))
         );
@@ -123,6 +131,9 @@ public class Downloader extends JFrame implements WindowListener {
         initAboutComponents();
 
         startClipboardListener();
+
+        pack();
+        this.setLocationRelativeTo(null);
     }
 
     private void initSpecialSettingsComponents() {
@@ -133,6 +144,13 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void initTrayIcon() {
+
+        if (SystemTray.isSupported()) {
+            SystemTray.getSystemTray().remove(trayIcon);
+        }
+
+        trayIcon = new TrayIcon(IconControl.getImage("download", 256), StringFormat.translate("common", "app_name"));
+
         trayIcon.setImageAutoSize(true);
         IconControl.addInDynamicConverter(
                 () -> trayIcon.setImage(IconControl.getImage("icon", 256))
@@ -145,6 +163,7 @@ public class Downloader extends JFrame implements WindowListener {
             this.setVisible(true);
             this.setState(JFrame.NORMAL);
         });
+        showMenuItem.addActionListener(actionListener);
         trayIconMenu.add(showMenuItem);
 
         var exitMenuItem = new MenuItem("exit");
@@ -153,10 +172,7 @@ public class Downloader extends JFrame implements WindowListener {
 
         trayIcon.setPopupMenu(trayIconMenu);
 
-        trayIcon.addActionListener(e -> {
-            this.setVisible(true);
-            this.setState(JFrame.NORMAL);
-        });
+        trayIcon.addActionListener(actionListener);
 
         if (SystemTray.isSupported()) {
             try {
@@ -170,24 +186,39 @@ public class Downloader extends JFrame implements WindowListener {
     private void initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
-        var windowMenu = new JMenu("窗口");
+        var windowMenu = new JMenu(StringFormat.translate("download_menu_bar", "frame"));
 
-        var alwaysOnTopCheckBox = new JCheckBoxMenuItem("置顶状态");
+        var alwaysOnTopCheckBox = new JCheckBoxMenuItem(StringFormat.translate("download_menu_bar", "frame.is_always_top"));
         alwaysOnTopCheckBox.addActionListener(e -> this.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected()));
 
         windowMenu.add(alwaysOnTopCheckBox);
 
         windowMenu.addSeparator();
 
-        var refreshMenuItem = new JMenuItem("刷新");
-        refreshMenuItem.setToolTipText("只能刷新应用数据和界面UI，部分组件内已有的数据不做更新");
+        var refreshMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.refresh"));
+        refreshMenuItem.setToolTipText(StringFormat.translate("download_menu_bar", "frame.refresh.tooltip"));
         refreshMenuItem.addActionListener(e -> {
             DataControl.load();
             ThemeChanger.easyChanger();
         });
         windowMenu.add(refreshMenuItem);
 
-        var exitMenuItem = new JMenuItem("退出程序");
+        var updateFrameMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.update_frame"));
+        updateFrameMenuItem.addActionListener(e -> {
+            if (JOptionPane.showConfirmDialog(this, StringFormat.translate("download_menu_bar", "frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+                this.dispose();
+
+                DataControl.load();
+                ThemeChanger.easyChanger();
+
+                new Downloader().setVisible(true);
+            }
+        });
+        windowMenu.add(updateFrameMenuItem);
+
+        windowMenu.addSeparator();
+
+        var exitMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.exit"));
         exitMenuItem.addActionListener(e -> System.exit(0));
         windowMenu.add(exitMenuItem);
 
@@ -207,7 +238,7 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void initAboutComponents() {
-        nameLabel.setText("减速带 V" + DataControl.get("version", "0.0.0"));
+        nameLabel.setText(StringFormat.translate("common", "app_name") + " V" + DataControl.get("version", "0.0.0"));
         nameLabel.putClientProperty("FlatLaf.style", "font: bold $h0.font");
         IconControl.addInDynamicConverter(
                 () -> nameLabel.setIcon(IconControl.getIcon("icon", nameLabel.getFont().getSize()))
@@ -281,25 +312,25 @@ public class Downloader extends JFrame implements WindowListener {
 
             var createTaskPanel = new CreateTaskPanel();
             var mainPanel = createTaskPanel.MainPanel;
-            var learnMoreButton = new JButton("了解更多");
+            var learnMoreButton = new JButton(StringFormat.translate("common", "learn"));
             learnMoreButton.addActionListener(_ -> {
                 var panel = new JPanel();
                 var textArea = new JTextArea("""
                         支持：哔哩哔哩，HTTP
                         由于还处于开发阶段，哔哩哔哩链接解析出的视频只能使用单线程下载
-                        同时合并文件速度很慢，暂不支持分P下载！
+                        同时使用内置库合并文件速度很慢，建议使用本地的FFmpeg！
                         
                         """);
                 panel.add(textArea);
 
 
-                FunctionDialog.showDialog(this, "了解更多", panel,
+                FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                         _ -> {},
                         FunctionDialog.DEFAULT_BUTTONS, 0,
                         null, FunctionDialog.NORTH_DIRECTION_RIGHT);
             });
 
-            FunctionDialog.showDialog(this, "创建下载任务", mainPanel,
+            FunctionDialog.showDialog(this, StringFormat.translate("task", "task.creat_task"), mainPanel,
                     result -> {
                         if (result == FunctionDialog.RESULT_OK) {
                             createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
@@ -347,6 +378,27 @@ public class Downloader extends JFrame implements WindowListener {
         isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
+
+        {
+            String[] laugs = new String[]{
+                    "简体中文(zh_cn)", "English(en_us)", "日本語(ja_JP)", "Русский язык(ru_RU)"
+            };
+
+
+            var lauguage = DataControl.get("laug", "zh_cn");
+            for (String laug : laugs) {
+                laugComboBox.addItem(laug);
+
+                Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(laug);
+                if (matcher.find() && lauguage.equals(matcher.group(1))) {
+                    lauguage = laug;
+                }
+            }
+
+
+
+            laugComboBox.setSelectedItem(lauguage);
+        }
 
         themeComboBox.addItem("Mac Dark");
         themeComboBox.addItem("Mac Light");
@@ -400,15 +452,21 @@ public class Downloader extends JFrame implements WindowListener {
         });
         themeComboBox.addItemListener(e -> {
             var themeStr = e.getItem().toString();
-            DataControl.put("theme", themeStr);
-            DataControl.save();
+            DataControl.putAndSave("theme", themeStr);
             ThemeChanger.easyChanger();
         });
         FontListComboBox.addActionListener(e -> {
             var fontName = FontListComboBox.getSelectedItem().toString();
-            DataControl.put("Font", fontName);
-            DataControl.save();
+            DataControl.putAndSave("Font", fontName);
             ThemeChanger.easyChanger();
+        });
+        laugComboBox.addItemListener(e ->{
+            var lauguage = e.getItem().toString();
+            Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(lauguage);
+            if (matcher.find()) {
+                lauguage = matcher.group(1);
+            }
+            DataControl.putAndSave("laug", lauguage);
         });
 
         dataPathButton.addActionListener(e -> {
@@ -434,7 +492,7 @@ public class Downloader extends JFrame implements WindowListener {
 
             DataControl.save();
             DataControl.load();
-            JOptionPane.showMessageDialog(this, "保存成功并刷新");
+            JOptionPane.showMessageDialog(this, StringFormat.translate("settings", "settings.save.tip"));
             ThemeChanger.easyChanger();
         });
 
@@ -443,29 +501,26 @@ public class Downloader extends JFrame implements WindowListener {
 
 
     private void startClipboardListener() {
-        Thread.ofVirtual().name("clipboard-listener").start(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(1500);
-                    if (DataControl.get("isUseClipBoardListener", false)) {
-                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                        if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
-                            String content = (String) clipboard.getData(DataFlavor.stringFlavor);
-                            if (content != null && !content.equals(lastClipboardContent)) {
-                                lastClipboardContent = content;
-                                String url = extractUrl(content);
-                                if (url != null) {
-                                    Thread.ofVirtual().start(() -> {
-                                        if (isValidUrl(url)) {
-                                            SwingUtilities.invokeLater(() -> showLinkDetectedDialog(url));
-                                        }
-                                    });
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.addFlavorListener(e -> {
+            if (!DataControl.get("isUseClipBoardListener", false)) return;
+            try {
+                if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
+                    String content = (String) clipboard.getData(DataFlavor.stringFlavor);
+                    if (content != null && !content.equals(lastClipboardContent)) {
+                        lastClipboardContent = content;
+                        String url = extractUrl(content);
+                        if (url != null) {
+                            Thread.ofVirtual().start(() -> {
+                                if (isValidUrl(url)) {
+                                    SwingUtilities.invokeLater(() -> showLinkDetectedDialog(url));
                                 }
-                            }
+                            });
                         }
                     }
-
-                } catch (Exception _) {}
+                }
+            } catch (Exception ex) {
+                logger.debug("剪切板监听异常", ex);
             }
         });
     }
@@ -487,6 +542,7 @@ public class Downloader extends JFrame implements WindowListener {
     private void showLinkDetectedDialog(String url) {
         this.setVisible(true);
         this.setState(JFrame.NORMAL);
+        tabbedPane1.setSelectedIndex(0);
         this.toFront();
 
         var createTaskPanel = new CreateTaskPanel();
@@ -520,12 +576,12 @@ public class Downloader extends JFrame implements WindowListener {
         try {
             if (url.startsWith("BV") || url.contains("bilibili.com")) {
                 return isValidBiliUrl(url);
-            }
-            return isHttpReachable(url);
+            }else if(url.startsWith("http")) return isHttpReachable(url);
         } catch (Exception e) {
             logger.debug("链接验证失败: " + url, e);
             return false;
         }
+        return false;
     }
 
     private boolean isValidBiliUrl(String url) {
@@ -560,9 +616,22 @@ public class Downloader extends JFrame implements WindowListener {
             conn.setRequestMethod("HEAD");
             conn.setConnectTimeout(5000);
             conn.setReadTimeout(5000);
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0");
             int code = conn.getResponseCode();
+            if (code >= 200 && code < 400) {
+                String contentType = conn.getContentType();
+                conn.disconnect();
+                if (contentType == null) return true;
+                String lowerType = contentType.toLowerCase();
+                if (lowerType.startsWith("text/html")
+                        || lowerType.startsWith("application/xhtml+xml")
+                        || lowerType.startsWith("text/xml")) {
+                    return false;
+                }
+                return true;
+            }
             conn.disconnect();
-            return code >= 200 && code < 400;
+            return false;
         } catch (Exception e) {
             logger.debug("HTTP链接验证失败: " + url, e);
             return false;

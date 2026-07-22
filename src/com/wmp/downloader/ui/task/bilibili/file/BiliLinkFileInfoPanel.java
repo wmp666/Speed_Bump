@@ -1,4 +1,4 @@
-package com.wmp.downloader.ui.task.bilibili;
+package com.wmp.downloader.ui.task.bilibili.file;
 
 import com.wmp.downloader.exception.BiliDownloadTaskException;
 import com.wmp.downloader.ui.FunctionDialog;
