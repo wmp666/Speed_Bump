@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新剪切板监听，增加独立的(视频+音频)合并功能&#10;将更多文本添加到翻译文件中">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复剪切板监听问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -227,7 +227,8 @@
     <MESSAGE value="加入了多语言功能（AI翻译）&#10;重新支持哔哩哔哩分P下载（暂时没有问题）" />
     <MESSAGE value="将更多文本添加到翻译文件中" />
     <MESSAGE value="更新剪切板监听，增加独立的(视频+音频)合并功能&#10;将更多文本添加到翻译文件中" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新剪切板监听，增加独立的(视频+音频)合并功能&#10;将更多文本添加到翻译文件中" />
+    <MESSAGE value="修复剪切板监听问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复剪切板监听问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
