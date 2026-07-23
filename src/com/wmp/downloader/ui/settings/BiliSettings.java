@@ -42,6 +42,8 @@ public class BiliSettings extends BasicSpecialSettings {
     public class BiliSpecialSettingsPanel extends SpecialSettingsPanel {
 
         public BiliSpecialSettingsPanel(JPanel panel) {
+            super();
+
             this.setLayout(new BorderLayout());
             this.add(panel, BorderLayout.CENTER);
             UserNameLabel.putClientProperty("FlatLaf.style", "font: bold $h3.font");

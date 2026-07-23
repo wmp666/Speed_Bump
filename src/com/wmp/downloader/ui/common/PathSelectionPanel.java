@@ -17,11 +17,15 @@ public class PathSelectionPanel extends JPanel {
     private PathChangeListener pathChangeListener = path -> {};
 
     public PathSelectionPanel(String prompt, File defaultFile) {
+        this(prompt, defaultFile, SystemFileChooser.DIRECTORIES_ONLY);
+    }
+
+    public PathSelectionPanel(String prompt, File defaultFile, int FileSelectionMode) {
         LocationChooseButton.addActionListener(e -> {
             var systemFileChooser = new SystemFileChooser();
-            systemFileChooser.setDialogType(SystemFileChooser.SAVE_DIALOG);
+            systemFileChooser.setDialogType(SystemFileChooser.OPEN_DIALOG);
             systemFileChooser.setFileHidingEnabled(true);
-            systemFileChooser.setFileSelectionMode(SystemFileChooser.DIRECTORIES_ONLY);
+            systemFileChooser.setFileSelectionMode(FileSelectionMode);
             if (systemFileChooser.showDialog(this, "选择") == SystemFileChooser.APPROVE_OPTION) {
                 var path = systemFileChooser.getSelectedFile().getAbsolutePath();
                 FileTextField.setText(path);

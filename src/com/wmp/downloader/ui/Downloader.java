@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui;
 
+import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
@@ -17,6 +18,8 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;   // FIX 新增导入
+import java.awt.event.ComponentEvent;     // FIX 新增导入
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -61,7 +64,6 @@ public class Downloader extends JFrame implements WindowListener {
     private final Timer taskListener = new Timer(100, e -> {
         taskList.removeIf(DownloadTask ->
         {
-
             if (DownloadTask.isCanExit()) {
                 TasksPanel.remove(DownloadTask);
                 return true;
@@ -75,7 +77,6 @@ public class Downloader extends JFrame implements WindowListener {
                 }
             }
         });
-
     });
     private JButton allStartButton;
     private JButton allPauseButton;
@@ -85,9 +86,11 @@ public class Downloader extends JFrame implements WindowListener {
     private JButton deleteTempFolderDataButton;
     private JCheckBox isUseClipBoardListenerCheckBox;
     private JComboBox<String> laugComboBox;
+    private PathSelectionPanel backgroundSelectionPanel;
+    private JComboBox<String> BackgroundModeComboBox;
+    private JScrollPane settingsScrollPane;
     private String lastClipboardContent = "";
 
-    // 修改：使用定时器轮询代替 FlavorListener
     private Timer clipboardTimer;
 
     private CreateTaskPanel createTaskPanel = null;
@@ -97,8 +100,18 @@ public class Downloader extends JFrame implements WindowListener {
         this.setState(JFrame.NORMAL);
     };
 
+    private JLayeredPane layeredPane = new JLayeredPane();
+    private BackgroundPanel backgroundPanel;
+    private JPanel backgroundPreviewPanel;
+    private Timer backgroundupdateTimer = new Timer(500, e->{
+        updateBackground();
+        updateChildBounds(); // FIX 使用统一方法
+    });
+    // FIX 删除了无用的 backgroundTimer 字段
+
     public Downloader() {
         taskListener.start();
+
 
         this.setTitle(StringFormat.translate("common", "app_name") + " V" + DataControl.get("version", "0.0.1"));
         this.setContentPane(UIPanel);
@@ -111,11 +124,8 @@ public class Downloader extends JFrame implements WindowListener {
         );
         this.addWindowListener(this);
 
-
         initTrayIcon();
-
         initMenuBar();
-
 
         IconControl.addInDynamicConverter(
                 () -> {
@@ -126,6 +136,15 @@ public class Downloader extends JFrame implements WindowListener {
                     tabbedPane1.setIconAt(tabbedPane1.indexOfComponent(aboutPanel), IconControl.getIcon("about", size));
                 }
         );
+
+        // 使用JLayeredPane包装主界面
+        initLayeredPane();
+
+        // 初始化背景相关
+        initBackgroundSettings();
+
+
+
         //任务
         initTaskComponents();
         //设置
@@ -139,17 +158,120 @@ public class Downloader extends JFrame implements WindowListener {
 
         pack();
         this.setLocationRelativeTo(null);
+
+        // FIX 确保初始显示时子组件边界正确
+        SwingUtilities.invokeLater(this::updateChildBounds);
+
+        backgroundupdateTimer.start();
+    }
+
+    private void initLayeredPane() {
+        // 将UIPanel添加到默认层
+        layeredPane.add(UIPanel, JLayeredPane.DEFAULT_LAYER);
+        // FIX 添加组件监听器，在尺寸变化时更新子组件边界
+        layeredPane.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                updateChildBounds();
+            }
+        });
+        this.setContentPane(layeredPane);
+    }
+
+    // FIX 新增方法：更新UIPanel和背景面板的边界
+    private void updateChildBounds() {
+        int w = layeredPane.getWidth();
+        int h = layeredPane.getHeight();
+        if (w > 0 && h > 0) {
+            UIPanel.setBounds(0, 0, w, h);
+            if (backgroundPanel != null && backgroundPanel.isVisible()) {
+                backgroundPanel.setBounds(0, 0, w, h);
+            }
+            layeredPane.revalidate();
+            layeredPane.repaint();
+        }
+    }
+
+    private void initBackgroundSettings() {
+        // 创建背景面板（如果不存在）
+        if (backgroundPanel == null) {
+            String backgroundPath = DataControl.get("background", null);
+            if (backgroundPath != null && !backgroundPath.isEmpty()) {
+                try {
+                    ImageIcon backgroundIcon = new ImageIcon(backgroundPath);
+                    backgroundPanel = new BackgroundPanel(backgroundIcon.getImage());
+                } catch (Exception e) {
+                    logger.warn("背景图片加载失败: " + backgroundPath, e);
+                }
+            }
+        }
+
+        // 添加背景面板到最底层
+        if (backgroundPanel != null) {
+            layeredPane.add(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
+            // FIX 使用统一的边界更新方法
+            updateChildBounds();
+        }
+    }
+
+    // FIX 删除原来的 updateBackgroundBounds，合并到 updateChildBounds 中
+
+    private void updateBackground() {
+        String backgroundPath = DataControl.get("background", null);
+        String mode = DataControl.get("background_mode", "None");
+
+        if ("Image".equals(mode) && backgroundPath != null && !backgroundPath.isEmpty()) {
+            try {
+                ImageIcon backgroundIcon = new ImageIcon(backgroundPath);
+                Image backgroundImage = backgroundIcon.getImage();
+
+                if (backgroundPanel == null) {
+                    backgroundPanel = new BackgroundPanel(backgroundImage);
+                    layeredPane.add(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
+                } else {
+                    backgroundPanel.updateBackgroundImage(backgroundImage);
+                }
+                backgroundPanel.setVisible(true);
+                layeredPane.setLayer(UIPanel, JLayeredPane.DEFAULT_LAYER);
+                layeredPane.setLayer(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
+                // FIX 更新边界并强制重绘
+                updateChildBounds();
+                backgroundPanel.repaint();
+            } catch (Exception e) {
+                logger.warn("背景图片加载失败: " + backgroundPath, e);
+                resetBackground();
+            }
+        } else {
+            resetBackground();
+        }
+    }
+
+    private void resetBackground() {
+        if (backgroundPanel != null) {
+            backgroundPanel.setVisible(false);
+            // FIX 刷新界面
+            layeredPane.repaint();
+        }
     }
 
     private void initSpecialSettingsComponents() {
         var biliSettings = new BiliSettings();
-        SpecialSettingsTabbedPane.addTab(biliSettings.getSettingsName(), biliSettings.getSettings());
+        var jScrollPane1 = new JScrollPane(biliSettings.getSettings());
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+        jScrollPane1.setBorder(null);
+        jScrollPane1.getViewport().setBorder(null);
+        SpecialSettingsTabbedPane.addTab(biliSettings.getSettingsName(), jScrollPane1);
         var fFmpegSettings = new FFmpegSettings();
-        SpecialSettingsTabbedPane.addTab(fFmpegSettings.getSettingsName(), fFmpegSettings.getSettings());
+        var jScrollPane2 = new JScrollPane(fFmpegSettings.getSettings());
+        jScrollPane2.setBorder(null);
+        jScrollPane2.getViewport().setBorder(null);
+        jScrollPane2.setOpaque(false);
+        jScrollPane2.getViewport().setOpaque(false);
+        SpecialSettingsTabbedPane.addTab(fFmpegSettings.getSettingsName(), jScrollPane2);
     }
 
     private void initTrayIcon() {
-
         if (SystemTray.isSupported()) {
             SystemTray.getSystemTray().remove(trayIcon);
         }
@@ -204,6 +326,8 @@ public class Downloader extends JFrame implements WindowListener {
         refreshMenuItem.setToolTipText(StringFormat.translate("download_menu_bar", "frame.refresh.tooltip"));
         refreshMenuItem.addActionListener(e -> {
             DataControl.load();
+            updateBackground();
+            updateChildBounds(); // FIX 使用统一方法
             ThemeChanger.easyChanger();
         });
         windowMenu.add(refreshMenuItem);
@@ -211,14 +335,10 @@ public class Downloader extends JFrame implements WindowListener {
         var updateFrameMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.update_frame"));
         updateFrameMenuItem.addActionListener(e -> {
             if (JOptionPane.showConfirmDialog(this, StringFormat.translate("download_menu_bar", "frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-                // 修改：停止旧定时器
                 if (clipboardTimer != null) {
                     clipboardTimer.stop();
                 }
                 this.dispose();
-                // 移除已无用的 FlavorListener 相关代码
-                // Toolkit.getDefaultToolkit().getSystemClipboard().removeFlavorListener(this.flavorListener);
-
                 DataControl.load();
                 ThemeChanger.easyChanger();
 
@@ -238,14 +358,19 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
+
+        settingsScrollPane = new JScrollPane(settingsPanel);
+        settingsScrollPane.setBorder(null);
+        settingsScrollPane.getViewport().setBorder(null);
+        settingsScrollPane.getViewport().setOpaque(false);
+        settingsScrollPane.setOpaque(false);
 
 
+        backgroundSelectionPanel = new PathSelectionPanel(StringFormat.translate("settings", "settings.personalized.background_path"), new File(DataControl.get("background", "")), SystemFileChooser.FILES_ONLY);
         pathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
         tempPathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "temp_path"), new File(DataControl.get("TempFilePath", DataControl.getDefaultTempPath().getAbsolutePath())));
 
         fontSizeSpinner = new JSpinner(new SpinnerNumberModel(DataControl.get("FontSize", 12).intValue(), 1, Integer.MAX_VALUE, 1));
-
     }
 
     private void initAboutComponents() {
@@ -261,10 +386,8 @@ public class Downloader extends JFrame implements WindowListener {
                 var textArea = new JTextArea("你真的要这么做吗!\n这样做真的很危险!\n不要继续呀!");
                 panel.add(textArea);
 
-
                 var learnMoreButton = new JButton(StringFormat.translate("common", "learn"));
                 learnMoreButton.addActionListener(_ -> {
-
                     JOptionPane.showMessageDialog(this, "作者/程序是软件的核心部分,去除会导致异常", "了解更多", JOptionPane.WARNING_MESSAGE);
                 });
 
@@ -299,25 +422,20 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void initTaskComponents() {
-        //初始化组件数据
         ThemeChanger.addInDynamicConverter(
                 this::updateDefaultButton
         );
 
-        //初始化组件
         createTaskButton.putClientProperty("FlatLaf.style", "font: $h2.font");
         allStartButton.putClientProperty("FlatLaf.style", "font: $h2.font");
         allPauseButton.putClientProperty("FlatLaf.style", "font: $h2.font");
 
-        //为组件添加图标
         IconControl.addInDynamicConverter(
                 () -> createTaskButton.setIcon(IconControl.getIcon("new", createTaskButton.getFont().getSize())),
                 () -> allStartButton.setIcon(IconControl.getIcon("start", allStartButton.getFont().getSize())),
                 () -> allPauseButton.setIcon(IconControl.getIcon("pause", allPauseButton.getFont().getSize()))
-
         );
 
-        //按钮监听
         createTaskButton.addActionListener(e -> {
             createDownloadTask(null);
         });
@@ -334,8 +452,6 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void createDownloadTask(String url) {
-        //创建下载任务
-
         if (this.createTaskPanel == null)
             this.createTaskPanel = new CreateTaskPanel();
         if (url != null) {
@@ -351,7 +467,6 @@ public class Downloader extends JFrame implements WindowListener {
                     """);
             panel.add(textArea);
 
-
             FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                     _ -> {},
                     FunctionDialog.DEFAULT_BUTTONS, 0,
@@ -364,13 +479,11 @@ public class Downloader extends JFrame implements WindowListener {
             var textArea = new JTextArea(StringFormat.translate("common", "support_text_area"));
             panel.add(textArea);
 
-
             FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                     _ -> {},
                     FunctionDialog.DEFAULT_BUTTONS, 0,
                     null, FunctionDialog.NORTH_DIRECTION_RIGHT);
         });
-
 
         FunctionDialog.showDialog(this, StringFormat.translate("task", "task.creat_task"), mainPanel,
                 result -> {
@@ -388,9 +501,7 @@ public class Downloader extends JFrame implements WindowListener {
                             TasksPanel.addTab(name, taskPanel);
                             TasksPanel.revalidate();
                             TasksPanel.repaint();
-
                         });
-
                     }
                     this.createTaskPanel = null;
                 }
@@ -399,24 +510,27 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void initSettingsComponents() {
-
-
-        //初始化组件数据
         ThemeChanger.addInDynamicConverter(
                 this::updateDefaultButton
         );
 
+        settingsScrollPane.getVerticalScrollBar().setUnitIncrement(10);
 
         isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
         isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
 
+        BackgroundModeComboBox.addItem("None");
+        BackgroundModeComboBox.addItem("Image");
+
+        BackgroundModeComboBox.setSelectedItem(DataControl.get("background_mode", "None"));
+        backgroundSelectionPanel.setPath(DataControl.get("background", ""));
+
         {
             String[] laugs = new String[]{
                     "简体中文(zh_cn)", "English(en_us)", "日本語(ja_JP)", "Русский язык(ru_RU)"
             };
-
 
             var lauguage = DataControl.get("laug", "zh_cn");
             for (String laug : laugs) {
@@ -427,8 +541,6 @@ public class Downloader extends JFrame implements WindowListener {
                     lauguage = laug;
                 }
             }
-
-
 
             laugComboBox.setSelectedItem(lauguage);
         }
@@ -445,14 +557,12 @@ public class Downloader extends JFrame implements WindowListener {
 
         themeComboBox.setSelectedItem(DataControl.get("theme", "Mac Dark"));
 
-        //获取所有字体
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         for (String font : fonts) {
             FontListComboBox.addItem(font);
         }
         FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
 
-        //为组件添加图标
         IconControl.addInDynamicConverter(
                 () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize()))
         );
@@ -461,13 +571,25 @@ public class Downloader extends JFrame implements WindowListener {
                 () -> saveButton.setIcon(IconControl.getIcon("save", saveButton.getFont().getSize()))
         );
 
-        //按钮监听
         tabbedPane1.addChangeListener(e -> updateDefaultButton());
-
         ThreadNumSlider.addChangeListener(e -> {
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
             ThreadNumLabel.setSize(ThreadNumLabel.getPreferredSize());
         });
+
+        BackgroundModeComboBox.addItemListener(e ->{
+            DataControl.putAndSave("background_mode", e.getItem().toString());
+            if (e.getItem().equals("Image")) {
+                backgroundSelectionPanel.setEnabled(true);
+            } else{
+                backgroundSelectionPanel.setEnabled(false);
+            }
+        });
+
+        backgroundSelectionPanel.setPathChangeListener(path -> {
+            DataControl.putAndSave("background", path);
+        });
+
         refreshButton.addActionListener(e -> {
             DataControl.load();
             isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
@@ -480,6 +602,9 @@ public class Downloader extends JFrame implements WindowListener {
             FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
             fontSizeSpinner.setValue(DataControl.get("FontSize", 12));
             themeComboBox.setSelectedItem(DataControl.get("theme", "Mac Dark"));
+
+            updateBackground();
+            updateChildBounds(); // FIX 使用统一方法
 
             ThemeChanger.easyChanger();
         });
@@ -525,15 +650,16 @@ public class Downloader extends JFrame implements WindowListener {
 
             DataControl.save();
             DataControl.load();
+
+            updateBackground();
+            updateChildBounds(); // FIX 使用统一方法
+
+
             JOptionPane.showMessageDialog(this, StringFormat.translate("settings", "settings.save.tip"));
             ThemeChanger.easyChanger();
         });
-
-
     }
 
-
-    // 修改：使用定时轮询取代 FlavorListener
     private void startClipboardListener() {
         clipboardTimer = new Timer(500, e -> {
             if (!DataControl.get("isUseClipBoardListener", false)) {
@@ -583,8 +709,6 @@ public class Downloader extends JFrame implements WindowListener {
         }else{
             createTaskPanel.setLink(url);
         }
-
-
     }
 
     private boolean isValidUrl(String url) {
@@ -672,30 +796,80 @@ public class Downloader extends JFrame implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
+        // FIX 移除了 backgroundTimer 的停止（已删除该字段）
         trayIcon.displayMessage("WDownLoader", "已最小化到系统托盘", TrayIcon.MessageType.INFO);
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
+        backgroundupdateTimer.stop();
     }
 
     @Override
     public void windowIconified(WindowEvent e) {
-
     }
 
     @Override
     public void windowDeiconified(WindowEvent e) {
-
     }
 
     @Override
     public void windowActivated(WindowEvent e) {
-
+        backgroundupdateTimer.start();
     }
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+        backgroundupdateTimer.stop();
+    }
 
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        super.setBounds(x, y, width, height);
+        // FIX 窗口尺寸变化时更新子组件
+        updateChildBounds();
+    }
+
+    private class BackgroundPanel extends JPanel {
+        private Image backgroundImage;
+        private Color backgroundColor;
+
+        public BackgroundPanel(Image backgroundImage) {
+            this.backgroundImage = backgroundImage;
+            setOpaque(false);
+            setLayout(new BorderLayout());
+        }
+
+        public void updateBackgroundImage(Image newImage) {
+            this.backgroundImage = newImage;
+            repaint();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (backgroundImage != null) {
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
+
+                int panelWidth = getWidth();
+                int panelHeight = getHeight();
+                int imgWidth = backgroundImage.getWidth(this);
+                int imgHeight = backgroundImage.getHeight(this);
+
+                if (imgWidth > 0 && imgHeight > 0) {
+                    double scale = Math.max((double) panelWidth / imgWidth,
+                            (double) panelHeight / imgHeight);
+                    int scaledWidth = (int) (imgWidth * scale);
+                    int scaledHeight = (int) (imgHeight * scale);
+
+                    int x = (panelWidth - scaledWidth) / 2;
+                    int y = (panelHeight - scaledHeight) / 2;
+
+                    g2d.drawImage(backgroundImage, x, y, scaledWidth, scaledHeight, this);
+                }
+                g2d.dispose();
+            }
+        }
     }
 }

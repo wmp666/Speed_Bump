@@ -39,6 +39,7 @@ public class FFmpegSettings extends BasicSpecialSettings {
     class FFmpegSpecialSettingsPanel extends SpecialSettingsPanel {
 
         public FFmpegSpecialSettingsPanel(JPanel mainPanel) {
+            super();
             this.setLayout(new BorderLayout());
             this.add(mainPanel, BorderLayout.CENTER);
 

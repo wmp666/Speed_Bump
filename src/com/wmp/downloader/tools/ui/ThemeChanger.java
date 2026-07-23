@@ -4,6 +4,7 @@ import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.formdev.flatlaf.ui.FlatTitlePane;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 
@@ -85,6 +86,12 @@ public class ThemeChanger {
                 }
             }
         }
+        //主体部分数据更新
+        UIManager.put("TabbedPane.tabsOpaque", false);
+        UIManager.put("TabbedPane.contentOpaque", false);
+        UIManager.put("ScrollBar.track", new Color(0, 0, 0, 0));
+        //UIManager.put("TitlePane.unifiedBackground", false);
+
 
         //组件更新
         runDynamicConverters();

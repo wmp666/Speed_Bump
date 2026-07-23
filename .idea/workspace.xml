@@ -9,8 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复剪切板监听问题">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复剪切板监听问题（仍有问题）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/common.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/common.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FFmpegSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/PathSelectionPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/PathSelectionPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/PathSelectionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/PathSelectionPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BasicSpecialSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BasicSpecialSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BiliSettings.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BiliSettings.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BiliSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/BiliSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +241,8 @@
     <MESSAGE value="将更多文本添加到翻译文件中" />
     <MESSAGE value="更新剪切板监听，增加独立的(视频+音频)合并功能&#10;将更多文本添加到翻译文件中" />
     <MESSAGE value="修复剪切板监听问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复剪切板监听问题" />
+    <MESSAGE value="修复剪切板监听问题（仍有问题）" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复剪切板监听问题（仍有问题）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

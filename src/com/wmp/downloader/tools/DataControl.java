@@ -118,7 +118,7 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.put("version", "0.0.8");
+        tempDataMap.put("version", "0.0.9");
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {
                 tempDataMap.put("theme_type", "light");
@@ -129,9 +129,10 @@ public class DataControl {
                 case "Mac Dark", "Dark", "Darcula" -> {
                     tempDataMap.put("theme_type", "dark");
                 }
-                case "Mac Light", "Light", "IntelliJ", "System", "Windows Classic", "Metal" -> {
+                case "Mac Light", "Light", "IntelliJ" -> {
                     tempDataMap.put("theme_type", "light");
                 }
+                default -> tempDataMap.put("theme_type", "light");
             }
         }else if(key.equals("laug")){
             // 1. 修改全局默认区域
