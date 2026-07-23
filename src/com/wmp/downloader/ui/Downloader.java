@@ -543,7 +543,7 @@ public class Downloader extends JFrame implements WindowListener {
             try {
                 if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
                     String content = (String) clipboard.getData(DataFlavor.stringFlavor);
-                    if (content != null && !content.equals(lastClipboardContent)) {
+                    if (!lastClipboardContent.strip().isEmpty() && content != null && !content.equals(lastClipboardContent)) {
                         logger.info("剪切板更新");
                         lastClipboardContent = content;
                         String url = extractUrl(content);
