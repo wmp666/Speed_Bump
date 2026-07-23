@@ -16,6 +16,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.net.URI;
@@ -29,6 +30,7 @@ public class CreateTaskPanel {
     private final Logger logger = Logger.getLogger(CreateTaskPanel.class);
 
     public JPanel MainPanel;
+    private JTabbedPane tabbedPane1;
     private JTextArea DownloaderURLTextArea;
     private PathSelectionPanel PathSelectionPanel;
     private JPanel linkInfoPanel;
@@ -37,16 +39,29 @@ public class CreateTaskPanel {
     private JSlider ThreadNumSlider;
     private JTextField ThreadNumLabel;
     private JProgressBar tipProgressBar;
+    private CreateVideoHandleTaskPanel CreateVideoHandleTaskPanel;
 
-
+    private ArrayList<DownloadTask> moreDownloadTasks = new ArrayList<>();
 
     public CreateTaskPanel() {
+        CreateVideoHandleTaskPanel.setDownloadTaskAddListener(downloadTask -> moreDownloadTasks.add(downloadTask));
+
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
 
         modeComboBox.addItem(StringFormat.translate("task", "task.create_task.choose_mode.multi_threaded"));
         modeComboBox.addItem(StringFormat.translate("task", "task.create_task.choose_mode.single_threaded"));
 
+        modeComboBox.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                String mode = e.getItem().toString();
+                if (mode.equals(StringFormat.translate("task", "task.create_task.choose_mode.multi_threaded"))) {
+                    ThreadNumSlider.setEnabled(true);
+                }else if (mode.equals(StringFormat.translate("task", "task.create_task.choose_mode.single_threaded"))) {
+                    ThreadNumSlider.setEnabled(false);
+                }
+            }
+        });
         //添加链接解析功能
         DownloaderURLTextArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -177,10 +192,17 @@ public class CreateTaskPanel {
             //else if (linkFileInfoPanel.getMode().equals("ED2k"))
                 //downloadTasks.add(new Ed2kDownloadTask(linkFileInfoPanel.getFileName(), linkFileInfoPanel.getFileSizeNum(), URI.create(linkFileInfoPanel.getUrl()), new File(path), threadNum, mode));
         }
+        downloadTasks.addAll(moreDownloadTasks);
         return downloadTasks;
     }
 
     public void setLink(String link) {
-        SwingUtilities.invokeLater(() -> DownloaderURLTextArea.setText(link));
+        SwingUtilities.invokeLater(() -> {
+            if (DownloaderURLTextArea.getText().strip().isEmpty()) {
+                DownloaderURLTextArea.setText(link);
+            } else {
+                DownloaderURLTextArea.append("\n" + link);
+            }
+        });
     }
 }

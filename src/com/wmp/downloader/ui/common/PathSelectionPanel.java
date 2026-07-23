@@ -55,7 +55,8 @@ public class PathSelectionPanel extends JPanel {
         FileTextField.putClientProperty("FlatLaf.style", "font: $Large.font");
 
         DownloadFileLocationLabel.setText(prompt);
-        FileTextField.setText(defaultFile.getAbsolutePath());
+        if (defaultFile != null)
+            FileTextField.setText(defaultFile.getAbsolutePath());
 
         this.add(PathSelectionPanel);
     }

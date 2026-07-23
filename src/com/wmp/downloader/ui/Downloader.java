@@ -87,7 +87,12 @@ public class Downloader extends JFrame implements WindowListener {
     private JComboBox<String> laugComboBox;
     private String lastClipboardContent = "";
 
-    private ActionListener actionListener = (ActionListener) e -> {
+    // 修改：使用定时器轮询代替 FlavorListener
+    private Timer clipboardTimer;
+
+    private CreateTaskPanel createTaskPanel = null;
+
+    private ActionListener actionListener = e -> {
         this.setVisible(true);
         this.setState(JFrame.NORMAL);
     };
@@ -206,7 +211,13 @@ public class Downloader extends JFrame implements WindowListener {
         var updateFrameMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.update_frame"));
         updateFrameMenuItem.addActionListener(e -> {
             if (JOptionPane.showConfirmDialog(this, StringFormat.translate("download_menu_bar", "frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+                // 修改：停止旧定时器
+                if (clipboardTimer != null) {
+                    clipboardTimer.stop();
+                }
                 this.dispose();
+                // 移除已无用的 FlavorListener 相关代码
+                // Toolkit.getDefaultToolkit().getSystemClipboard().removeFlavorListener(this.flavorListener);
 
                 DataControl.load();
                 ThemeChanger.easyChanger();
@@ -251,7 +262,7 @@ public class Downloader extends JFrame implements WindowListener {
                 panel.add(textArea);
 
 
-                var learnMoreButton = new JButton("了解更多");
+                var learnMoreButton = new JButton(StringFormat.translate("common", "learn"));
                 learnMoreButton.addActionListener(_ -> {
 
                     JOptionPane.showMessageDialog(this, "作者/程序是软件的核心部分,去除会导致异常", "了解更多", JOptionPane.WARNING_MESSAGE);
@@ -308,50 +319,7 @@ public class Downloader extends JFrame implements WindowListener {
 
         //按钮监听
         createTaskButton.addActionListener(e -> {
-            //创建下载任务
-
-            var createTaskPanel = new CreateTaskPanel();
-            var mainPanel = createTaskPanel.MainPanel;
-            var learnMoreButton = new JButton(StringFormat.translate("common", "learn"));
-            learnMoreButton.addActionListener(_ -> {
-                var panel = new JPanel();
-                var textArea = new JTextArea("""
-                        支持：哔哩哔哩，HTTP
-                        由于还处于开发阶段，哔哩哔哩链接解析出的视频只能使用单线程下载
-                        同时使用内置库合并文件速度很慢，建议使用本地的FFmpeg！
-                        
-                        """);
-                panel.add(textArea);
-
-
-                FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
-                        _ -> {},
-                        FunctionDialog.DEFAULT_BUTTONS, 0,
-                        null, FunctionDialog.NORTH_DIRECTION_RIGHT);
-            });
-
-            FunctionDialog.showDialog(this, StringFormat.translate("task", "task.creat_task"), mainPanel,
-                    result -> {
-                        if (result == FunctionDialog.RESULT_OK) {
-                            createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
-                                taskList.add(taskPanel);
-                                var name = taskPanel.getFileName();
-                                if (name != null) {
-                                    if (name.length() > 9) {
-                                        name = name.substring(0, 6) + "...";
-                                    }
-                                } else {
-                                    name = StringFormat.translate("task", "task.download_task.no_name_file");
-                                }
-                                TasksPanel.addTab(name, taskPanel);
-                                TasksPanel.revalidate();
-                                TasksPanel.repaint();
-                            });
-                        }
-                        this.pack();
-                    }
-                    , FunctionDialog.OK_CANCEL_BUTTONS, 0,
-                    new JButton[]{learnMoreButton}, FunctionDialog.NORTH_DIRECTION_RIGHT);
+            createDownloadTask(null);
         });
         allStartButton.addActionListener(e -> {
             for (var urlDownloadTask : taskList) {
@@ -363,6 +331,71 @@ public class Downloader extends JFrame implements WindowListener {
                 if (!urlDownloadTask.isFinally()) urlDownloadTask.stop();
             }
         });
+    }
+
+    private void createDownloadTask(String url) {
+        //创建下载任务
+
+        if (this.createTaskPanel == null)
+            this.createTaskPanel = new CreateTaskPanel();
+        if (url != null) {
+            createTaskPanel.setLink(url);
+        }
+        var mainPanel = createTaskPanel.MainPanel;
+        var learnMoreButton = new JButton(StringFormat.translate("common", "learn"));
+        learnMoreButton.addActionListener(_ -> {
+            var panel = new JPanel();
+            var textArea = new JTextArea("""
+                    由于还处于开发阶段，哔哩哔哩链接解析出的视频只能使用单线程下载
+                    同时使用内置库合并文件速度很慢，建议使用本地的FFmpeg！
+                    """);
+            panel.add(textArea);
+
+
+            FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
+                    _ -> {},
+                    FunctionDialog.DEFAULT_BUTTONS, 0,
+                    null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+        });
+
+        var SupportButton = new JButton(StringFormat.translate("common", "support"));
+        SupportButton.addActionListener(_ -> {
+            var panel = new JPanel();
+            var textArea = new JTextArea(StringFormat.translate("common", "support_text_area"));
+            panel.add(textArea);
+
+
+            FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
+                    _ -> {},
+                    FunctionDialog.DEFAULT_BUTTONS, 0,
+                    null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+        });
+
+
+        FunctionDialog.showDialog(this, StringFormat.translate("task", "task.creat_task"), mainPanel,
+                result -> {
+                    if (result == FunctionDialog.RESULT_OK) {
+                        createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
+                            taskList.add(taskPanel);
+                            var name = taskPanel.getFileName();
+                            if (name != null) {
+                                if (name.length() > 9) {
+                                    name = name.substring(0, 6) + "...";
+                                }
+                            } else {
+                                name = StringFormat.translate("task", "task.download_task.no_name_file");
+                            }
+                            TasksPanel.addTab(name, taskPanel);
+                            TasksPanel.revalidate();
+                            TasksPanel.repaint();
+
+                        });
+
+                    }
+                    this.createTaskPanel = null;
+                }
+                , FunctionDialog.OK_CANCEL_BUTTONS, 0,
+                new JButton[]{learnMoreButton, SupportButton}, FunctionDialog.NORTH_DIRECTION_RIGHT);
     }
 
     private void initSettingsComponents() {
@@ -500,29 +533,30 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
 
+    // 修改：使用定时轮询取代 FlavorListener
     private void startClipboardListener() {
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.addFlavorListener(e -> {
-            if (!DataControl.get("isUseClipBoardListener", false)) return;
+        clipboardTimer = new Timer(500, e -> {
+            if (!DataControl.get("isUseClipBoardListener", false)) {
+                return;
+            }
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             try {
                 if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
                     String content = (String) clipboard.getData(DataFlavor.stringFlavor);
                     if (content != null && !content.equals(lastClipboardContent)) {
+                        logger.info("剪切板更新");
                         lastClipboardContent = content;
                         String url = extractUrl(content);
-                        if (url != null) {
-                            Thread.ofVirtual().start(() -> {
-                                if (isValidUrl(url)) {
-                                    SwingUtilities.invokeLater(() -> showLinkDetectedDialog(url));
-                                }
-                            });
+                        if (url != null && isValidUrl(url)) {
+                            SwingUtilities.invokeLater(() -> showLinkDetectedDialog(url));
                         }
                     }
                 }
             } catch (Exception ex) {
-                logger.debug("剪切板监听异常", ex);
+                logger.debug("剪切板轮询异常", ex);
             }
         });
+        clipboardTimer.start();
     }
 
     private String extractUrl(String text) {
@@ -541,35 +575,16 @@ public class Downloader extends JFrame implements WindowListener {
 
     private void showLinkDetectedDialog(String url) {
         this.setVisible(true);
-        this.setState(JFrame.NORMAL);
         tabbedPane1.setSelectedIndex(0);
         this.toFront();
 
-        var createTaskPanel = new CreateTaskPanel();
-        createTaskPanel.setLink(url);
+        if (createTaskPanel == null) {
+            createDownloadTask(url);
+        }else{
+            createTaskPanel.setLink(url);
+        }
 
-        FunctionDialog.showDialog(this, "检测到下载链接", createTaskPanel.MainPanel,
-                result -> {
-                    if (result == FunctionDialog.RESULT_OK) {
-                        createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
-                            taskList.add(taskPanel);
-                            var name = taskPanel.getFileName();
-                            if (name != null) {
-                                if (name.length() > 9) {
-                                    name = name.substring(0, 6) + "...";
-                                }
-                            } else {
-                                name = StringFormat.translate("task", "task.download_task.no_name_file");
-                            }
-                            TasksPanel.addTab(name, taskPanel);
-                            TasksPanel.revalidate();
-                            TasksPanel.repaint();
-                        });
-                    }
-                    this.pack();
-                },
-                FunctionDialog.OK_CANCEL_BUTTONS, 0,
-                null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+
     }
 
     private boolean isValidUrl(String url) {

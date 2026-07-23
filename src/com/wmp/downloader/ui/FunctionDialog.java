@@ -84,7 +84,7 @@ public class FunctionDialog extends JDialog {
         // 添加上方按钮
         if (northButtons != null) {
             for (var jButton : northButtons) {
-                jButton.putClientProperty("FlatLaf.style", "font: $h2.font");
+                jButton.putClientProperty("FlatLaf.style", "font: $h3.font");
                 northButtonPanel.add(jButton);
             }
             switch (northButtonsDirection) {

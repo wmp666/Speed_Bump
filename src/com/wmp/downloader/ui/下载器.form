@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.wmp.downloader.ui.Downloader">
   <grid id="27dc6" binding="UIPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="550" height="620"/>
+      <xy x="20" y="20" width="550" height="624"/>
     </constraints>
     <properties/>
     <border type="none"/>

@@ -165,10 +165,11 @@ public class BiliFolderDownloadTask extends DownloadTask {
                     totalSpeed += dp.getSpeed();
                 }
                 int completed = completedCount.get();
-                infoLabel.setText(String.format("<html>%s | %s | %s</html>",
-                        StringFormat.translate("task", "task.download_task.progress_folder_downloaded") + DownloadProgress.formatSize(totalDownloaded),
-                        StringFormat.translate("task", "task.download_task.progress_folder_speed") + DownloadProgress.formatSize(totalSpeed) + "/s",
-                        String.format(StringFormat.translate("task", "task.download_task.progress_folder_files"), completed, biliUrls.length)));
+                infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.progress_folder"),
+                                        DownloadProgress.formatSize(totalDownloaded),
+                                        DownloadProgress.formatSize(totalSpeed),
+                                        completed, biliUrls.length));
+
             }
         });
         progressTimer.start();
@@ -292,10 +293,10 @@ public class BiliFolderDownloadTask extends DownloadTask {
                     infoLabel.setText(StringFormat.translate("task", "task.download_task.partial_failed"));
                     JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.partial_failed_detail"), StringFormat.translate("common", "error"), JOptionPane.WARNING_MESSAGE);
                 } else {
-                    infoLabel.setText(String.format("<html>%s | %s | %s</html>",
-                            StringFormat.translate("task", "task.download_task.all_complete"),
-                            DownloadProgress.formatSize(totalFileSize),
-                            String.format(StringFormat.translate("task", "task.download_task.progress_folder_files_count"), biliUrls.length)));
+                    infoLabel.setText(String.format("<html>%s</html>",
+                            String.format(StringFormat.translate("task", "task.download_task.progress_single"),
+                                    DownloadProgress.formatSize(totalFileSize),
+                                    DownloadProgress.formatSize(0))));
                 }
                 this.revalidate();
                 this.repaint();
@@ -306,7 +307,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
     public void doWhenStop() {
         pauseControllerList.forEach(PauseController::pause);
         if (progressTimer != null) progressTimer.stop();
-        infoLabel.setText("<html>" + StringFormat.translate("task", "task.download_task.paused") + "</html>");
+        infoLabel.setText(StringFormat.translate("task", "task.download_task.paused"));
     }
 
     @Override
