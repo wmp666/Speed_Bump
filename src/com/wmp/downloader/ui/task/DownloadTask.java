@@ -1,6 +1,7 @@
 package com.wmp.downloader.ui.task;
 
 import com.formdev.flatlaf.util.ColorFunctions;
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.IconControl;
@@ -41,6 +42,7 @@ public abstract class DownloadTask extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(mainPanel);
 
+        downloadControlButton.setToolTipText(StringFormat.translate("task", "task.download_task.download_control.start"));
         ProgressBarsScrollPane.getVerticalScrollBar().setUnitIncrement(10);
 
 
@@ -62,7 +64,7 @@ public abstract class DownloadTask extends JPanel {
                 fileName = fileName.substring(0, 5) + "...";
             }
         } else {
-            fileName = "无名称的文件";
+            fileName = StringFormat.translate("task", "task.download_task.no_name_file");
         }
         nameLabel.setText(fileName);
         nameLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
@@ -78,13 +80,13 @@ public abstract class DownloadTask extends JPanel {
         downloadControlButton.addActionListener(e -> {
             if (isStart) {
                 stop();
-                downloadControlButton.setToolTipText("继续");
+                downloadControlButton.setToolTipText(StringFormat.translate("task", "task.download_task.download_control.resume"));
             } else if (!isFinally) {
 
                 start();
 
 
-                downloadControlButton.setToolTipText("暂停");
+                downloadControlButton.setToolTipText(StringFormat.translate("task", "task.download_task.download_control.pause"));
             }
             for (var dynamicConverterTask : IconDynamicConverterTasks) {
                 dynamicConverterTask.task();
@@ -108,7 +110,7 @@ public abstract class DownloadTask extends JPanel {
         });
 
         exitButton.addActionListener(e -> {
-            if (JOptionPane.showConfirmDialog(this, "你确认要关闭？") == JOptionPane.YES_OPTION) {
+            if (JOptionPane.showConfirmDialog(this, StringFormat.translate("task", "task.download_task.close.confirm")) == JOptionPane.YES_OPTION) {
                 this.setVisible(false);
                 isCanExit = true;
 
@@ -138,10 +140,10 @@ public abstract class DownloadTask extends JPanel {
 
         } catch (Exception e) {
             logger.error("下载异常", e);
-            JOptionPane.showMessageDialog(this, "下载出现异常\ncatch a exception", "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_error.confirm") + "\ncatch a exception", StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
         }
 
-        downloadControlButton.setToolTipText("暂停");
+        downloadControlButton.setToolTipText(StringFormat.translate("task", "task.download_task.download_control.pause"));
         for (var dynamicConverterTask : IconDynamicConverterTasks) {
             dynamicConverterTask.task();
         }
@@ -153,7 +155,7 @@ public abstract class DownloadTask extends JPanel {
 
         doWhenStop();
 
-        downloadControlButton.setToolTipText("开始");
+        downloadControlButton.setToolTipText(StringFormat.translate("task", "task.download_task.download_control.start"));
         for (var dynamicConverterTask : IconDynamicConverterTasks) {
             dynamicConverterTask.task();
         }

@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui.task.http;
 
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
 import com.wmp.downloader.tools.download.URLDownloadTool.PauseController;
@@ -78,7 +79,7 @@ public class URLDownloadTask extends DownloadTask {
                     progressTimer = new Timer(1000, e -> {
                         if (isStart) {
                             downloadProgress.updateSpeed();
-                            infoLabel.setText(String.format("<html>已下载: %s | 速度: %s/s | 已合并: %s</html>",
+                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.progress_multi"),
                                     DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
                                     DownloadProgress.formatSize(downloadProgress.getSpeed()),
                                     DownloadProgress.formatSize(downloadProgress.getMergedBytes())));
@@ -101,8 +102,8 @@ public class URLDownloadTask extends DownloadTask {
                     if (hasError) {
                         logger.error("部分分段下载失败，请检查日志后重试。");
                         downloadControlButton.setEnabled(false);
-                        infoLabel.setText("多线程下载异常");
-                        JOptionPane.showMessageDialog(this, "下载失败\n多线程下载异常", "错误", JOptionPane.ERROR_MESSAGE);
+                        infoLabel.setText(StringFormat.translate("task", "task.download_task.multi_thread_error"));
+                        JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_multi"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                         stop();
 
                     }
@@ -117,7 +118,7 @@ public class URLDownloadTask extends DownloadTask {
                             threadProgressBarList.clear();
 
                             downloadProgress.resetMergedBytes();
-                            SwingUtilities.invokeLater(() -> infoLabel.setText("正在合并文件"));
+                            SwingUtilities.invokeLater(() -> infoLabel.setText(StringFormat.translate("task", "task.download_task.merging_file")));
                             JProgressBar margePartProgressBar = new JProgressBar(0, 100);
                             margePartProgressBar.setStringPainted(true);
                             ProgressBarsPanel.add(margePartProgressBar);
@@ -134,7 +135,7 @@ public class URLDownloadTask extends DownloadTask {
 
                             isFinally = true;
 
-                            infoLabel.setText(String.format("<html>下载完成 | 大小: %s</html>", DownloadProgress.formatSize(fileSize)));
+                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.download_complete"), DownloadProgress.formatSize(fileSize)));
 
                             this.revalidate();
                             this.repaint();
@@ -143,8 +144,8 @@ public class URLDownloadTask extends DownloadTask {
                             progressTimer.stop();
                             logger.error("合并文件发生异常", e);
                             downloadControlButton.setEnabled(false);
-                            infoLabel.setText("合并文件发生异常");
-                            JOptionPane.showMessageDialog(this, "下载失败\n合并文件发生异常", "错误", JOptionPane.ERROR_MESSAGE);
+                            infoLabel.setText(StringFormat.translate("task", "task.download_task.merge_error"));
+                            JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_merge"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                         }
                     }
                     if (hasError) {
@@ -156,7 +157,7 @@ public class URLDownloadTask extends DownloadTask {
                 } catch (Exception e) {
                     if (progressTimer != null) progressTimer.stop();
                     logger.error("多线程下载发生异常", e);
-                    JOptionPane.showMessageDialog(this, "下载失败\n多线程下载异常", "错误", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_multi"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                     isStart = false;
                 }
             });
@@ -168,7 +169,7 @@ public class URLDownloadTask extends DownloadTask {
                     progressTimer = new Timer(1000, e -> {
                         if (isStart) {
                             downloadProgress.updateSpeed();
-                            infoLabel.setText(String.format("<html>已下载: %s | 速度: %s/s | 已合并: %s</html>",
+                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.download_complete"),
                                     DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
                                     DownloadProgress.formatSize(downloadProgress.getSpeed()),
                                     DownloadProgress.formatSize(downloadProgress.getMergedBytes())));
@@ -183,12 +184,12 @@ public class URLDownloadTask extends DownloadTask {
                     progressTimer.stop();
                     if (!isSuccess) {
                         downloadControlButton.setEnabled(false);
-                        infoLabel.setText("单线程下载异常");
-                        JOptionPane.showMessageDialog(this, "下载失败\n单线程下载异常", "错误", JOptionPane.ERROR_MESSAGE);
+                        infoLabel.setText(StringFormat.translate("task", "task.download_task.download_failed_single"));
+                        JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_single"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                         stop();
                     } else {
                         isFinally = true;
-                        infoLabel.setText(String.format("<html>下载完成 | 大小: %s</html>", DownloadProgress.formatSize(fileSize)));
+                        infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.download_complete"), DownloadProgress.formatSize(fileSize)));
                     }
                     downloadControlButton.setEnabled(false);
                     //清除已有的进度条
@@ -200,7 +201,7 @@ public class URLDownloadTask extends DownloadTask {
                 } catch (Exception e) {
                     if (progressTimer != null) progressTimer.stop();
                     logger.error("单线程下载发生异常", e);
-                    JOptionPane.showMessageDialog(this, "下载失败\n单线程下载异常", "错误", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_single"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                     isStart = false;
                 }
             });
@@ -212,7 +213,7 @@ public class URLDownloadTask extends DownloadTask {
     public void doWhenStop() {
         pauseController.pause();
         progressTimer.stop();
-        infoLabel.setText("<html>已暂停</html>");
+        infoLabel.setText(StringFormat.translate("task", "task.download_task.paused"));
 
         if (progressTimer != null) progressTimer.stop();
 

@@ -5,6 +5,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import org.apache.log4j.Logger;
 import org.jsoup.Connection;
@@ -44,8 +45,8 @@ public class BiliScanCodePanel extends JPanel {
             try {
                 Desktop.getDesktop().browse(URI.create(loginURL));
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "无法打开浏览器", "错误", JOptionPane.ERROR_MESSAGE);
-                logger.error("无法打开浏览器", ex);
+                JOptionPane.showMessageDialog(null, StringFormat.translate("special_settings", "bili_special_settings.open_link.error"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                logger.error(StringFormat.translate("special_settings", "bili_special_settings.cannot_open_browser"), ex);
             }
         });
     }
@@ -60,23 +61,23 @@ public class BiliScanCodePanel extends JPanel {
             try {
                 String qrcodeKey = fetchQRCode();
                 if (qrcodeKey == null) {
-                    logger.error("获取二维码失败");
-                    JOptionPane.showMessageDialog(null, "获取二维码失败", "错误", JOptionPane.ERROR_MESSAGE);
+                    logger.error(StringFormat.translate("special_settings", "bili_special_settings.get_qr_code_failed"));
+                    JOptionPane.showMessageDialog(null, StringFormat.translate("special_settings", "bili_special_settings.get_qr_code.error"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 String sessData = pollLoginStatus(qrcodeKey);
                 if (sessData != null) {
-                    logger.info("登录成功！SESSDATA: " + sessData);
+                    logger.info(StringFormat.translate("special_settings", "bili_special_settings.login_success_sessdata") + sessData);
                     //保存
                     DataControl.putAndSave("bili_sessdata", sessData);
                     // 现在可以使用 cookies 调用其他 API
                 } else {
-                    logger.error("登录失败或超时");
+                    logger.error(StringFormat.translate("special_settings", "bili_special_settings.login_failed_or_timeout"));
                 }
             } catch (Exception e) {
-                logger.error("登录过程中发生错误", e);
-                JOptionPane.showMessageDialog(null, "登录过程中发生错误", "错误", JOptionPane.ERROR_MESSAGE);
+                logger.error(StringFormat.translate("special_settings", "bili_special_settings.login_process_error"), e);
+                JOptionPane.showMessageDialog(null, StringFormat.translate("special_settings", "bili_special_settings.login_process.error"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -100,9 +101,10 @@ public class BiliScanCodePanel extends JPanel {
             this.loginURL = data.getString("url");
 
             // 生成二维码图片
+            String statusMsg = StringFormat.translate("special_settings", "bili_special_settings.qr_code_generated");
             QRLabel.setIcon(new ImageIcon(generateQRCodeImage(this.loginURL, (int) (QRRefreshButton.getPreferredSize().getWidth() * 1.2))));
-            QRStatusLabel.setText("二维码已生成");
-            logger.info("二维码已生成");
+            QRStatusLabel.setText(statusMsg);
+            logger.info(statusMsg);
             return qrcodeKey;
         }
         return null;
@@ -123,7 +125,7 @@ public class BiliScanCodePanel extends JPanel {
     // 步骤2：轮询登录状态
     private String pollLoginStatus(String qrcodeKey) throws InterruptedException {
         String pollUrl = "https://passport.bilibili.com/x/passport-login/web/qrcode/poll?qrcode_key=" + qrcodeKey;
-        System.out.println("轮询登录状态URL: " + pollUrl);
+        System.out.println(StringFormat.translate("special_settings", "bili_special_settings.poll_login_status_url") + pollUrl);
 
         // 轮询最多 90 次，每次间隔 2 秒（共 180 秒）
         for (int i = 0; i < 90; i++) {
@@ -147,26 +149,31 @@ public class BiliScanCodePanel extends JPanel {
                 switch (code) {
                     case 0 -> {
                         // 登录成功
-                        QRStatusLabel.setText("登录成功");
+                        String successMsg = StringFormat.translate("special_settings", "bili_special_settings.login_success");
+                        QRStatusLabel.setText(successMsg);
                         return extractSESSDATA(cookies);
                     }
                     case 86038 -> {
-                        QRStatusLabel.setText("二维码已过期，请重新获取");
-                        logger.warn("二维码已过期，请重新获取");
+                        String expiredMsg = StringFormat.translate("special_settings", "bili_special_settings.qr_code_expired");
+                        QRStatusLabel.setText(expiredMsg);
+                        logger.warn(expiredMsg);
                         return null;
                     }
                     case 86090 -> {
-                        QRStatusLabel.setText("已扫码，请在手机上确认...");
-                        logger.info("已扫码，请在手机上确认...");
+                        String scannedMsg = StringFormat.translate("special_settings", "bili_special_settings.scanned_confirm");
+                        QRStatusLabel.setText(scannedMsg);
+                        logger.info(scannedMsg);
                     }
                     case 86101 -> {
-                        QRStatusLabel.setText("等待扫码...");
-                        logger.info("等待扫码...");
+                        String waitingMsg = StringFormat.translate("special_settings", "bili_special_settings.waiting_scan");
+                        QRStatusLabel.setText(waitingMsg);
+                        logger.info(waitingMsg);
                     }
 
                     default -> {
-                        QRStatusLabel.setText("未知状态码: " + code);
-                        logger.error("未知状态码: " + code);
+                        String unknownMsg = StringFormat.translate("special_settings", "bili_special_settings.unknown_status_code") + code;
+                        QRStatusLabel.setText(unknownMsg);
+                        logger.error(unknownMsg);
                     }
                 }
             } catch (IOException e) {

@@ -31,15 +31,15 @@
           <component id="b7934" class="javax.swing.JButton" binding="selectionAllbutton">
             <constraints/>
             <properties>
-              <label resource-bundle="com/wmp/downloader/laug/common" key="selection_all"/>
-              <text value="全选"/>
+              <label value="全选"/>
+              <text resource-bundle="com/wmp/downloader/laug/common" key="selection_all"/>
             </properties>
           </component>
           <component id="87650" class="javax.swing.JButton" binding="selectionNoneButton">
             <constraints/>
             <properties>
               <label resource-bundle="com/wmp/downloader/laug/common" key="selection_none"/>
-              <text value="全不选"/>
+              <text resource-bundle="com/wmp/downloader/laug/common" key="selection_none"/>
             </properties>
           </component>
           <component id="893d2" class="javax.swing.JButton" binding="selectionReverseButton">

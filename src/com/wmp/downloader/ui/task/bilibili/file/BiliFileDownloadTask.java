@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui.task.bilibili.file;
 
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.download.URLDownloadTool;
@@ -74,16 +75,16 @@ public class BiliFileDownloadTask extends DownloadTask {
                 boolean videoSuccess = false;
                 boolean audioSuccess = false;
 
-                SwingUtilities.invokeLater(() -> infoLabel.setText("正在下载视频..."));
+                SwingUtilities.invokeLater(() -> infoLabel.setText(StringFormat.translate("task", "task.download_task.downloading_video")));
                 try {
                     videoSuccess = downloadFile(videoUri, tempDir, "video.m4s", headers, fileSize[0]);
                     //if (!videoSuccess) return;
                 } catch (Exception e) {
-                    logger.error("视频下载失败", e);
-                    JOptionPane.showMessageDialog(this, "视频下载失败", "错误", JOptionPane.ERROR_MESSAGE);
+                    logger.error(StringFormat.translate("task", "task.download_task.video_download_failed"), e);
+                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.video_download_failed"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                 }
 
-                SwingUtilities.invokeLater(() -> infoLabel.setText("正在下载音频..."));
+                SwingUtilities.invokeLater(() -> infoLabel.setText(StringFormat.translate("task", "task.download_task.downloading_audio")));
                 downloadProgress.resetSpeed();
                 downloadProgress.resetMergedBytes();
                 ProgressBarsPanel.removeAll();
@@ -97,8 +98,8 @@ public class BiliFileDownloadTask extends DownloadTask {
                     audioSuccess = downloadFile(audioUri, tempDir, "audio.m4s", headers, fileSize[1]);
                     //if (!audioSuccess) return;
                 } catch (Exception e) {
-                    logger.error("音频下载失败", e);
-                    JOptionPane.showMessageDialog(this, "音频下载失败", "错误", JOptionPane.ERROR_MESSAGE);
+                    logger.error(StringFormat.translate("task", "task.download_task.audio_download_failed"), e);
+                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.audio_download_failed"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                 }
 
                 //合并文件
@@ -107,9 +108,9 @@ public class BiliFileDownloadTask extends DownloadTask {
                     var jProgressBar = new JProgressBar();
                     jProgressBar.setStringPainted(true);
                     ProgressBarsPanel.add(jProgressBar);
-                    infoLabel.setText("正在合并文件...");
+                    infoLabel.setText(StringFormat.translate("task", "task.download_task.merging_file"));
                     var isConverged = ConvergenceTool.converge(new File(tempDir, "video.m4s"), new File(tempDir, "audio.m4s"), new File(savePath, fileName), jProgressBar);
-                    infoLabel.setText("合并" + (isConverged? "成功": "失败"));
+                    infoLabel.setText(StringFormat.translate("task", isConverged ? "task.download_task.merge_success" : "task.download_task.merge_failed"));
 
                     //删除文件
                     DataControl.deleteFolder(tempDir, false);
@@ -118,13 +119,13 @@ public class BiliFileDownloadTask extends DownloadTask {
                 isFinally = true;
                 downloadControlButton.setEnabled(false);
                 ProgressBarsPanel.removeAll();
-                SwingUtilities.invokeLater(() -> infoLabel.setText(String.format("<html>下载完成 | 大小: %s</html>", DownloadProgress.formatSize(fileSize[0] + fileSize[1]))));
+                SwingUtilities.invokeLater(() -> infoLabel.setText(String.format("<html>%s</html>", StringFormat.translate("task", "task.download_task.download_complete"), DownloadProgress.formatSize(fileSize[0] + fileSize[1]))));
                 this.revalidate();
                 this.repaint();
             } catch (Exception e) {
                 if (progressTimer != null) progressTimer.stop();
-                logger.error("下载发生异常", e);
-                JOptionPane.showMessageDialog(this, "下载失败\n" + e.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                logger.error(StringFormat.translate("task", "task.download_task.download_exception"), e);
+                JOptionPane.showMessageDialog(this, String.format(StringFormat.translate("task", "task.download_task.download_failed_detail"), e.getMessage()), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
                 isStart = false;
             }
         });
@@ -138,9 +139,10 @@ public class BiliFileDownloadTask extends DownloadTask {
         progressTimer = new Timer(1000, e -> {
             if (isStart) {
                 downloadProgress.updateSpeed();
-                infoLabel.setText(String.format("<html>已下载: %s | 速度: %s/s</html>",
+                infoLabel.setText(String.format("<html>%s</html>",
+                        String.format(StringFormat.translate("task", "task.download_task.progress_single"),
                         DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
-                        DownloadProgress.formatSize(downloadProgress.getSpeed())));
+                        DownloadProgress.formatSize(downloadProgress.getSpeed()))));
             }
         });
         progressTimer.start();
@@ -155,8 +157,8 @@ public class BiliFileDownloadTask extends DownloadTask {
 
         if (!isSuccess) {
             downloadControlButton.setEnabled(false);
-            infoLabel.setText("单线程下载异常");
-            JOptionPane.showMessageDialog(this, "下载失败\n单线程下载异常", "错误", JOptionPane.ERROR_MESSAGE);
+            infoLabel.setText(StringFormat.translate("task", "task.download_task.single_thread_error"));
+            JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_single"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
             stop();
             return false;
         }
@@ -169,7 +171,7 @@ public class BiliFileDownloadTask extends DownloadTask {
     public void doWhenStop() {
         pauseController.pause();
         if (progressTimer != null) progressTimer.stop();
-        infoLabel.setText("<html>已暂停</html>");
+        infoLabel.setText("<html>" + StringFormat.translate("task", "task.download_task.paused") + "</html>");
     }
 
     @Override

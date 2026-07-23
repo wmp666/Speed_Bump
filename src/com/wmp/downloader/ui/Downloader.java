@@ -71,7 +71,7 @@ public class Downloader extends JFrame implements WindowListener {
             if (urlDownloadTask.isFinally()) {
                 if (!taskFinalyTipList.contains(urlDownloadTask)) {
                     taskFinalyTipList.add(urlDownloadTask);
-                    JOptionPane.showMessageDialog(this, "下载[" + urlDownloadTask.getName() + "]完成", "下载完成", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getName()), StringFormat.translate("task", "task.download_task.success.confirm.title"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -230,8 +230,8 @@ public class Downloader extends JFrame implements WindowListener {
         // TODO: place custom component creation code here
 
 
-        pathSelectionPanel = new PathSelectionPanel("保存位置：", DataControl.getDownloadFilePath());
-        tempPathSelectionPanel = new PathSelectionPanel("缓存数据位置：", new File(DataControl.get("TempFilePath", DataControl.getDefaultTempPath().getAbsolutePath())));
+        pathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
+        tempPathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "temp_path"), new File(DataControl.get("TempFilePath", DataControl.getDefaultTempPath().getAbsolutePath())));
 
         fontSizeSpinner = new JSpinner(new SpinnerNumberModel(DataControl.get("FontSize", 12).intValue(), 1, Integer.MAX_VALUE, 1));
 
@@ -257,14 +257,14 @@ public class Downloader extends JFrame implements WindowListener {
                     JOptionPane.showMessageDialog(this, "作者/程序是软件的核心部分,去除会导致异常", "了解更多", JOptionPane.WARNING_MESSAGE);
                 });
 
-                FunctionDialog.showDialog(this, "警告", panel,
+                FunctionDialog.showDialog(this, StringFormat.translate("common", "warn"), panel,
                         _ -> {
                             try {
                                 Thread.sleep(5000);
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }
-                            JOptionPane.showMessageDialog(this, "错误", "发生错误!软件开始修复修复问题...", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "发生错误!软件开始修复修复问题...", "错误", JOptionPane.ERROR_MESSAGE);
                             try {
                                 Thread.sleep(5000);
                             } catch (InterruptedException ex) {
@@ -341,7 +341,7 @@ public class Downloader extends JFrame implements WindowListener {
                                         name = name.substring(0, 6) + "...";
                                     }
                                 } else {
-                                    name = "未设置名称的文件";
+                                    name = StringFormat.translate("task", "task.download_task.no_name_file");
                                 }
                                 TasksPanel.addTab(name, taskPanel);
                                 TasksPanel.revalidate();
@@ -559,7 +559,7 @@ public class Downloader extends JFrame implements WindowListener {
                                     name = name.substring(0, 6) + "...";
                                 }
                             } else {
-                                name = "未设置名称的文件";
+                                name = StringFormat.translate("task", "task.download_task.no_name_file");
                             }
                             TasksPanel.addTab(name, taskPanel);
                             TasksPanel.revalidate();

@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui.task.createTask;
 
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
@@ -42,6 +43,10 @@ public class CreateTaskPanel {
     public CreateTaskPanel() {
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
+
+        modeComboBox.addItem(StringFormat.translate("task", "task.create_task.choose_mode.multi_threaded"));
+        modeComboBox.addItem(StringFormat.translate("task", "task.create_task.choose_mode.single_threaded"));
+
         //添加链接解析功能
         DownloaderURLTextArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -52,12 +57,11 @@ public class CreateTaskPanel {
             public void insertUpdate(DocumentEvent e) {
                 Thread.ofVirtual().start(() -> {
                     synchronized (this) {
-                        tipLabel.setText("正在解析链接...");
+                        tipLabel.setText(StringFormat.translate("task", "task.create_task.parsing_link"));
                         tipProgressBar.setVisible(true);
                         tipProgressBar.setIndeterminate(true);
 
 
-                        linkFileInfoPanels.clear();
                         linkFileInfoPanels.clear();
                         linkInfoPanel.removeAll();
                         parseLinks(DownloaderURLTextArea.getText().split("\n"));
@@ -72,10 +76,9 @@ public class CreateTaskPanel {
 
                 Thread.ofVirtual().start(() -> {
                     synchronized (this) {
-                        tipLabel.setText("正在解析链接...");
+                        tipLabel.setText(StringFormat.translate("task", "task.create_task.parsing_link"));
                         tipProgressBar.setVisible(true);
                         tipProgressBar.setIndeterminate(true);
-                        linkFileInfoPanels.clear();
                         linkFileInfoPanels.clear();
                         linkInfoPanel.removeAll();
                         parseLinks(DownloaderURLTextArea.getText().split("\n"));
@@ -91,7 +94,7 @@ public class CreateTaskPanel {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 if (e.getButton() == java.awt.event.MouseEvent.BUTTON3) {
                     JPopupMenu popupMenu = new JPopupMenu();
-                    JMenuItem pasteItem = new JMenuItem("粘贴");
+                    JMenuItem pasteItem = new JMenuItem(StringFormat.translate("task", "task.create_task.download_url.paste"));
                     pasteItem.addActionListener(_ -> DownloaderURLTextArea.paste());
                     popupMenu.add(pasteItem);
                     popupMenu.show(DownloaderURLTextArea, e.getX(), e.getY());
@@ -108,7 +111,7 @@ public class CreateTaskPanel {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        PathSelectionPanel = new PathSelectionPanel("保存路径", DataControl.getDownloadFilePath());
+        PathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
 
         linkInfoPanel = new JPanel(new GridLayout(0, 1, 5, 5));
     }
@@ -134,7 +137,7 @@ public class CreateTaskPanel {
             MainPanel.revalidate();
             MainPanel.repaint();
         } catch (Exception e) {
-            tipLabel.setText("存在错误链接");
+            tipLabel.setText(StringFormat.translate("task", "task.create_task.error_link"));
             tipProgressBar.setVisible(false);
             logger.error("Error parsing link: " + link, e);
         }
@@ -142,7 +145,7 @@ public class CreateTaskPanel {
 
     public ArrayList<DownloadTask> getDownloadTasks() {
         var path = PathSelectionPanel.getPath();
-        var mode = Objects.equals(modeComboBox.getSelectedItem(), "多线程") ? 0 : 1;
+        var mode = modeComboBox.getSelectedIndex();
         var threadNum = ThreadNumSlider.getValue();
 
         ArrayList<DownloadTask> downloadTasks = new ArrayList<>();

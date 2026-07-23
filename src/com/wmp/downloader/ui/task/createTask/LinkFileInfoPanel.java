@@ -1,6 +1,7 @@
 package com.wmp.downloader.ui.task.createTask;
 
 import com.formdev.flatlaf.util.ColorFunctions;
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.IconControl;
@@ -109,7 +110,7 @@ public abstract class LinkFileInfoPanel extends JPanel {
             @Override
             public void editButtonAction(ActionEvent e) {
                 var taskFileEditPanel = new TaskFileEditPanel(nameLabel.getText());
-                FunctionDialog.showDialog(this, "编辑任务信息", taskFileEditPanel,
+                FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
                         result -> {
                             if (result == FunctionDialog.RESULT_SAVE)
                                 nameLabel.setText(taskFileEditPanel.getFileName());

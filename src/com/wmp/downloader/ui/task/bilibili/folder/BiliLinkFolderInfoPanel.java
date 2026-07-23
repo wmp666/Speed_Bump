@@ -3,6 +3,7 @@ package com.wmp.downloader.ui.task.bilibili.folder;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wmp.downloader.exception.BiliDownloadTaskException;
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.BiliInfoFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.download.URLDownloadTool;
@@ -63,7 +64,7 @@ public class BiliLinkFolderInfoPanel extends LinkFolderInfoPanel {
     public void editButtonAction(ActionEvent e) {
         //更新所有数据
         var taskFileEditPanel = new BiliTaskFolderEditPanel(folderNameLabel.getText(), this.downloadInfos, this.videoQualityInfoIndex, this.audioQualityInfoIndex);
-        FunctionDialog.showDialog(this, "编辑任务信息", taskFileEditPanel,
+        FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
                 result -> {
                     if (result == FunctionDialog.RESULT_SAVE) {
                         folderNameLabel.setText(taskFileEditPanel.getFileName());

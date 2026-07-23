@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui.task.bilibili.folder;
 
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.download.URLDownloadTool;
@@ -79,7 +80,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
     }
 
     private String truncateTabTitle(String name) {
-        if (name == null) return "未知文件";
+        if (name == null) return StringFormat.translate("task", "task.download_task.unknown_file");
         if (name.length() > 10) {
             int dotIdx = name.lastIndexOf('.');
             if (dotIdx > 0 && name.length() - dotIdx <= 5) {
@@ -164,10 +165,10 @@ public class BiliFolderDownloadTask extends DownloadTask {
                     totalSpeed += dp.getSpeed();
                 }
                 int completed = completedCount.get();
-                infoLabel.setText(String.format("<html>已下载: %s | 速度: %s/s | 文件: %d/%d</html>",
-                        DownloadProgress.formatSize(totalDownloaded),
-                        DownloadProgress.formatSize(totalSpeed),
-                        completed, biliUrls.length));
+                infoLabel.setText(String.format("<html>%s | %s | %s</html>",
+                        StringFormat.translate("task", "task.download_task.progress_folder_downloaded") + DownloadProgress.formatSize(totalDownloaded),
+                        StringFormat.translate("task", "task.download_task.progress_folder_speed") + DownloadProgress.formatSize(totalSpeed) + "/s",
+                        String.format(StringFormat.translate("task", "task.download_task.progress_folder_files"), completed, biliUrls.length)));
             }
         });
         progressTimer.start();
@@ -187,7 +188,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
 
         try {
             if (videoUrl != null) {
-                SwingUtilities.invokeLater(() -> infoLabel.setText("正在下载视频: " + outputName));
+                SwingUtilities.invokeLater(() -> infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.downloading_video_file"), outputName)));
                 JProgressBar videoProgressBar = new JProgressBar(0, 100);
                 videoProgressBar.setStringPainted(true);
                 SwingUtilities.invokeLater(() -> progressPanel.add(videoProgressBar));
@@ -198,7 +199,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
                         videoSize, 10, videoProgressBar, pc, dp, headers);
 
                 if (!videoSuccess) {
-                    logger.error("视频下载失败: " + outputName);
+                    logger.error(StringFormat.translate("task", "task.download_task.video_download_failed") + ": " + outputName);
                     hasAnyError = true;
                     checkAllFilesCompleted();
                     return;
@@ -214,7 +215,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
             downloadProgressList.set(fileIndex, audioDp);
 
             if (audioUrl != null) {
-                SwingUtilities.invokeLater(() -> infoLabel.setText("正在下载音频: " + outputName));
+                SwingUtilities.invokeLater(() -> infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.downloading_audio_file"), outputName)));
                 JProgressBar audioProgressBar = new JProgressBar(0, 100);
                 audioProgressBar.setStringPainted(true);
                 SwingUtilities.invokeLater(() -> progressPanel.add(audioProgressBar));
@@ -225,7 +226,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
                         audioSize, 10, audioProgressBar, audioPc, audioDp, headers);
 
                 if (!audioSuccess) {
-                    logger.error("音频下载失败: " + outputName);
+                    logger.error(StringFormat.translate("task", "task.download_task.audio_download_failed") + ": " + outputName);
                     hasAnyError = true;
                     checkAllFilesCompleted();
                     return;
@@ -234,7 +235,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
 
             if (videoSuccess && audioSuccess) {
                 SwingUtilities.invokeLater(() -> {
-                    infoLabel.setText("正在合并: " + outputName);
+                    infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.merging"), outputName));
                     progressPanel.removeAll();
                     progressPanel.revalidate();
                     progressPanel.repaint();
@@ -254,12 +255,12 @@ public class BiliFolderDownloadTask extends DownloadTask {
                         mergeProgressBar);
 
                 if (!converged) {
-                    logger.error("合并失败: " + outputName);
+                    logger.error(StringFormat.translate("task", "task.download_task.merge_failed") + ": " + outputName);
                     hasAnyError = true;
                 }
 
                 SwingUtilities.invokeLater(() -> {
-                    infoLabel.setText("完成: " + outputName);
+                    infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.file_complete"), outputName));
                     progressPanel.removeAll();
                     progressPanel.revalidate();
                     progressPanel.repaint();
@@ -269,7 +270,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
             }
 
         } catch (Exception e) {
-            logger.error("文件[" + outputName + "]处理异常", e);
+            logger.error(String.format(StringFormat.translate("task", "task.download_task.download_exception") + "[%s]", outputName), e);
             hasAnyError = true;
         } finally {
             checkAllFilesCompleted();
@@ -288,11 +289,13 @@ public class BiliFolderDownloadTask extends DownloadTask {
                 DataControl.deleteFolder(tempDir, false);
 
                 if (hasAnyError) {
-                    infoLabel.setText("部分文件下载失败");
-                    JOptionPane.showMessageDialog(this, "部分文件下载失败，请检查日志后重试", "错误", JOptionPane.WARNING_MESSAGE);
+                    infoLabel.setText(StringFormat.translate("task", "task.download_task.partial_failed"));
+                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.partial_failed_detail"), StringFormat.translate("common", "error"), JOptionPane.WARNING_MESSAGE);
                 } else {
-                    infoLabel.setText(String.format("<html>全部下载完成 | 大小: %s | 文件数: %d</html>",
-                            DownloadProgress.formatSize(totalFileSize), biliUrls.length));
+                    infoLabel.setText(String.format("<html>%s | %s | %s</html>",
+                            StringFormat.translate("task", "task.download_task.all_complete"),
+                            DownloadProgress.formatSize(totalFileSize),
+                            String.format(StringFormat.translate("task", "task.download_task.progress_folder_files_count"), biliUrls.length)));
                 }
                 this.revalidate();
                 this.repaint();
@@ -303,7 +306,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
     public void doWhenStop() {
         pauseControllerList.forEach(PauseController::pause);
         if (progressTimer != null) progressTimer.stop();
-        infoLabel.setText("<html>已暂停</html>");
+        infoLabel.setText("<html>" + StringFormat.translate("task", "task.download_task.paused") + "</html>");
     }
 
     @Override

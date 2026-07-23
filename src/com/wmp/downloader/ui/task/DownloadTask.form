@@ -42,7 +42,7 @@
             </constraints>
             <properties>
               <text value=""/>
-              <toolTipText value="关闭"/>
+              <toolTipText resource-bundle="com/wmp/downloader/laug/task" key="task.download_task.close"/>
             </properties>
           </component>
           <component id="2a392" class="javax.swing.JButton" binding="openButton">
@@ -51,7 +51,7 @@
             </constraints>
             <properties>
               <text value=""/>
-              <toolTipText value="打开文件"/>
+              <toolTipText resource-bundle="com/wmp/downloader/laug/task" key="task.download_task.open_file"/>
             </properties>
           </component>
           <component id="56a89" class="javax.swing.JButton" binding="downloadControlButton">
@@ -68,7 +68,7 @@
             </constraints>
             <properties>
               <text value=""/>
-              <toolTipText value="打开文件夹"/>
+              <toolTipText resource-bundle="com/wmp/downloader/laug/task" key="task.download_task.open_folder"/>
             </properties>
           </component>
         </children>

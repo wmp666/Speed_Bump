@@ -1,6 +1,7 @@
 package com.wmp.downloader.ui.task.createTask;
 
 import com.formdev.flatlaf.util.ColorFunctions;
+import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.IconControl;
@@ -84,7 +85,7 @@ public abstract class LinkFolderInfoPanel extends JPanel {
 
         fileChooseButton.addActionListener(e -> {
             var linkFileChoosePanel = new LinkFileChoosePanel(fileNames, sizes, fileTypes, fileSelectionStatus);
-            FunctionDialog.showDialog(this, "选择文件", linkFileChoosePanel,
+            FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.choose_file"), linkFileChoosePanel,
                     result -> {
                         if (result == FunctionDialog.RESULT_OK) {
                             sizeLabel.setText(formatFileSize(linkFileChoosePanel.getSelectedFilesSize()));
@@ -194,7 +195,7 @@ public abstract class LinkFolderInfoPanel extends JPanel {
             @Override
             public void editButtonAction(ActionEvent e) {
                 var taskFileEditPanel = new TaskFileEditPanel(folderNameLabel.getText());
-                FunctionDialog.showDialog(this, "编辑任务信息", taskFileEditPanel,
+                FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
                         result -> {
                             if (result == FunctionDialog.RESULT_SAVE)
                                 folderNameLabel.setText(taskFileEditPanel.getFileName());
