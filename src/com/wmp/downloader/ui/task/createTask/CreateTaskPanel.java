@@ -163,11 +163,11 @@ public class CreateTaskPanel {
 
         ArrayList<DownloadTask> downloadTasks = new ArrayList<>();
         for (var panel : linkFileInfoPanels) {
-            if (panel instanceof LinkFileInfoPanel linkFileInfoPanel1){
-                if (linkFileInfoPanel1.getMode().equals("HTTP"))
-                    downloadTasks.add(new URLDownloadTask(linkFileInfoPanel1.getFileName(), linkFileInfoPanel1.getFileSizeNum(), URI.create(linkFileInfoPanel1.getUrl()), new File(path), threadNum, mode));
-                else if (linkFileInfoPanel1.getMode().equals("bilibili")) {
-                    if (linkFileInfoPanel1 instanceof BiliLinkFileInfoPanel biliLinkFileInfoPanel)
+            if (panel instanceof LinkFileInfoPanel linkFileInfoPanel){
+                if (linkFileInfoPanel.getMode().equals("HTTP") || linkFileInfoPanel.getMode().equals("douyin"))
+                    downloadTasks.add(new URLDownloadTask(linkFileInfoPanel.getFileName(), linkFileInfoPanel.getFileSizeNum(), URI.create(linkFileInfoPanel.getUrl()), new File(path), threadNum, mode));
+                else if (linkFileInfoPanel.getMode().equals("bilibili")) {
+                    if (linkFileInfoPanel instanceof BiliLinkFileInfoPanel biliLinkFileInfoPanel)
                         downloadTasks.add(new BiliFileDownloadTask(
                                 biliLinkFileInfoPanel.getFileName(), biliLinkFileInfoPanel.getFileSize(),
                                 biliLinkFileInfoPanel.getBiliDownloadUrl(), new File(path), threadNum, mode));

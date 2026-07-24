@@ -2,6 +2,7 @@ package com.wmp.downloader.ui.task;
 
 import com.wmp.downloader.ui.task.bilibili.BiliParser;
 import com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel;
+import com.wmp.downloader.ui.task.douyin.DouyinParser;
 import com.wmp.downloader.ui.task.ed2k.Ed2kParser;
 import com.wmp.downloader.ui.task.http.HTTPParser;
 
@@ -14,9 +15,16 @@ public abstract class Parser {
     public static Parser getParser(String url) {
         if(url.startsWith("BV") || url.contains("bilibili.com")){
             return new BiliParser();
-        }else if (url.strip().startsWith("http")) {
+        } else if (url.strip().contains("v.douyin.com")) {
+            return new DouyinParser();
+        }
+        else if (url.strip().startsWith("http")) {
             return new HTTPParser();
         }
+
+
+
+
         //else if(url.strip().startsWith("ed2k://")){
         //    return new Ed2kParser();
         //}

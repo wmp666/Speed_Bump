@@ -190,8 +190,8 @@ public abstract class LinkFolderInfoPanel extends JPanel {
 
     public abstract void selectionFileListChangeAction();
 
-    public static LinkFolderInfoPanel createBasicLinkFileInfoPanel(String folderName, long size, String mode, String url, String[] fileTypes) {
-        return new LinkFolderInfoPanel(folderName, new long[]{size}, mode, new String[]{url}, new String[]{folderName}, fileTypes) {
+    public static LinkFolderInfoPanel createBasicLinkFolderInfoPanel(String folderName, long[] size, String mode, String[] url, String[] fileNames, String[] fileTypes) {
+        return new LinkFolderInfoPanel(folderName, size, mode, url, fileNames, fileTypes) {
             @Override
             public void editButtonAction(ActionEvent e) {
                 var taskFileEditPanel = new TaskFileEditPanel(folderNameLabel.getText());
