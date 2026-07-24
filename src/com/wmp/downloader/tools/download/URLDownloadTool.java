@@ -1,6 +1,7 @@
 package com.wmp.downloader.tools.download;
 
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -73,6 +74,7 @@ public class URLDownloadTool {
 
         logger.info("下载的链接：" + uri);
 
+        fileName = StringFormat.sanitizeName(fileName);
         File partsFile = new File(DataControl.getTempPath(), fileName);
         var files = partsFile.listFiles(File::isFile);
         if (files != null && files.length != numThreads) {
@@ -137,7 +139,7 @@ public class URLDownloadTool {
 
         logger.info("下载的链接：" + uri);
 
-        File destFile = new File(destPath, fileName);
+        File destFile = StringFormat.sanitizeFile(new File(destPath, fileName));
         long downloaded = destFile.exists() && (destFile.length() < fileSize) ? destFile.length() : 0;
 
         URL url = uri.toURL();
@@ -226,6 +228,7 @@ public class URLDownloadTool {
         logger.info("下载的链接：" + uri);
 
         if (!destPath.exists()){
+            destPath = StringFormat.sanitizeFile(destPath);
             destPath.getParentFile().mkdirs();
             destPath.createNewFile();
         }
@@ -259,7 +262,7 @@ public class URLDownloadTool {
     public static void mergeParts(File destPath, String fileName, int partCount, long fileSize, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws IOException {
         logger.info("合并的路径：" + destPath);
 
-        File destFile = new File(destPath, fileName);
+        File destFile = StringFormat.sanitizeFile(new File(destPath, fileName));
         if (destFile.exists()) {
             destFile.delete();
         } else {

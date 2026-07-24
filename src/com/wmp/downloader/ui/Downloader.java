@@ -1,7 +1,7 @@
 package com.wmp.downloader.ui;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.ui.IconControl;

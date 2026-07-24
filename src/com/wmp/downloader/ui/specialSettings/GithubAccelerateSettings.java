@@ -1,6 +1,6 @@
 package com.wmp.downloader.ui.specialSettings;
 
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.settings.BasicSpecialSettings;
 

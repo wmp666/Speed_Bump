@@ -1,21 +1,14 @@
 package com.wmp.downloader.ui.task.bilibili.folder;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.wmp.downloader.exception.BiliDownloadTaskException;
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.BiliInfoFormat;
-import com.wmp.downloader.tools.DataControl;
-import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.ui.task.bilibili.info.BiliDownloadInfo;
 import com.wmp.downloader.ui.task.createTask.LinkFolderInfoPanel;
 import org.apache.log4j.Logger;
 
 import java.awt.event.ActionEvent;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

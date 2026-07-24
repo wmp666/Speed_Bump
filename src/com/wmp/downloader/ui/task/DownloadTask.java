@@ -1,7 +1,7 @@
 package com.wmp.downloader.ui.task;
 
 import com.formdev.flatlaf.util.ColorFunctions;
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.IconControl;
@@ -94,7 +94,7 @@ public abstract class DownloadTask extends JPanel {
         });
         openButton.addActionListener(e -> {
             try {
-                Desktop.getDesktop().open(new File(savePath, this.fileName));
+                Desktop.getDesktop().open(StringFormat.sanitizeFile(new File(savePath, this.fileName)));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Failed to open file", "Error", JOptionPane.ERROR_MESSAGE);
                 logger.error("Failed to open file", ex);
@@ -102,7 +102,7 @@ public abstract class DownloadTask extends JPanel {
         });
         openInFolderButton.addActionListener(e -> {
             try {
-                Desktop.getDesktop().open(savePath);
+                Desktop.getDesktop().open(StringFormat.sanitizeFile(savePath));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Failed to open folder", "Error", JOptionPane.ERROR_MESSAGE);
                 logger.error("Failed to open folder", ex);

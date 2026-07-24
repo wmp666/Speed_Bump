@@ -9,11 +9,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加Alpha通道">
-      <change afterPath="$PROJECT_DIR$/icon.ico" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新图标">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/icon/dark/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icon/dark/icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/icon/light/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icon/light/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/StringFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/StringFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/BiliSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/BiliSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/FFmpegSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/FFmpegSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/GithubAccelerateSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/GithubAccelerateSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/DownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/file/BiliFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/file/BiliFileDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/file/BiliLinkFileInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/file/BiliLinkFileInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliFolderDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliLinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliLinkFolderInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateVideoHandleTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateVideoHandleTaskPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFileInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFileInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFolderInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/videohandle/CreateMergeTaskFuncPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/videohandle/CreateMergeTaskFuncPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/http/URLDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/http/URLDownloadTask.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,8 +208,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-63390994e64e-intellij.indexing.shared.core-IU-262.8665.258" />
-        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.8665.258" />
+        <option value="bundled-jdk-30f59d01ecdd-63390994e64e-intellij.indexing.shared.core-IU-262.8665.337" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.8665.337" />
       </set>
     </attachedChunks>
   </component>
@@ -237,7 +255,8 @@
     <MESSAGE value="增加背景设置" />
     <MESSAGE value="增加Github加速" />
     <MESSAGE value="增加Alpha通道" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加Alpha通道" />
+    <MESSAGE value="更新图标" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新图标" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -246,6 +265,11 @@
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliFolderDownloadTask.java</url>
           <line>187</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java</url>
+          <line>141</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.util.MissingResourceException" package="java.util" />

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +17,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class DataControl {
     public static final ArrayList<String> themeList = new ArrayList<>();
@@ -48,6 +50,7 @@ public class DataControl {
         errorAppender.setThreshold(Level.ERROR);
         rootLogger.addAppender(errorAppender);
     }
+    
 
     public static void load() {
 
@@ -119,7 +122,7 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.put("version", "0.1.0");
+        tempDataMap.put("version", "0.1.1");
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {
                 tempDataMap.put("theme_type", "light");
@@ -171,18 +174,22 @@ public class DataControl {
     }
 
     public static void deleteFolder(File file, boolean isShowMessage){
-        try (var paths = Files.walk(Paths.get(file.toURI()))) {
-            paths.sorted((o1, o2) -> -o1.compareTo(o2))
-                    .forEach(path -> {
-                        try {
-                            Files.deleteIfExists(path);
-                        } catch (IOException ex) {
-                            logger.error("删除失败", ex);
-                        }
-                    });
-            if (isShowMessage)
-                JOptionPane.showMessageDialog(null, "删除成功");
-        } catch (IOException e) {
+        try {
+            try (var paths = Files.walk(Paths.get(StringFormat.sanitizeFile(file).toURI()))) {
+                paths.sorted((o1, o2) -> -o1.compareTo(o2))
+                        .forEach(path -> {
+                            try {
+                                Files.deleteIfExists(path);
+                            } catch (IOException ex) {
+                                logger.error("删除失败", ex);
+                            }
+                        });
+                if (isShowMessage)
+                    JOptionPane.showMessageDialog(null, "删除成功");
+            } catch (Exception e) {
+                logger.error("删除文件夹失败", e);
+            }
+        } catch (Exception e) {
             logger.error("删除文件夹失败", e);
         }
     }

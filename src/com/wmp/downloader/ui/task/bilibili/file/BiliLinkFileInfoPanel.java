@@ -1,7 +1,7 @@
 package com.wmp.downloader.ui.task.bilibili.file;
 
 import com.wmp.downloader.exception.BiliDownloadTaskException;
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.ui.task.bilibili.info.BiliDownloadInfo;
 import com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel;

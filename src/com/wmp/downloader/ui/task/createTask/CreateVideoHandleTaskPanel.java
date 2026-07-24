@@ -1,14 +1,12 @@
 package com.wmp.downloader.ui.task.createTask;
 
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.createTask.videohandle.CreateMergeTaskFuncPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
 
 public class CreateVideoHandleTaskPanel extends JPanel {
     private JPanel mainPanel;

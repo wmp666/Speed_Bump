@@ -1,6 +1,6 @@
 package com.wmp.downloader.ui.task.http;
 
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
 import com.wmp.downloader.tools.download.URLDownloadTool.PauseController;

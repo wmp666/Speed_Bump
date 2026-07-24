@@ -1,6 +1,7 @@
 package com.wmp.downloader.tools.download;
 
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import org.apache.log4j.Logger;
 import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -27,6 +28,7 @@ public class ConvergenceTool {
      */
     public static boolean converge(File videoPath, File audioPath, File destPath, JProgressBar progressBar) {
 
+        destPath = StringFormat.sanitizeFile(destPath);
         if (!destPath.exists()){
             try {
                 destPath.getParentFile().mkdirs();
@@ -39,7 +41,7 @@ public class ConvergenceTool {
         logger.info("保存路径：" + destPath.getAbsolutePath());
 
         if (DataControl.get("ffmpeg_isUseLocal", false)){
-            return LocalConvergeWithStreamCopy(DataControl.get("ffmpeg_appPath", ""), videoPath, audioPath, destPath, progressBar);
+            return LocalConvergeWithStreamCopy(DataControl.get("ffmpeg_appPath", ""), StringFormat.sanitizeFile(videoPath), StringFormat.sanitizeFile(audioPath), StringFormat.sanitizeFile(destPath), progressBar);
         }
 
         // ---------- 初始化进度条（建议调用前设置好 min/max） ----------

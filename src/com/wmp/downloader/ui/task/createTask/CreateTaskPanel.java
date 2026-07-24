@@ -1,6 +1,6 @@
 package com.wmp.downloader.ui.task.createTask;
 
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
@@ -21,8 +21,6 @@ import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class CreateTaskPanel {
     private final ArrayList<JPanel> linkFileInfoPanels = new ArrayList<>();

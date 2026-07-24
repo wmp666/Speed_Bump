@@ -1,6 +1,6 @@
 package com.wmp.downloader.ui.task.bilibili.file;
 
-import com.wmp.downloader.laug.StringFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.download.URLDownloadTool;
