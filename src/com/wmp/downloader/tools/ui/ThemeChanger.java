@@ -90,6 +90,7 @@ public class ThemeChanger {
         UIManager.put("TabbedPane.tabsOpaque", false);
         UIManager.put("TabbedPane.contentOpaque", false);
         UIManager.put("ScrollBar.track", new Color(0, 0, 0, 0));
+        //UIManager.put("TitlePane.unifiedBackground", true);
         //UIManager.put("TitlePane.unifiedBackground", false);
 
 

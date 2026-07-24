@@ -104,6 +104,7 @@ public class DataControl {
     public static void putAndSave(String key, Object value){
         put(key, value);
         save();
+        load();
     }
 
     /**
@@ -118,7 +119,7 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.put("version", "0.0.9");
+        tempDataMap.put("version", "0.1.0");
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {
                 tempDataMap.put("theme_type", "light");

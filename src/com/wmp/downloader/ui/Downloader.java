@@ -8,7 +8,9 @@ import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.settings.BasicSpecialSettings;
-import com.wmp.downloader.ui.settings.BiliSettings;
+import com.wmp.downloader.ui.specialSettings.BiliSettings;
+import com.wmp.downloader.ui.specialSettings.FFmpegSettings;
+import com.wmp.downloader.ui.specialSettings.GithubAccelerateSettings;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
@@ -28,6 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -255,20 +258,18 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void initSpecialSettingsComponents() {
-        var biliSettings = new BiliSettings();
-        var jScrollPane1 = new JScrollPane(biliSettings.getSettings());
-        jScrollPane1.setOpaque(false);
-        jScrollPane1.getViewport().setOpaque(false);
-        jScrollPane1.setBorder(null);
-        jScrollPane1.getViewport().setBorder(null);
-        SpecialSettingsTabbedPane.addTab(biliSettings.getSettingsName(), jScrollPane1);
-        var fFmpegSettings = new FFmpegSettings();
-        var jScrollPane2 = new JScrollPane(fFmpegSettings.getSettings());
-        jScrollPane2.setBorder(null);
-        jScrollPane2.getViewport().setBorder(null);
-        jScrollPane2.setOpaque(false);
-        jScrollPane2.getViewport().setOpaque(false);
-        SpecialSettingsTabbedPane.addTab(fFmpegSettings.getSettingsName(), jScrollPane2);
+        BasicSpecialSettings[] basicSpecialSettings = new BasicSpecialSettings[]{
+                new BiliSettings(), new FFmpegSettings(), new GithubAccelerateSettings()
+        };
+
+        for (var specialSettings : basicSpecialSettings) {
+            var jScrollPane1 = new JScrollPane(specialSettings.getSettings());
+            jScrollPane1.setOpaque(false);
+            jScrollPane1.getViewport().setOpaque(false);
+            jScrollPane1.setBorder(null);
+            jScrollPane1.getViewport().setBorder(null);
+            SpecialSettingsTabbedPane.addTab(specialSettings.getSettingsName(), jScrollPane1);
+        }
     }
 
     private void initTrayIcon() {
@@ -525,7 +526,11 @@ public class Downloader extends JFrame implements WindowListener {
         BackgroundModeComboBox.addItem("Image");
 
         BackgroundModeComboBox.setSelectedItem(DataControl.get("background_mode", "None"));
+
         backgroundSelectionPanel.setPath(DataControl.get("background", ""));
+        if(Objects.equals(BackgroundModeComboBox.getSelectedItem(), "Image")){
+            backgroundSelectionPanel.setVisible(true);
+        } else backgroundSelectionPanel.setEnabled(false);
 
         {
             String[] laugs = new String[]{
@@ -580,9 +585,9 @@ public class Downloader extends JFrame implements WindowListener {
         BackgroundModeComboBox.addItemListener(e ->{
             DataControl.putAndSave("background_mode", e.getItem().toString());
             if (e.getItem().equals("Image")) {
-                backgroundSelectionPanel.setEnabled(true);
+                backgroundSelectionPanel.setVisible(true);
             } else{
-                backgroundSelectionPanel.setEnabled(false);
+                backgroundSelectionPanel.setVisible(false);
             }
         });
 

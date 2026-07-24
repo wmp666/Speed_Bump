@@ -1,10 +1,11 @@
-package com.wmp.downloader.ui.settings;
+package com.wmp.downloader.ui.specialSettings;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.laug.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.ui.FunctionDialog;
+import com.wmp.downloader.ui.settings.BasicSpecialSettings;
 import com.wmp.downloader.ui.settings.bilibili.BiliScanCodePanel;
 import org.apache.log4j.Logger;
 import org.jsoup.Connection;
@@ -12,7 +13,6 @@ import org.jsoup.Jsoup;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
 import java.io.IOException;
 
 public class BiliSettings extends BasicSpecialSettings {

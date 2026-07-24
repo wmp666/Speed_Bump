@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui.task.http;
 
+import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.task.Parser;
 import com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel;
 import org.apache.log4j.Logger;
@@ -18,6 +19,9 @@ public class HTTPParser extends Parser {
     private static final Logger logger = Logger.getLogger(HTTPParser.class);
     @Override
     public LinkFileInfoPanel parse(String link) {
+        if (DataControl.get("is_use_github_accelerate", false) && link.contains("github.com")){
+            link = "https://" + DataControl.get("github_accelerate_link", "gh-proxy.org") + "/" + link;
+        }
         try {
             var fileName = extractFileName(link);
             var fileSizeNum = getFileSize(link);
