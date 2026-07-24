@@ -43,26 +43,28 @@ public class DouyinParser extends Parser {
                     );
                 }
                 else if (jsonObject.getString("type").equals("图集")) {
-                    long[] sizes = new long[jsonObject.getJSONArray("urls").size()];
+                    long[] sizes = new long[jsonObject.getJSONArray("images").size()];
                     for (int i = 0; i < sizes.length; i++) {
-                        sizes[i] = URLDownloadTool.getFileSize(jsonObject.getJSONArray("urls").getString(i));
+                        sizes[i] = URLDownloadTool.getFileSize(jsonObject.getJSONArray("images").getString(i));
                     }
-                    String[] urls = new String[jsonObject.getJSONArray("urls").size()];
-                    for (int i = 0; i < urls.length; i++) {
-                        urls[i] = jsonObject.getJSONArray("images").getString(i);
+                    String[] images = new String[jsonObject.getJSONArray("images").size()];
+                    for (int i = 0; i < images.length; i++) {
+                        images[i] = jsonObject.getJSONArray("images").getString(i);
                     }
-                    String[] names = new String[jsonObject.getJSONArray("urls").size()];
+                    String[] names = new String[jsonObject.getJSONArray("images").size()];
                     String[] types = new String[names.length];
                     for (int i = 0; i < names.length; i++) {
-                        names[i] = URLDownloadTool.extractFileName(urls[i]);
-                        var tempStringList = names[i].split("\\.");
+                        String imageName = URLDownloadTool.extractFileName(images[i]);
+
+                        var tempStringList = imageName.split("\\.");
                         types[i] = tempStringList.length <= 1?"None":tempStringList[tempStringList.length - 1];
+                        names[i] = i + "." + types[i];
                     }
                     return LinkFolderInfoPanel.createBasicLinkFolderInfoPanel(
                             jsonObject.getString("title"),
                             sizes,
                             "douyin",
-                            urls,
+                            images,
                             names,
                             types
                     );

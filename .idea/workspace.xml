@@ -9,18 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加对系统禁用符号的保底机制">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/TikTokDownloader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/douyin/DouyinParser.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加抖音视频下载">
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/douyin/DouyinImageDownloadTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/common.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/common.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/LinkFolderInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/http/HTTPParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/http/HTTPParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/douyin/DouyinParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/douyin/DouyinParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +110,7 @@
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\task\bilibili\folder" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.wmp.downloader.ui.task.douyin" />
       <recent name="com.wmp.downloader.ui.task.bilibili" />
       <recent name="com.wmp.downloader.ui.task.createTask" />
     </key>
@@ -247,14 +243,15 @@
     <MESSAGE value="增加Alpha通道" />
     <MESSAGE value="更新图标" />
     <MESSAGE value="增加对系统禁用符号的保底机制" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加对系统禁用符号的保底机制" />
+    <MESSAGE value="增加抖音视频下载" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加抖音视频下载" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliFolderDownloadTask.java</url>
-          <line>187</line>
+          <line>189</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

@@ -9,6 +9,7 @@ import com.wmp.downloader.ui.task.bilibili.file.BiliFileDownloadTask;
 import com.wmp.downloader.ui.task.bilibili.folder.BiliFolderDownloadTask;
 import com.wmp.downloader.ui.task.bilibili.file.BiliLinkFileInfoPanel;
 import com.wmp.downloader.ui.task.bilibili.folder.BiliLinkFolderInfoPanel;
+import com.wmp.downloader.ui.task.douyin.DouyinImageDownloadTask;
 import com.wmp.downloader.ui.task.http.URLDownloadTask;
 import org.apache.log4j.Logger;
 
@@ -173,7 +174,15 @@ public class CreateTaskPanel {
                                 biliLinkFileInfoPanel.getBiliDownloadUrl(), new File(path), threadNum, mode));
                 }
             } else if (panel instanceof LinkFolderInfoPanel linkFolderPanel) {
-                if (linkFolderPanel instanceof BiliLinkFolderInfoPanel biliLinkFolderInfoPanel)
+                if (linkFolderPanel.getMode().equals("douyin"))
+                    downloadTasks.add(new DouyinImageDownloadTask(
+                            linkFolderPanel.getFolderName(),
+                            linkFolderPanel.getSelectedUrls(),
+                            linkFolderPanel.getFileNames(),
+                            linkFolderPanel.getFileSizes(),
+                            new File(path), threadNum, mode
+                    ));
+                else if (linkFolderPanel instanceof BiliLinkFolderInfoPanel biliLinkFolderInfoPanel)
                     downloadTasks.add(new BiliFolderDownloadTask(
                             biliLinkFolderInfoPanel.getFolderName(),
                             biliLinkFolderInfoPanel.getSelectedBiliTotalSize(),
