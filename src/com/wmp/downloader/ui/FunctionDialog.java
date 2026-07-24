@@ -101,7 +101,7 @@ public class FunctionDialog extends JDialog {
 
         // 添加功能面板
         if (functionPanel != null) {
-            UIPanel.add(functionPanel, BorderLayout.CENTER);
+            taskPanel.add(functionPanel, BorderLayout.CENTER);
         }
         // 添加按钮
         if (buttons.length == 0) {

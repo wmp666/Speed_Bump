@@ -55,6 +55,8 @@ public class BiliSettings extends BasicSpecialSettings {
             //初始化图标
             IconControl.addInDynamicConverter(() -> {
                 loginIconLabel.setIcon(IconControl.getIcon("login", loginPanel.getPreferredSize().height));
+                ScanCodeButton.setIcon(IconControl.getIcon("scan", ScanCodeButton.getFont().getSize()));
+                loggedOutButton.setIcon(IconControl.getIcon("power_switch", loggedOutButton.getFont().getSize()));
             });
 
             //初始化监听

@@ -10,7 +10,11 @@ public class StringFormat {
 
     public static String translate(String rootLocal, String key) {
         ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_PREFIX + rootLocal, Locale.getDefault());
-        return bundle.getString(key);
+        try {
+            return bundle.getString(key);
+        } catch (Exception e) {
+            return String.format("%s: %s", rootLocal, key);
+        }
     }
 
     /**

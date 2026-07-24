@@ -2,6 +2,7 @@ package com.wmp.downloader.ui.specialSettings;
 
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.settings.BasicSpecialSettings;
 import org.apache.log4j.Logger;
@@ -42,6 +43,11 @@ public class FFmpegSettings extends BasicSpecialSettings {
             super();
             this.setLayout(new BorderLayout());
             this.add(mainPanel, BorderLayout.CENTER);
+
+            //初始化图标
+            IconControl.addInDynamicConverter(() -> {
+                downloadButton.setIcon(IconControl.getIcon("link", downloadButton.getFont().getSize()));
+            });
 
             isUseLocalFFmpegCheckBox.setSelected(DataControl.get("ffmpeg_isUseLocal", false));
             localFFmpegPathPanel.setPath(DataControl.get("ffmpeg_appPath", ""));
