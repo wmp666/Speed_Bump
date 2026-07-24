@@ -26,6 +26,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.ArrayList;
@@ -92,6 +93,7 @@ public class Downloader extends JFrame implements WindowListener {
     private PathSelectionPanel backgroundSelectionPanel;
     private JComboBox<String> BackgroundModeComboBox;
     private JScrollPane settingsScrollPane;
+    private JSlider alphaSlider;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -106,7 +108,7 @@ public class Downloader extends JFrame implements WindowListener {
     private JLayeredPane layeredPane = new JLayeredPane();
     private BackgroundPanel backgroundPanel;
     private JPanel backgroundPreviewPanel;
-    private Timer backgroundupdateTimer = new Timer(500, e->{
+    private Timer backgroundupdateTimer = new Timer(100, e->{
         updateBackground();
         updateChildBounds(); // FIX 使用统一方法
     });
@@ -521,6 +523,7 @@ public class Downloader extends JFrame implements WindowListener {
         isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
+        alphaSlider.setValue((int) (DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue()*100));
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -530,7 +533,7 @@ public class Downloader extends JFrame implements WindowListener {
         backgroundSelectionPanel.setPath(DataControl.get("background", ""));
         if(Objects.equals(BackgroundModeComboBox.getSelectedItem(), "Image")){
             backgroundSelectionPanel.setVisible(true);
-        } else backgroundSelectionPanel.setEnabled(false);
+        } else backgroundSelectionPanel.setVisible(false);
 
         {
             String[] laugs = new String[]{
@@ -590,10 +593,14 @@ public class Downloader extends JFrame implements WindowListener {
                 backgroundSelectionPanel.setVisible(false);
             }
         });
-
         backgroundSelectionPanel.setPathChangeListener(path -> {
             DataControl.putAndSave("background", path);
         });
+        alphaSlider.addChangeListener(e -> {
+            DataControl.putAndSave("background_alpha", (float) alphaSlider.getValue()/100.0f);
+        });
+
+
 
         refreshButton.addActionListener(e -> {
             DataControl.load();
@@ -835,7 +842,7 @@ public class Downloader extends JFrame implements WindowListener {
         updateChildBounds();
     }
 
-    private class BackgroundPanel extends JPanel {
+    private static class BackgroundPanel extends JPanel {
         private Image backgroundImage;
         private Color backgroundColor;
 
@@ -855,7 +862,7 @@ public class Downloader extends JFrame implements WindowListener {
             super.paintComponent(g);
             if (backgroundImage != null) {
                 Graphics2D g2d = (Graphics2D) g.create();
-                g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
+                g2d.setComposite(AlphaComposite.SrcOver.derive(DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue()));
 
                 int panelWidth = getWidth();
                 int panelHeight = getHeight();
