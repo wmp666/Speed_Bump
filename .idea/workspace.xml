@@ -9,22 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加README.md, LICENSE">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/video/VideoInfoReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/videohandle/ResetVideoInfoPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/videohandle/ResetVideoInfoPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/douyin/DouyinVideoDownloadTask.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加视频转码，转格式">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/task.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/task.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/video_handle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/video_handle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateVideoHandleTaskPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateVideoHandleTaskPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_en_US.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_ja_JP.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings_ru_RU.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/video_handle_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/video_handle_ru_RU.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateVideoHandleTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateVideoHandleTaskPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/http/URLDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/http/URLDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/videohandle/ResetVideoInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/videohandle/ResetVideoInfoPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +249,8 @@
     <MESSAGE value="修复抖音图集下载问题..." />
     <MESSAGE value="增加更多图标" />
     <MESSAGE value="增加README.md, LICENSE" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加README.md, LICENSE" />
+    <MESSAGE value="增加视频转码，转格式" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加视频转码，转格式" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

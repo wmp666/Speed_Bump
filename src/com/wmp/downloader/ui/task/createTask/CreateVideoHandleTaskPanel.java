@@ -28,7 +28,7 @@ public class CreateVideoHandleTaskPanel extends JPanel {
 
         this.createMergeTaskButton.addActionListener(e -> {
             var createMergeTaskFuncPanel = new CreateMergeTaskFuncPanel();
-            FunctionDialog.showDialog(this, StringFormat.translate("video_handle", "video_handle.create_merge_task"),
+            FunctionDialog.showDialog(this, StringFormat.translate("video_handle", "video_handle.reset_video_info"),
                     createMergeTaskFuncPanel, result -> {
                         if (result == FunctionDialog.RESULT_OK) {
                             downloadTaskAddListener.AddDownloadTask(createMergeTaskFuncPanel.createDownloadTask());

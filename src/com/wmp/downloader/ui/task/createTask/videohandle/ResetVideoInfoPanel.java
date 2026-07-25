@@ -1,6 +1,7 @@
 package com.wmp.downloader.ui.task.createTask.videohandle;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
+import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
@@ -60,7 +61,7 @@ public class ResetVideoInfoPanel extends JPanel {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         FilePathSelectionPanel = new PathSelectionPanel(StringFormat.translate("video_handle", "video_handle.reset_video_info.file_selection"), null, SystemFileChooser.FILES_ONLY);
-        outPathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), null, SystemFileChooser.DIRECTORIES_ONLY);
+        outPathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath(), SystemFileChooser.DIRECTORIES_ONLY);
     }
 
     public DownloadTask createDownloadTask() {
