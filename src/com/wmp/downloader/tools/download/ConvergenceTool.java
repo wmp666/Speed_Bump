@@ -10,7 +10,11 @@ import org.bytedeco.javacv.FFmpegLogCallback;
 import org.bytedeco.javacv.Frame;
 
 import javax.swing.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ConvergenceTool {
@@ -116,6 +120,8 @@ public class ConvergenceTool {
                 });
             }
 
+            recorder.close();
+
             return true;
 
         } catch (Exception e) {
@@ -214,33 +220,202 @@ public class ConvergenceTool {
         return exeName;
     }
 
+    /**
+     * 将视频转码/重新封装为指定的容器格式与编码
+     *
+     * @param inputFile       源视频文件
+     * @param outputFile      目标输出文件（路径及文件名）
+     * @param containerFormat 目标容器格式扩展名，如 "mp4", "mkv"
+     * @param videoCodec      视频编码器名称（FFmpeg 编码器名），如 "libx264"
+     * @param audioCodec      音频编码器名称（FFmpeg 编码器名），如 "aac"
+     * @param progressBar     进度条（可为 null）
+     * @return 成功返回 true
+     */
+    public static boolean transcodeVideo(File inputFile, File outputFile,
+                                         String containerFormat, String videoCodec, String audioCodec,
+                                         JProgressBar progressBar) {
+        outputFile = StringFormat.sanitizeFile(outputFile);
+        if (!outputFile.exists()) {
+            try {
+                outputFile.getParentFile().mkdirs();
+                outputFile.createNewFile();
+            } catch (Exception e) {
+                logger.error("创建输出文件失败: ", e);
+                return false;
+            }
+        }else{
+            if (JOptionPane.showConfirmDialog(null,
+                    StringFormat.translate("task", "task.download_task.delete_exists_file.confirm")) == JOptionPane.YES_OPTION) {
+                DataControl.deleteFolder(outputFile, true);
+            }else return false;
 
-    static void main() {
-        var progressBar = new JProgressBar();
-        progressBar.setMinimum(0);
-        progressBar.setMaximum(100);
-        progressBar.setValue(0);
-        progressBar.setStringPainted(true);
+        }
 
-        JFrame frame = new JFrame();
-        frame.add(progressBar);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        // 优先使用本地 FFmpeg（速度快，支持更多编码）
+        if (DataControl.get("ffmpeg_isUseLocal", false)) {
+            return localTranscode(DataControl.get("ffmpeg_appPath", ""),
+                    inputFile, outputFile, containerFormat, videoCodec, audioCodec, progressBar);
+        }
 
+        // 否则使用 JavaCV 内置方式（不依赖外部 FFmpeg）
+        return javacvTranscode(inputFile, outputFile, containerFormat, videoCodec, audioCodec, progressBar);
+    }
 
-        //扫描器
-        var scanner = new Scanner(System.in);
+    private static boolean localTranscode(String appPath, File inputFile, File outputFile,
+                                          String containerFormat, String videoCodec, String audioCodec,
+                                          JProgressBar progressBar) {
+        try {
+            FFmpegLogCallback.set();
+            if (progressBar != null) {
+                progressBar.setIndeterminate(true);
+                progressBar.setString("正在转码...");
+            }
 
-        System.out.print("请输入视频文件路径：");
-        var videoPath = new File(scanner.next());
-        System.out.print("\n请输入音频文件路径：");
-        var audioPath = new File(scanner.next());
-        System.out.print("\n请输入目标输出文件路径：");
-        var destPath = new File(scanner.next());
-        System.out.println();
-        IO.readln("" + ConvergenceTool.converge(videoPath,
-                audioPath,
-                destPath, progressBar));
+            String ffmpeg = findFFmpeg(appPath);
+            File ffmpegFile = new File(ffmpeg);
+            File ffmpegDir = ffmpegFile.getParentFile();
+
+            ProcessBuilder pb = new ProcessBuilder(
+                    ffmpeg, "-y",
+                    "-i", inputFile.getAbsolutePath(),
+                    "-c:v", videoCodec,
+                    "-c:a", audioCodec,
+                    "-f", containerFormat,
+                    outputFile.getAbsolutePath()
+            );
+
+            // 1. 设置工作目录为 ffmpeg 所在目录（防止相对路径依赖）
+            if (ffmpegDir != null && ffmpegDir.exists()) {
+                pb.directory(ffmpegDir);
+            }
+
+            // 2. 将 ffmpeg 目录添加到 PATH 环境变量（确保依赖库可找到）
+            Map<String, String> env = pb.environment();
+            String pathEnv = env.get("PATH");
+            if (ffmpegDir != null) {
+                String ffmpegPath = ffmpegDir.getAbsolutePath();
+                if (pathEnv == null) {
+                    env.put("PATH", ffmpegPath);
+                } else if (!pathEnv.contains(ffmpegPath)) {
+                    env.put("PATH", ffmpegPath + File.pathSeparator + pathEnv);
+                }
+            }
+
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+
+            // 3. 【关键】必须消费输出流，否则进程阻塞
+            Thread.ofVirtual().start(() -> {
+                try (BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        // 可在此解析进度（例如提取时间），目前仅调试日志
+                        logger.debug("FFmpeg output: " + line);
+                    }
+                } catch (Exception e) {
+                    logger.error("日志输出异常：", e);
+                }
+            });
+
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                logger.error("FFmpeg 转码失败，退出码: " + exitCode);
+                JOptionPane.showMessageDialog(null, "FFmpeg 转码失败，退出码: " + exitCode);
+
+                // 可进一步读取错误信息（但已合并到同一流）
+                return false;
+            }
+
+            if (progressBar != null) {
+                SwingUtilities.invokeLater(() -> {
+                    progressBar.setIndeterminate(false);
+                    progressBar.setValue(100);
+                    progressBar.setString("100%");
+                });
+            }
+            return true;
+        } catch (Exception e) {
+            logger.error("本地 FFmpeg 转码异常: ", e);
+            JOptionPane.showMessageDialog(null, "本地 FFmpeg 转码异常: " + e);
+            return false;
+        }
+    }
+
+    private static boolean javacvTranscode(File inputFile, File outputFile,
+                                           String containerFormat, String videoCodec, String audioCodec,
+                                           JProgressBar progressBar) {
+        if (progressBar != null) {
+            progressBar.setMinimum(0);
+            progressBar.setMaximum(100);
+            progressBar.setValue(0);
+            progressBar.setStringPainted(true);
+        }
+
+        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(inputFile)) {
+            FFmpegLogCallback.set();
+            grabber.start();
+
+            int totalFrames = grabber.getLengthInFrames();
+            FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(outputFile,
+                    grabber.getImageWidth(), grabber.getImageHeight());
+            recorder.setFormat(containerFormat);
+            recorder.setVideoCodec(findVideoCodecID(videoCodec));
+            recorder.setAudioCodec(findAudioCodecID(audioCodec));
+            recorder.setFrameRate(grabber.getFrameRate());
+            recorder.setVideoBitrate(grabber.getVideoBitrate());
+            recorder.setSampleRate(grabber.getSampleRate());
+            recorder.setAudioChannels(grabber.getAudioChannels());
+            recorder.start();
+
+            Frame frame;
+            int count = 0;
+            int lastProgress = -1;
+            while ((frame = grabber.grab()) != null) {
+                recorder.record(frame);
+                count++;
+                if (totalFrames > 0 && progressBar != null) {
+                    int progress = Math.clamp((int) ((double) count / totalFrames * 100), 0, 99);
+                    if (progress != lastProgress) {
+                        lastProgress = progress;
+                        final int p = progress;
+                        SwingUtilities.invokeLater(() -> {
+                            progressBar.setValue(p);
+                            progressBar.setString(p + "%");
+                        });
+                    }
+                }
+            }
+            recorder.close();
+            if (progressBar != null) {
+                SwingUtilities.invokeLater(() -> {
+                    progressBar.setValue(100);
+                    progressBar.setString("100%");
+                });
+            }
+            return true;
+        } catch (Exception e) {
+            logger.error("JavaCV 转码失败: ", e);
+            return false;
+        }
+    }
+
+    // 将编码器名称转为 FFmpeg 内部 ID（用于 JavaCV）
+    private static int findVideoCodecID(String codecName) {
+        switch (codecName) {
+            case "libx264": return avcodec.AV_CODEC_ID_H264;
+            case "libx265": return avcodec.AV_CODEC_ID_HEVC;
+            default: return avcodec.AV_CODEC_ID_H264;
+        }
+    }
+
+    private static int findAudioCodecID(String codecName) {
+        switch (codecName) {
+            case "aac": return avcodec.AV_CODEC_ID_AAC;
+            case "libmp3lame": return avcodec.AV_CODEC_ID_MP3;
+            case "flac": return avcodec.AV_CODEC_ID_FLAC;
+            case "pcm_s16le": return avcodec.AV_CODEC_ID_PCM_S16LE;
+            default: return avcodec.AV_CODEC_ID_AAC;
+        }
     }
 }

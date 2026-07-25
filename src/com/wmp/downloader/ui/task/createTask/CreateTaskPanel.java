@@ -10,6 +10,7 @@ import com.wmp.downloader.ui.task.bilibili.folder.BiliFolderDownloadTask;
 import com.wmp.downloader.ui.task.bilibili.file.BiliLinkFileInfoPanel;
 import com.wmp.downloader.ui.task.bilibili.folder.BiliLinkFolderInfoPanel;
 import com.wmp.downloader.ui.task.douyin.DouyinImageDownloadTask;
+import com.wmp.downloader.ui.task.douyin.DouyinVideoDownloadTask;
 import com.wmp.downloader.ui.task.http.URLDownloadTask;
 import org.apache.log4j.Logger;
 
@@ -165,14 +166,20 @@ public class CreateTaskPanel {
         ArrayList<DownloadTask> downloadTasks = new ArrayList<>();
         for (var panel : linkFileInfoPanels) {
             if (panel instanceof LinkFileInfoPanel linkFileInfoPanel){
-                if (linkFileInfoPanel.getMode().equals("HTTP") || linkFileInfoPanel.getMode().equals("douyin"))
+                if (linkFileInfoPanel.getMode().equals("HTTP"))
                     downloadTasks.add(new URLDownloadTask(linkFileInfoPanel.getFileName(), linkFileInfoPanel.getFileSizeNum(), URI.create(linkFileInfoPanel.getUrl()), new File(path), threadNum, mode));
                 else if (linkFileInfoPanel.getMode().equals("bilibili")) {
                     if (linkFileInfoPanel instanceof BiliLinkFileInfoPanel biliLinkFileInfoPanel)
                         downloadTasks.add(new BiliFileDownloadTask(
                                 biliLinkFileInfoPanel.getFileName(), biliLinkFileInfoPanel.getFileSize(),
                                 biliLinkFileInfoPanel.getBiliDownloadUrl(), new File(path), threadNum, mode));
-                }
+                }else if (linkFileInfoPanel.getMode().equals("douyin"))
+                    downloadTasks.add(new DouyinVideoDownloadTask(
+                            linkFileInfoPanel.getFileName(),
+                            linkFileInfoPanel.getFileSizeNum(),
+                            URI.create(linkFileInfoPanel.getUrl()),
+                            new File(path), threadNum, mode
+                    ));
             } else if (panel instanceof LinkFolderInfoPanel linkFolderPanel) {
                 if (linkFolderPanel.getMode().equals("douyin"))
                     downloadTasks.add(new DouyinImageDownloadTask(

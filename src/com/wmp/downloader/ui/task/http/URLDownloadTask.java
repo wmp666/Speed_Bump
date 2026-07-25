@@ -169,10 +169,9 @@ public class URLDownloadTask extends DownloadTask {
                     progressTimer = new Timer(1000, e -> {
                         if (isStart) {
                             downloadProgress.updateSpeed();
-                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.download_complete"),
+                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.progress_single"),
                                     DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
-                                    DownloadProgress.formatSize(downloadProgress.getSpeed()),
-                                    DownloadProgress.formatSize(downloadProgress.getMergedBytes())));
+                                    DownloadProgress.formatSize(downloadProgress.getSpeed())));
                         }
                     });
                     progressTimer.start();

@@ -4,6 +4,7 @@ import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.createTask.videohandle.CreateMergeTaskFuncPanel;
+import com.wmp.downloader.ui.task.createTask.videohandle.ResetVideoInfoPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.awt.*;
 public class CreateVideoHandleTaskPanel extends JPanel {
     private JPanel mainPanel;
     private JButton createMergeTaskButton;
+    private JButton resetVideoInfoButton;
 
     private DownloadTaskAddListener downloadTaskAddListener = e -> {
 
@@ -30,6 +32,16 @@ public class CreateVideoHandleTaskPanel extends JPanel {
                     createMergeTaskFuncPanel, result -> {
                         if (result == FunctionDialog.RESULT_OK) {
                             downloadTaskAddListener.AddDownloadTask(createMergeTaskFuncPanel.createDownloadTask());
+                        }
+                    }, FunctionDialog.OK_CANCEL_BUTTONS, 0, null, 0);
+
+        });
+        this.resetVideoInfoButton.addActionListener(e -> {
+            var resetVideoInfoPanel = new ResetVideoInfoPanel();
+            FunctionDialog.showDialog(this, StringFormat.translate("video_handle", "video_handle.create_merge_task"),
+                    resetVideoInfoPanel, result -> {
+                        if (result == FunctionDialog.RESULT_OK) {
+                            downloadTaskAddListener.AddDownloadTask(resetVideoInfoPanel.createDownloadTask());
                         }
                     }, FunctionDialog.OK_CANCEL_BUTTONS, 0, null, 0);
 

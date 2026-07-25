@@ -159,7 +159,7 @@ public class URLDownloadTool {
                 progressBar.setValue(100);
                 return true;
             }else if (destFile.length() > fileSize){
-                var i = JOptionPane.showConfirmDialog(null, "本地文件似乎存在问题（大于要下载的文件大小），继续下载将删除文件，是否继续下载？");
+                var i = JOptionPane.showConfirmDialog(null, StringFormat.translate("task", "task.download_task.delete_err_file.confirm"));
                 if (i == JOptionPane.YES_OPTION){
                     destFile.delete();
                 }else{

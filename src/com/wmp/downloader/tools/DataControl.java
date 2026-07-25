@@ -173,6 +173,27 @@ public class DataControl {
         return file;
     }
 
+    public static void delete(File file, boolean isShowMessage){
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                deleteFolder(file, isShowMessage);
+            } else {
+                deleteFile(file, isShowMessage);
+            }
+        }
+    }
+
+    public static void delete(File file){
+        delete(file, true);
+    }
+
+    public static void deleteFile(File file, boolean isShowMessage){
+        if (file.exists()) {
+            file.delete();
+            if (isShowMessage)
+                JOptionPane.showMessageDialog(null, "删除成功");
+        }
+    }
     public static void deleteFolder(File file, boolean isShowMessage){
         try {
             try (var paths = Files.walk(Paths.get(StringFormat.sanitizeFile(file).toURI()))) {
