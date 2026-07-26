@@ -21,6 +21,7 @@ public class FFmpegSettings extends BasicSpecialSettings {
     private JCheckBox isUseLocalFFmpegCheckBox;
     private PathSelectionPanel localFFmpegPathPanel;
     private JButton downloadButton;
+    private JCheckBox isUseHardwareAccelerationCheckBox;
 
     @Override
     public String getSettingsName() {
@@ -50,10 +51,14 @@ public class FFmpegSettings extends BasicSpecialSettings {
             });
 
             isUseLocalFFmpegCheckBox.setSelected(DataControl.get("ffmpeg_isUseLocal", false));
+            isUseHardwareAccelerationCheckBox.setSelected(DataControl.get("is_use_hardware_acceleration", true));
             localFFmpegPathPanel.setPath(DataControl.get("ffmpeg_appPath", ""));
 
             isUseLocalFFmpegCheckBox.addActionListener(e -> {
                 DataControl.putAndSave("ffmpeg_isUseLocal", isUseLocalFFmpegCheckBox.isSelected());
+            });
+            isUseHardwareAccelerationCheckBox.addActionListener(e -> {
+                DataControl.putAndSave("is_use_hardware_acceleration", isUseHardwareAccelerationCheckBox.isSelected());
             });
             localFFmpegPathPanel.setPathChangeListener(path -> DataControl.putAndSave("ffmpeg_appPath", path));
             downloadButton.addActionListener(e -> {

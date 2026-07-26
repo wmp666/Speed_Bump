@@ -14,8 +14,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ConvergenceTool {
 
@@ -275,21 +277,53 @@ public class ConvergenceTool {
             File ffmpegFile = new File(ffmpeg);
             File ffmpegDir = ffmpegFile.getParentFile();
 
-            ProcessBuilder pb = new ProcessBuilder(
-                    ffmpeg, "-y",
-                    "-i", inputFile.getAbsolutePath(),
-                    "-c:v", videoCodec,
-                    "-c:a", audioCodec,
-                    "-f", containerFormat,
-                    outputFile.getAbsolutePath()
-            );
+            // ---------- 硬件加速处理 ----------
+            String usedVideoCodec = videoCodec;
+            String hwaccelParam = null;
+            boolean useHw = DataControl.get("is_use_hardware_acceleration", true);
 
-            // 1. 设置工作目录为 ffmpeg 所在目录（防止相对路径依赖）
+            if (useHw) {
+                HardwareAccelConfig config = detectBestHardwareConfig(appPath);
+                if (config != null && !"none".equals(config.hwaccel)) {
+                    hwaccelParam = config.hwaccel;
+                    // 如果用户原编码器是软件编码，则替换为硬件编码器
+                    if ("libx264".equals(videoCodec) || "libx265".equals(videoCodec)) {
+                        usedVideoCodec = config.videoEncoder;
+                    } else {
+                        // 用户可能指定了其他编码器，保留但添加 hwaccel 仍能加速解码
+                        usedVideoCodec = videoCodec;
+                    }
+                    logger.info("启用硬件加速: hwaccel=" + hwaccelParam + ", encoder=" + usedVideoCodec);
+                } else {
+                    logger.info("未检测到可用硬件加速，使用软件编码");
+                }
+            }
+
+            // ---------- 构建命令 ----------
+            java.util.List<String> cmd = new java.util.ArrayList<>();
+            cmd.add(ffmpeg);
+            cmd.add("-y");
+            if (hwaccelParam != null) {
+                cmd.add("-hwaccel");
+                cmd.add(hwaccelParam);
+                // 可选：添加 -hwaccel_output_format 以保持 GPU 内存，但可能引起兼容问题，这里不添加
+            }
+            cmd.add("-i");
+            cmd.add(inputFile.getAbsolutePath());
+            cmd.add("-c:v");
+            cmd.add(usedVideoCodec);
+            cmd.add("-c:a");
+            cmd.add(audioCodec);
+            cmd.add("-f");
+            cmd.add(containerFormat);
+            cmd.add(outputFile.getAbsolutePath());
+
+            ProcessBuilder pb = new ProcessBuilder(cmd);
+
+            // 设置工作目录和环境变量（同原有逻辑）
             if (ffmpegDir != null && ffmpegDir.exists()) {
                 pb.directory(ffmpegDir);
             }
-
-            // 2. 将 ffmpeg 目录添加到 PATH 环境变量（确保依赖库可找到）
             Map<String, String> env = pb.environment();
             String pathEnv = env.get("PATH");
             if (ffmpegDir != null) {
@@ -304,14 +338,14 @@ public class ConvergenceTool {
             pb.redirectErrorStream(true);
             Process process = pb.start();
 
-            // 3. 【关键】必须消费输出流，否则进程阻塞
+            // 消费输出流（使用虚拟线程）
             Thread.ofVirtual().start(() -> {
                 try (BufferedReader reader = new BufferedReader(
                         new InputStreamReader(process.getInputStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        // 可在此解析进度（例如提取时间），目前仅调试日志
                         logger.debug("FFmpeg output: " + line);
+                        // 这里可以解析进度（如 out_time_ms）并更新 progressBar
                     }
                 } catch (Exception e) {
                     logger.error("日志输出异常：", e);
@@ -322,8 +356,6 @@ public class ConvergenceTool {
             if (exitCode != 0) {
                 logger.error("FFmpeg 转码失败，退出码: " + exitCode);
                 JOptionPane.showMessageDialog(null, "FFmpeg 转码失败，退出码: " + exitCode);
-
-                // 可进一步读取错误信息（但已合并到同一流）
                 return false;
             }
 
@@ -341,7 +373,6 @@ public class ConvergenceTool {
             return false;
         }
     }
-
     private static boolean javacvTranscode(File inputFile, File outputFile,
                                            String containerFormat, String videoCodec, String audioCodec,
                                            JProgressBar progressBar) {
@@ -360,7 +391,34 @@ public class ConvergenceTool {
             FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(outputFile,
                     grabber.getImageWidth(), grabber.getImageHeight());
             recorder.setFormat(containerFormat);
-            recorder.setVideoCodec(findVideoCodecID(videoCodec));
+
+            // ---------- 硬件加速处理 ----------
+            boolean useHw = DataControl.get("is_use_hardware_acceleration", true);
+            String usedVideoCodecName = null;
+            int usedVideoCodecId = -1;
+
+            if (useHw) {
+                String hwEncoder = detectHardwareEncoderJavaCV();
+                if (hwEncoder != null) {
+                    // 使用硬件编码器（通过名称设置）
+                    usedVideoCodecName = hwEncoder;
+                    // 设置像素格式为硬件友好格式
+                    recorder.setPixelFormat(org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_NV12);
+                    logger.info("JavaCV 使用硬件编码器: " + hwEncoder);
+                } else {
+                    logger.info("JavaCV 未检测到硬件编码器，回退至软件编码");
+                }
+            }
+
+            // 如果未启用硬件或未检测到，则使用软件编码 ID
+            if (usedVideoCodecName == null) {
+                usedVideoCodecId = findVideoCodecID(videoCodec);
+                recorder.setVideoCodec(usedVideoCodecId);
+            } else {
+                recorder.setVideoCodecName(usedVideoCodecName);
+            }
+
+            // 音频编码不变
             recorder.setAudioCodec(findAudioCodecID(audioCodec));
             recorder.setFrameRate(grabber.getFrameRate());
             recorder.setVideoBitrate(grabber.getVideoBitrate());
@@ -417,5 +475,136 @@ public class ConvergenceTool {
             case "pcm_s16le": return avcodec.AV_CODEC_ID_PCM_S16LE;
             default: return avcodec.AV_CODEC_ID_AAC;
         }
+    }
+
+
+
+
+    // ---------- 硬件加速自动检测 ----------
+    private static HardwareAccelConfig cachedConfig = null;
+
+    /**
+     * 硬件加速配置
+     */
+    private static class HardwareAccelConfig {
+        final String hwaccel;          // 如 "cuda", "qsv"，或 "none"
+        final String videoEncoder;     // 如 "h264_nvenc"
+        final String pixelFormat;      // 如 "nv12"
+
+        HardwareAccelConfig(String hwaccel, String videoEncoder, String pixelFormat) {
+            this.hwaccel = hwaccel;
+            this.videoEncoder = videoEncoder;
+            this.pixelFormat = pixelFormat;
+        }
+    }
+
+    /**
+     * 使用本地 ffmpeg 检测最优硬件加速配置（仅当 ffmpeg 可用时）
+     */
+    private static HardwareAccelConfig detectBestHardwareConfig(String ffmpegPath) {
+        if (cachedConfig != null) return cachedConfig;
+
+        String ffmpeg = findFFmpeg(ffmpegPath); // 获取可执行文件路径
+        HardwareAccelConfig fallback = new HardwareAccelConfig("none", "libx264", "yuv420p");
+
+        try {
+            // 1. 获取支持的 hwaccel
+            Set<String> hwaccels = new HashSet<>();
+            Process p1 = new ProcessBuilder(ffmpeg, "-hwaccels").redirectErrorStream(true).start();
+            try (BufferedReader r = new BufferedReader(new InputStreamReader(p1.getInputStream()))) {
+                String line;
+                while ((line = r.readLine()) != null) {
+                    if (line.trim().startsWith(" ")) {
+                        hwaccels.add(line.trim());
+                    }
+                }
+            }
+            p1.waitFor();
+
+            // 2. 获取支持的编码器
+            Set<String> encoders = new HashSet<>();
+            Process p2 = new ProcessBuilder(ffmpeg, "-encoders").redirectErrorStream(true).start();
+            try (BufferedReader r = new BufferedReader(new InputStreamReader(p2.getInputStream()))) {
+                String line;
+                while ((line = r.readLine()) != null) {
+                    // 匹配形如 "V..... libx264" 的行
+                    if (line.matches("^[VAS]....\\s+\\S+")) {
+                        String[] parts = line.trim().split("\\s+");
+                        if (parts.length >= 2) encoders.add(parts[1]);
+                    }
+                }
+            }
+            p2.waitFor();
+
+            // 3. 按优先级选择
+            String[] hwPriority = {"cuda", "nvdec", "qsv", "vaapi", "vdpau", "videotoolbox"};
+            String[] encPriority = {"h264_nvenc", "h264_qsv", "h264_vaapi", "h264_amf", "h264_videotoolbox"};
+
+            String selectedHw = null;
+            String selectedEnc = null;
+            for (String hw : hwPriority) {
+                if (hwaccels.contains(hw)) {
+                    // 根据 hw 推断编码器前缀
+                    String prefix = getEncoderPrefix(hw);
+                    for (String enc : encPriority) {
+                        if (enc.startsWith(prefix) && encoders.contains(enc)) {
+                            selectedHw = hw;
+                            selectedEnc = enc;
+                            break;
+                        }
+                    }
+                    if (selectedHw != null) break;
+                }
+            }
+
+            if (selectedHw != null) {
+                String pixelFormat = (selectedHw.equals("qsv") || selectedHw.equals("vaapi")) ? "nv12" : "yuv420p";
+                cachedConfig = new HardwareAccelConfig(selectedHw, selectedEnc, pixelFormat);
+                logger.info("检测到硬件加速: hwaccel=" + selectedHw + ", encoder=" + selectedEnc);
+                return cachedConfig;
+            }
+        } catch (Exception e) {
+            logger.warn("硬件加速检测失败，将使用软件编码", e);
+        }
+
+        cachedConfig = fallback;
+        return cachedConfig;
+    }
+
+    private static String getEncoderPrefix(String hwaccel) {
+        switch (hwaccel) {
+            case "cuda":
+            case "nvdec": return "nvenc";
+            case "qsv": return "qsv";
+            case "vaapi": return "vaapi";
+            case "vdpau": return "vdpau";
+            case "videotoolbox": return "videotoolbox";
+            default: return "";
+        }
+    }
+
+    /**
+     * 通过 JavaCV 尝试检测可用的硬件编码器（用于 javacvTranscode）
+     */
+    private static String detectHardwareEncoderJavaCV() {
+        String[] candidates = {"h264_nvenc", "h264_qsv", "h264_vaapi", "h264_amf", "h264_videotoolbox"};
+        for (String enc : candidates) {
+            try {
+                // 创建一个临时 recorder 来测试编码器是否可用
+                FFmpegFrameRecorder test = new FFmpegFrameRecorder("dummy.mp4", 640, 480);
+                test.setVideoCodecName(enc);
+                test.setFormat("mp4");
+                test.start();
+                test.stop();
+                test.release();
+                // 删除临时文件
+                new File("dummy.mp4").delete();
+                logger.info("JavaCV 检测到硬件编码器: " + enc);
+                return enc;
+            } catch (Exception e) {
+                // 忽略，尝试下一个
+            }
+        }
+        return null; // 无可用硬件编码器
     }
 }
