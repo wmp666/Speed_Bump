@@ -1,0 +1,70 @@
+name: 提交Bug (简体中文)
+description: 请准确描述您遇到的问题，帮助我们改进
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: trigger
+    attributes:
+      label: 🔍 触发条件
+      description: 描述问题出现的特定前提
+      placeholder: |
+        1. 例如：仅当视频文件为 H.265 编码时
+        2. 
+        3.
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 📌 重现步骤
+      description: 请按顺序列出每一步操作
+      placeholder: |
+        1. 打开软件，点击“视频合并”
+        2. 导入两个 MP4 文件
+        3. 点击“开始合并”
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: ⚠️ 影响程度
+      description: 该问题对您使用的影响
+      options:
+        - 严重阻塞，无法继续使用核心功能
+        - 功能可用，但体验明显受损
+        - 轻微不便，有临时绕过方法
+        - 仅界面显示问题，不影响操作
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: platform
+    attributes:
+      label: 🖥️ 出现平台
+      description: 请勾选实际测试过的平台
+      options:
+        - label: 所有平台
+        - label: Windows（请注明版本）
+        - label: macOS（请注明版本）
+        - label: Linux（请注明发行版）
+
+  - type: checkboxes
+    id: related
+    attributes:
+      label: 🔗 相关功能影响
+      options:
+        - label: 该问题是否会影响到其他功能
+        - label: 该问题是否由其他功能引起
+        - label: 该问题是否与界面有关
+        - label: 该问题是否与下载功能有关
+        - label: 该问题是否与视频处理（合并、转码等）有关
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 📎 附件与补充信息
+      description: 上传日志、截图或填写错误码
+      placeholder: 请将日志片段、截图链接等附在此处
