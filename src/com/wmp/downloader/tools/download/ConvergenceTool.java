@@ -398,25 +398,33 @@ public class ConvergenceTool {
             int usedVideoCodecId = -1;
 
             if (useHw) {
-                String hwEncoder = detectHardwareEncoderJavaCV();
+                // 根据用户选择的编码器动态检测对应的硬件编码器
+                String hwEncoder = detectHardwareEncoderJavaCV(videoCodec);
                 if (hwEncoder != null) {
-                    // 使用硬件编码器（通过名称设置）
                     usedVideoCodecName = hwEncoder;
-                    // 设置像素格式为硬件友好格式
                     recorder.setPixelFormat(org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_NV12);
-                    logger.info("JavaCV 使用硬件编码器: " + hwEncoder);
+                    logger.info("JavaCV 使用硬件编码器: " + hwEncoder + " (原指定编码器: " + videoCodec + ")");
                 } else {
-                    logger.info("JavaCV 未检测到硬件编码器，回退至软件编码");
+                    logger.info("JavaCV 未检测到匹配的硬件编码器，使用软件编码: " + videoCodec);
                 }
             }
 
-            // 如果未启用硬件或未检测到，则使用软件编码 ID
-            if (usedVideoCodecName == null) {
-                usedVideoCodecId = findVideoCodecID(videoCodec);
-                recorder.setVideoCodec(usedVideoCodecId);
+            // 确定最终要使用的编码器名称
+            String finalVideoCodecName;
+            if (usedVideoCodecName != null) {
+                finalVideoCodecName = usedVideoCodecName; // 硬件编码器名称
             } else {
-                recorder.setVideoCodecName(usedVideoCodecName);
+                // 软件编码，规范化用户指定的名称
+                finalVideoCodecName = normalizeCodecName(videoCodec);
             }
+
+// 设置编码器（名称方式）
+            recorder.setVideoCodecName(finalVideoCodecName);
+            logger.info("视频编码器设置为: " + finalVideoCodecName);
+
+// 音频编码器也使用名称设置（可选，但建议一致）
+            String audioCodecName = normalizeAudioCodecName(audioCodec);
+            recorder.setAudioCodecName(audioCodecName);;
 
             // 音频编码不变
             recorder.setAudioCodec(findAudioCodecID(audioCodec));
@@ -586,25 +594,76 @@ public class ConvergenceTool {
     /**
      * 通过 JavaCV 尝试检测可用的硬件编码器（用于 javacvTranscode）
      */
-    private static String detectHardwareEncoderJavaCV() {
-        String[] candidates = {"h264_nvenc", "h264_qsv", "h264_vaapi", "h264_amf", "h264_videotoolbox"};
+    private static String detectHardwareEncoderJavaCV(String userCodec) {
+        // 根据用户编码器确定要尝试的硬件编码器前缀
+        String targetStandard; // 期望的编码标准（h264 或 hevc）
+        if ("libx265".equals(userCodec) || "hevc".equals(userCodec)) {
+            targetStandard = "hevc";
+        } else {
+            targetStandard = "h264"; // 默认 h264
+        }
+
+        // 构建可能的硬件编码器列表
+        String prefix = targetStandard; // "h264" 或 "hevc"
+        String[] candidates = {
+                prefix + "_nvenc",
+                prefix + "_qsv",
+                prefix + "_vaapi",
+                prefix + "_amf",
+                prefix + "_videotoolbox",
+                // 通用编码器名称（旧版）
+                prefix + "_cuvid" // 较少用
+        };
+
         for (String enc : candidates) {
             try {
-                // 创建一个临时 recorder 来测试编码器是否可用
+                // 创建临时 recorder 测试编码器可用性
                 FFmpegFrameRecorder test = new FFmpegFrameRecorder("dummy.mp4", 640, 480);
                 test.setVideoCodecName(enc);
                 test.setFormat("mp4");
                 test.start();
                 test.stop();
                 test.release();
-                // 删除临时文件
                 new File("dummy.mp4").delete();
                 logger.info("JavaCV 检测到硬件编码器: " + enc);
                 return enc;
             } catch (Exception e) {
-                // 忽略，尝试下一个
+                // 忽略失败，继续尝试下一个
             }
         }
-        return null; // 无可用硬件编码器
+
+        // 如果未找到硬件编码器，尝试通用的 h264/hevc 硬件编码（部分库直接支持名称）
+        // 注意：某些情况下 setVideoCodecName("h264_nvenc") 可能返回 null 但 setVideoCodecName 仍然生效
+        // 因此还可以尝试根据 targetStandard 直接返回软件编码器
+        return null;
+    }
+
+    private static String normalizeCodecName(String name) {
+        if (name == null) return "libx264";
+        switch (name.toLowerCase()) {
+            case "libx265":
+            case "hevc":
+            case "h265":
+            case "hevc_nvenc":   // 如果用户直接传入硬件编码器名
+            case "hevc_qsv":
+            case "hevc_vaapi":
+                return "libx265";
+            case "libx264":
+            case "h264":
+            case "h.264":
+                return "libx264";
+            default:
+                return name; // 原样保留
+        }
+    }
+
+    private static String normalizeAudioCodecName(String name) {
+        if (name == null) return "aac";
+        switch (name.toLowerCase()) {
+            case "aac": return "aac";
+            case "mp3": case "libmp3lame": return "libmp3lame";
+            case "flac": return "flac";
+            default: return name;
+        }
     }
 }
