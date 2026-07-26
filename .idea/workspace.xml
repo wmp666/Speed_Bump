@@ -10,8 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新issue模板">
-      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateVideoHandleTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateVideoHandleTaskPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +92,7 @@
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
     "应用程序.BilibiliUserInfo.executor": "Run",
     "应用程序.ConvergenceTool.executor": "Run",
-    "应用程序.Run.executor": "Debug",
+    "应用程序.Run.executor": "Run",
     "应用程序.TikTokDownloader.executor": "Run",
     "应用程序.VideoInfoReader.executor": "Run"
   }
