@@ -1,38 +1,35 @@
 ---
 name: 提交Bug (简体中文)
 about: Create a report to help us improve
-title: ''
+title: '问题标题：'
 labels: ''
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+### **触发条件:** [条件]
+1.
+2.
+3.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+### **重现步骤:**
+1.
+2.
+3.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### **影响:**
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+### **出现平台:**
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+- [ ] 所有平台
+- [ ] Windows
+- [ ] macOS
+- [ ] Linux
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+### **相关选项:**
 
-**Additional context**
-Add any other context about the problem here.
+- [ ]  该问题是否会影响到其他功能
+- [ ]  该问题是否由其他功能引起
+- [ ]  该问题是否与界面有关
+- [ ] 该问题是否与下载功能有关
+- [ ] 该问题是否与视频处理（视频合并，视频转码...）功能有关

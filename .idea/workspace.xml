@@ -9,12 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加硬件加速功能，默认启动">
-      <change afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" afterDir="false" />
-    </list>
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加。。。" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -251,7 +246,8 @@
     <MESSAGE value="增加README.md, LICENSE" />
     <MESSAGE value="增加视频转码，转格式" />
     <MESSAGE value="增加硬件加速功能，默认启动" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加硬件加速功能，默认启动" />
+    <MESSAGE value="增加。。。" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加。。。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
