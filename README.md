@@ -33,7 +33,7 @@
 
 ### 其他
 - [Ghost Downloader 3](https://github.com/XiaoYouChR/Ghost-Downloader-3/releases)：提供 **UI** + **功能** 启发
-- [遇见API](https://api.yujn.cn)：提供部分API支持
+- [遇见API](https://api.yujn.cn)：提供抖音下载
 - [Nieobie:game-icon-pack](https://github.com/Nieobie/game-icon-pack)：提供图标
 
 ## 特定功能启用状态
