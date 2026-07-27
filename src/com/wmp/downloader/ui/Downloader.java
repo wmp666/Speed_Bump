@@ -392,6 +392,7 @@ public class Downloader extends JFrame implements WindowListener {
                     （本声明最终解释权归本软件开发者所有，并保留根据法律法规变化适时修订的权利。）
                     """);
             textArea.setLineWrap(true);
+            textArea.setColumns(20);
             panel.add(textArea);
 
             FunctionDialog.showDialog(this, "免责声明", panel,
@@ -533,7 +534,7 @@ public class Downloader extends JFrame implements WindowListener {
             var textArea = new JTextArea(StringFormat.translate("common", "support_text_area"));
             panel.add(textArea);
 
-            FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
+            FunctionDialog.showDialog(this, StringFormat.translate("common", "support"), panel,
                     _ -> {},
                     FunctionDialog.DEFAULT_BUTTONS, 0,
                     null, FunctionDialog.NORTH_DIRECTION_RIGHT,

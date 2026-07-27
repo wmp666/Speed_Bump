@@ -25,6 +25,7 @@
 - [bytedeco:javacv](https://github.com/bytedeco/javacv)
 - [org.jsoup:jsoup](https://jsoup.org/)
 - [log4j:log4j](https://logging.apache.org/log4j/2.x/index.html)
+- [io.github.dj.raven:modal-dialog](https://github.com/DJ-Raven/swing-modal-dialog)
 
 
 ### 贡献者

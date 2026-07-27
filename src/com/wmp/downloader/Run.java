@@ -31,6 +31,9 @@ public class Run {
             JPanel panel = new JPanel(new BorderLayout());
             JTextArea textArea = new JTextArea();
             textArea.setText("""
+                    0.1.7
+                    1. 更新功能性弹窗样式
+                    
                     0.1.6
                     1. 提升功能性弹窗功能
                     2. 增加新的文本到语言文件

@@ -3,7 +3,8 @@
   <component name="ExcludeFromValidation">
     <file url="file://$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/BiliFolderDownloadTask.java" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_25" default="true" project-jdk-name="25" project-jdk-type="JavaSDK">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_25" default="true" project-jdk-name="25.0.3" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

@@ -6,6 +6,9 @@ import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.ThemeChanger;
+import raven.modal.ModalDialog;
+import raven.modal.component.SimpleModalBorder;
+import raven.modal.option.ModalBorderOption;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,30 +93,8 @@ public class FunctionDialog extends JDialog {
         AtomicInteger result = new AtomicInteger(RESULT_EXIT);
 
         //判断组件c所在的窗体或c是窗体本身是否置顶
-        if (c instanceof JFrame frame) {
-            this.setAlwaysOnTop(isAlwaysTop || frame.isAlwaysOnTop());
-        } else if (c instanceof JDialog dialog) {
-            this.setAlwaysOnTop(isAlwaysTop || dialog.isAlwaysOnTop());
-        }else {
-            this.setAlwaysOnTop(isAlwaysTop);
-        }
-        this.setResizable(false);
-        this.setTitle(title);
-        this.setMinimumSize(new Dimension(400, 300));
-        if (c instanceof JFrame frame) {
-            this.setMaximumSize(frame.getSize());
-        }else if (c instanceof JDialog dialog) {
-            this.setMaximumSize(dialog.getSize());
-        }else {
-            this.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
-        }
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setModal(true);
-        this.add(UIPanel);
 
-        ThemeChanger.addInDynamicConverter(
-                task
-        );
+
 
         // 添加上方按钮
         if (northButtons != null) {
@@ -141,36 +122,90 @@ public class FunctionDialog extends JDialog {
             buttons = OK_CANCEL_BUTTONS;
         }
 
-        for (var i = 0; i < buttons.length; i++) {
-            var button = buttons[i];
-            JButton jButton = new JButton(button.text());
-            jButton.putClientProperty("FlatLaf.style", "font: bold $h2.font");
-            jButton.addActionListener(e -> {
-                this.setVisible(false);
-                result.set(button.result());
-            });
-            if (i == defaultButtonIndex) {
-                ButtonsPanel.getRootPane().setDefaultButton(jButton);
+
+
+
+
+
+        //使用Dialog
+
+        if (c == null) {
+
+            if (c instanceof JFrame frame) {
+                this.setAlwaysOnTop(isAlwaysTop || frame.isAlwaysOnTop());
+            } else if (c instanceof JDialog dialog) {
+                this.setAlwaysOnTop(isAlwaysTop || dialog.isAlwaysOnTop());
+            }else {
+                this.setAlwaysOnTop(isAlwaysTop);
             }
-            ButtonsPanel.add(jButton);
+            this.setResizable(false);
+            this.setTitle(title);
+            this.setMinimumSize(new Dimension(400, 300));
+            if (c instanceof JFrame frame) {
+                this.setMaximumSize(frame.getSize());
+            }else if (c instanceof JDialog dialog) {
+                this.setMaximumSize(dialog.getSize());
+            }else {
+                this.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
+            }
+            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            this.setModal(true);
+            this.add(UIPanel);
+
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                JButton jButton = new JButton(button.text());
+                jButton.putClientProperty("FlatLaf.style", "font: bold $h2.font");
+                jButton.addActionListener(e -> {
+                    this.setVisible(false);
+                    result.set(button.result());
+                });
+                if (i == defaultButtonIndex) {
+                    var rootPane1 = ButtonsPanel.getRootPane();
+                    if (rootPane1 != null) rootPane1.setDefaultButton(jButton);
+                }
+                ButtonsPanel.add(jButton);
+            }
+
+            this.pack();
+            this.parent = c;
+            this.setLocationRelativeTo(c);
+
+            packTimer.start();
+
+            this.requestFocus();
+            this.setVisible(true);
+
+            if (resultCallback != null)
+                resultCallback.onResult(result.get());
+
+            packTimer.stop();
+
+            this.dispose();
         }
+        else{
+            var options = new SimpleModalBorder.Option[buttons.length];
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                options[i] = new SimpleModalBorder.Option(button.text(), button.result());
+            }
 
-
-        this.pack();
-        this.parent = c;
-        this.setLocationRelativeTo(c);
-
-        packTimer.start();
-
-        this.requestFocus();
-        this.setVisible(true);
-
-        if (resultCallback != null)
-            resultCallback.onResult(result.get());
-
-        packTimer.stop();
-
-        this.dispose();
+            var modalBorderOption = new ModalBorderOption();
+            modalBorderOption.setPadding(10, 10, 10, 10);
+            modalBorderOption.setUseScroll(true);
+            SimpleModalBorder simpleModalBorder = new SimpleModalBorder(
+                    UIPanel, title, modalBorderOption,
+                    options, (action, data) -> {
+                if (data == SimpleModalBorder.OPENED) {
+                    return;
+                }
+                if (resultCallback != null) {
+                    resultCallback.onResult(data);
+                }
+            }
+            );
+            ModalDialog.showModal(c, simpleModalBorder);
+        }
     }
 
     /**
