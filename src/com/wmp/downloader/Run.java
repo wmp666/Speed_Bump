@@ -31,6 +31,9 @@ public class Run {
             JPanel panel = new JPanel(new BorderLayout());
             JTextArea textArea = new JTextArea();
             textArea.setText("""
+                    0.1.8
+                    1.考虑到大小问题，这个版本删除了JavaCV
+                    
                     0.1.7
                     1. 更新功能性弹窗样式
                     2. 更新通知样式
