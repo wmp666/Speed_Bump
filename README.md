@@ -22,7 +22,6 @@
 - [JFormDesigner:FlatLaf](https://www.formdev.com/flatlaf)
 - [alibaba:fastjson](https://github.com/alibaba/fastjson)
 - [google:core+javase](https://developer.android.google.cn/guide/playcore?hl=zh-cn)
-- [bytedeco:javacv](https://github.com/bytedeco/javacv)
 - [org.jsoup:jsoup](https://jsoup.org/)
 - [log4j:log4j](https://logging.apache.org/log4j/2.x/index.html)
 - [io.github.dj.raven:modal-dialog](https://github.com/DJ-Raven/swing-modal-dialog)
@@ -39,7 +38,6 @@
 
 ## 特定功能启用状态
 - [ ] Github 加速
-- [ ] 启动本地FFmpeg
 - [ ] 剪切板监听
 - [x] 启用硬件加速
 - [x] 关闭SSL
