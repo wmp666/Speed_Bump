@@ -398,7 +398,7 @@ public class Downloader extends JFrame implements WindowListener {
                     （本声明最终解释权归本软件开发者所有，并保留根据法律法规变化适时修订的权利。）
                     """);
             textArea.setLineWrap(true);
-            textArea.setColumns(20);
+            textArea.setColumns(30);
             panel.add(textArea);
 
             FunctionDialog.showDialog(this, "免责声明", panel,

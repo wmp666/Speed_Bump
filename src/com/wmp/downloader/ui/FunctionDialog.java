@@ -8,7 +8,9 @@ import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import raven.modal.ModalDialog;
 import raven.modal.component.SimpleModalBorder;
+import raven.modal.option.LayoutOption;
 import raven.modal.option.ModalBorderOption;
+import raven.modal.option.Option;
 
 import javax.swing.*;
 import java.awt.*;
@@ -191,19 +193,27 @@ public class FunctionDialog extends JDialog {
             }
 
             var modalBorderOption = new ModalBorderOption();
-            modalBorderOption.setPadding(10, 10, 10, 10);
-            modalBorderOption.setUseScroll(true);
+            modalBorderOption.setPadding(10, 10, 10, 10)
+                    .setUseScroll(true);
             SimpleModalBorder simpleModalBorder = new SimpleModalBorder(
                     UIPanel, title, modalBorderOption,
                     options, (action, data) -> {
-                if (data == SimpleModalBorder.OPENED) {
-                    return;
+                        if (data == SimpleModalBorder.OPENED) {
+                            return;
+                        }
+                        if (resultCallback != null) {
+                            resultCallback.onResult(data);
+                        }
+                    }
+            ){
+                @Override
+                protected JScrollPane createContentScroll() {
+                    var contentScroll = super.createContentScroll();
+                    contentScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    contentScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    return contentScroll;
                 }
-                if (resultCallback != null) {
-                    resultCallback.onResult(data);
-                }
-            }
-            );
+            };
             ModalDialog.showModal(c, simpleModalBorder);
         }
     }

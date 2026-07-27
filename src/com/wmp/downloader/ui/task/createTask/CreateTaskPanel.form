@@ -23,7 +23,11 @@
             <children>
               <scrollpane id="ed13b">
                 <constraints border-constraint="Center"/>
-                <properties/>
+                <properties>
+                  <horizontalScrollBarPolicy value="30"/>
+                  <verticalScrollBarPolicy value="20"/>
+                  <visible value="true"/>
+                </properties>
                 <border type="none" title-resource-bundle="com/wmp/downloader/laug/task" title-key="task.create_task.download_url_content"/>
                 <children>
                   <grid id="f77d6" binding="linkInfoPanel" custom-create="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
