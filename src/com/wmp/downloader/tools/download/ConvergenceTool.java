@@ -4,11 +4,6 @@ import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
-import org.bytedeco.ffmpeg.global.avcodec;
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.FFmpegFrameRecorder;
-import org.bytedeco.javacv.FFmpegLogCallback;
-import org.bytedeco.javacv.Frame;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -47,99 +42,8 @@ public class ConvergenceTool {
         }
         logger.info("保存路径：" + destPath.getAbsolutePath());
 
-        if (DataControl.get("ffmpeg_isUseLocal", false)){
-            return LocalConvergeWithStreamCopy(DataControl.get("ffmpeg_appPath", ""), StringFormat.sanitizeFile(videoPath), StringFormat.sanitizeFile(audioPath), StringFormat.sanitizeFile(destPath), progressBar);
-        }
+        return LocalConvergeWithStreamCopy(DataControl.get("ffmpeg_appPath", ""), StringFormat.sanitizeFile(videoPath), StringFormat.sanitizeFile(audioPath), StringFormat.sanitizeFile(destPath), progressBar);
 
-        // ---------- 初始化进度条（建议调用前设置好 min/max） ----------
-        if (progressBar != null) {
-            progressBar.setMinimum(0);
-            progressBar.setMaximum(100);
-            progressBar.setValue(0);
-            progressBar.setStringPainted(true);
-        }
-
-        FFmpegFrameRecorder recorder = null;
-
-        try(FFmpegFrameGrabber videoGrabber = new FFmpegFrameGrabber(videoPath);
-            FFmpegFrameGrabber audioGrabber = new FFmpegFrameGrabber(audioPath);) {
-            FFmpegLogCallback.set();
-
-            videoGrabber.start();
-            audioGrabber.start();
-
-            // ---------- 获取总帧数用于进度计算 ----------
-            int totalFrames = videoGrabber.getLengthInFrames();
-            long totalDuration = videoGrabber.getLengthInTime() / 1000; // 微秒转毫秒（备用方案）
-
-
-            recorder = new FFmpegFrameRecorder(destPath, videoGrabber.getImageWidth(), videoGrabber.getImageHeight());
-            recorder.setVideoCodec(videoGrabber.getVideoCodec());
-            recorder.setAudioCodec(audioGrabber.getAudioCodec());
-            recorder.setFormat("mp4");
-            recorder.setFrameRate(videoGrabber.getFrameRate());
-            recorder.setVideoBitrate(videoGrabber.getVideoBitrate());
-            recorder.setVideoOption("preset", "ultrafast");
-            recorder.setVideoOption("tune", "zerolatency");
-
-            recorder.setSampleRate(audioGrabber.getSampleRate());
-            recorder.setAudioChannels(audioGrabber.getAudioChannels());
-            recorder.start();
-
-            Frame videoFrame;
-            int frameCount = 0;
-            int lastProgress = -1;
-
-            while ((videoFrame = videoGrabber.grabImage()) != null) {
-                Frame audioFrame = audioGrabber.grabSamples();
-                if (audioFrame != null) {
-                    recorder.record(audioFrame);
-                }
-                recorder.record(videoFrame);
-
-                frameCount++;
-                if (totalFrames > 0) {
-                    int progress = Math.clamp((int) ((double) frameCount / totalFrames * 100), 0, 100);
-                    if (progress != lastProgress && progressBar != null) {
-                        lastProgress = progress;
-                        final int p = progress;
-                        SwingUtilities.invokeLater(() -> {
-                            progressBar.setValue(p);
-                            progressBar.setString(p + "%");
-                        });
-                    }
-                }
-            }
-
-            Frame audioFrame;
-            while ((audioFrame = audioGrabber.grabSamples()) != null) {
-                recorder.record(audioFrame);
-            }
-
-            if (progressBar != null) {
-                SwingUtilities.invokeLater(() -> {
-                    progressBar.setValue(100);
-                    progressBar.setString("100%");
-                });
-            }
-
-            recorder.close();
-
-            return true;
-
-        } catch (Exception e) {
-            logger.error("Error occurred during convergence: ", e);
-            return false;
-        } finally {
-            if (recorder != null) {
-                try {
-                    recorder.stop();
-                    recorder.release();
-                } catch (FFmpegFrameRecorder.Exception e) {
-                    logger.error("Error stopping or releasing recorder: ", e);
-                }
-            }
-        }
     }
 
     /**
@@ -151,8 +55,6 @@ public class ConvergenceTool {
     private static boolean LocalConvergeWithStreamCopy(String appPath, File videoPath, File audioPath,
                                                        File destPath, JProgressBar progressBar) {
         try {
-            FFmpegLogCallback.set();
-
             if (progressBar != null) {
                 progressBar.setIndeterminate(true);
                 progressBar.setString("正在合并...");
@@ -255,20 +157,15 @@ public class ConvergenceTool {
         }
 
         // 优先使用本地 FFmpeg（速度快，支持更多编码）
-        if (DataControl.get("ffmpeg_isUseLocal", false)) {
-            return localTranscode(DataControl.get("ffmpeg_appPath", ""),
+        return localTranscode(DataControl.get("ffmpeg_appPath", ""),
                     inputFile, outputFile, containerFormat, videoCodec, audioCodec, progressBar);
-        }
 
-        // 否则使用 JavaCV 内置方式（不依赖外部 FFmpeg）
-        return javacvTranscode(inputFile, outputFile, containerFormat, videoCodec, audioCodec, progressBar);
     }
 
     private static boolean localTranscode(String appPath, File inputFile, File outputFile,
                                           String containerFormat, String videoCodec, String audioCodec,
                                           JProgressBar progressBar) {
         try {
-            FFmpegLogCallback.set();
             if (progressBar != null) {
                 progressBar.setIndeterminate(true);
                 progressBar.setString("正在转码...");
@@ -374,117 +271,7 @@ public class ConvergenceTool {
             return false;
         }
     }
-    private static boolean javacvTranscode(File inputFile, File outputFile,
-                                           String containerFormat, String videoCodec, String audioCodec,
-                                           JProgressBar progressBar) {
-        if (progressBar != null) {
-            progressBar.setMinimum(0);
-            progressBar.setMaximum(100);
-            progressBar.setValue(0);
-            progressBar.setStringPainted(true);
-        }
 
-        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(inputFile)) {
-            FFmpegLogCallback.set();
-            grabber.start();
-
-            int totalFrames = grabber.getLengthInFrames();
-            FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(outputFile,
-                    grabber.getImageWidth(), grabber.getImageHeight());
-            recorder.setFormat(containerFormat);
-
-            // ---------- 硬件加速处理 ----------
-            boolean useHw = DataControl.get("is_use_hardware_acceleration", true);
-            String usedVideoCodecName = null;
-            int usedVideoCodecId = -1;
-
-            if (useHw) {
-                // 根据用户选择的编码器动态检测对应的硬件编码器
-                String hwEncoder = detectHardwareEncoderJavaCV(videoCodec);
-                if (hwEncoder != null) {
-                    usedVideoCodecName = hwEncoder;
-                    recorder.setPixelFormat(org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_NV12);
-                    logger.info("JavaCV 使用硬件编码器: " + hwEncoder + " (原指定编码器: " + videoCodec + ")");
-                } else {
-                    logger.info("JavaCV 未检测到匹配的硬件编码器，使用软件编码: " + videoCodec);
-                }
-            }
-
-            // 确定最终要使用的编码器名称
-            String finalVideoCodecName;
-            if (usedVideoCodecName != null) {
-                finalVideoCodecName = usedVideoCodecName; // 硬件编码器名称
-            } else {
-                // 软件编码，规范化用户指定的名称
-                finalVideoCodecName = normalizeCodecName(videoCodec);
-            }
-
-// 设置编码器（名称方式）
-            recorder.setVideoCodecName(finalVideoCodecName);
-            logger.info("视频编码器设置为: " + finalVideoCodecName);
-
-// 音频编码器也使用名称设置（可选，但建议一致）
-            String audioCodecName = normalizeAudioCodecName(audioCodec);
-            recorder.setAudioCodecName(audioCodecName);;
-
-            // 音频编码不变
-            recorder.setAudioCodec(findAudioCodecID(audioCodec));
-            recorder.setFrameRate(grabber.getFrameRate());
-            recorder.setVideoBitrate(grabber.getVideoBitrate());
-            recorder.setSampleRate(grabber.getSampleRate());
-            recorder.setAudioChannels(grabber.getAudioChannels());
-            recorder.start();
-
-            Frame frame;
-            int count = 0;
-            int lastProgress = -1;
-            while ((frame = grabber.grab()) != null) {
-                recorder.record(frame);
-                count++;
-                if (totalFrames > 0 && progressBar != null) {
-                    int progress = Math.clamp((int) ((double) count / totalFrames * 100), 0, 99);
-                    if (progress != lastProgress) {
-                        lastProgress = progress;
-                        final int p = progress;
-                        SwingUtilities.invokeLater(() -> {
-                            progressBar.setValue(p);
-                            progressBar.setString(p + "%");
-                        });
-                    }
-                }
-            }
-            recorder.close();
-            if (progressBar != null) {
-                SwingUtilities.invokeLater(() -> {
-                    progressBar.setValue(100);
-                    progressBar.setString("100%");
-                });
-            }
-            return true;
-        } catch (Exception e) {
-            logger.error("JavaCV 转码失败: ", e);
-            return false;
-        }
-    }
-
-    // 将编码器名称转为 FFmpeg 内部 ID（用于 JavaCV）
-    private static int findVideoCodecID(String codecName) {
-        switch (codecName) {
-            case "libx264": return avcodec.AV_CODEC_ID_H264;
-            case "libx265": return avcodec.AV_CODEC_ID_HEVC;
-            default: return avcodec.AV_CODEC_ID_H264;
-        }
-    }
-
-    private static int findAudioCodecID(String codecName) {
-        switch (codecName) {
-            case "aac": return avcodec.AV_CODEC_ID_AAC;
-            case "libmp3lame": return avcodec.AV_CODEC_ID_MP3;
-            case "flac": return avcodec.AV_CODEC_ID_FLAC;
-            case "pcm_s16le": return avcodec.AV_CODEC_ID_PCM_S16LE;
-            default: return avcodec.AV_CODEC_ID_AAC;
-        }
-    }
 
 
 
@@ -590,53 +377,6 @@ public class ConvergenceTool {
             case "videotoolbox": return "videotoolbox";
             default: return "";
         }
-    }
-
-    /**
-     * 通过 JavaCV 尝试检测可用的硬件编码器（用于 javacvTranscode）
-     */
-    private static String detectHardwareEncoderJavaCV(String userCodec) {
-        // 根据用户编码器确定要尝试的硬件编码器前缀
-        String targetStandard; // 期望的编码标准（h264 或 hevc）
-        if ("libx265".equals(userCodec) || "hevc".equals(userCodec)) {
-            targetStandard = "hevc";
-        } else {
-            targetStandard = "h264"; // 默认 h264
-        }
-
-        // 构建可能的硬件编码器列表
-        String prefix = targetStandard; // "h264" 或 "hevc"
-        String[] candidates = {
-                prefix + "_nvenc",
-                prefix + "_qsv",
-                prefix + "_vaapi",
-                prefix + "_amf",
-                prefix + "_videotoolbox",
-                // 通用编码器名称（旧版）
-                prefix + "_cuvid" // 较少用
-        };
-
-        for (String enc : candidates) {
-            try {
-                // 创建临时 recorder 测试编码器可用性
-                FFmpegFrameRecorder test = new FFmpegFrameRecorder("dummy.mp4", 640, 480);
-                test.setVideoCodecName(enc);
-                test.setFormat("mp4");
-                test.start();
-                test.stop();
-                test.release();
-                new File("dummy.mp4").delete();
-                logger.info("JavaCV 检测到硬件编码器: " + enc);
-                return enc;
-            } catch (Exception e) {
-                // 忽略失败，继续尝试下一个
-            }
-        }
-
-        // 如果未找到硬件编码器，尝试通用的 h264/hevc 硬件编码（部分库直接支持名称）
-        // 注意：某些情况下 setVideoCodecName("h264_nvenc") 可能返回 null 但 setVideoCodecName 仍然生效
-        // 因此还可以尝试根据 targetStandard 直接返回软件编码器
-        return null;
     }
 
     private static String normalizeCodecName(String name) {

@@ -15,8 +15,6 @@ import com.wmp.downloader.ui.specialSettings.GithubAccelerateSettings;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
-import org.bytedeco.librealsense.frame;
-import raven.modal.Toast;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,7 +79,7 @@ public class Downloader extends JFrame implements WindowListener {
             if (urlDownloadTask.isFinally()) {
                 if (!taskFinalyTipList.contains(urlDownloadTask)) {
                     taskFinalyTipList.add(urlDownloadTask);
-                    ToastMessage.show(this, String.format(StringFormat.translate("task", "task.download_task.success.confirm")), ToastMessage.SUCCESS);
+                    ToastMessage.show(this, String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()), ToastMessage.SUCCESS);
                 }
             }
         });
