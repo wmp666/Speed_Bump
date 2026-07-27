@@ -4,9 +4,11 @@ import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.ConvergenceTool;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
+import raven.modal.Toast;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +55,8 @@ public class ResetVideoInfoPanel extends JPanel {
                 fileNameTextField.setText(file.getName());
             } catch (Exception e) {
                 fileNameTextField.setText("");
-                JOptionPane.showMessageDialog(this, StringFormat.translate("video_handle", "video_handle.reset_video_info.file_selection_error"), StringFormat.translate("video_handle", "video_handle.reset_video_info.file_selection_error_title"), JOptionPane.ERROR_MESSAGE);
+                logger.error("文件选择错误");
+                ToastMessage.show(this, StringFormat.translate("video_handle", "video_handle.reset_video_info.file_selection_error"), ToastMessage.ERROR);
             }
         });
     }
@@ -68,7 +71,8 @@ public class ResetVideoInfoPanel extends JPanel {
         // 输入文件：用户选择的文件
         File inputFile = new File(FilePathSelectionPanel.getPath());
         if (!inputFile.exists()) {
-            JOptionPane.showMessageDialog(this, "请选择有效的输入文件", "错误", JOptionPane.ERROR_MESSAGE);
+            logger.error("输入文件不存在");
+            ToastMessage.show(this, "请选择有效的输入文件", ToastMessage.ERROR);
             return null;
         }
 

@@ -7,6 +7,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -45,7 +46,7 @@ public class BiliScanCodePanel extends JPanel {
             try {
                 Desktop.getDesktop().browse(URI.create(loginURL));
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, StringFormat.translate("special_settings", "bili_special_settings.open_link.error"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                ToastMessage.show(null, StringFormat.translate("special_settings", "bili_special_settings.open_link.error"), ToastMessage.ERROR);
                 logger.error(StringFormat.translate("special_settings", "bili_special_settings.cannot_open_browser"), ex);
             }
         });
@@ -62,7 +63,7 @@ public class BiliScanCodePanel extends JPanel {
                 String qrcodeKey = fetchQRCode();
                 if (qrcodeKey == null) {
                     logger.error(StringFormat.translate("special_settings", "bili_special_settings.get_qr_code_failed"));
-                    JOptionPane.showMessageDialog(null, StringFormat.translate("special_settings", "bili_special_settings.get_qr_code.error"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                    ToastMessage.show(null, StringFormat.translate("special_settings", "bili_special_settings.get_qr_code.error"), ToastMessage.ERROR);
                     return;
                 }
 
@@ -77,7 +78,7 @@ public class BiliScanCodePanel extends JPanel {
                 }
             } catch (Exception e) {
                 logger.error(StringFormat.translate("special_settings", "bili_special_settings.login_process_error"), e);
-                JOptionPane.showMessageDialog(null, StringFormat.translate("special_settings", "bili_special_settings.login_process.error"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                ToastMessage.show(null, StringFormat.translate("special_settings", "bili_special_settings.login_process.error"), ToastMessage.ERROR);
             }
         });
     }

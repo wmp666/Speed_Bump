@@ -4,6 +4,7 @@ import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
 import com.wmp.downloader.tools.download.URLDownloadTool.PauseController;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
 
@@ -103,7 +104,7 @@ public class URLDownloadTask extends DownloadTask {
                         logger.error("部分分段下载失败，请检查日志后重试。");
                         downloadControlButton.setEnabled(false);
                         infoLabel.setText(StringFormat.translate("task", "task.download_task.multi_thread_error"));
-                        JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_multi"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                        ToastMessage.show(this, StringFormat.translate("task", "task.download_task.multi_thread_error"), ToastMessage.ERROR);
                         stop();
 
                     }
@@ -145,7 +146,7 @@ public class URLDownloadTask extends DownloadTask {
                             logger.error("合并文件发生异常", e);
                             downloadControlButton.setEnabled(false);
                             infoLabel.setText(StringFormat.translate("task", "task.download_task.merge_error"));
-                            JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_merge"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                            ToastMessage.show(this, StringFormat.translate("task", "task.download_task.merge_error"), ToastMessage.ERROR);
                         }
                     }
                     if (hasError) {
@@ -157,7 +158,7 @@ public class URLDownloadTask extends DownloadTask {
                 } catch (Exception e) {
                     if (progressTimer != null) progressTimer.stop();
                     logger.error("多线程下载发生异常", e);
-                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_multi"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                    ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_multi"), ToastMessage.ERROR);
                     isStart = false;
                 }
             });
@@ -184,7 +185,7 @@ public class URLDownloadTask extends DownloadTask {
                     if (!isSuccess) {
                         downloadControlButton.setEnabled(false);
                         infoLabel.setText(StringFormat.translate("task", "task.download_task.download_failed_single"));
-                        JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_single"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                        ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_single"), ToastMessage.ERROR);
                         stop();
                     } else {
                         isFinally = true;
@@ -200,7 +201,7 @@ public class URLDownloadTask extends DownloadTask {
                 } catch (Exception e) {
                     if (progressTimer != null) progressTimer.stop();
                     logger.error("单线程下载发生异常", e);
-                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_single"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                    ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_single"), ToastMessage.ERROR);
                     isStart = false;
                 }
             });

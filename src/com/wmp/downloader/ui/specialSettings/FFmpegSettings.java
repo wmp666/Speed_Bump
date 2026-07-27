@@ -3,6 +3,7 @@ package com.wmp.downloader.ui.specialSettings;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.settings.BasicSpecialSettings;
 import org.apache.log4j.Logger;
@@ -66,7 +67,7 @@ public class FFmpegSettings extends BasicSpecialSettings {
                     Desktop.getDesktop().browse(URI.create("https://ffmpeg.org/download.html"));
                 } catch (IOException ex) {
                     logger.error("Error opening browser", ex);
-                    JOptionPane.showMessageDialog(mainPanel, "Error opening browser", "Error", JOptionPane.ERROR_MESSAGE);
+                    ToastMessage.show(mainPanel, "Error opening browser", ToastMessage.ERROR);
                 }
             });
         }

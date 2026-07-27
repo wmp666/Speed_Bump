@@ -3,6 +3,7 @@ package com.wmp.downloader.ui.task.createTask.videohandle;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.download.ConvergenceTool;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
 
@@ -72,7 +73,7 @@ public class CreateMergeTaskFuncPanel extends JPanel {
             if (converged){
                 downloadControlButton.setEnabled(false);
             }else{
-                JOptionPane.showMessageDialog(null, StringFormat.translate("video_handle", "video_handle.create_merge_task.merge_fail"));
+                ToastMessage.show(null, StringFormat.translate("video_handle", "video_handle.create_merge_task.merge_fail"), ToastMessage.ERROR);
             }
         }
 

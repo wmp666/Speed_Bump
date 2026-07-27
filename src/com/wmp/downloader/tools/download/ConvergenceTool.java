@@ -2,6 +2,7 @@ package com.wmp.downloader.tools.download;
 
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
 import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -355,7 +356,7 @@ public class ConvergenceTool {
             int exitCode = process.waitFor();
             if (exitCode != 0) {
                 logger.error("FFmpeg 转码失败，退出码: " + exitCode);
-                JOptionPane.showMessageDialog(null, "FFmpeg 转码失败，退出码: " + exitCode);
+                ToastMessage.show(null, "FFmpeg 转码失败，退出码: " + exitCode, ToastMessage.ERROR);
                 return false;
             }
 
@@ -369,7 +370,7 @@ public class ConvergenceTool {
             return true;
         } catch (Exception e) {
             logger.error("本地 FFmpeg 转码异常: ", e);
-            JOptionPane.showMessageDialog(null, "本地 FFmpeg 转码异常: " + e);
+            ToastMessage.show(null, "本地 FFmpeg 转码异常: " + e, ToastMessage.ERROR);
             return false;
         }
     }

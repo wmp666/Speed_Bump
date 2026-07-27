@@ -6,6 +6,7 @@ import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -96,16 +97,16 @@ public abstract class DownloadTask extends JPanel {
             try {
                 Desktop.getDesktop().open(StringFormat.sanitizeFile(new File(savePath, this.fileName)));
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Failed to open file", "Error", JOptionPane.ERROR_MESSAGE);
-                logger.error("Failed to open file", ex);
+                ToastMessage.show(this, StringFormat.translate("task", "task.download_task.open_file_failed"), ToastMessage.ERROR);
+                logger.error("文件打开失败", ex);
             }
         });
         openInFolderButton.addActionListener(e -> {
             try {
                 Desktop.getDesktop().open(StringFormat.sanitizeFile(savePath));
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Failed to open folder", "Error", JOptionPane.ERROR_MESSAGE);
-                logger.error("Failed to open folder", ex);
+                ToastMessage.show(this, StringFormat.translate("task", "task.download_task.open_folder_failed"), ToastMessage.ERROR);
+                logger.error("文件夹打开失败", ex);
             }
         });
 
@@ -140,7 +141,7 @@ public abstract class DownloadTask extends JPanel {
 
         } catch (Exception e) {
             logger.error("下载异常", e);
-            JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_error.confirm") + "\ncatch a exception", StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+            ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_error.confirm"), ToastMessage.ERROR);
         }
 
         downloadControlButton.setToolTipText(StringFormat.translate("task", "task.download_task.download_control.pause"));

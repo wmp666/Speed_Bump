@@ -6,6 +6,7 @@ import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
 import com.wmp.downloader.tools.download.URLDownloadTool.PauseController;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
 
@@ -81,7 +82,7 @@ public class BiliFileDownloadTask extends DownloadTask {
                     //if (!videoSuccess) return;
                 } catch (Exception e) {
                     logger.error(StringFormat.translate("task", "task.download_task.video_download_failed"), e);
-                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.video_download_failed"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                    ToastMessage.show(this, StringFormat.translate("task", "task.download_task.video_download_failed"), ToastMessage.ERROR);
                 }
 
                 SwingUtilities.invokeLater(() -> infoLabel.setText(StringFormat.translate("task", "task.download_task.downloading_audio")));
@@ -99,7 +100,7 @@ public class BiliFileDownloadTask extends DownloadTask {
                     //if (!audioSuccess) return;
                 } catch (Exception e) {
                     logger.error(StringFormat.translate("task", "task.download_task.audio_download_failed"), e);
-                    JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.audio_download_failed"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                    ToastMessage.show(this, StringFormat.translate("task", "task.download_task.audio_download_failed"), ToastMessage.ERROR);
                 }
 
                 //合并文件
@@ -125,7 +126,7 @@ public class BiliFileDownloadTask extends DownloadTask {
             } catch (Exception e) {
                 if (progressTimer != null) progressTimer.stop();
                 logger.error(StringFormat.translate("task", "task.download_task.download_exception"), e);
-                JOptionPane.showMessageDialog(this, String.format(StringFormat.translate("task", "task.download_task.download_failed_detail"), e.getMessage()), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+                ToastMessage.show(this, String.format(StringFormat.translate("task", "task.download_task.download_failed_detail"), e.getMessage()), ToastMessage.ERROR);
                 isStart = false;
             }
         });
@@ -158,7 +159,7 @@ public class BiliFileDownloadTask extends DownloadTask {
         if (!isSuccess) {
             downloadControlButton.setEnabled(false);
             infoLabel.setText(StringFormat.translate("task", "task.download_task.single_thread_error"));
-            JOptionPane.showMessageDialog(this, StringFormat.translate("task", "task.download_task.download_failed_single"), StringFormat.translate("common", "error"), JOptionPane.ERROR_MESSAGE);
+            ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_single"), ToastMessage.ERROR);
             stop();
             return false;
         }

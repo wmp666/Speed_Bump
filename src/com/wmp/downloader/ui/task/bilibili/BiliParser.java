@@ -3,6 +3,7 @@ package com.wmp.downloader.ui.task.bilibili;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.task.Parser;
 import com.wmp.downloader.ui.task.bilibili.file.BiliLinkFileInfoPanel;
 import com.wmp.downloader.ui.task.bilibili.folder.BiliLinkFolderInfoPanel;
@@ -104,7 +105,7 @@ public class BiliParser extends Parser {
 
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "获取视频信息出错", "错误", JOptionPane.ERROR_MESSAGE);
+            ToastMessage.show(null, "获取视频信息出错", ToastMessage.ERROR);
             logger.error("获取视频信息出错", e);
         }
 

@@ -90,7 +90,6 @@ public class ThemeChanger {
         //主体部分数据更新
         UIManager.put("TabbedPane.tabsOpaque", false);
         UIManager.put("TabbedPane.contentOpaque", false);
-        UIManager.put("ScrollBar.track", new Color(0, 0, 0, 0));
         FlatLaf.setUseNativeWindowDecorations(true);
         //UIManager.put("TitlePane.unifiedBackground", true);
         //UIManager.put("TitlePane.unifiedBackground", false);

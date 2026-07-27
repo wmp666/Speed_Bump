@@ -6,6 +6,7 @@ import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.settings.BasicSpecialSettings;
 import com.wmp.downloader.ui.specialSettings.BiliSettings;
@@ -15,6 +16,7 @@ import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
 import org.bytedeco.librealsense.frame;
+import raven.modal.Toast;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,6 +40,7 @@ import java.util.regex.Pattern;
 
 public class Downloader extends JFrame implements WindowListener {
 
+    public static Downloader mainFrame;
     public static TrayIcon trayIcon;
     private static final Logger logger = Logger.getLogger(Downloader.class);
     private final List<DownloadTask> taskList = new ArrayList<>();
@@ -78,7 +81,7 @@ public class Downloader extends JFrame implements WindowListener {
             if (urlDownloadTask.isFinally()) {
                 if (!taskFinalyTipList.contains(urlDownloadTask)) {
                     taskFinalyTipList.add(urlDownloadTask);
-                    JOptionPane.showMessageDialog(this, String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getName()), StringFormat.translate("task", "task.download_task.success.confirm.title"), JOptionPane.INFORMATION_MESSAGE);
+                    ToastMessage.show(this, String.format(StringFormat.translate("task", "task.download_task.success.confirm")), ToastMessage.SUCCESS);
                 }
             }
         });
@@ -116,13 +119,16 @@ public class Downloader extends JFrame implements WindowListener {
     // FIX 删除了无用的 backgroundTimer 字段
 
     public Downloader() {
+
+        mainFrame = this;
+
         taskListener.start();
 
 
         this.getRootPane().putClientProperty( "JRootPane.fullWindowContent", true );
         //this.getRootPane().setBackground( new Color( 0, 0, 0, 0 ) );
 
-        this.setTitle(StringFormat.translate("common", "app_name") + " V" + DataControl.get("version", "0.0.1"));
+        this.setTitle(StringFormat.translate("common", "app_name"));
         this.setContentPane(UIPanel);
         this.setMinimumSize(new Dimension(800, 550));
 
@@ -440,29 +446,6 @@ public class Downloader extends JFrame implements WindowListener {
                 var textArea = new JTextArea("你真的要这么做吗!\n这样做真的很危险!\n不要继续呀!");
                 panel.add(textArea);
 
-                var learnMoreButton = new JButton(StringFormat.translate("common", "learn"));
-                learnMoreButton.addActionListener(_ -> {
-                    JOptionPane.showMessageDialog(this, "作者/程序是软件的核心部分,去除会导致异常", "了解更多", JOptionPane.WARNING_MESSAGE);
-                });
-
-                FunctionDialog.showDialog(this, StringFormat.translate("common", "warn"), panel,
-                        _ -> {
-                            try {
-                                Thread.sleep(5000);
-                            } catch (InterruptedException ex) {
-                                ex.printStackTrace();
-                            }
-                            JOptionPane.showMessageDialog(this, "发生错误!软件开始修复修复问题...", "错误", JOptionPane.ERROR_MESSAGE);
-                            try {
-                                Thread.sleep(5000);
-                            } catch (InterruptedException ex) {
-                                ex.printStackTrace();
-                            }
-                            JOptionPane.showMessageDialog(this, "完成!");
-                            authorCheckBox.setSelected(true);
-                        },
-                        new FunctionDialog.CustomButtons[]{FunctionDialog.OK_BUTTON, FunctionDialog.OK_BUTTON, FunctionDialog.OK_BUTTON}, 0,
-                        new JButton[]{learnMoreButton}, FunctionDialog.NORTH_DIRECTION_RIGHT, true, true);
             }
         });
         FlatLafCheckBox.addActionListener(e -> {
@@ -625,7 +608,8 @@ public class Downloader extends JFrame implements WindowListener {
         FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
 
         IconControl.addInDynamicConverter(
-                () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize()))
+                () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize())),
+                () -> deleteTempFolderDataButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize()))
         );
         IconControl.addInDynamicConverter(
                 () -> refreshButton.setIcon(IconControl.getIcon("refresh", refreshButton.getFont().getSize())),
@@ -719,8 +703,7 @@ public class Downloader extends JFrame implements WindowListener {
             updateBackground();
             updateChildBounds(); // FIX 使用统一方法
 
-
-            JOptionPane.showMessageDialog(this, StringFormat.translate("settings", "settings.save.tip"));
+            ToastMessage.show(this, StringFormat.translate("settings", "settings.save.tip"), ToastMessage.SUCCESS);
             ThemeChanger.easyChanger();
         });
     }

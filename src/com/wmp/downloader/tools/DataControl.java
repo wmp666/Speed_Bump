@@ -2,6 +2,8 @@ package com.wmp.downloader.tools;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.ui.Downloader;
 import org.apache.log4j.DailyRollingFileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -58,7 +60,7 @@ public class DataControl {
         try {
             configureLogPath(getDataPath().getAbsolutePath());
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "日志路径配置失败\n因此出现问题后无法查看日志", "错误", JOptionPane.ERROR_MESSAGE);
+            ToastMessage.show(Downloader.mainFrame, "日志路径配置失败\n因此出现问题后无法查看日志", ToastMessage.ERROR);
         }
 
         logger.debug("加载数据...");
@@ -192,7 +194,7 @@ public class DataControl {
         if (file.exists()) {
             file.delete();
             if (isShowMessage)
-                JOptionPane.showMessageDialog(null, "删除成功");
+                ToastMessage.show(Downloader.mainFrame, StringFormat.translate("task", "delete_success"), ToastMessage.SUCCESS);
         }
     }
     public static void deleteFolder(File file, boolean isShowMessage){
@@ -207,7 +209,7 @@ public class DataControl {
                             }
                         });
                 if (isShowMessage)
-                    JOptionPane.showMessageDialog(null, "删除成功");
+                    ToastMessage.show(Downloader.mainFrame, StringFormat.translate("task", "delete_success"), ToastMessage.SUCCESS);
             } catch (Exception e) {
                 logger.error("删除文件夹失败", e);
             }

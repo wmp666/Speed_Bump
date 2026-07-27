@@ -5,6 +5,7 @@ import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
 import com.wmp.downloader.tools.download.URLDownloadTool.PauseController;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
 
@@ -321,10 +322,7 @@ public class DouyinImageDownloadTask extends DownloadTask {
 
                 if (hasAnyError) {
                     infoLabel.setText(StringFormat.translate("task", "task.download_task.partial_failed"));
-                    JOptionPane.showMessageDialog(this,
-                            StringFormat.translate("task", "task.download_task.partial_failed_detail"),
-                            StringFormat.translate("common", "error"),
-                            JOptionPane.WARNING_MESSAGE);
+                    ToastMessage.show(this, StringFormat.translate("task", "task.download_task.partial_failed"), ToastMessage.ERROR);
                 } else {
                     infoLabel.setText(String.format("<html>%s</html>",
                             String.format(StringFormat.translate("task", "task.download_task.progress_single"),
