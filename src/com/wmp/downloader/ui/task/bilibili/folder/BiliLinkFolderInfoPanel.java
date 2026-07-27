@@ -8,6 +8,7 @@ import com.wmp.downloader.ui.task.bilibili.info.BiliDownloadInfo;
 import com.wmp.downloader.ui.task.createTask.LinkFolderInfoPanel;
 import org.apache.log4j.Logger;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +58,7 @@ public class BiliLinkFolderInfoPanel extends LinkFolderInfoPanel {
     public void editButtonAction(ActionEvent e) {
         //更新所有数据
         var taskFileEditPanel = new BiliTaskFolderEditPanel(folderNameLabel.getText(), this.downloadInfos, this.videoQualityInfoIndex, this.audioQualityInfoIndex);
-        FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
+        FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
                 result -> {
                     if (result == FunctionDialog.RESULT_SAVE) {
                         folderNameLabel.setText(taskFileEditPanel.getFileName());

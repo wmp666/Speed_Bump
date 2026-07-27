@@ -28,7 +28,7 @@ public class CreateVideoHandleTaskPanel extends JPanel {
 
         this.createMergeTaskButton.addActionListener(e -> {
             var createMergeTaskFuncPanel = new CreateMergeTaskFuncPanel();
-            FunctionDialog.showDialog(mainPanel, StringFormat.translate("video_handle", "video_handle.reset_video_info"),
+            FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(mainPanel), StringFormat.translate("video_handle", "video_handle.reset_video_info"),
                     createMergeTaskFuncPanel, result -> {
                         if (result == FunctionDialog.RESULT_OK) {
                             downloadTaskAddListener.AddDownloadTask(createMergeTaskFuncPanel.createDownloadTask());
@@ -38,7 +38,7 @@ public class CreateVideoHandleTaskPanel extends JPanel {
         });
         this.resetVideoInfoButton.addActionListener(e -> {
             var resetVideoInfoPanel = new ResetVideoInfoPanel();
-            FunctionDialog.showDialog(mainPanel, StringFormat.translate("video_handle", "video_handle.create_merge_task"),
+            FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(mainPanel), StringFormat.translate("video_handle", "video_handle.create_merge_task"),
                     resetVideoInfoPanel, result -> {
                         if (result == FunctionDialog.RESULT_OK) {
                             downloadTaskAddListener.AddDownloadTask(resetVideoInfoPanel.createDownloadTask());

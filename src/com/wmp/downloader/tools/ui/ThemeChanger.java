@@ -7,6 +7,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.ui.FlatTitlePane;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
+import org.bytedeco.librealsense.frame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,6 +91,7 @@ public class ThemeChanger {
         UIManager.put("TabbedPane.tabsOpaque", false);
         UIManager.put("TabbedPane.contentOpaque", false);
         UIManager.put("ScrollBar.track", new Color(0, 0, 0, 0));
+        FlatLaf.setUseNativeWindowDecorations(true);
         //UIManager.put("TitlePane.unifiedBackground", true);
         //UIManager.put("TitlePane.unifiedBackground", false);
 

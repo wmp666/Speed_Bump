@@ -85,7 +85,7 @@ public abstract class LinkFolderInfoPanel extends JPanel {
 
         fileChooseButton.addActionListener(e -> {
             var linkFileChoosePanel = new LinkFileChoosePanel(fileNames, sizes, fileTypes, fileSelectionStatus);
-            FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.choose_file"), linkFileChoosePanel,
+            FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.choose_file"), linkFileChoosePanel,
                     result -> {
                         if (result == FunctionDialog.RESULT_OK) {
                             sizeLabel.setText(formatFileSize(linkFileChoosePanel.getSelectedFilesSize()));
@@ -195,7 +195,7 @@ public abstract class LinkFolderInfoPanel extends JPanel {
             @Override
             public void editButtonAction(ActionEvent e) {
                 var taskFileEditPanel = new TaskFileEditPanel(folderNameLabel.getText());
-                FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
+                FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
                         result -> {
                             if (result == FunctionDialog.RESULT_SAVE)
                                 folderNameLabel.setText(taskFileEditPanel.getFileName());

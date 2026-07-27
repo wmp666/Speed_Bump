@@ -6,6 +6,7 @@ import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.ui.task.bilibili.info.BiliDownloadInfo;
 import com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class BiliLinkFileInfoPanel extends LinkFileInfoPanel {
@@ -24,7 +25,7 @@ public class BiliLinkFileInfoPanel extends LinkFileInfoPanel {
     @Override
     public void editButtonAction(ActionEvent e) {
         var taskFileEditPanel = new BiliTaskFileEditPanel(nameLabel.getText(), downloadInfo, videoInfoIndex, audioInfoIndex);
-        FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
+        FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
                 result -> {
                     if (result == FunctionDialog.RESULT_SAVE) {
                         nameLabel.setText(taskFileEditPanel.getFileName());

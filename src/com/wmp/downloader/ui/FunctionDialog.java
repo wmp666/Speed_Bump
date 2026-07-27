@@ -32,7 +32,8 @@ public class FunctionDialog extends JDialog {
         this.revalidate();
         this.repaint();
         this.pack();
-        this.setLocationRelativeTo(parent);
+        if(parent != null)
+            this.setLocationRelativeTo(parent);
     });
 
     private JPanel UIPanel;
@@ -56,7 +57,36 @@ public class FunctionDialog extends JDialog {
      * @param northButtons          上方部按钮列表
      * @param northButtonsDirection 上方按钮方向，0表示居左，1表示居中，2表示居右
      */
-    private FunctionDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop) {
+    private FunctionDialog(Component c, String title,
+                           JPanel functionPanel, ResultCallback resultCallback,
+                           CustomButtons[] buttons, int defaultButtonIndex,
+                           JButton[] northButtons, int northButtonsDirection,
+                           boolean isAlwaysTop) {
+        this(c, title,
+                functionPanel, resultCallback,
+                buttons, defaultButtonIndex,
+                northButtons, northButtonsDirection,
+                isAlwaysTop, false);
+    }
+
+
+    /**
+     * @param c                     父组件
+     * @param title                 标题
+     * @param functionPanel         功能面板
+     * @param resultCallback        结果回调
+     * @param buttons               按钮列表
+     * @param defaultButtonIndex    默认按钮索引
+     * @param northButtons          上方部按钮列表
+     * @param northButtonsDirection 上方按钮方向，0表示居左，1表示居中，2表示居右
+     * @param isAlwaysTop           是否置顶
+     * @param isUseScrollPane       是否使用滚动条
+     */
+    private FunctionDialog(Component c, String title,
+                           JPanel functionPanel, ResultCallback resultCallback,
+                           CustomButtons[] buttons, int defaultButtonIndex,
+                           JButton[] northButtons, int northButtonsDirection,
+                           boolean isAlwaysTop, boolean isUseScrollPane) {
         AtomicInteger result = new AtomicInteger(RESULT_EXIT);
 
         //判断组件c所在的窗体或c是窗体本身是否置顶
@@ -101,7 +131,10 @@ public class FunctionDialog extends JDialog {
 
         // 添加功能面板
         if (functionPanel != null) {
-            taskPanel.add(functionPanel, BorderLayout.CENTER);
+            if (isUseScrollPane) {
+                JScrollPane scrollPane = new JScrollPane(functionPanel);
+                taskPanel.add(scrollPane, BorderLayout.CENTER);
+            }else taskPanel.add(functionPanel, BorderLayout.CENTER);
         }
         // 添加按钮
         if (buttons.length == 0) {
@@ -132,7 +165,8 @@ public class FunctionDialog extends JDialog {
         this.requestFocus();
         this.setVisible(true);
 
-        resultCallback.onResult(result.get());
+        if (resultCallback != null)
+            resultCallback.onResult(result.get());
 
         packTimer.stop();
 
@@ -143,15 +177,36 @@ public class FunctionDialog extends JDialog {
      * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int, boolean)
      */
     public static void showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection) {
-        new FunctionDialog(c, title, functionPanel, resultCallback, buttons, defaultButtonIndex, northButtons, northButtonsDirection, false);
+        new FunctionDialog(c, title,
+                functionPanel, resultCallback,
+                buttons, defaultButtonIndex,
+                northButtons, northButtonsDirection,
+                false, false);
     }
 
     /**
      * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int, boolean)
      */
     public static void showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop) {
-        new FunctionDialog(c, title, functionPanel, resultCallback, buttons, defaultButtonIndex, northButtons, northButtonsDirection, isAlwaysTop);
+        new FunctionDialog(c, title,
+                functionPanel, resultCallback,
+                buttons, defaultButtonIndex,
+                northButtons, northButtonsDirection,
+                isAlwaysTop, false);
     }
+
+    /**
+     * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int, boolean)
+     */
+    public static void showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop, boolean isUseScrollPane) {
+        new FunctionDialog(c, title,
+                functionPanel, resultCallback,
+                buttons, defaultButtonIndex,
+                northButtons, northButtonsDirection,
+                isAlwaysTop, isUseScrollPane);
+    }
+
+
 
     static void main() {
         FlatMacDarkLaf.setup();

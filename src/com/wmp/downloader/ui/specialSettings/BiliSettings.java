@@ -61,7 +61,7 @@ public class BiliSettings extends BasicSpecialSettings {
 
             //初始化监听
             ScanCodeButton.addActionListener(e -> {
-                FunctionDialog.showDialog(this, StringFormat.translate("special_settings", "bili_special_settings.login.scan_code"),
+                FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("special_settings", "bili_special_settings.login.scan_code"),
                         new BiliScanCodePanel(),
                         result -> {
                             if (result == FunctionDialog.RESULT_OK){

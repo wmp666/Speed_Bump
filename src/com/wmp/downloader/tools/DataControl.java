@@ -1,6 +1,7 @@
 package com.wmp.downloader.tools;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.log4j.DailyRollingFileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -122,7 +123,7 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.put("version", "0.1.5");
+        tempDataMap.put("version", "0.1.6");
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {
                 tempDataMap.put("theme_type", "light");
@@ -151,7 +152,7 @@ public class DataControl {
     public static void save() {
         try {
             Files.createDirectories(DATA_DIR);
-            String json = JSON.toJSONString(saveData);
+            String json = JSON.toJSONString(saveData, SerializerFeature.PrettyFormat);
             Files.writeString(DATA_FILE, json, StandardCharsets.UTF_8, Files.exists(DATA_FILE) ? StandardOpenOption.TRUNCATE_EXISTING : StandardOpenOption.CREATE);
         } catch (IOException e) {
             logger.error("保存数据失败", e);

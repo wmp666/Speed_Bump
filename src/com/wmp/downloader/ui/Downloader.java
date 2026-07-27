@@ -14,6 +14,7 @@ import com.wmp.downloader.ui.specialSettings.GithubAccelerateSettings;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
+import org.bytedeco.librealsense.frame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -117,6 +118,9 @@ public class Downloader extends JFrame implements WindowListener {
     public Downloader() {
         taskListener.start();
 
+
+        this.getRootPane().putClientProperty( "JRootPane.fullWindowContent", true );
+        //this.getRootPane().setBackground( new Color( 0, 0, 0, 0 ) );
 
         this.setTitle(StringFormat.translate("common", "app_name") + " V" + DataControl.get("version", "0.0.1"));
         this.setContentPane(UIPanel);
@@ -393,7 +397,7 @@ public class Downloader extends JFrame implements WindowListener {
             FunctionDialog.showDialog(this, "免责声明", panel,
                     _ -> {},
                     FunctionDialog.DEFAULT_BUTTONS, 0,
-                    null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+                    null, FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
         });
         AppMenu.add(DisclaimerMenuItem);
 
@@ -457,7 +461,7 @@ public class Downloader extends JFrame implements WindowListener {
                             authorCheckBox.setSelected(true);
                         },
                         new FunctionDialog.CustomButtons[]{FunctionDialog.OK_BUTTON, FunctionDialog.OK_BUTTON, FunctionDialog.OK_BUTTON}, 0,
-                        new JButton[]{learnMoreButton}, FunctionDialog.NORTH_DIRECTION_RIGHT);
+                        new JButton[]{learnMoreButton}, FunctionDialog.NORTH_DIRECTION_RIGHT, true, true);
             }
         });
         FlatLafCheckBox.addActionListener(e -> {
@@ -519,7 +523,8 @@ public class Downloader extends JFrame implements WindowListener {
             FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                     _ -> {},
                     FunctionDialog.DEFAULT_BUTTONS, 0,
-                    null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+                    null, FunctionDialog.NORTH_DIRECTION_RIGHT,
+                    true, true);
         });
 
         var SupportButton = new JButton(StringFormat.translate("common", "support"));
@@ -531,7 +536,8 @@ public class Downloader extends JFrame implements WindowListener {
             FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                     _ -> {},
                     FunctionDialog.DEFAULT_BUTTONS, 0,
-                    null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+                    null, FunctionDialog.NORTH_DIRECTION_RIGHT,
+                    true, true);
         });
 
         FunctionDialog.showDialog(this, StringFormat.translate("task", "task.creat_task"), mainPanel,

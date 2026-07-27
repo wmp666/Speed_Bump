@@ -18,21 +18,6 @@
         </border>
         <children/>
       </grid>
-      <scrollpane id="1ec17">
-        <constraints border-constraint="Center"/>
-        <properties/>
-        <border type="empty">
-          <size top="5" left="5" bottom="5" right="5"/>
-        </border>
-        <children>
-          <grid id="bb9d3" binding="taskPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints/>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
-        </children>
-      </scrollpane>
       <grid id="46d9d" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="North"/>
@@ -56,6 +41,12 @@
             </properties>
           </component>
         </children>
+      </grid>
+      <grid id="31c8e" binding="taskPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children/>
       </grid>
     </children>
   </grid>

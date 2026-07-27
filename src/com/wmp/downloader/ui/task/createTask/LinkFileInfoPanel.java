@@ -109,7 +109,7 @@ public abstract class LinkFileInfoPanel extends JPanel {
             @Override
             public void editButtonAction(ActionEvent e) {
                 var taskFileEditPanel = new TaskFileEditPanel(nameLabel.getText());
-                FunctionDialog.showDialog(this, StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
+                FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
                         result -> {
                             if (result == FunctionDialog.RESULT_SAVE)
                                 nameLabel.setText(taskFileEditPanel.getFileName());
