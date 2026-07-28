@@ -32,11 +32,6 @@ public abstract class Parser {
         //else if(url.strip().startsWith("ed2k://")){
         //    return new Ed2kParser();
         //}
-        return new Parser() {
-            @Override
-            public JPanel parse(String content) {
-                return null;
-            }
-        };
+        return null;
     }
 }

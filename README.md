@@ -1,5 +1,5 @@
 # 减速带 (Speed Bump)
-1. 多线程+单线程下载工具，支持HTTP，HTTPS
+1. 多线程+单线程下载工具，支持HTTP，HTTPS，BT（Torrent）
 2. 视频处理器，支持合并音频，视频；
 
 > 作者正在加急赶工完成README，同时更多内容还在制作中...
@@ -8,6 +8,7 @@
 ## 支持的下载链接
 - HTTP/HTTPS
   - Github加速
+- BT（Torrent）
 - 哔哩哔哩（视频、视频合集）
 - 抖音（视频、图集）
 ## 支持的视频处理
@@ -25,6 +26,7 @@
 - [org.jsoup:jsoup](https://jsoup.org/)
 - [log4j:log4j](https://logging.apache.org/log4j/2.x/index.html)
 - [io.github.dj.raven:modal-dialog](https://github.com/DJ-Raven/swing-modal-dialog)
+- [frostwire:frostwire-jlibtorrent](https://github.com/frostwire/frostwire-jlibtorrent)
 
 
 ### 贡献者
@@ -39,6 +41,7 @@
 ## 特定功能启用状态
 - [ ] Github 加速
 - [ ] 剪切板监听
+- [ ] 拖入文本域（创建任务页）添加文件路径
 - [x] 启用硬件加速
 - [x] 关闭SSL
 

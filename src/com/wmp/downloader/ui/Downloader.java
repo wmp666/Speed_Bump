@@ -96,6 +96,7 @@ public class Downloader extends JFrame implements WindowListener {
     private JSlider alphaSlider;
     private JCheckBox alibabaFastjsonCheckBox;
     private JCheckBox log4jLog4jCheckBox;
+    private JScrollPane aboutScrollPane;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -454,6 +455,8 @@ public class Downloader extends JFrame implements WindowListener {
             EasterEggData.canUseIcon = IconPackCheckBox.isSelected();
             IconControl.runDynamicConverters();
         });
+
+        aboutScrollPane.getViewport().setOpaque(false);
     }
 
     private void initTaskComponents() {

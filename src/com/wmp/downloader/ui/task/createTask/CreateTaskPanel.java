@@ -2,6 +2,7 @@ package com.wmp.downloader.ui.task.createTask;
 
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.Parser;
@@ -19,6 +20,12 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.io.File;
@@ -120,6 +127,46 @@ public class CreateTaskPanel {
         ThreadNumSlider.addChangeListener(e -> {
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
         });
+
+        // 支持拖放文件/目录到下载链接输入框
+        new DropTarget(DownloaderURLTextArea, new DropTargetAdapter() {
+            @Override
+            public void drop(DropTargetDropEvent dtde) {
+                try {
+                    // 接受复制操作
+                    dtde.acceptDrop(DnDConstants.ACTION_COPY);
+                    Transferable tr = dtde.getTransferable();
+
+                    // 检查是否包含文件列表数据
+                    if (tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                        @SuppressWarnings("unchecked")
+                        java.util.List<File> files = (java.util.List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);
+
+                        // 构建路径字符串（每个文件一行）
+                        StringBuilder sb = new StringBuilder();
+                        for (File file : files) {
+                            if (!sb.isEmpty()) sb.append("\n");
+                            sb.append(file.getAbsolutePath());
+                        }
+
+                        // 追加到文本区域（考虑已有内容）
+                        String current = DownloaderURLTextArea.getText();
+                        if (current.isBlank()) {
+                            DownloaderURLTextArea.setText(sb.toString());
+                        } else {
+                            DownloaderURLTextArea.append("\n" + sb.toString());
+                        }
+
+                        dtde.dropComplete(true);
+                    } else {
+                        dtde.rejectDrop();
+                    }
+                } catch (Exception e) {
+                    dtde.rejectDrop();
+                    logger.error("处理拖放文件时出错", e);
+                }
+            }
+        });
     }
 
 
@@ -142,7 +189,13 @@ public class CreateTaskPanel {
         //判断链接类型
 
         try{
-            var linkFileInfoPanel = Parser.getParser(link).parse(link);
+            var parser = Parser.getParser(link);
+            JPanel linkFileInfoPanel;
+            if (parser != null) {
+                linkFileInfoPanel = parser.parse(link);
+            }else{
+                return;
+            }
 
             if (linkFileInfoPanel != null) {
                 linkFileInfoPanels.add(linkFileInfoPanel);
@@ -155,6 +208,7 @@ public class CreateTaskPanel {
         } catch (Exception e) {
             tipLabel.setText(StringFormat.translate("task", "task.create_task.error_link"));
             tipProgressBar.setVisible(false);
+            ToastMessage.show(null, StringFormat.translate("task", "task.create_task.error_link") + ": " + link, ToastMessage.ERROR);
             logger.error("Error parsing link: " + link, e);
         }
     }
