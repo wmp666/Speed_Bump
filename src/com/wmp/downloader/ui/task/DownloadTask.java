@@ -34,6 +34,8 @@ public abstract class DownloadTask extends JPanel {
     private DynamicConverterTask[] IconDynamicConverterTasks = new DynamicConverterTask[0];
     private DynamicConverterTask[] ThemeDynamicConverterTasks = new DynamicConverterTask[0];
 
+    protected int startCount = 0;
+
     public DownloadTask(String fileName, File savePath) {
         this.fileName = fileName;
 
@@ -131,6 +133,8 @@ public abstract class DownloadTask extends JPanel {
     public void start() {
         if (isStart || isFinally) return;
         isStart = true;
+
+        startCount++;
 
         //判断是否支持多线程
         try {

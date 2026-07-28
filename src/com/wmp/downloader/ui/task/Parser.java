@@ -1,6 +1,7 @@
 package com.wmp.downloader.ui.task;
 
 import com.wmp.downloader.ui.task.bilibili.BiliParser;
+import com.wmp.downloader.ui.task.bt.BTParser;
 import com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel;
 import com.wmp.downloader.ui.task.douyin.DouyinParser;
 import com.wmp.downloader.ui.task.ed2k.Ed2kParser;
@@ -20,6 +21,9 @@ public abstract class Parser {
         }
         else if (url.strip().startsWith("http")) {
             return new HTTPParser();
+        }
+        else if (url.strip().endsWith(".torrent")) {
+            return new BTParser();
         }
 
 

@@ -9,6 +9,7 @@ import com.wmp.downloader.ui.task.bilibili.file.BiliFileDownloadTask;
 import com.wmp.downloader.ui.task.bilibili.folder.BiliFolderDownloadTask;
 import com.wmp.downloader.ui.task.bilibili.file.BiliLinkFileInfoPanel;
 import com.wmp.downloader.ui.task.bilibili.folder.BiliLinkFolderInfoPanel;
+import com.wmp.downloader.ui.task.bt.TorrentFileDownloadTask;
 import com.wmp.downloader.ui.task.douyin.DouyinImageDownloadTask;
 import com.wmp.downloader.ui.task.douyin.DouyinVideoDownloadTask;
 import com.wmp.downloader.ui.task.http.URLDownloadTask;
@@ -180,6 +181,12 @@ public class CreateTaskPanel {
                             URI.create(linkFileInfoPanel.getUrl()),
                             new File(path), threadNum, mode
                     ));
+
+                else if (linkFileInfoPanel.getMode().equals("BT-Torrent"))
+                    downloadTasks.add(new TorrentFileDownloadTask(
+                            new File(path),
+                            linkFileInfoPanel.getFileName(),
+                            linkFileInfoPanel.getUrl()));
             } else if (panel instanceof LinkFolderInfoPanel linkFolderPanel) {
                 if (linkFolderPanel.getMode().equals("douyin"))
                     downloadTasks.add(new DouyinImageDownloadTask(

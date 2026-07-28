@@ -214,7 +214,7 @@ public class FunctionDialog extends JDialog {
                     return contentScroll;
                 }
             };
-            ModalDialog.showModal(c, simpleModalBorder);
+            ModalDialog.showModal(c, simpleModalBorder, new Option().setBackgroundClickType(Option.BackgroundClickType.BLOCK));
         }
     }
 

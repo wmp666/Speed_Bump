@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="DownLoader:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/DownLoader_jar</output-path>
-    <root id="archive" name="DownLoader.jar">
+  <artifact type="jar" name="DownLoader_Windows:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DownLoader_Windows_jar</output-path>
+    <root id="archive" name="DownLoader_windows.jar">
       <element id="module-output" name="DownLoader" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/alibaba/fastjson/2.0.15/fastjson-2.0.15.jar" path-in-jar="/" />
@@ -19,6 +19,8 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.15.1/jsoup-1.15.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/zxing/core/3.5.3/core-3.5.3.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/zxing/javase/3.5.3/javase-3.5.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jlibtorrent-2.0.12.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jlibtorrent-windows-2.0.12.9.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

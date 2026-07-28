@@ -16,5 +16,7 @@
     <orderEntry type="library" name="google.zxing.core" level="project" />
     <orderEntry type="library" name="google.zxing.javase" level="project" />
     <orderEntry type="library" name="io.github.dj.raven.modal.dialog" level="project" />
+    <orderEntry type="library" name="jlibtorrent-2.0.12.9" level="project" />
+    <orderEntry type="library" name="jlibtorrent-windows-2.0.12.9" level="project" />
   </component>
 </module>

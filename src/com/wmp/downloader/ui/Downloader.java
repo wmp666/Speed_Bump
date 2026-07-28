@@ -58,8 +58,6 @@ public class Downloader extends JFrame implements WindowListener {
     private JButton createTaskButton;
     private JCheckBox FlatLafCheckBox;
     private JCheckBox IconPackCheckBox;
-    private JCheckBox alibabaFastjsonCheckBox;
-    private JCheckBox log4jLog4jCheckBox;
     private JPanel TaskButtonPanel;
     private PathSelectionPanel pathSelectionPanel;
     private JComboBox<String> FontListComboBox;
@@ -96,6 +94,8 @@ public class Downloader extends JFrame implements WindowListener {
     private JComboBox<String> BackgroundModeComboBox;
     private JScrollPane settingsScrollPane;
     private JSlider alphaSlider;
+    private JCheckBox alibabaFastjsonCheckBox;
+    private JCheckBox log4jLog4jCheckBox;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;

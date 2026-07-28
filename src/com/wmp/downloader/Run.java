@@ -31,6 +31,10 @@ public class Run {
             JPanel panel = new JPanel(new BorderLayout());
             JTextArea textArea = new JTextArea();
             textArea.setText("""
+                    0.1.9
+                    1.增加种子下载（单个文件）
+                    2.优化功能性弹窗（内嵌式），点击四周会关闭的问题
+                    
                     0.1.8
                     1.考虑到大小问题，这个版本删除了JavaCV
                     
