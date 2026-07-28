@@ -6,6 +6,7 @@ import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.task.DownloadTask;
 
 import javax.swing.*;
@@ -14,15 +15,20 @@ import java.util.concurrent.CountDownLatch;
 
 public class TorrentFileDownloadTask extends DownloadTask {
 
-    private String torrentFile;
+    private final String link;
+
+    /**
+     * 0-Torrent 1-Magnet
+     */
+    private final int linkMode;
 
     private TorrentHandle handle;
     private SessionManager manager;
 
-    public TorrentFileDownloadTask(File savePath, String fileName, String torrentFile) {
+    public TorrentFileDownloadTask(File savePath, String fileName, String link) {
         super(fileName, savePath);
-        this.torrentFile = torrentFile;
-
+        this.link = link;
+        this.linkMode = BTParser.getLinkMode( link);
     }
 
     @Override
@@ -50,20 +56,26 @@ public class TorrentFileDownloadTask extends DownloadTask {
         SessionParams params = new SessionParams();
         manager.start(params);
 
-        // 3. 添加下载任务
-        File torrentFile = new File(this.torrentFile);
-        File saveDir = savePath;
-
+        // 3. 创建下载任务，同时获取相关信息
+        TorrentInfo ti;
         AddTorrentParams addParams = new AddTorrentParams();
-        addParams.savePath(String.valueOf(saveDir));
-        // 从种子文件加载 TorrentInfo
-        TorrentInfo ti = new TorrentInfo(torrentFile);
+        addParams.savePath(savePath.getAbsolutePath());
+        if (linkMode == 0 || linkMode == 1) {
+            File torrentFile = new File(this.link);
+            ti = new TorrentInfo(torrentFile);
 
-        Thread.sleep(10000);
-        manager.download(ti, saveDir);
+            // 添加任务，返回 TorrentHandle 用于控制该任务
+            addParams.torrentInfo(ti);
+        }else{
+            ti = null;
+            ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_exception"), ToastMessage.ERROR);
+            return;
+        }
 
-        // 添加任务，返回 TorrentHandle 用于控制该任务
-        addParams.torrentInfo(ti);
+        //开始下载
+        manager.download(ti, savePath);
+
+
 
         var sha1 = ti.infoHashV1();
         this.handle = manager.find(sha1);

@@ -221,14 +221,14 @@ public class CreateTaskPanel {
         ArrayList<DownloadTask> downloadTasks = new ArrayList<>();
         for (var panel : linkFileInfoPanels) {
             if (panel instanceof LinkFileInfoPanel linkFileInfoPanel){
-                if (linkFileInfoPanel.getMode().equals("HTTP"))
+                if (linkFileInfoPanel.getMode().equals("HTTP")) //HTTP 单文件
                     downloadTasks.add(new URLDownloadTask(linkFileInfoPanel.getFileName(), linkFileInfoPanel.getFileSizeNum(), URI.create(linkFileInfoPanel.getUrl()), new File(path), threadNum, mode));
-                else if (linkFileInfoPanel.getMode().equals("bilibili")) {
+                else if (linkFileInfoPanel.getMode().equals("bilibili")) { //哔哩哔哩 单文件
                     if (linkFileInfoPanel instanceof BiliLinkFileInfoPanel biliLinkFileInfoPanel)
                         downloadTasks.add(new BiliFileDownloadTask(
                                 biliLinkFileInfoPanel.getFileName(), biliLinkFileInfoPanel.getFileSize(),
                                 biliLinkFileInfoPanel.getBiliDownloadUrl(), new File(path), threadNum, mode));
-                }else if (linkFileInfoPanel.getMode().equals("douyin"))
+                }else if (linkFileInfoPanel.getMode().equals("douyin")) //抖音 单文件
                     downloadTasks.add(new DouyinVideoDownloadTask(
                             linkFileInfoPanel.getFileName(),
                             linkFileInfoPanel.getFileSizeNum(),
@@ -236,13 +236,14 @@ public class CreateTaskPanel {
                             new File(path), threadNum, mode
                     ));
 
-                else if (linkFileInfoPanel.getMode().equals("BT-Torrent"))
+                else if (linkFileInfoPanel.getMode().equals("BT-Torrent") ||
+                linkFileInfoPanel.getMode().equals("BT-Magnet")) //BT 单文件
                     downloadTasks.add(new TorrentFileDownloadTask(
                             new File(path),
                             linkFileInfoPanel.getFileName(),
                             linkFileInfoPanel.getUrl()));
             } else if (panel instanceof LinkFolderInfoPanel linkFolderPanel) {
-                if (linkFolderPanel.getMode().equals("douyin"))
+                if (linkFolderPanel.getMode().equals("douyin")) //抖音 多文件（图集）
                     downloadTasks.add(new DouyinImageDownloadTask(
                             linkFolderPanel.getFolderName(),
                             linkFolderPanel.getSelectedUrls(),
@@ -250,7 +251,7 @@ public class CreateTaskPanel {
                             linkFolderPanel.getFileSizes(),
                             new File(path), threadNum, mode
                     ));
-                else if (linkFolderPanel instanceof BiliLinkFolderInfoPanel biliLinkFolderInfoPanel)
+                else if (linkFolderPanel instanceof BiliLinkFolderInfoPanel biliLinkFolderInfoPanel) //哔哩哔哩 多文件
                     downloadTasks.add(new BiliFolderDownloadTask(
                             biliLinkFolderInfoPanel.getFolderName(),
                             biliLinkFolderInfoPanel.getSelectedBiliTotalSize(),

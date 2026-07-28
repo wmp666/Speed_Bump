@@ -12,7 +12,6 @@ import javax.swing.*;
 public abstract class Parser {
     public abstract JPanel parse(String content);
 
-
     public static Parser getParser(String url) {
         if(url.startsWith("BV") || url.contains("bilibili.com")){
             return new BiliParser();
@@ -22,7 +21,7 @@ public abstract class Parser {
         else if (url.strip().startsWith("http")) {
             return new HTTPParser();
         }
-        else if (url.strip().endsWith(".torrent")) {
+        else if (url.strip().endsWith(".torrent") || url.strip().startsWith("magnet:")) {
             return new BTParser();
         }
 
@@ -34,4 +33,6 @@ public abstract class Parser {
         //}
         return null;
     }
+
+
 }
