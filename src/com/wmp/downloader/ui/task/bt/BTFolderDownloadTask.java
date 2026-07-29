@@ -84,6 +84,7 @@ public class BTFolderDownloadTask extends DownloadTask {
 
         // 5. 添加任务并获取句柄
         this.handle = new TorrentHandle(manager.swig().add_torrent(addParams.swig(), new error_code()));
+        handle.renameFile(0, fileName);
         if (handle == null || !handle.isValid()) {
             ToastMessage.show(null, StringFormat.translate("task", "task.download_task.download_exception"), ToastMessage.ERROR);
             return;

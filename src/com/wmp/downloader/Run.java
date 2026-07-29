@@ -12,6 +12,8 @@ import java.awt.*;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
+    public static final String VERSION = "0.2.0";
+
     static void main(String[] args) {
         DataControl.load();
 
@@ -33,6 +35,9 @@ public class Run {
             JPanel panel = new JPanel(new BorderLayout());
             JTextArea textArea = new JTextArea();
             textArea.setText("""
+                    0.2.0
+                    1.使修改种子、磁力文件/文件夹名称功能可用
+                    
                     0.1.9
                     1.增加种子、磁力下载
                     2.优化功能性弹窗（内嵌式），点击四周会关闭的问题

@@ -91,6 +91,7 @@ public class BTFileDownloadTask extends DownloadTask {
 
         var sha1 = ti.infoHashV1();
         this.handle = manager.find(sha1);
+        handle.renameFile(0, fileName);
 
         JProgressBar progressBar = new JProgressBar();
         progressBar.setStringPainted(true);

@@ -7,6 +7,7 @@ import com.frostwire.jlibtorrent.alerts.MetadataReceivedAlert;
 import com.frostwire.jlibtorrent.swig.create_torrent;
 import com.frostwire.jlibtorrent.swig.entry;
 import com.frostwire.jlibtorrent.swig.error_code;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -78,6 +79,7 @@ public class MagnetToTorrent {
                             fos.write(bencodedData);
                         }
 
+                        ToastMessage.show(null, StringFormat.translate("task", "task.magnet_to_torrent.success"), ToastMessage.SUCCESS);
                         logger.info("种子文件已生成: " + torrentPath[0]);
                         latch.countDown();
 

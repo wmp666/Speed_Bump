@@ -2,6 +2,7 @@ package com.wmp.downloader.tools;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.wmp.downloader.Run;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.Downloader;
 import org.apache.log4j.DailyRollingFileAppender;
@@ -124,7 +125,7 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.put("version", "0.1.9");
+        tempDataMap.put("version", Run.VERSION);
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {
                 tempDataMap.put("theme_type", "light");
