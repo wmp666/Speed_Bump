@@ -35,6 +35,9 @@ public class Run {
             JPanel panel = new JPanel(new BorderLayout());
             JTextArea textArea = new JTextArea();
             textArea.setText("""
+                    0.2.1
+                    1.更新创建链接功能，更加智能
+                    
                     0.2.0
                     1.使修改种子、磁力文件/文件夹名称功能可用
                     

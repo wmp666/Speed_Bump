@@ -20,7 +20,6 @@ public class Ed2kParser extends Parser {
             return LinkFileInfoPanel
                     .createBasicLinkFileInfoPanel(fileName, Long.parseLong(fileSize), "ed2k", content);
         }
-        return LinkFileInfoPanel
-                .createBasicLinkFileInfoPanel("", 0, "ed2k", "");
+        return null;
     }
 }
