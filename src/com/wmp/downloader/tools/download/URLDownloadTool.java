@@ -62,16 +62,17 @@ public class URLDownloadTool {
 
     /**
      * 多线程下载
-     * @param uri 下载链接
-     * @param destFile 保存路径（暂时不用）
-     * @param fileName 文件名
-     * @param fileSize 文件大小
-     * @param numThreads 线程数
-     * @param maxRetries 最大重试次数
+     *
+     * @param uri             下载链接
+     * @param destFile        保存路径（暂时不用）
+     * @param fileName        文件名
+     * @param fileSize        文件大小
+     * @param numThreads      线程数
+     * @param maxRetries      最大重试次数
      * @param progressBarList 进度列表
      * @param pauseController 暂停管理
-     * @param progress 进度文字处理
-     * @param headers 头部信息
+     * @param progress        进度文字处理
+     * @param headers         头部信息
      * @return 下载信息
      */
     public static DownloadingInfo download(URI uri, File destFile, String fileName, long fileSize, int numThreads, int maxRetries, List<JProgressBar> progressBarList, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) throws Exception {
@@ -112,14 +113,15 @@ public class URLDownloadTool {
 
     /**
      * 单线程下载
-     * @param uri 下载链接
-     * @param destPath 保存路径
-     * @param fileName 文件名
-     * @param fileSize 文件大小
-     * @param maxRetries 最大重试次数
-     * @param progressBar 进度条
+     *
+     * @param uri             下载链接
+     * @param destPath        保存路径
+     * @param fileName        文件名
+     * @param fileSize        文件大小
+     * @param maxRetries      最大重试次数
+     * @param progressBar     进度条
      * @param pauseController 暂停管理
-     * @param progress 进度文字处理
+     * @param progress        进度文字处理
      * @return 是否下载成功
      */
     public static boolean singleThreadDownload(URI uri, File destPath, String fileName, long fileSize, int maxRetries, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws Exception {
@@ -128,15 +130,16 @@ public class URLDownloadTool {
 
     /**
      * 单线程下载
-     * @param uri 下载链接
-     * @param destPath 保存路径
-     * @param fileName 文件名
-     * @param fileSize 文件大小
-     * @param maxRetries 最大重试次数
-     * @param progressBar 进度条
+     *
+     * @param uri             下载链接
+     * @param destPath        保存路径
+     * @param fileName        文件名
+     * @param fileSize        文件大小
+     * @param maxRetries      最大重试次数
+     * @param progressBar     进度条
      * @param pauseController 暂停管理
-     * @param progress 进度文字处理
-     * @param headers 头部信息
+     * @param progress        进度文字处理
+     * @param headers         头部信息
      * @return 是否下载成功
      */
     public static boolean singleThreadDownload(URI uri, File destPath, String fileName, long fileSize, int maxRetries, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) throws Exception {
@@ -154,20 +157,20 @@ public class URLDownloadTool {
         }
 
         if (destFile.exists()) {
-            if (destFile.length() == fileSize){
+            if (destFile.length() == fileSize) {
                 logger.debug("文件已完整下载。");
                 progressBar.setValue(100);
                 return true;
-            }else if (destFile.length() > fileSize){
+            } else if (destFile.length() > fileSize) {
                 var i = JOptionPane.showConfirmDialog(null, StringFormat.translate("task", "task.download_task.delete_err_file.confirm"));
-                if (i == JOptionPane.YES_OPTION){
+                if (i == JOptionPane.YES_OPTION) {
                     destFile.delete();
-                }else{
+                } else {
                     return true;
                 }
             }
 
-        }else{
+        } else {
             destFile.getParentFile().mkdirs();
             destFile.createNewFile();
         }
@@ -231,7 +234,7 @@ public class URLDownloadTool {
 
         logger.info("下载的链接：" + uri);
 
-        if (!destPath.exists()){
+        if (!destPath.exists()) {
             destPath = StringFormat.sanitizeFile(destPath);
             destPath.getParentFile().mkdirs();
             destPath.createNewFile();
@@ -253,15 +256,17 @@ public class URLDownloadTool {
             return false;
         }
     }
+
     /**
      * 文件合并
-     * @param destPath 保存路径
-     * @param fileName 文件名
-     * @param partCount 分段数
-     * @param fileSize 文件大小
-     * @param progressBar 进度条
+     *
+     * @param destPath        保存路径
+     * @param fileName        文件名
+     * @param partCount       分段数
+     * @param fileSize        文件大小
+     * @param progressBar     进度条
      * @param pauseController 暂停管理
-     * @param progress 进度文字处理
+     * @param progress        进度文字处理
      */
     public static void mergeParts(File destPath, String fileName, int partCount, long fileSize, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws IOException {
         logger.info("合并的路径：" + destPath);
@@ -317,7 +322,7 @@ public class URLDownloadTool {
 
     }
 
-    public static long getFileSize(String urlStr){
+    public static long getFileSize(String urlStr) {
         try {
             // 方式一：HEAD 请求（推荐，不消耗流量）
             HttpURLConnection conn = (HttpURLConnection) URI.create(urlStr).toURL().openConnection();
@@ -421,7 +426,6 @@ public class URLDownloadTool {
             return null;
         }
     }
-
 
 
     public static class DownloadTaskRunnable implements Runnable {
@@ -616,7 +620,8 @@ public class URLDownloadTool {
         }
     }
 
-    public record DownloadingInfo(CountDownLatch latch, ExecutorService executor, List<DownloadTaskRunnable> downloadTasks,
+    public record DownloadingInfo(CountDownLatch latch, ExecutorService executor,
+                                  List<DownloadTaskRunnable> downloadTasks,
                                   int status, PauseController pauseController, DownloadProgress progress) {
 
     }

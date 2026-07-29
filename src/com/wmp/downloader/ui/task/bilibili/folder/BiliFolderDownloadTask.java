@@ -1,7 +1,7 @@
 package com.wmp.downloader.ui.task.bilibili.folder;
 
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
@@ -167,9 +167,9 @@ public class BiliFolderDownloadTask extends DownloadTask {
                 }
                 int completed = completedCount.get();
                 infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.progress_folder"),
-                                        DownloadProgress.formatSize(totalDownloaded),
-                                        DownloadProgress.formatSize(totalSpeed),
-                                        completed, biliUrls.length));
+                        DownloadProgress.formatSize(totalDownloaded),
+                        DownloadProgress.formatSize(totalSpeed),
+                        completed, biliUrls.length));
 
             }
         });
@@ -278,6 +278,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
             checkAllFilesCompleted();
         }
     }
+
     private void checkAllFilesCompleted() {
         int completed = completedCount.incrementAndGet();
         if (completed >= biliUrls.length) {

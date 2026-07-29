@@ -1,8 +1,6 @@
 package com.wmp.downloader.ui.drawer;
 
 import com.wmp.downloader.tools.DataControl;
-import com.wmp.downloader.tools.ui.IconControl;
-import raven.modal.drawer.menu.DrawerMenu;
 import raven.modal.drawer.menu.MenuOption;
 import raven.modal.drawer.simple.SimpleDrawerBuilder;
 import raven.modal.drawer.simple.footer.SimpleFooterData;

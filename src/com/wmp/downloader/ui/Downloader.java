@@ -1,9 +1,9 @@
 package com.wmp.downloader.ui;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
@@ -20,11 +20,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;   // FIX 新增导入
-import java.awt.event.ComponentEvent;     // FIX 新增导入
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -111,7 +107,7 @@ public class Downloader extends JFrame implements WindowListener {
     private JLayeredPane layeredPane = new JLayeredPane();
     private BackgroundPanel backgroundPanel;
     private JPanel backgroundPreviewPanel;
-    private Timer backgroundupdateTimer = new Timer(100, e->{
+    private Timer backgroundupdateTimer = new Timer(100, e -> {
         updateBackground();
         updateChildBounds(); // FIX 使用统一方法
     });
@@ -124,7 +120,7 @@ public class Downloader extends JFrame implements WindowListener {
         taskListener.start();
 
 
-        this.getRootPane().putClientProperty( "JRootPane.fullWindowContent", true );
+        this.getRootPane().putClientProperty("JRootPane.fullWindowContent", true);
         //this.getRootPane().setBackground( new Color( 0, 0, 0, 0 ) );
 
         this.setTitle(StringFormat.translate("common", "app_name"));
@@ -156,7 +152,6 @@ public class Downloader extends JFrame implements WindowListener {
 
         // 初始化背景相关
         initBackgroundSettings();
-
 
 
         //任务
@@ -401,7 +396,8 @@ public class Downloader extends JFrame implements WindowListener {
             panel.add(textArea);
 
             FunctionDialog.showDialog(this, "免责声明", panel,
-                    _ -> {},
+                    _ -> {
+                    },
                     FunctionDialog.DEFAULT_BUTTONS, 0,
                     null, FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
         });
@@ -506,7 +502,8 @@ public class Downloader extends JFrame implements WindowListener {
             panel.add(textArea);
 
             FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
-                    _ -> {},
+                    _ -> {
+                    },
                     FunctionDialog.DEFAULT_BUTTONS, 0,
                     null, FunctionDialog.NORTH_DIRECTION_RIGHT,
                     true, true);
@@ -519,7 +516,8 @@ public class Downloader extends JFrame implements WindowListener {
             panel.add(textArea);
 
             FunctionDialog.showDialog(this, StringFormat.translate("common", "support"), panel,
-                    _ -> {},
+                    _ -> {
+                    },
                     FunctionDialog.DEFAULT_BUTTONS, 0,
                     null, FunctionDialog.NORTH_DIRECTION_RIGHT,
                     true, true);
@@ -560,7 +558,7 @@ public class Downloader extends JFrame implements WindowListener {
         isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
-        alphaSlider.setValue((int) (DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue()*100));
+        alphaSlider.setValue((int) (DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue() * 100));
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -568,7 +566,7 @@ public class Downloader extends JFrame implements WindowListener {
         BackgroundModeComboBox.setSelectedItem(DataControl.get("background_mode", "None"));
 
         backgroundSelectionPanel.setPath(DataControl.get("background", ""));
-        if(Objects.equals(BackgroundModeComboBox.getSelectedItem(), "Image")){
+        if (Objects.equals(BackgroundModeComboBox.getSelectedItem(), "Image")) {
             backgroundSelectionPanel.setVisible(true);
         } else backgroundSelectionPanel.setVisible(false);
 
@@ -623,11 +621,11 @@ public class Downloader extends JFrame implements WindowListener {
             ThreadNumLabel.setSize(ThreadNumLabel.getPreferredSize());
         });
 
-        BackgroundModeComboBox.addItemListener(e ->{
+        BackgroundModeComboBox.addItemListener(e -> {
             DataControl.putAndSave("background_mode", e.getItem().toString());
             if (e.getItem().equals("Image")) {
                 backgroundSelectionPanel.setVisible(true);
-            } else{
+            } else {
                 backgroundSelectionPanel.setVisible(false);
             }
         });
@@ -635,9 +633,8 @@ public class Downloader extends JFrame implements WindowListener {
             DataControl.putAndSave("background", path);
         });
         alphaSlider.addChangeListener(e -> {
-            DataControl.putAndSave("background_alpha", (float) alphaSlider.getValue()/100.0f);
+            DataControl.putAndSave("background_alpha", (float) alphaSlider.getValue() / 100.0f);
         });
-
 
 
         refreshButton.addActionListener(e -> {
@@ -668,7 +665,7 @@ public class Downloader extends JFrame implements WindowListener {
             DataControl.putAndSave("Font", fontName);
             ThemeChanger.easyChanger();
         });
-        laugComboBox.addItemListener(e ->{
+        laugComboBox.addItemListener(e -> {
             var lauguage = e.getItem().toString();
             Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(lauguage);
             if (matcher.find()) {
@@ -755,7 +752,7 @@ public class Downloader extends JFrame implements WindowListener {
 
         if (createTaskPanel == null) {
             createDownloadTask(url);
-        }else{
+        } else {
             createTaskPanel.setLink(url);
         }
     }
@@ -764,7 +761,7 @@ public class Downloader extends JFrame implements WindowListener {
         try {
             if (url.startsWith("BV") || url.contains("bilibili.com")) {
                 return isValidBiliUrl(url);
-            }else if(url.startsWith("http")) return isHttpReachable(url);
+            } else if (url.startsWith("http")) return isHttpReachable(url);
         } catch (Exception e) {
             logger.debug("链接验证失败: " + url, e);
             return false;
@@ -832,11 +829,11 @@ public class Downloader extends JFrame implements WindowListener {
             getRootPane().setDefaultButton(createTaskButton);
         } else if (selectedIndex == tabbedPane1.indexOfComponent(settingsPanel)) {
             getRootPane().setDefaultButton(saveButton);
-        } else if (selectedIndex == tabbedPane1.indexOfComponent(SpecialSettingsPanel)){
+        } else if (selectedIndex == tabbedPane1.indexOfComponent(SpecialSettingsPanel)) {
             if (SpecialSettingsTabbedPane.getSelectedComponent() instanceof BasicSpecialSettings.SpecialSettingsPanel specialSettingsPanel) {
                 specialSettingsPanel.setDefaultButton();
             }
-        }else getRootPane().setDefaultButton(null);
+        } else getRootPane().setDefaultButton(null);
     }
 
     @Override

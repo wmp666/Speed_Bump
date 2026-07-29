@@ -8,7 +8,6 @@ import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
-import raven.modal.Toast;
 
 import javax.swing.*;
 import java.awt.*;
@@ -101,11 +100,16 @@ public class ResetVideoInfoPanel extends JPanel {
     // 映射音频编码显示名 -> FFmpeg 编码器
     private String mapAudioCodec(String display) {
         switch (display) {
-            case "aac":  return "aac";
-            case "mp3":  return "libmp3lame";
-            case "flac": return "flac";
-            case "wav":  return "pcm_s16le"; // 无损 PCM
-            default:     return "aac";
+            case "aac":
+                return "aac";
+            case "mp3":
+                return "libmp3lame";
+            case "flac":
+                return "flac";
+            case "wav":
+                return "pcm_s16le"; // 无损 PCM
+            default:
+                return "aac";
         }
     }
 
@@ -124,7 +128,6 @@ public class ResetVideoInfoPanel extends JPanel {
             this.containerFormat = containerFormat;
             this.videoCodec = videoCodec;
             this.audioCodec = audioCodec;
-
 
 
         }
@@ -151,7 +154,7 @@ public class ResetVideoInfoPanel extends JPanel {
                 ProgressBarsPanel.removeAll();
                 if (!success) {
                     logger.error("转码失败");
-                }else {
+                } else {
                     downloadControlButton.setEnabled(false);
                     isFinally = true;
                 }

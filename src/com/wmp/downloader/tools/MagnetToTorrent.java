@@ -7,13 +7,12 @@ import com.frostwire.jlibtorrent.alerts.MetadataReceivedAlert;
 import com.frostwire.jlibtorrent.swig.create_torrent;
 import com.frostwire.jlibtorrent.swig.entry;
 import com.frostwire.jlibtorrent.swig.error_code;
-import com.frostwire.jlibtorrent.swig.libtorrent;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Random;
 import java.util.concurrent.CountDownLatch;
-
-import org.apache.log4j.Logger;
 
 public class MagnetToTorrent {
 
@@ -26,7 +25,7 @@ public class MagnetToTorrent {
                 DataControl.getTempPath().getAbsolutePath()));
     }
 
-    public static String magnetToTorrent(String magnetUri, String savePath, String tempPath){
+    public static String magnetToTorrent(String magnetUri, String savePath, String tempPath) {
         logger.info("开始转换磁力链接");
 
         SessionManager manager = new SessionManager();
@@ -64,16 +63,22 @@ public class MagnetToTorrent {
                         entry e = ct.generate();
 
                         // 3. ★ 使用 libtorrent.bencode 将 entry 编码为字节数组 ★
+                        logger.info("正在获取种子文件数据...");
                         byte[] bencodedData = ti.bencode();
 
                         // 4. 保存为 .torrent 文件
-                        String torrentFileName = ti.name() + ".torrent";
+                        String torrentFileName = new Random().nextLong() + ".torrent";
                         var file = new File(tempPath + "/" + torrentFileName);
                         torrentPath[0] = file.getAbsolutePath();
+
+                        //修改为可存储在系统上的文件
+                        torrentPath[0] = StringFormat.sanitizeFile(new File(torrentPath[0])).getAbsolutePath();
+
                         try (FileOutputStream fos = new FileOutputStream(file)) {
                             fos.write(bencodedData);
                         }
-                        logger.info("种子文件已生成: " + torrentFileName);
+
+                        logger.info("种子文件已生成: " + torrentPath[0]);
                         latch.countDown();
 
                     } catch (Exception e) {

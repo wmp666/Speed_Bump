@@ -38,13 +38,14 @@ public class DouyinImageDownloadTask extends DownloadTask {
 
     /**
      * 构造器
-     * @param folderName    文件夹名称（将作为父目录名）
-     * @param imageUrls     图片下载链接数组
-     * @param imageNames    图片文件名数组（需含扩展名，如 .jpg）
-     * @param imageSizes    图片文件大小数组（字节）
-     * @param savePath      保存根目录
-     * @param threadNum     每张图片的分块线程数（当 mode=0 且服务器支持 Range 时生效）
-     * @param mode          下载模式：0=自动（优先多线程），1=单线程
+     *
+     * @param folderName 文件夹名称（将作为父目录名）
+     * @param imageUrls  图片下载链接数组
+     * @param imageNames 图片文件名数组（需含扩展名，如 .jpg）
+     * @param imageSizes 图片文件大小数组（字节）
+     * @param savePath   保存根目录
+     * @param threadNum  每张图片的分块线程数（当 mode=0 且服务器支持 Range 时生效）
+     * @param mode       下载模式：0=自动（优先多线程），1=单线程
      */
     public DouyinImageDownloadTask(String folderName, String[] imageUrls, String[] imageNames,
                                    long[] imageSizes, File savePath, int threadNum, int mode) {

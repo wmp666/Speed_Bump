@@ -1,8 +1,8 @@
 package com.wmp.downloader.ui.task.bilibili.folder;
 
 import com.wmp.downloader.exception.BiliDownloadTaskException;
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.BiliInfoFormat;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.ui.task.bilibili.info.BiliDownloadInfo;
 import com.wmp.downloader.ui.task.createTask.LinkFolderInfoPanel;
@@ -90,7 +90,7 @@ public class BiliLinkFolderInfoPanel extends LinkFolderInfoPanel {
     /**
      * 刷新每个下载信息中的视频，音频大小（已选的质量信息对应的）
      */
-    private void resetSizes(){
+    private void resetSizes() {
         ArrayList<String> uniqueVideoQualities = new ArrayList<>();
         for (var info : downloadInfos) {
             for (var vi : info.videoInfos()) {
@@ -147,13 +147,13 @@ public class BiliLinkFolderInfoPanel extends LinkFolderInfoPanel {
         }
     }
 
-    private void resetSize(){
+    private void resetSize() {
         resetSizes();
 
         //获取真正被选中的文件大小
         long tempSize = 0;
         for (var i = 0; i < this.fileSelectionStatus.length; i++) {
-            if (this.fileSelectionStatus[i]){//选中
+            if (this.fileSelectionStatus[i]) {//选中
                 tempSize += this.sizes[i][0] + this.sizes[i][1];
             }
         }
@@ -163,9 +163,10 @@ public class BiliLinkFolderInfoPanel extends LinkFolderInfoPanel {
 
     /**
      * 获取下载链接
+     *
      * @return 下载链接 [选中的文件][选中文件中的各个下载链接]
      */
-    public String[][] getBiliDownloadUrls(){
+    public String[][] getBiliDownloadUrls() {
         ArrayList<String> uniqueVideoQualities = new ArrayList<>();
         for (var info : downloadInfos) {
             for (var vi : info.videoInfos()) {

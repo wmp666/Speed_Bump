@@ -38,7 +38,7 @@ public class BiliParser extends Parser {
         String BVId = "";
         if (link.strip().startsWith("BV")) {
             BVId = link.strip();
-        }else{
+        } else {
             //https://www.bilibili.com/video/BV1uUKV6zE9R/?spm_id_from=333.1007.tianma.1-2-2.click&vd_source=1ab658dba666f92347c26ce08c448bd5
             Matcher matcher = Pattern.compile("(BV[A-Za-z0-9]+)").matcher(link);
             if (matcher.find()) {
@@ -84,18 +84,16 @@ public class BiliParser extends Parser {
             logger.info("Titles: " + Arrays.toString(titles));
 
 
-
             //仅用BV号获取的
             String title = data.getString("title");
             logger.info("视频/合集标题: " + title);
 
 
-
-            if (cids.length == 1){
+            if (cids.length == 1) {
                 var downloadInfo = getDownloadInfo(BVId, cids[0], sessdata);
                 logger.info("下载信息: " + downloadInfo);
                 return new BiliLinkFileInfoPanel(title + ".mp4", downloadInfo);
-            }else{
+            } else {
                 BiliDownloadInfo[] downloadInfos = new BiliDownloadInfo[cids.length];
                 for (int i = 0; i < cids.length; i++) {
                     downloadInfos[i] = getDownloadInfo(BVId, cids[i], sessdata);
@@ -109,10 +107,10 @@ public class BiliParser extends Parser {
             logger.error("获取视频信息出错", e);
         }
 
-            return null;
+        return null;
     }
 
-    private static BiliDownloadInfo getDownloadInfo(String BVId, long cid, String sessdata){
+    private static BiliDownloadInfo getDownloadInfo(String BVId, long cid, String sessdata) {
         try {
             //获取每个视频中的数据
             String videoInfoUrl = "https://api.bilibili.com/x/player/playurl?otype=json&fnver=0&fnval=16&player=1&qn=64&bvid=" + BVId + "&cid=" + cid;

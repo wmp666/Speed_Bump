@@ -12,7 +12,7 @@ public abstract class BasicSpecialSettings {
     /**
      * 需要动态保存数据
      */
-    public abstract class SpecialSettingsPanel extends JPanel{
+    public abstract class SpecialSettingsPanel extends JPanel {
         public SpecialSettingsPanel() {
             this.setOpaque(false);
         }

@@ -1,7 +1,7 @@
 package com.wmp.downloader.ui.specialSettings;
 
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
@@ -66,6 +66,7 @@ public class FFmpegSettings extends BasicSpecialSettings {
                 }
             });
         }
+
         @Override
         public void setDefaultButton() {
 

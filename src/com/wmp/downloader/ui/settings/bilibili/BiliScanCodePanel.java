@@ -5,8 +5,8 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
 import org.jsoup.Connection;
@@ -53,12 +53,11 @@ public class BiliScanCodePanel extends JPanel {
     }
 
 
-
     // 保存登录成功后获取的 Cookie（包含 SESSDATA）
     private static String cookies = "";
 
-    private void refreshQR(){
-        Thread.ofVirtual().start(()->{
+    private void refreshQR() {
+        Thread.ofVirtual().start(() -> {
             try {
                 String qrcodeKey = fetchQRCode();
                 if (qrcodeKey == null) {
@@ -111,7 +110,9 @@ public class BiliScanCodePanel extends JPanel {
         return null;
     }
 
-    /** 生成二维码图片
+    /**
+     * 生成二维码图片
+     *
      * @param text 要编码的文本（https）
      * @param size 二维码图片的大小
      * @return 二维码图片

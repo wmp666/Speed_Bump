@@ -1,8 +1,8 @@
 package com.wmp.downloader.ui.specialSettings;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.ui.settings.BasicSpecialSettings;
@@ -64,7 +64,7 @@ public class BiliSettings extends BasicSpecialSettings {
                 FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("special_settings", "bili_special_settings.login.scan_code"),
                         new BiliScanCodePanel(),
                         result -> {
-                            if (result == FunctionDialog.RESULT_OK){
+                            if (result == FunctionDialog.RESULT_OK) {
                                 initUserInfo();
                             }
                         }, FunctionDialog.DEFAULT_BUTTONS, 0,
@@ -84,7 +84,7 @@ public class BiliSettings extends BasicSpecialSettings {
 
         }
 
-        public void initUserInfo(){
+        public void initUserInfo() {
             try {
                 Connection.Response response = Jsoup.connect("https://api.bilibili.com/x/web-interface/nav")
                         .header("Cookie", "SESSDATA=" + DataControl.get("bili_sessdata", "")) // 关键：在Header中设置Cookie
@@ -95,7 +95,7 @@ public class BiliSettings extends BasicSpecialSettings {
                 JSONObject jsonObject = JSONObject.parseObject(response.body());
                 var userData = jsonObject.getJSONObject("data");
 
-                if (!userData.getBooleanValue("isLogin", false)){
+                if (!userData.getBooleanValue("isLogin", false)) {
                     UserNameLabel.setText("未登录");
                     loginStatusLabel.setText("无");
                     return;
@@ -104,7 +104,7 @@ public class BiliSettings extends BasicSpecialSettings {
                 logger.debug("用户信息: " + userData);
                 String userName = userData.getString("uname");
                 var userId = userData.getLongValue("mid", 0);
-                boolean isVip = userData.getIntValue("vipStatus",0) == 1;//0:非会员，1:会员
+                boolean isVip = userData.getIntValue("vipStatus", 0) == 1;//0:非会员，1:会员
                 UserNameLabel.setText(userName);
                 loginStatusLabel.setText("UID: " + userId + " " + (isVip ? " 会员" : " 非会员"));
                 loggedOutButton.setEnabled(true);

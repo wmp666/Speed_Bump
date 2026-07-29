@@ -47,4 +47,23 @@ public class WebSetter {
             }
         }
     }
+
+    public static void proxies(boolean isUseSystemProxy) {
+        System.setProperty("java.net.useSystemProxies", String.valueOf(isUseSystemProxy));
+    }
+
+    public static void proxies(String host, int port) {
+        proxies(false);
+        System.setProperty("http.proxyHost", host);
+        System.setProperty("http.proxyPort", String.valueOf(port));
+    }
+
+    public static void isUseProxy(boolean isUseProxy) {
+        if (!isUseProxy) {
+            proxies(false);
+            System.setProperty("http.proxyHost", "");
+            System.setProperty("http.proxyPort", "");
+        }
+
+    }
 }

@@ -1,8 +1,8 @@
 package com.wmp.downloader.ui.task;
 
 import com.formdev.flatlaf.util.ColorFunctions;
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
@@ -37,9 +37,9 @@ public abstract class DownloadTask extends JPanel {
     protected int startCount = 0;
 
     public DownloadTask(String fileName, File savePath) {
-        this.fileName = fileName;
+        this.fileName = StringFormat.sanitizeName(fileName);
 
-        this.savePath = savePath;
+        this.savePath = StringFormat.sanitizeFile(savePath);
         setName(fileName);
 
         this.setLayout(new BorderLayout());

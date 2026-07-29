@@ -5,7 +5,6 @@ import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.wmp.downloader.tools.download.URLDownloadTool;
-import com.wmp.downloader.ui.Downloader;
 
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
@@ -32,7 +31,6 @@ public class BTTest {
 
         Thread.sleep(10000);
         manager.download(ti, saveDir);
-
 
 
         // 添加任务，返回 TorrentHandle 用于控制该任务

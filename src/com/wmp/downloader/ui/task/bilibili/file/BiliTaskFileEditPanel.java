@@ -9,7 +9,7 @@ import java.awt.*;
 
 import static com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel.formatFileSize;
 
-public class BiliTaskFileEditPanel extends JPanel{
+public class BiliTaskFileEditPanel extends JPanel {
 
     private static final Logger logger = Logger.getLogger(BiliTaskFileEditPanel.class);
 
@@ -37,18 +37,18 @@ public class BiliTaskFileEditPanel extends JPanel{
         for (var i = 0; i < downloadInfo.videoInfos().length; i++) {
             VideoQualityComboBox.addItem(
                     BiliInfoFormat.VideoFormat(downloadInfo.videoInfos()[i].quality()) + " "
-            + BiliInfoFormat.getVideoCode(downloadInfo.videoInfos()[i].codecid())) ;
+                            + BiliInfoFormat.getVideoCode(downloadInfo.videoInfos()[i].codecid()));
 
         }
         VideoQualityComboBox.setSelectedIndex(videoInfoIndex);
         for (var i = 0; i < downloadInfo.audioInfos().length; i++) {
             SoundQualityComboBox.addItem(
-                    BiliInfoFormat.AudioFormat(downloadInfo.audioInfos()[i].bitrate())) ;
+                    BiliInfoFormat.AudioFormat(downloadInfo.audioInfos()[i].bitrate()));
 
         }
         SoundQualityComboBox.setSelectedIndex(audioInfoIndex);
         //添加监听
-        VideoQualityComboBox.addItemListener(e ->{
+        VideoQualityComboBox.addItemListener(e -> {
             if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
                 int qualityIndex = VideoQualityComboBox.getSelectedIndex();
                 if (qualityIndex >= 0 && qualityIndex < downloadInfo.videoInfos().length) {
@@ -59,7 +59,7 @@ public class BiliTaskFileEditPanel extends JPanel{
             }
         });
 
-        SoundQualityComboBox.addItemListener(e ->{
+        SoundQualityComboBox.addItemListener(e -> {
             if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
                 int audioIndex = SoundQualityComboBox.getSelectedIndex();
                 if (audioIndex >= 0 && audioIndex < downloadInfo.audioInfos().length) {
@@ -83,10 +83,12 @@ public class BiliTaskFileEditPanel extends JPanel{
     public long getFileSizeNum() {
         return this.size;
     }
-    public int getVideoInfoIndex(){
+
+    public int getVideoInfoIndex() {
         return VideoQualityComboBox.getSelectedIndex();
     }
-    public int getAudioInfoIndex(){
+
+    public int getAudioInfoIndex() {
         return SoundQualityComboBox.getSelectedIndex();
     }
 

@@ -1,16 +1,17 @@
 package com.wmp.downloader.ui.task.createTask;
 
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.Parser;
 import com.wmp.downloader.ui.task.bilibili.file.BiliFileDownloadTask;
-import com.wmp.downloader.ui.task.bilibili.folder.BiliFolderDownloadTask;
 import com.wmp.downloader.ui.task.bilibili.file.BiliLinkFileInfoPanel;
+import com.wmp.downloader.ui.task.bilibili.folder.BiliFolderDownloadTask;
 import com.wmp.downloader.ui.task.bilibili.folder.BiliLinkFolderInfoPanel;
-import com.wmp.downloader.ui.task.bt.TorrentFileDownloadTask;
+import com.wmp.downloader.ui.task.bt.BTFileDownloadTask;
+import com.wmp.downloader.ui.task.bt.BTFolderDownloadTask;
 import com.wmp.downloader.ui.task.douyin.DouyinImageDownloadTask;
 import com.wmp.downloader.ui.task.douyin.DouyinVideoDownloadTask;
 import com.wmp.downloader.ui.task.http.URLDownloadTask;
@@ -65,7 +66,7 @@ public class CreateTaskPanel {
                 String mode = e.getItem().toString();
                 if (mode.equals(StringFormat.translate("task", "task.create_task.choose_mode.multi_threaded"))) {
                     ThreadNumSlider.setEnabled(true);
-                }else if (mode.equals(StringFormat.translate("task", "task.create_task.choose_mode.single_threaded"))) {
+                } else if (mode.equals(StringFormat.translate("task", "task.create_task.choose_mode.single_threaded"))) {
                     ThreadNumSlider.setEnabled(false);
                 }
             }
@@ -74,6 +75,18 @@ public class CreateTaskPanel {
         DownloaderURLTextArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {
+                Thread.ofVirtual().start(() -> {
+                    synchronized (this) {
+                        tipLabel.setText(StringFormat.translate("task", "task.create_task.parsing_link"));
+                        tipProgressBar.setVisible(true);
+                        tipProgressBar.setIndeterminate(true);
+                        linkFileInfoPanels.clear();
+                        linkInfoPanel.removeAll();
+                        parseLinks(DownloaderURLTextArea.getText().split("\n"));
+                        tipLabel.setText("");
+                        tipProgressBar.setVisible(false);
+                    }
+                });
             }
 
             @Override
@@ -97,18 +110,6 @@ public class CreateTaskPanel {
             @Override
             public void removeUpdate(DocumentEvent e) {
 
-                Thread.ofVirtual().start(() -> {
-                    synchronized (this) {
-                        tipLabel.setText(StringFormat.translate("task", "task.create_task.parsing_link"));
-                        tipProgressBar.setVisible(true);
-                        tipProgressBar.setIndeterminate(true);
-                        linkFileInfoPanels.clear();
-                        linkInfoPanel.removeAll();
-                        parseLinks(DownloaderURLTextArea.getText().split("\n"));
-                        tipLabel.setText("");
-                        tipProgressBar.setVisible(false);
-                    }
-                });
 
             }
         });
@@ -170,8 +171,6 @@ public class CreateTaskPanel {
     }
 
 
-
-
     private void createUIComponents() {
         // TODO: place custom component creation code here
         PathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
@@ -188,19 +187,19 @@ public class CreateTaskPanel {
     private void parseLink(String link) {
         //判断链接类型
 
-        try{
+        try {
             var parser = Parser.getParser(link);
             JPanel linkFileInfoPanel;
             if (parser != null) {
                 linkFileInfoPanel = parser.parse(link);
-            }else{
+            } else {
                 return;
             }
 
             if (linkFileInfoPanel != null) {
                 linkFileInfoPanels.add(linkFileInfoPanel);
                 linkInfoPanel.add(linkFileInfoPanel);
-            }else{
+            } else {
                 throw new LayerInstantiationException("链接解析出错");
             }
             MainPanel.revalidate();
@@ -220,7 +219,7 @@ public class CreateTaskPanel {
 
         ArrayList<DownloadTask> downloadTasks = new ArrayList<>();
         for (var panel : linkFileInfoPanels) {
-            if (panel instanceof LinkFileInfoPanel linkFileInfoPanel){
+            if (panel instanceof LinkFileInfoPanel linkFileInfoPanel) {
                 if (linkFileInfoPanel.getMode().equals("HTTP")) //HTTP 单文件
                     downloadTasks.add(new URLDownloadTask(linkFileInfoPanel.getFileName(), linkFileInfoPanel.getFileSizeNum(), URI.create(linkFileInfoPanel.getUrl()), new File(path), threadNum, mode));
                 else if (linkFileInfoPanel.getMode().equals("bilibili")) { //哔哩哔哩 单文件
@@ -228,7 +227,7 @@ public class CreateTaskPanel {
                         downloadTasks.add(new BiliFileDownloadTask(
                                 biliLinkFileInfoPanel.getFileName(), biliLinkFileInfoPanel.getFileSize(),
                                 biliLinkFileInfoPanel.getBiliDownloadUrl(), new File(path), threadNum, mode));
-                }else if (linkFileInfoPanel.getMode().equals("douyin")) //抖音 单文件
+                } else if (linkFileInfoPanel.getMode().equals("douyin")) //抖音 单文件
                     downloadTasks.add(new DouyinVideoDownloadTask(
                             linkFileInfoPanel.getFileName(),
                             linkFileInfoPanel.getFileSizeNum(),
@@ -237,8 +236,8 @@ public class CreateTaskPanel {
                     ));
 
                 else if (linkFileInfoPanel.getMode().equals("BT-Torrent") ||
-                linkFileInfoPanel.getMode().equals("BT-Magnet")) //BT 单文件
-                    downloadTasks.add(new TorrentFileDownloadTask(
+                        linkFileInfoPanel.getMode().equals("BT-Magnet")) //BT 单文件
+                    downloadTasks.add(new BTFileDownloadTask(
                             new File(path),
                             linkFileInfoPanel.getFileName(),
                             linkFileInfoPanel.getUrl()));
@@ -261,12 +260,22 @@ public class CreateTaskPanel {
                             biliLinkFolderInfoPanel.getBiliDownloadUrls(),
                             biliLinkFolderInfoPanel.getSelectionFileNames(),
                             new File(path), threadNum, mode));
+                else if (linkFolderPanel.getMode().equals("BT-Torrent") ||
+                        linkFolderPanel.getMode().equals("BT-Magnet")) {//BT 多文件
+                    downloadTasks.add(new BTFolderDownloadTask(
+                            linkFolderPanel.getFolderName(),
+                            new File(path),
+                            linkFolderPanel.getUrls()[0],
+                            linkFolderPanel.getSelectedFileSize(),
+                            linkFolderPanel.getFileSelectionStatus()));
 
+
+                }
             }
 
 
             //else if (linkFileInfoPanel.getMode().equals("ED2k"))
-                //downloadTasks.add(new Ed2kDownloadTask(linkFileInfoPanel.getFileName(), linkFileInfoPanel.getFileSizeNum(), URI.create(linkFileInfoPanel.getUrl()), new File(path), threadNum, mode));
+            //downloadTasks.add(new Ed2kDownloadTask(linkFileInfoPanel.getFileName(), linkFileInfoPanel.getFileSizeNum(), URI.create(linkFileInfoPanel.getUrl()), new File(path), threadNum, mode));
         }
         downloadTasks.addAll(moreDownloadTasks);
         return downloadTasks;

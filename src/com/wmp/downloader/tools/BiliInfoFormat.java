@@ -27,8 +27,8 @@ public class BiliInfoFormat {
     public static final int V_CODE_H265 = 12;
     public static final int V_CODE_AV1 = 13;
 
-    public static String VideoFormat(int VQuality){
-        return switch (VQuality){
+    public static String VideoFormat(int VQuality) {
+        return switch (VQuality) {
             case V_Q_144 -> "144P 极速";
             case V_Q_240 -> "240P 极速";
             case V_Q_360 -> "360P 流畅";
@@ -47,8 +47,8 @@ public class BiliInfoFormat {
         };
     }
 
-    public static String AudioFormat(int AQuality){
-        return switch (AQuality){
+    public static String AudioFormat(int AQuality) {
+        return switch (AQuality) {
             case S_Q_64 -> "64kbps";
             case S_Q_132 -> "132kbps";
             case S_Q_192 -> "192kbps";
@@ -58,7 +58,7 @@ public class BiliInfoFormat {
         };
     }
 
-    public static String[] getVideoFormats(int[] VQualities){
+    public static String[] getVideoFormats(int[] VQualities) {
         String[] formats = new String[VQualities.length];
         for (int i = 0; i < VQualities.length; i++) {
             formats[i] = VideoFormat(VQualities[i]);
@@ -66,7 +66,7 @@ public class BiliInfoFormat {
         return formats;
     }
 
-    public static String[] getAudioFormats(int[] AQualities){
+    public static String[] getAudioFormats(int[] AQualities) {
         String[] formats = new String[AQualities.length];
         for (int i = 0; i < AQualities.length; i++) {
             formats[i] = AudioFormat(AQualities[i]);
@@ -74,8 +74,8 @@ public class BiliInfoFormat {
         return formats;
     }
 
-    public static String getVideoCode(int VCode){
-        return switch (VCode){
+    public static String getVideoCode(int VCode) {
+        return switch (VCode) {
             case V_CODE_H264 -> "H.264 / AVC";
             case V_CODE_H265 -> "H.265 / HEVC";
             case V_CODE_AV1 -> "AV1";

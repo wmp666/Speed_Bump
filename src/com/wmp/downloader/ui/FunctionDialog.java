@@ -2,13 +2,12 @@ package com.wmp.downloader.ui;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.util.ColorFunctions;
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import raven.modal.ModalDialog;
 import raven.modal.component.SimpleModalBorder;
-import raven.modal.option.LayoutOption;
 import raven.modal.option.ModalBorderOption;
 import raven.modal.option.Option;
 
@@ -37,7 +36,7 @@ public class FunctionDialog extends JDialog {
         this.revalidate();
         this.repaint();
         this.pack();
-        if(parent != null)
+        if (parent != null)
             this.setLocationRelativeTo(parent);
     });
 
@@ -97,7 +96,6 @@ public class FunctionDialog extends JDialog {
         //判断组件c所在的窗体或c是窗体本身是否置顶
 
 
-
         // 添加上方按钮
         if (northButtons != null) {
             for (var jButton : northButtons) {
@@ -117,16 +115,12 @@ public class FunctionDialog extends JDialog {
             if (isUseScrollPane) {
                 JScrollPane scrollPane = new JScrollPane(functionPanel);
                 taskPanel.add(scrollPane, BorderLayout.CENTER);
-            }else taskPanel.add(functionPanel, BorderLayout.CENTER);
+            } else taskPanel.add(functionPanel, BorderLayout.CENTER);
         }
         // 添加按钮
         if (buttons.length == 0) {
             buttons = OK_CANCEL_BUTTONS;
         }
-
-
-
-
 
 
         //使用Dialog
@@ -137,7 +131,7 @@ public class FunctionDialog extends JDialog {
                 this.setAlwaysOnTop(isAlwaysTop || frame.isAlwaysOnTop());
             } else if (c instanceof JDialog dialog) {
                 this.setAlwaysOnTop(isAlwaysTop || dialog.isAlwaysOnTop());
-            }else {
+            } else {
                 this.setAlwaysOnTop(isAlwaysTop);
             }
             this.setResizable(false);
@@ -145,9 +139,9 @@ public class FunctionDialog extends JDialog {
             this.setMinimumSize(new Dimension(400, 300));
             if (c instanceof JFrame frame) {
                 this.setMaximumSize(frame.getSize());
-            }else if (c instanceof JDialog dialog) {
+            } else if (c instanceof JDialog dialog) {
                 this.setMaximumSize(dialog.getSize());
-            }else {
+            } else {
                 this.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
             }
             this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -184,8 +178,7 @@ public class FunctionDialog extends JDialog {
             packTimer.stop();
 
             this.dispose();
-        }
-        else{
+        } else {
             var options = new SimpleModalBorder.Option[buttons.length];
             for (var i = 0; i < buttons.length; i++) {
                 var button = buttons[i];
@@ -198,14 +191,14 @@ public class FunctionDialog extends JDialog {
             SimpleModalBorder simpleModalBorder = new SimpleModalBorder(
                     UIPanel, title, modalBorderOption,
                     options, (action, data) -> {
-                        if (data == SimpleModalBorder.OPENED) {
-                            return;
-                        }
-                        if (resultCallback != null) {
-                            resultCallback.onResult(data);
-                        }
-                    }
-            ){
+                if (data == SimpleModalBorder.OPENED) {
+                    return;
+                }
+                if (resultCallback != null) {
+                    resultCallback.onResult(data);
+                }
+            }
+            ) {
                 @Override
                 protected JScrollPane createContentScroll() {
                     var contentScroll = super.createContentScroll();
@@ -252,11 +245,16 @@ public class FunctionDialog extends JDialog {
     }
 
 
-
     static void main() {
         FlatMacDarkLaf.setup();
 
-        showDialog(null, "提示", new JPanel(), result -> {
+        JFrame frame = new JFrame();
+        frame.setBackground(Color.PINK);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+
+        showDialog(frame, "提示", new JPanel(), result -> {
             System.out.println("Result: " + result);
         }, new CustomButtons[]{new CustomButtons("确定", RESULT_OK), new CustomButtons("保存", 4), new CustomButtons("取消", RESULT_CANCEL)}, 1, new JButton[]{new JButton("一个按钮")}, NORTH_DIRECTION_RIGHT);
     }

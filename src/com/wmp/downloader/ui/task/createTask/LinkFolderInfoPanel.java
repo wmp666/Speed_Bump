@@ -1,8 +1,8 @@
 package com.wmp.downloader.ui.task.createTask;
 
 import com.formdev.flatlaf.util.ColorFunctions;
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
@@ -44,11 +44,12 @@ public abstract class LinkFolderInfoPanel extends JPanel {
 
     /**
      * 创建链接文件组信息面板
+     *
      * @param folderFame 文件夹名称
-     * @param sizes 所有文件大小数组
-     * @param mode 下载的文件协议/种类（如：HTTP,bilibili）
-     * @param urls 所有文件链接数组
-     * @param fileNames 所有文件名称数组
+     * @param sizes      所有文件大小数组
+     * @param mode       下载的文件协议/种类（如：HTTP,bilibili）
+     * @param urls       所有文件链接数组
+     * @param fileNames  所有文件名称数组
      */
     public LinkFolderInfoPanel(String folderFame, long[] sizes, String mode, String[] urls, String[] fileNames, String[] fileTypes) {
 
@@ -143,12 +144,13 @@ public abstract class LinkFolderInfoPanel extends JPanel {
 
     /**
      * 获取文件名数组（选中的），带后缀
+     *
      * @return 选中的文件名数组
      */
-    public String[] getSelectionFileNames(){
+    public String[] getSelectionFileNames() {
         ArrayList<String> selectionFileNames = new ArrayList<>();
         for (var i = 0; i < fileSelectionStatus.length; i++) {
-            if (fileSelectionStatus[i]){
+            if (fileSelectionStatus[i]) {
                 if (allFileNames[i].endsWith("." + fileTypes[i]))
                     selectionFileNames.add(allFileNames[i]);
                 else
@@ -161,9 +163,11 @@ public abstract class LinkFolderInfoPanel extends JPanel {
     public long[] getFileSizes() {
         return allFileSizes;
     }
+
     public String[] getFileNames() {
         return allFileNames;
     }
+
     public String[] getUrls() {
         return AllUrls;
     }
@@ -189,6 +193,10 @@ public abstract class LinkFolderInfoPanel extends JPanel {
     public abstract void editButtonAction(ActionEvent e);
 
     public abstract void selectionFileListChangeAction();
+
+    public boolean[] getFileSelectionStatus() {
+        return fileSelectionStatus;
+    }
 
     public static LinkFolderInfoPanel createBasicLinkFolderInfoPanel(String folderName, long[] size, String mode, String[] url, String[] fileNames, String[] fileTypes) {
         return new LinkFolderInfoPanel(folderName, size, mode, url, fileNames, fileTypes) {

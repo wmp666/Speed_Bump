@@ -16,6 +16,8 @@ public class Run {
         DataControl.load();
 
         WebSetter.SSLControl(DataControl.get("isUseSSL", false));
+        WebSetter.proxies(true);
+
 
         ThemeChanger.easyChanger();
 
@@ -26,13 +28,13 @@ public class Run {
         //获取上次的版本
         var version = DataControl.get("last_version", "0.0.0");
         logger.info("Last version: " + version);
-        if (!version.equals(DataControl.get("version", "0.0.0"))){
+        if (!version.equals(DataControl.get("version", "0.0.0"))) {
             //弹出更新日志
             JPanel panel = new JPanel(new BorderLayout());
             JTextArea textArea = new JTextArea();
             textArea.setText("""
                     0.1.9
-                    1.增加种子下载（单个文件）
+                    1.增加种子、磁力下载
                     2.优化功能性弹窗（内嵌式），点击四周会关闭的问题
                     3.新增拖入文本域添加文件路径
                     4.修改创建任务的解析链接功能的异常抛出条件

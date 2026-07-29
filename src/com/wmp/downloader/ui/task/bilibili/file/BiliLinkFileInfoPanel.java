@@ -61,9 +61,10 @@ public class BiliLinkFileInfoPanel extends LinkFileInfoPanel {
 
     /**
      * 获取B站下载地址
+     *
      * @return 0-视频地址 1-音频地址
      */
-    public String[] getBiliDownloadUrl(){
+    public String[] getBiliDownloadUrl() {
         return new String[]{downloadInfo.videoInfos()[videoInfoIndex].url(), downloadInfo.audioInfos()[audioInfoIndex].url()};
     }
 }

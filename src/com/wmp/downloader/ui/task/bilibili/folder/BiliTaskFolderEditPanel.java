@@ -6,9 +6,9 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
-
-import static com.wmp.downloader.ui.task.createTask.LinkFileInfoPanel.formatFileSize;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class BiliTaskFolderEditPanel extends JPanel {
 
@@ -27,8 +27,9 @@ public class BiliTaskFolderEditPanel extends JPanel {
 
     /**
      * 编辑器
-     * @param name 标题
-     * @param downloadInfos 所有下载信息
+     *
+     * @param name                  标题
+     * @param downloadInfos         所有下载信息
      * @param videoQualityInfoIndex 按照从大到小的顺序排列出的画质数据的第几行
      * @param audioQualityInfoIndex 按照从大到小的顺序排列出的音质数据的第几行
      */
@@ -119,15 +120,17 @@ public class BiliTaskFolderEditPanel extends JPanel {
         folderNameTextField.setText(name);
     }
 
-    public int getVideoInfoIndex(){
+    public int getVideoInfoIndex() {
         return VideoQualityComboBox.getSelectedIndex();
     }
-    public int getAudioInfoIndex(){
+
+    public int getAudioInfoIndex() {
         return SoundQualityComboBox.getSelectedIndex();
     }
 
     /**
      * 用于获取每个视频链接的位置
+     *
      * @return 每个视频链接的位置
      */
     public String[] getVideoUrl() {
@@ -136,6 +139,7 @@ public class BiliTaskFolderEditPanel extends JPanel {
 
     /**
      * 用于获取每个音频链接的位置
+     *
      * @return 每个音频链接的位置
      */
     public String[] getAudioUrl() {

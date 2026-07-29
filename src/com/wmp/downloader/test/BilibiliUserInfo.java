@@ -2,7 +2,6 @@ package com.wmp.downloader.test;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document; // 注意：虽然返回JSON，但Jsoup可处理
 
 public class BilibiliUserInfo {
     // 你的SESSDATA

@@ -1,8 +1,8 @@
 package com.wmp.downloader.ui.task.createTask;
 
 import com.formdev.flatlaf.util.ColorFunctions;
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;

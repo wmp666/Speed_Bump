@@ -4,6 +4,7 @@ import com.frostwire.jlibtorrent.*;
 import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
+import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
@@ -13,7 +14,7 @@ import javax.swing.*;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
-public class TorrentFileDownloadTask extends DownloadTask {
+public class BTFileDownloadTask extends DownloadTask {
 
     private final String link;
 
@@ -25,10 +26,10 @@ public class TorrentFileDownloadTask extends DownloadTask {
     private TorrentHandle handle;
     private SessionManager manager;
 
-    public TorrentFileDownloadTask(File savePath, String fileName, String link) {
+    public BTFileDownloadTask(File savePath, String fileName, String link) {
         super(fileName, savePath);
         this.link = link;
-        this.linkMode = BTParser.getLinkMode( link);
+        this.linkMode = BTParser.getLinkMode(link);
     }
 
     @Override
@@ -66,10 +67,21 @@ public class TorrentFileDownloadTask extends DownloadTask {
 
             // 添加任务，返回 TorrentHandle 用于控制该任务
             addParams.torrentInfo(ti);
-        }else{
+        } else {
             ti = null;
             ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_exception"), ToastMessage.ERROR);
             return;
+        }
+
+        var file = new File(savePath, ti.name());
+        if (file.exists()) {
+            if (JOptionPane.showConfirmDialog(null,
+                    StringFormat.translate("task", "task.download_task.delete_exists_file.confirm")) == JOptionPane.YES_OPTION) {
+                DataControl.delete(file, true);
+            } else {
+                isStart = false;
+                return;
+            }
         }
 
         //开始下载
@@ -106,6 +118,7 @@ public class TorrentFileDownloadTask extends DownloadTask {
                     infoLabel.setText(String.format(
                             StringFormat.translate("task", "task.download_task.bt.downloading"),
                             URLDownloadTool.DownloadProgress.formatSize(status.allTimeDownload()),
+                            URLDownloadTool.DownloadProgress.formatSize(ti.totalSize()),
                             URLDownloadTool.DownloadProgress.formatSize(status.allTimeUpload()),
                             URLDownloadTool.DownloadProgress.formatSize(status.downloadRate())
                     ));

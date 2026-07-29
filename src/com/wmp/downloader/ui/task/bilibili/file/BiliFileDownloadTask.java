@@ -1,7 +1,7 @@
 package com.wmp.downloader.ui.task.bilibili.file;
 
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
@@ -41,8 +41,8 @@ public class BiliFileDownloadTask extends DownloadTask {
         File tempDir = new File(savePath, fileName + ".temp");
         if (!tempDir.exists()) {
             tempDir.mkdirs();
-        }else{
-           DataControl.deleteFolder(tempDir, false);
+        } else {
+            DataControl.deleteFolder(tempDir, false);
         }
     }
 
@@ -104,7 +104,7 @@ public class BiliFileDownloadTask extends DownloadTask {
                 }
 
                 //合并文件
-                if (videoSuccess && audioSuccess){
+                if (videoSuccess && audioSuccess) {
                     ProgressBarsPanel.removeAll();
                     var jProgressBar = new JProgressBar();
                     jProgressBar.setStringPainted(true);
@@ -142,8 +142,8 @@ public class BiliFileDownloadTask extends DownloadTask {
                 downloadProgress.updateSpeed();
                 infoLabel.setText(String.format("<html>%s</html>",
                         String.format(StringFormat.translate("task", "task.download_task.progress_single"),
-                        DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
-                        DownloadProgress.formatSize(downloadProgress.getSpeed()))));
+                                DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
+                                DownloadProgress.formatSize(downloadProgress.getSpeed()))));
             }
         });
         progressTimer.start();
@@ -169,6 +169,7 @@ public class BiliFileDownloadTask extends DownloadTask {
         threadProgressBarList.clear();
         return true;
     }
+
     public void doWhenStop() {
         pauseController.pause();
         if (progressTimer != null) progressTimer.stop();

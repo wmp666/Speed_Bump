@@ -8,11 +8,9 @@ import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 
 public class ConvergenceTool {
@@ -31,7 +29,7 @@ public class ConvergenceTool {
     public static boolean converge(File videoPath, File audioPath, File destPath, JProgressBar progressBar) {
 
         destPath = StringFormat.sanitizeFile(destPath);
-        if (!destPath.exists()){
+        if (!destPath.exists()) {
             try {
                 destPath.getParentFile().mkdirs();
                 destPath.createNewFile();
@@ -148,17 +146,17 @@ public class ConvergenceTool {
                 logger.error("创建输出文件失败: ", e);
                 return false;
             }
-        }else{
+        } else {
             if (JOptionPane.showConfirmDialog(null,
                     StringFormat.translate("task", "task.download_task.delete_exists_file.confirm")) == JOptionPane.YES_OPTION) {
                 DataControl.deleteFolder(outputFile, true);
-            }else return false;
+            } else return false;
 
         }
 
         // 优先使用本地 FFmpeg（速度快，支持更多编码）
         return localTranscode(DataControl.get("ffmpeg_appPath", ""),
-                    inputFile, outputFile, containerFormat, videoCodec, audioCodec, progressBar);
+                inputFile, outputFile, containerFormat, videoCodec, audioCodec, progressBar);
 
     }
 
@@ -273,9 +271,6 @@ public class ConvergenceTool {
     }
 
 
-
-
-
     // ---------- 硬件加速自动检测 ----------
     private static HardwareAccelConfig cachedConfig = null;
 
@@ -370,12 +365,18 @@ public class ConvergenceTool {
     private static String getEncoderPrefix(String hwaccel) {
         switch (hwaccel) {
             case "cuda":
-            case "nvdec": return "nvenc";
-            case "qsv": return "qsv";
-            case "vaapi": return "vaapi";
-            case "vdpau": return "vdpau";
-            case "videotoolbox": return "videotoolbox";
-            default: return "";
+            case "nvdec":
+                return "nvenc";
+            case "qsv":
+                return "qsv";
+            case "vaapi":
+                return "vaapi";
+            case "vdpau":
+                return "vdpau";
+            case "videotoolbox":
+                return "videotoolbox";
+            default:
+                return "";
         }
     }
 
@@ -401,10 +402,15 @@ public class ConvergenceTool {
     private static String normalizeAudioCodecName(String name) {
         if (name == null) return "aac";
         switch (name.toLowerCase()) {
-            case "aac": return "aac";
-            case "mp3": case "libmp3lame": return "libmp3lame";
-            case "flac": return "flac";
-            default: return name;
+            case "aac":
+                return "aac";
+            case "mp3":
+            case "libmp3lame":
+                return "libmp3lame";
+            case "flac":
+                return "flac";
+            default:
+                return name;
         }
     }
 }

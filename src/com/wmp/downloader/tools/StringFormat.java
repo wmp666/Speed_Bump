@@ -3,7 +3,6 @@ package com.wmp.downloader.tools;
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 public class StringFormat {
     private static final String BUNDLE_PREFIX = "com.wmp.downloader.laug.";

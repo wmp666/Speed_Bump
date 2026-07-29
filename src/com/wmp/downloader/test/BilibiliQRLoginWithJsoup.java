@@ -1,19 +1,16 @@
 package com.wmp.downloader.test;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import com.alibaba.fastjson2.JSONObject;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class BilibiliQRLoginWithJsoup {
 

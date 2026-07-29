@@ -41,8 +41,7 @@ public class DouyinParser extends Parser {
                             "douyin",
                             url
                     );
-                }
-                else if (jsonObject.getString("type").equals("图集")) {
+                } else if (jsonObject.getString("type").equals("图集")) {
                     long[] sizes = new long[jsonObject.getJSONArray("images").size()];
                     for (int i = 0; i < sizes.length; i++) {
                         sizes[i] = URLDownloadTool.getFileSize(jsonObject.getJSONArray("images").getString(i));
@@ -57,7 +56,7 @@ public class DouyinParser extends Parser {
                         String imageName = URLDownloadTool.extractFileName(images[i]);
 
                         var tempStringList = imageName.split("\\.");
-                        types[i] = tempStringList.length <= 1?"None":tempStringList[tempStringList.length - 1];
+                        types[i] = tempStringList.length <= 1 ? "None" : tempStringList[tempStringList.length - 1];
                         names[i] = i + "." + types[i];
                     }
                     return LinkFolderInfoPanel.createBasicLinkFolderInfoPanel(

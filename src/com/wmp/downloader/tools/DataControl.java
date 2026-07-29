@@ -9,8 +9,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -18,9 +16,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class DataControl {
     public static final ArrayList<String> themeList = new ArrayList<>();
@@ -53,7 +52,7 @@ public class DataControl {
         errorAppender.setThreshold(Level.ERROR);
         rootLogger.addAppender(errorAppender);
     }
-    
+
 
     public static void load() {
 
@@ -107,7 +106,7 @@ public class DataControl {
         DataControl.data.putAll(tempDataMap);
     }
 
-    public static void putAndSave(String key, Object value){
+    public static void putAndSave(String key, Object value) {
         put(key, value);
         save();
         load();
@@ -141,7 +140,7 @@ public class DataControl {
                 }
                 default -> tempDataMap.put("theme_type", "light");
             }
-        }else if(key.equals("laug")){
+        } else if (key.equals("laug")) {
             // 1. 修改全局默认区域
             var strings = value.toString().split("_");
             if (strings.length == 1)
@@ -162,7 +161,7 @@ public class DataControl {
         logger.debug("数据保存完成");
     }
 
-    public static File getDownloadFilePath(){
+    public static File getDownloadFilePath() {
         return new File(data.getOrDefault("DownloadFilePath", new File(getDataPath(), "Download")).toString());
     }
 
@@ -176,7 +175,7 @@ public class DataControl {
         return file;
     }
 
-    public static void delete(File file, boolean isShowMessage){
+    public static void delete(File file, boolean isShowMessage) {
         if (file.exists()) {
             if (file.isDirectory()) {
                 deleteFolder(file, isShowMessage);
@@ -186,18 +185,19 @@ public class DataControl {
         }
     }
 
-    public static void delete(File file){
+    public static void delete(File file) {
         delete(file, true);
     }
 
-    public static void deleteFile(File file, boolean isShowMessage){
+    public static void deleteFile(File file, boolean isShowMessage) {
         if (file.exists()) {
             file.delete();
             if (isShowMessage)
                 ToastMessage.show(Downloader.mainFrame, StringFormat.translate("task", "delete_success"), ToastMessage.SUCCESS);
         }
     }
-    public static void deleteFolder(File file, boolean isShowMessage){
+
+    public static void deleteFolder(File file, boolean isShowMessage) {
         try {
             try (var paths = Files.walk(Paths.get(StringFormat.sanitizeFile(file).toURI()))) {
                 paths.sorted((o1, o2) -> -o1.compareTo(o2))
@@ -218,7 +218,7 @@ public class DataControl {
         }
     }
 
-    public static void deleteFolder(File file){
+    public static void deleteFolder(File file) {
         deleteFolder(file, true);
     }
 

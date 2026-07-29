@@ -1,7 +1,7 @@
 package com.wmp.downloader.ui.task.createTask.videohandle;
 
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
@@ -34,13 +34,14 @@ public class CreateMergeTaskFuncPanel extends JPanel {
 
     /**
      * 返回路径
+     *
      * @return {视频位置，音频位置，保存位置}
      */
-    public File[] getPath(){
+    public File[] getPath() {
         return new File[]{new File(videoPathSelectionPanel.getPath()), new File(audioPathSelectionPanel.getPath()), new File(savePathSelectionPanel.getPath())};
     }
 
-    public String getFileName(){
+    public String getFileName() {
         return FileNameTextField.getText();
     }
 
@@ -70,9 +71,9 @@ public class CreateMergeTaskFuncPanel extends JPanel {
             ProgressBarsPanel.add(jProgressBar);
             var converged = ConvergenceTool.converge(paths[0], paths[1], new File(paths[2], fileName), jProgressBar);
             ProgressBarsPanel.removeAll();
-            if (converged){
+            if (converged) {
                 downloadControlButton.setEnabled(false);
-            }else{
+            } else {
                 ToastMessage.show(null, StringFormat.translate("video_handle", "video_handle.create_merge_task.merge_fail"), ToastMessage.ERROR);
             }
         }

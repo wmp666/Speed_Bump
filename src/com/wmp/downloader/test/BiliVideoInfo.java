@@ -15,6 +15,7 @@ import java.util.Arrays;
 public class BiliVideoInfo {
 
     private static Logger logger = Logger.getLogger(BiliVideoInfo.class);
+
     static void main() {
         var bv = IO.readln("输入BV：");
 
@@ -70,7 +71,6 @@ public class BiliVideoInfo {
             //仅用BV号获取的
             String title = data.getString("title");
             logger.info("视频/合集标题: " + title);
-
 
 
             if (cids.length == 1) {

@@ -14,7 +14,8 @@ public class PathSelectionPanel extends JPanel {
     private JButton LocationChooseButton;
     private JPanel PathSelectionPanel;
 
-    private PathChangeListener pathChangeListener = path -> {};
+    private PathChangeListener pathChangeListener = path -> {
+    };
 
     public PathSelectionPanel(String prompt, File defaultFile) {
         this(prompt, defaultFile, SystemFileChooser.DIRECTORIES_ONLY);
@@ -84,7 +85,7 @@ public class PathSelectionPanel extends JPanel {
         this.pathChangeListener = e;
     }
 
-    public interface PathChangeListener{
+    public interface PathChangeListener {
         void pathChanged(String path);
     }
 }
