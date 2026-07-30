@@ -99,6 +99,8 @@ public class Downloader extends JFrame implements WindowListener {
     private JCheckBox alibabaFastjsonCheckBox;
     private JCheckBox log4jLog4jCheckBox;
     private JScrollPane aboutScrollPane;
+    private JCheckBox isUseHeavyWeightToastCheckBox;
+    private JCheckBox isUseHeavyWeightFunctionDialogCheckBox;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -131,7 +133,7 @@ public class Downloader extends JFrame implements WindowListener {
 
         this.setTitle(StringFormat.translate("common", "app_name"));
         this.setContentPane(UIPanel);
-        this.setMinimumSize(new Dimension(800, 550));
+        this.setMinimumSize(new Dimension(900, 650));
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
@@ -612,6 +614,9 @@ public class Downloader extends JFrame implements WindowListener {
         }
         FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
 
+        isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight", false));
+
+        //添加图标
         IconControl.addInDynamicConverter(
                 () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize())),
                 () -> deleteTempFolderDataButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize()))
@@ -621,6 +626,7 @@ public class Downloader extends JFrame implements WindowListener {
                 () -> saveButton.setIcon(IconControl.getIcon("save", saveButton.getFont().getSize()))
         );
 
+        //添加监听
         tabbedPane1.addChangeListener(e -> updateDefaultButton());
         ThreadNumSlider.addChangeListener(e -> {
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
@@ -647,6 +653,8 @@ public class Downloader extends JFrame implements WindowListener {
             DataControl.load();
             isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
             isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
+            isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
+            isUseHeavyWeightFunctionDialogCheckBox.setSelected(DataControl.get("is_use_heavy_weight.function_dialog", false));
 
             ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
@@ -700,6 +708,8 @@ public class Downloader extends JFrame implements WindowListener {
             DataControl.put("DownloadFilePath", pathSelectionPanel.getPath());
             DataControl.put("TempFilePath", tempPathSelectionPanel.getPath());
             DataControl.put("FontSize", fontSizeSpinner.getValue());
+            DataControl.put("is_use_heavy_weight.toast", isUseHeavyWeightToastCheckBox.isSelected());
+            DataControl.put("is_use_heavy_weight.function_dialog", isUseHeavyWeightFunctionDialogCheckBox.isSelected());
 
             DataControl.save();
             DataControl.load();

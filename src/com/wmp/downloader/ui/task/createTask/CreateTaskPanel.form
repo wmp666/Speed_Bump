@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.wmp.downloader.ui.task.createTask.CreateTaskPanel">
   <grid id="27dc6" binding="MainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="503" height="400"/>
+      <xy x="20" y="20" width="652" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -155,6 +155,7 @@
                       <component id="dfaca" class="javax.swing.JTextArea" binding="DownloaderURLTextArea">
                         <constraints/>
                         <properties>
+                          <columns value="80"/>
                           <rows value="3"/>
                           <toolTipText resource-bundle="com/wmp/downloader/laug/task" key="task.create_task.download_url.text_area.tool_tip_text"/>
                         </properties>

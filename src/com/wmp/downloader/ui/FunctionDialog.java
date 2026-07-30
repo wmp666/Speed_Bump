@@ -223,7 +223,10 @@ public class FunctionDialog extends JDialog {
                     return button;
                 }
             };
-            ModalDialog.showModal(c, simpleModalBorder, new Option().setBackgroundClickType(Option.BackgroundClickType.BLOCK));
+            ModalDialog.showModal(c, simpleModalBorder,
+                    new Option()
+                            .setBackgroundClickType(Option.BackgroundClickType.BLOCK)
+                            .setHeavyWeight(DataControl.get("is_use_heavy_weight.function_dialog", false)));
         }
     }
 

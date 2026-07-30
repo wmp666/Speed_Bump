@@ -30,6 +30,8 @@ public class BiliScanCodePanel extends JPanel {
 
     private String loginURL;
 
+    private boolean isExit = false;
+
     public BiliScanCodePanel() {
         this.setLayout(new BorderLayout());
         this.add(mainPanel, BorderLayout.CENTER);
@@ -130,7 +132,7 @@ public class BiliScanCodePanel extends JPanel {
         System.out.println(StringFormat.translate("special_settings", "bili_special_settings.poll_login_status_url") + pollUrl);
 
         // 轮询最多 90 次，每次间隔 2 秒（共 180 秒）
-        for (int i = 0; i < 90; i++) {
+        for (int i = 0; i < 90 && !isExit; i++) {
             try {
                 Connection.Response response = Jsoup.connect(pollUrl)
                         .userAgent("Mozilla/5.0")
@@ -198,5 +200,13 @@ public class BiliScanCodePanel extends JPanel {
             }
         }
         return null;
+    }
+
+    public boolean isExit() {
+        return isExit;
+    }
+
+    public void setExit(boolean exit) {
+        isExit = exit;
     }
 }
