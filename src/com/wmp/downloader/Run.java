@@ -12,7 +12,7 @@ import java.awt.*;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static final String VERSION = "0.2.1.1";
+    public static final String VERSION = "0.2.2";
 
     static void main(String[] args) {
         DataControl.load();
@@ -37,7 +37,8 @@ public class Run {
             textArea.setText("""
                     0.2.2
                     1.增加新的设置项，个性化开放度更高
-                    2.
+                    2.整顿部分UI
+                    3.提升性能
                     
                     0.2.1
                     1.更新创建链接功能，更加智能
@@ -68,6 +69,9 @@ public class Run {
                     0.0.1 > 0.1.5
                     1.更新内容遗失 :(
                     """);
+            textArea.setEditable(false);
+            textArea.setLineWrap(true);
+            textArea.setRows(15);
             panel.add(textArea, BorderLayout.CENTER);
 
             FunctionDialog.showDialog(null, "更新日志 " + version + " > " + DataControl.get("version", "0.0.0"),

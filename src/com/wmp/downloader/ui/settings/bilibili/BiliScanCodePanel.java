@@ -104,7 +104,9 @@ public class BiliScanCodePanel extends JPanel {
 
             // 生成二维码图片
             String statusMsg = StringFormat.translate("special_settings", "bili_special_settings.qr_code_generated");
-            QRLabel.setIcon(new ImageIcon(generateQRCodeImage(this.loginURL, (int) (QRRefreshButton.getPreferredSize().getWidth() * 1.2))));
+            var icon = new ImageIcon(generateQRCodeImage(this.loginURL, (int) (QRRefreshButton.getFont().getSize() * 10)));
+            QRLabel.setIcon(icon);
+            QRLabel.setPreferredSize(new Dimension(icon.getIconWidth() + 10, icon.getIconHeight() + 10));
             QRStatusLabel.setText(statusMsg);
             logger.info(statusMsg);
             return qrcodeKey;
@@ -155,6 +157,7 @@ public class BiliScanCodePanel extends JPanel {
                         // 登录成功
                         String successMsg = StringFormat.translate("special_settings", "bili_special_settings.login_success");
                         QRStatusLabel.setText(successMsg);
+                        ToastMessage.show(successMsg, ToastMessage.SUCCESS);
                         return extractSESSDATA(cookies);
                     }
                     case 86038 -> {

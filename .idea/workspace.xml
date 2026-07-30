@@ -9,15 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新创建链接功能，更加智能&#10;添加ED2K链接下载（依赖gopeed）&#10;支持将下载链接强制挂载到gopeed">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="整顿部分UI，提升性能">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/commons_net.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/FTPDownloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/settings.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/BiliSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/BiliSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DownLoader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DownLoader.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,10 +82,10 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="BEProjectErrors" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
-}</component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4,
+  "fromUser": true
+}]]></component>
   <component name="ProjectId" id="3GdnVjhWbgsY6hnknjOE1D1U8OT" />
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
@@ -110,7 +109,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "300",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "302",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
@@ -131,6 +130,7 @@
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
     "应用程序.BilibiliUserInfo.executor": "Run",
     "应用程序.ConvergenceTool.executor": "Run",
+    "应用程序.FTPDownloader.executor": "Run",
     "应用程序.FunctionDialog.executor": "Run",
     "应用程序.GetMagnet3.executor": "Run",
     "应用程序.GopeedClient.executor": "Run",
@@ -162,8 +162,8 @@
     </key>
   </component>
   <component name="RunManager" selected="应用程序.Run">
-    <configuration name="GetMagnet3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.GetMagnet3" />
+    <configuration name="FTPDownloader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.FTPDownloader" />
       <module name="DownLoader" />
       <extension name="coverage">
         <pattern>
@@ -230,6 +230,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.Run" />
+        <item itemvalue="应用程序.FTPDownloader" />
         <item itemvalue="应用程序.ToastMessage" />
         <item itemvalue="应用程序.GopeedClient" />
       </list>
@@ -285,8 +286,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加Github加速" />
-    <MESSAGE value="增加Alpha通道" />
     <MESSAGE value="更新图标" />
     <MESSAGE value="增加对系统禁用符号的保底机制" />
     <MESSAGE value="增加抖音视频下载" />
@@ -310,7 +309,20 @@
     <MESSAGE value="增强种子、磁力下载能力" />
     <MESSAGE value="更新创建链接功能，更加智能" />
     <MESSAGE value="更新创建链接功能，更加智能&#10;添加ED2K链接下载（依赖gopeed）&#10;支持将下载链接强制挂载到gopeed" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新创建链接功能，更加智能&#10;添加ED2K链接下载（依赖gopeed）&#10;支持将下载链接强制挂载到gopeed" />
+    <MESSAGE value="增加新的设置项，个性化开放度更高" />
+    <MESSAGE value="整顿部分UI，提升性能" />
+    <option name="LAST_COMMIT_MESSAGE" value="整顿部分UI，提升性能" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/test/FTPDownloader.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

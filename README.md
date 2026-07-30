@@ -32,6 +32,7 @@
 - [log4j:log4j](https://logging.apache.org/log4j/2.x/index.html)
 - [io.github.dj.raven:modal-dialog](https://github.com/DJ-Raven/swing-modal-dialog)
 - [frostwire:frostwire-jlibtorrent](https://github.com/frostwire/frostwire-jlibtorrent)
+- [commons.net](https://commons.apache.org/proper/commons-net/)
 
 
 ### 贡献者
@@ -61,6 +62,7 @@
 - [ ] BT种子、磁力链接内的文件下载支持断点续传
 - [ ] 每一个下载完成的下载任务,可以作为一个文件进行拖拽操作
 - [ ] 支持在关闭软件后,保存各个未下载任务进度保存，下次启动时继续下载，已下载的内容仍然保留在任务列表中
+- [ ] 新的任务界面UI
 - ...
 
 
