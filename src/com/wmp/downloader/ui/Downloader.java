@@ -504,8 +504,7 @@ public class Downloader extends JFrame implements WindowListener {
         learnMoreButton.addActionListener(_ -> {
             var panel = new JPanel();
             var textArea = new JTextArea("""
-                    由于还处于开发阶段，哔哩哔哩链接解析出的视频只能使用单线程下载
-                    同时使用内置库合并文件速度很慢，建议使用本地的FFmpeg！
+                    
                     """);
             panel.add(textArea);
 
