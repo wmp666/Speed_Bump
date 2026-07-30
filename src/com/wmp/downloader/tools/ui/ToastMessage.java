@@ -1,6 +1,7 @@
 package com.wmp.downloader.tools.ui;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.Downloader;
 import raven.modal.Toast;
 import raven.modal.toast.option.ToastLocation;
@@ -18,7 +19,6 @@ public class ToastMessage {
     public static final Toast.Type ERROR = Toast.Type.ERROR;
 
     public static void show(Component c, String message, Toast.Type type, boolean isUseHeavyWeight) {
-
         if (c == null) c = Downloader.mainFrame;
         Toast.show(c, type, message, ToastLocation.BOTTOM_TRAILING, new ToastOption()
                 .setDelay(2000)
@@ -29,6 +29,14 @@ public class ToastMessage {
 
     public static void show(Component c, String message, Toast.Type type) {
         show(c, message, type, false);
+    }
+
+    public static void show(String message, Toast.Type type){
+        show(null, message, type);
+    }
+
+    public static void show(String message){
+        show(message, Toast.Type.DEFAULT);
     }
 
     static void main() {

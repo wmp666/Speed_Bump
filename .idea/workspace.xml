@@ -9,14 +9,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增强种子、磁力下载能力">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/ED2KMonitor.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新创建链接功能，更加智能&#10;添加ED2K链接下载（依赖gopeed）&#10;支持将下载链接强制挂载到gopeed">
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/GopeedClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/specialSettings/GopeedSettings.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/gopeed/GopeedDownloadTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/gopeed/GopeedParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/special_settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/special_settings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/task.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/task.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/test/ED2KMonitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/MagnetToTorrent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/MagnetToTorrent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/StringFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/StringFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/DownloadTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/createTask/CreateTaskPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/ed2k/Ed2kDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/ed2k/Ed2kDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/ed2k/Ed2kParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/ed2k/Ed2kParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +117,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;false&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;261&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;300&quot;,
@@ -131,6 +143,7 @@
     &quot;应用程序.ConvergenceTool.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.FunctionDialog.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.GetMagnet3.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.GopeedClient.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.MagnetToTorrent.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.Run.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.TikTokDownloader.executor&quot;: &quot;Run&quot;,
@@ -158,13 +171,13 @@
       <recent name="com.wmp.downloader.ui.task.createTask" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.FunctionDialog">
-    <configuration name="FunctionDialog" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.ui.FunctionDialog" />
+  <component name="RunManager" selected="应用程序.Run">
+    <configuration name="GetMagnet3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.GetMagnet3" />
       <module name="DownLoader" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.ui.*" />
+          <option name="PATTERN" value="com.wmp.downloader.test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -172,12 +185,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GetMagnet3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.GetMagnet3" />
+    <configuration name="GopeedClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.GopeedClient" />
       <module name="DownLoader" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.test.*" />
+          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -224,6 +237,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="应用程序.Run" />
+        <item itemvalue="应用程序.GopeedClient" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -275,8 +294,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复剪切板监听问题（仍有问题）" />
-    <MESSAGE value="增加背景设置" />
     <MESSAGE value="增加Github加速" />
     <MESSAGE value="增加Alpha通道" />
     <MESSAGE value="更新图标" />
@@ -300,7 +317,9 @@
     <MESSAGE value="增加种子下载（单个文件）&#10;优化功能性弹窗（内嵌式），点击四周会关闭的问题" />
     <MESSAGE value="增加磁力下载（单个文件）" />
     <MESSAGE value="增强种子、磁力下载能力" />
-    <option name="LAST_COMMIT_MESSAGE" value="增强种子、磁力下载能力" />
+    <MESSAGE value="更新创建链接功能，更加智能" />
+    <MESSAGE value="更新创建链接功能，更加智能&#10;添加ED2K链接下载（依赖gopeed）&#10;支持将下载链接强制挂载到gopeed" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新创建链接功能，更加智能&#10;添加ED2K链接下载（依赖gopeed）&#10;支持将下载链接强制挂载到gopeed" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

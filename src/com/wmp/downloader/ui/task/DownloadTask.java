@@ -99,7 +99,7 @@ public abstract class DownloadTask extends JPanel {
             try {
                 Desktop.getDesktop().open(StringFormat.sanitizeFile(new File(savePath, this.fileName)));
             } catch (Exception ex) {
-                ToastMessage.show(this, StringFormat.translate("task", "task.download_task.open_file_failed"), ToastMessage.ERROR);
+                ToastMessage.show(this, StringFormat.translate("task", "task.download_task.open_file_failed") + "\n" + new File(savePath, this.fileName), ToastMessage.ERROR);
                 logger.error("文件打开失败", ex);
             }
         });

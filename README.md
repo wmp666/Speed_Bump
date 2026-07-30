@@ -1,5 +1,5 @@
 # 减速带 (Speed Bump)
-1. 多线程 + 单线程下载工具，支持HTTP，HTTPS，BT（Torrent、Magnet）
+1. 多线程 + 单线程下载工具，支持HTTP，HTTPS，BT（Torrent、Magnet），ED2K
 2. 视频处理器，支持合并音频，视频；
 
 ## 使用提示
@@ -12,6 +12,7 @@
 - HTTP/HTTPS
   - Github加速
 - BT（Torrent、Magnet）
+- ED2K
 - 哔哩哔哩（视频、视频合集）
 - 抖音（视频、图集）
 
@@ -23,7 +24,7 @@
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## 鸣谢
-### 第三方帮助
+### 第三方库
 - [JFormDesigner:FlatLaf](https://www.formdev.com/flatlaf)
 - [alibaba:fastjson](https://github.com/alibaba/fastjson)
 - [google:core+javase](https://developer.android.google.cn/guide/playcore?hl=zh-cn)
@@ -41,6 +42,7 @@
 - [Ghost Downloader 3](https://github.com/XiaoYouChR/Ghost-Downloader-3/releases)：提供 **UI** + **功能** 启发
 - [遇见API](https://api.yujn.cn)：提供部分API支持
 - [Nieobie:game-icon-pack](https://github.com/Nieobie/game-icon-pack)：提供图标
+- [gopeed](https://gopeed.com/)
 
 ## 特定功能启用状态
 - [ ] Github 加速
@@ -50,8 +52,8 @@
 - [x] 关闭SSL
 
 ## 正在制作的功能（不一定是难实现，可能是时间不够）
-- [ ] 更多下载协议（FTP，ED2K，M3U8，MPEG-DASH）
-- [ ] 更多支持的视频网站（仅用于学习交流）
+- [ ] 更多下载协议（FTP，M3U8，MPEG-DASH）
+- [ ] 支持更多的视频网站（仅用于学习交流）
 - [ ] 关闭任务时可选择删除下载文件
 - [ ] 限速
 - [ ] 一键下载FFmpeg

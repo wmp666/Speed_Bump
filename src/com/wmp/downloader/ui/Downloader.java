@@ -12,6 +12,7 @@ import com.wmp.downloader.ui.settings.BasicSpecialSettings;
 import com.wmp.downloader.ui.specialSettings.BiliSettings;
 import com.wmp.downloader.ui.specialSettings.FFmpegSettings;
 import com.wmp.downloader.ui.specialSettings.GithubAccelerateSettings;
+import com.wmp.downloader.ui.specialSettings.GopeedSettings;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
@@ -73,7 +74,12 @@ public class Downloader extends JFrame implements WindowListener {
             if (urlDownloadTask.isFinally()) {
                 if (!taskFinalyTipList.contains(urlDownloadTask)) {
                     taskFinalyTipList.add(urlDownloadTask);
-                    ToastMessage.show(this, String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()), ToastMessage.SUCCESS);
+                    ToastMessage.show(this,
+                            String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
+                            ToastMessage.SUCCESS);
+                    trayIcon.displayMessage(null,
+                            String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
+                            TrayIcon.MessageType.INFO);
                 }
             }
         });
@@ -265,7 +271,7 @@ public class Downloader extends JFrame implements WindowListener {
 
     private void initSpecialSettingsComponents() {
         BasicSpecialSettings[] basicSpecialSettings = new BasicSpecialSettings[]{
-                new BiliSettings(), new FFmpegSettings(), new GithubAccelerateSettings()
+                new BiliSettings(), new FFmpegSettings(), new GithubAccelerateSettings(), new GopeedSettings()
         };
 
         for (var specialSettings : basicSpecialSettings) {

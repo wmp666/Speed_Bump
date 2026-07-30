@@ -75,7 +75,11 @@ public class MagnetToTorrent {
                         //修改为可存储在系统上的文件
                         torrentPath[0] = StringFormat.sanitizeFile(new File(torrentPath[0])).getAbsolutePath();
 
-                        try (FileOutputStream fos = new FileOutputStream(file)) {
+                        var tempFile = new File(torrentPath[0]);
+                        tempFile.getParentFile().mkdirs();
+                        tempFile.createNewFile();
+
+                        try (FileOutputStream fos = new FileOutputStream(torrentPath[0])) {
                             fos.write(bencodedData);
                         }
 
@@ -84,7 +88,8 @@ public class MagnetToTorrent {
                         latch.countDown();
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        ToastMessage.show(null, StringFormat.translate("task", "task.magnet_to_torrent.fail"), ToastMessage.ERROR);
+                        logger.error(e);
                     }
                 }
             }

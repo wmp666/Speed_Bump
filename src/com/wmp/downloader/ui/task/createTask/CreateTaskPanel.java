@@ -15,6 +15,7 @@ import com.wmp.downloader.ui.task.bt.BTFolderDownloadTask;
 import com.wmp.downloader.ui.task.douyin.DouyinImageDownloadTask;
 import com.wmp.downloader.ui.task.douyin.DouyinVideoDownloadTask;
 import com.wmp.downloader.ui.task.ed2k.Ed2kDownloadTask;
+import com.wmp.downloader.ui.task.gopeed.GopeedDownloadTask;
 import com.wmp.downloader.ui.task.http.URLDownloadTask;
 import org.apache.log4j.Logger;
 
@@ -295,6 +296,12 @@ public class CreateTaskPanel {
                             linkFileInfoPanel.getFileName(),
                             new File(path),
                             linkFileInfoPanel.getFileSizeNum(),
+                            linkFileInfoPanel.getUrl()
+                    ));
+                else if (linkFileInfoPanel.getMode().equals("gopeed"))
+                    downloadTasks.add(new GopeedDownloadTask(
+                            linkFileInfoPanel.getFileName(),
+                            new File(path),
                             linkFileInfoPanel.getUrl()
                     ));
             } else if (panel instanceof LinkFolderInfoPanel linkFolderPanel) {

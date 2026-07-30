@@ -12,7 +12,7 @@ import java.awt.*;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static final String VERSION = "0.2.0";
+    public static final String VERSION = "0.2.1";
 
     static void main(String[] args) {
         DataControl.load();
@@ -37,6 +37,9 @@ public class Run {
             textArea.setText("""
                     0.2.1
                     1.更新创建链接功能，更加智能
+                    2.添加ED2K链接下载（依赖gopeed）
+                    3.支持将下载链接强制挂载到gopeed
+                    4.新增下载成功的系统提示
                     
                     0.2.0
                     1.使修改种子、磁力文件/文件夹名称功能可用

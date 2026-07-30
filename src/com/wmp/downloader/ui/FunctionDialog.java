@@ -32,6 +32,8 @@ public class FunctionDialog extends JDialog {
 
     private Component parent = null;
 
+    private int result = RESULT_EXIT;
+
     private final Timer packTimer = new Timer(50, e -> {
         this.revalidate();
         this.repaint();
@@ -155,6 +157,7 @@ public class FunctionDialog extends JDialog {
                 jButton.addActionListener(e -> {
                     this.setVisible(false);
                     result.set(button.result());
+                    this.result = button.result;
                 });
                 if (i == defaultButtonIndex) {
                     var rootPane1 = ButtonsPanel.getRootPane();
@@ -188,6 +191,7 @@ public class FunctionDialog extends JDialog {
             var modalBorderOption = new ModalBorderOption();
             modalBorderOption.setPadding(10, 10, 10, 10)
                     .setUseScroll(true);
+            CustomButtons[] finalButtons = buttons;
             SimpleModalBorder simpleModalBorder = new SimpleModalBorder(
                     UIPanel, title, modalBorderOption,
                     options, (action, data) -> {
@@ -206,6 +210,18 @@ public class FunctionDialog extends JDialog {
                     contentScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
                     return contentScroll;
                 }
+
+                @Override
+                protected JButton createButtonOption(Option option) {
+                    JButton button = new JButton(option.getText()){
+                        @Override
+                        public boolean isDefaultButton() {
+                            return finalButtons[defaultButtonIndex].result == option.getType();
+                        }
+                    };
+                    button.addActionListener(_ -> doAction(option.getType()));
+                    return button;
+                }
             };
             ModalDialog.showModal(c, simpleModalBorder, new Option().setBackgroundClickType(Option.BackgroundClickType.BLOCK));
         }
@@ -214,37 +230,39 @@ public class FunctionDialog extends JDialog {
     /**
      * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int, boolean)
      */
-    public static void showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection) {
-        new FunctionDialog(c, title,
+    public static int showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection) {
+        return new FunctionDialog(c, title,
                 functionPanel, resultCallback,
                 buttons, defaultButtonIndex,
                 northButtons, northButtonsDirection,
-                false, false);
+                false, false).getResult();
     }
 
     /**
      * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int, boolean)
      */
-    public static void showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop) {
-        new FunctionDialog(c, title,
+    public static int showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop) {
+        return new FunctionDialog(c, title,
                 functionPanel, resultCallback,
                 buttons, defaultButtonIndex,
                 northButtons, northButtonsDirection,
-                isAlwaysTop, false);
+                isAlwaysTop, false).getResult();
     }
 
     /**
      * @see #FunctionDialog(Component, String, JPanel, ResultCallback, CustomButtons[], int, JButton[], int, boolean)
      */
-    public static void showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop, boolean isUseScrollPane) {
-        new FunctionDialog(c, title,
+    public static int showDialog(Component c, String title, JPanel functionPanel, ResultCallback resultCallback, CustomButtons[] buttons, int defaultButtonIndex, JButton[] northButtons, int northButtonsDirection, boolean isAlwaysTop, boolean isUseScrollPane) {
+        return new FunctionDialog(c, title,
                 functionPanel, resultCallback,
                 buttons, defaultButtonIndex,
                 northButtons, northButtonsDirection,
-                isAlwaysTop, isUseScrollPane);
+                isAlwaysTop, isUseScrollPane).getResult();
     }
 
-
+    public int getResult(){
+        return this.result;
+    }
     static void main() {
         FlatMacDarkLaf.setup();
 
