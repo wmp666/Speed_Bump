@@ -7,6 +7,10 @@ import java.util.ResourceBundle;
 public class StringFormat {
     private static final String BUNDLE_PREFIX = "com.wmp.downloader.laug.";
 
+    public static String translate(String key) {
+        return translate(null, key);
+    }
+
     public static String translate(String rootLocal, String key) {
         ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_PREFIX + "laug", Locale.getDefault());
         try {

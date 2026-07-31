@@ -350,15 +350,20 @@ public class Downloader extends JFrame implements WindowListener {
 
         var updateFrameMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.update_frame"));
         updateFrameMenuItem.addActionListener(e -> {
-            if (JOptionPane.showConfirmDialog(this, StringFormat.translate("download_menu_bar", "frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-                if (clipboardTimer != null) {
-                    clipboardTimer.stop();
-                }
-                this.dispose();
-                DataControl.load();
-                ThemeChanger.easyChanger();
+            try {
+                if (JOptionPane.showConfirmDialog(this, StringFormat.translate("download_menu_bar", "frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+                    if (clipboardTimer != null) {
+                        clipboardTimer.stop();
+                    }
+                    this.dispose();
+                    DataControl.load();
+                    ThemeChanger.easyChanger();
 
-                new Downloader().setVisible(true);
+                    new Downloader().setVisible(true);
+                }
+            } catch (HeadlessException ex) {
+                ToastMessage.show(this, StringFormat.translate("refresh_failed"), ToastMessage.ERROR);
+                logger.error("刷新失败！", ex);
             }
         });
         windowMenu.add(updateFrameMenuItem);
@@ -614,7 +619,7 @@ public class Downloader extends JFrame implements WindowListener {
         }
         FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
 
-        isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight", false));
+        isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
 
         //添加图标
         IconControl.addInDynamicConverter(
