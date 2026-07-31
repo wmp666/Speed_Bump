@@ -7,10 +7,12 @@ import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
 import com.wmp.downloader.tools.download.URLDownloadTool.PauseController;
 import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
@@ -108,7 +110,7 @@ public class BiliFileDownloadTask extends DownloadTask {
                     ProgressBarsPanel.removeAll();
                     var jProgressBar = new JProgressBar();
                     jProgressBar.setStringPainted(true);
-                    ProgressBarsPanel.add(jProgressBar);
+                    ProgressBarsPanel.add(UITools.createProgressBarPanel(jProgressBar));
                     infoLabel.setText(StringFormat.translate("task", "task.download_task.merging_file"));
                     var isConverged = ConvergenceTool.converge(new File(tempDir, "video.m4s"), new File(tempDir, "audio.m4s"), new File(savePath, fileName), jProgressBar);
                     infoLabel.setText(StringFormat.translate("task", isConverged ? "task.download_task.merge_success" : "task.download_task.merge_failed"));
@@ -120,7 +122,9 @@ public class BiliFileDownloadTask extends DownloadTask {
                 isFinally = true;
                 downloadControlButton.setEnabled(false);
                 ProgressBarsPanel.removeAll();
-                SwingUtilities.invokeLater(() -> infoLabel.setText(String.format("<html>%s</html>", StringFormat.translate("task", "task.download_task.download_complete"), DownloadProgress.formatSize(fileSize[0] + fileSize[1]))));
+                SwingUtilities.invokeLater(() -> infoLabel.setText(String.format(
+                        StringFormat.translate("task.download_task.download_complete"),
+                                URLDownloadTool.DownloadProgress.formatSize(fileSize[0] + fileSize[1]), DownloadProgress.formatSize(fileSize[0] + fileSize[1]))));
                 this.revalidate();
                 this.repaint();
             } catch (Exception e) {
@@ -151,7 +155,7 @@ public class BiliFileDownloadTask extends DownloadTask {
         JProgressBar progressBar = new JProgressBar(0, 100);
         progressBar.setStringPainted(true);
         threadProgressBarList.add(progressBar);
-        ProgressBarsPanel.add(progressBar);
+        ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
 
         boolean isSuccess = URLDownloadTool.singleThreadDownload(uri, tempDir, targetFileName, size, 10, progressBar, pauseController, downloadProgress, headers);
         progressTimer.stop();

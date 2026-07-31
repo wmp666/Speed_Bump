@@ -12,7 +12,7 @@ import java.awt.*;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static final String VERSION = "0.2.3.1";
+    public static final String VERSION = "0.2.4";
 
     static void main(String[] args) {
         DataControl.load();
@@ -37,6 +37,8 @@ public class Run {
             textArea.setText("""
                     0.2.4
                     1.支持跟随系统变更主题
+                    2.更新任务界面UI
+                    3.下载任务名称显示优化
                     
                     0.2.3
                     1.将翻译文件统一为一个文件

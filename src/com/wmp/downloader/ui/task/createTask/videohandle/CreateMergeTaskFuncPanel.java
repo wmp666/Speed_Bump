@@ -4,6 +4,7 @@ import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
 
@@ -68,7 +69,7 @@ public class CreateMergeTaskFuncPanel extends JPanel {
             var jProgressBar = new JProgressBar(0, 100);
             jProgressBar.setStringPainted(true);
             infoLabel.setText(StringFormat.translate("video_handle", "video_handle.create_merge_task.run_tip"));
-            ProgressBarsPanel.add(jProgressBar);
+            ProgressBarsPanel.add(UITools.createProgressBarPanel(jProgressBar));
             var converged = ConvergenceTool.converge(paths[0], paths[1], new File(paths[2], fileName), jProgressBar);
             ProgressBarsPanel.removeAll();
             if (converged) {

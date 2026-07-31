@@ -61,7 +61,8 @@ public class Downloader extends JFrame implements WindowListener {
     private JSpinner fontSizeSpinner;
     private JLabel nameLabel;
     private JCheckBox authorCheckBox;
-    private JTabbedPane TasksPanel;
+    private JPanel TasksPanel;
+    private final GridBagConstraints gbc = new GridBagConstraints();
     private final Timer taskListener = new Timer(100, e -> {
         taskList.removeIf(DownloadTask ->
         {
@@ -101,6 +102,7 @@ public class Downloader extends JFrame implements WindowListener {
     private JScrollPane aboutScrollPane;
     private JCheckBox isUseHeavyWeightToastCheckBox;
     private JCheckBox isUseHeavyWeightFunctionDialogCheckBox;
+    private JScrollPane TasksScrollPane;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -144,6 +146,15 @@ public class Downloader extends JFrame implements WindowListener {
 
         initTrayIcon();
         initMenuBar();
+
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;                 // 关键：不分配额外的垂直空间
+        gbc.anchor = GridBagConstraints.NORTH; // 关键：顶部对齐
+        gbc.insets = new Insets(5, 0, 5, 0);    // 上下各 5px 间距
+
 
         IconControl.addInDynamicConverter(
                 () -> {
@@ -433,6 +444,16 @@ public class Downloader extends JFrame implements WindowListener {
         settingsScrollPane.getViewport().setOpaque(false);
         settingsScrollPane.setOpaque(false);
 
+        TasksPanel = new JPanel(new GridBagLayout());
+        TasksPanel.setOpaque(false);
+
+        TasksScrollPane = new JScrollPane(TasksPanel);
+        TasksScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // 关闭水平滚动
+        TasksScrollPane.getViewport().setLayout(new ViewportLayout()); // 默认布局，会拉伸组件
+        TasksScrollPane.setBorder(null);
+        TasksScrollPane.getViewport().setBorder(null);
+        TasksScrollPane.getViewport().setOpaque(false);
+        TasksScrollPane.setOpaque(false);
 
         backgroundSelectionPanel = new PathSelectionPanel(StringFormat.translate("settings", "settings.personalized.background_path"), new File(DataControl.get("background", "")), SystemFileChooser.FILES_ONLY);
         pathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
@@ -539,16 +560,11 @@ public class Downloader extends JFrame implements WindowListener {
                 result -> {
                     if (result == FunctionDialog.RESULT_OK) {
                         createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
+                            taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
                             taskList.add(taskPanel);
-                            var name = taskPanel.getFileName();
-                            if (name != null) {
-                                if (name.length() > 9) {
-                                    name = name.substring(0, 6) + "...";
-                                }
-                            } else {
-                                name = StringFormat.translate("task", "task.download_task.no_name_file");
-                            }
-                            TasksPanel.addTab(name, taskPanel);
+
+                            TasksPanel.add(taskPanel, gbc);
                             TasksPanel.revalidate();
                             TasksPanel.repaint();
                         });

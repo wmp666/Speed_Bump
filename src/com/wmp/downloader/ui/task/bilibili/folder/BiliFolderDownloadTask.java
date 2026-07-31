@@ -7,6 +7,7 @@ import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.download.URLDownloadTool.DownloadProgress;
 import com.wmp.downloader.tools.download.URLDownloadTool.PauseController;
 import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
 
@@ -35,7 +36,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
     private final ArrayList<PauseController> pauseControllerList = new ArrayList<>();
     private final ArrayList<DownloadProgress> downloadProgressList = new ArrayList<>();
     private Timer progressTimer;
-    private JTabbedPane fileTabbedPane;
+    private final ArrayList<JPanel> progressBarPanelList = new ArrayList<>();
     private AtomicInteger completedCount;
     private volatile boolean hasAnyError = false;
 
@@ -101,10 +102,8 @@ public class BiliFolderDownloadTask extends DownloadTask {
         } else {
             pauseControllerList.forEach(PauseController::resume);
         }
-
         ProgressBarsPanel.removeAll();
-        fileTabbedPane = new JTabbedPane(JTabbedPane.LEFT, JTabbedPane.SCROLL_TAB_LAYOUT);
-        ProgressBarsPanel.add(fileTabbedPane);
+
 
         Map<String, String> headers = buildHeaders();
         completedCount = new AtomicInteger(0);
@@ -118,15 +117,9 @@ public class BiliFolderDownloadTask extends DownloadTask {
             String fName = fileIndex < fileNames.length ? fileNames[fileIndex] : "file_" + fileIndex;
             long fSize = fileIndex < fileSizes.length ? fileSizes[fileIndex] : 0;
 
-            JPanel filePanel = new JPanel(new BorderLayout(2, 2));
-            JLabel fileLabel = new JLabel(fName);
-            fileLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
-            filePanel.add(fileLabel, BorderLayout.NORTH);
+            JPanel progressPanel = new JPanel(new GridLayout(1, 0));
 
-            JPanel progressPanel = new JPanel(new GridLayout(0, 1, 2, 2));
-            filePanel.add(progressPanel, BorderLayout.CENTER);
-
-            fileTabbedPane.addTab(truncateTabTitle(fName), filePanel);
+            progressBarPanelList.add(UITools.createProgressBarsPanel(progressPanel));
 
             String videoUrl = biliUrls[i].length > 0 ? biliUrls[i][0] : null;
             String audioUrl = biliUrls[i].length > 1 ? biliUrls[i][1] : null;
@@ -144,6 +137,8 @@ public class BiliFolderDownloadTask extends DownloadTask {
                 ref.outputName = ref.outputName + ".mp4";
             }
 
+
+
             Thread.ofVirtual().start(() -> {
                 try {
                     downloadAndConvergePart(fileIndex, videoUrl, audioUrl,
@@ -156,6 +151,8 @@ public class BiliFolderDownloadTask extends DownloadTask {
                 }
             });
         }
+
+        ProgressBarsPanel.add(UITools.createProgressBarsPanel(progressBarPanelList.toArray(JPanel[]::new)));
 
         progressTimer = new Timer(1000, e -> {
             if (isStart) {

@@ -5,6 +5,7 @@ import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
@@ -145,7 +146,7 @@ public class ResetVideoInfoPanel extends JPanel {
                 progressBar.setMinimum(0);
                 progressBar.setMaximum(100);
                 progressBar.setValue(0);
-                ProgressBarsPanel.add(progressBar);
+                ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
                 boolean success = ConvergenceTool.transcodeVideo(
                         inputFile, outputFile,
                         containerFormat, videoCodec, audioCodec,

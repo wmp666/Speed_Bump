@@ -8,6 +8,7 @@ import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.task.DownloadTask;
 
 import javax.swing.*;
@@ -96,7 +97,7 @@ public class BTFileDownloadTask extends DownloadTask {
         JProgressBar progressBar = new JProgressBar();
         progressBar.setStringPainted(true);
         progressBar.setMaximum(100);
-        ProgressBarsPanel.add(progressBar);
+        ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
 
         // 4. 监听下载进度和完成事件
         CountDownLatch signal = new CountDownLatch(1);
