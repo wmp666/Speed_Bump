@@ -601,6 +601,7 @@ public class Downloader extends JFrame implements WindowListener {
             laugComboBox.setSelectedItem(lauguage);
         }
 
+        themeComboBox.addItem("System Theme Style");
         themeComboBox.addItem("Mac Dark");
         themeComboBox.addItem("Mac Light");
         themeComboBox.addItem("Dark");
@@ -611,7 +612,7 @@ public class Downloader extends JFrame implements WindowListener {
         themeComboBox.addItem("Windows Classic");
         themeComboBox.addItem("Metal");
 
-        themeComboBox.setSelectedItem(DataControl.get("theme", "Mac Dark"));
+        themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
 
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         for (String font : fonts) {
@@ -667,7 +668,7 @@ public class Downloader extends JFrame implements WindowListener {
             tempPathSelectionPanel.setPath(DataControl.get("TempFilePath", DataControl.getDataPath().getAbsolutePath()));
             FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
             fontSizeSpinner.setValue(DataControl.get("FontSize", 12));
-            themeComboBox.setSelectedItem(DataControl.get("theme", "Mac Dark"));
+            themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
 
             updateBackground();
             updateChildBounds(); // FIX 使用统一方法

@@ -3,6 +3,7 @@ package com.wmp.downloader.tools;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.wmp.downloader.Run;
+import com.wmp.downloader.tools.ui.SystemThemeDetector;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.Downloader;
 import org.apache.log4j.DailyRollingFileAppender;
@@ -34,7 +35,7 @@ public class DataControl {
     private static final HashMap<String, Object> data = new HashMap<>();
 
     static {
-        themeList.addAll(List.of("Mac Light", "Mac Dark", "Light", "Dark", "Darcula", "IntelliJ", "System", "Windows Classic", "Metal"));
+        themeList.addAll(List.of("System Theme Style", "Mac Light", "Mac Dark", "Light", "Dark", "Darcula", "IntelliJ", "System", "Windows Classic", "Metal"));
         load();
     }
 
@@ -138,6 +139,9 @@ public class DataControl {
                 }
                 case "Mac Light", "Light", "IntelliJ" -> {
                     tempDataMap.put("theme_type", "light");
+                }
+                case "System Theme Style" -> {
+                    tempDataMap.put("theme_type", SystemThemeDetector.isDarkMode() ? "dark" : "light");
                 }
                 default -> tempDataMap.put("theme_type", "light");
             }

@@ -139,13 +139,11 @@ public class FunctionDialog extends JDialog {
             this.setResizable(false);
             this.setTitle(title);
             this.setMinimumSize(new Dimension(400, 300));
-            if (c instanceof JFrame frame) {
-                this.setMaximumSize(frame.getSize());
-            } else if (c instanceof JDialog dialog) {
-                this.setMaximumSize(dialog.getSize());
-            } else {
-                this.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
-            }
+            var screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            this.setMaximumSize(new Dimension(
+                    (int) (screenSize.width * 0.8),
+                    (int) (screenSize.height * 0.8)
+            ));
             this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             this.setModal(true);
             this.add(UIPanel);

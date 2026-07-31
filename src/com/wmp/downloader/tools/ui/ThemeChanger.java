@@ -16,6 +16,14 @@ public class ThemeChanger {
 
     private static final List<DynamicConverterTask> dynamicConverterTasks = new ArrayList<>();
 
+    private static String theme = "";
+
+    private static final Timer timer = new Timer(1000, e -> easyChanger());
+
+    static {
+        timer.start();
+    }
+
     /**
      * 动态转换部分组件在不同主题下的状态
      *
@@ -44,7 +52,7 @@ public class ThemeChanger {
         for (var task : dynamicConverterTasks) task.task();
     }
 
-    public static void changer(Object newTheme) {
+    private static void changer(Object newTheme) {
         if (newTheme == null)
             return;
         DataControl.refresh();
@@ -53,10 +61,28 @@ public class ThemeChanger {
 
 
         //主题更新
-        if (!EasterEggData.canUseFlatLaf) {
+            if (!EasterEggData.canUseFlatLaf) {
 
 
-            if (!(newTheme instanceof FlatLaf)) {
+                if (!(newTheme instanceof FlatLaf)) {
+                    if (newTheme instanceof LookAndFeel laf)
+                        FlatLaf.setup(laf);
+                    else if (newTheme instanceof String className) {
+                        try {
+                            UIManager.setLookAndFeel(className);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                } else {
+                    try {
+                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            } else {
                 if (newTheme instanceof LookAndFeel laf)
                     FlatLaf.setup(laf);
                 else if (newTheme instanceof String className) {
@@ -66,25 +92,7 @@ public class ThemeChanger {
                         throw new RuntimeException(e);
                     }
                 }
-
-            } else {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
             }
-        } else {
-            if (newTheme instanceof LookAndFeel laf)
-                FlatLaf.setup(laf);
-            else if (newTheme instanceof String className) {
-                try {
-                    UIManager.setLookAndFeel(className);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
         //主体部分数据更新
         UIManager.put("TabbedPane.tabsOpaque", false);
         UIManager.put("TabbedPane.contentOpaque", false);
@@ -113,7 +121,7 @@ public class ThemeChanger {
      * 简单主题切换
      */
     public static void easyChanger() {
-        easyChanger(DataControl.get("theme", "Mac Dark"));
+        easyChanger(DataControl.get("theme", "System Theme Style"));
     }
 
     /**
@@ -122,6 +130,11 @@ public class ThemeChanger {
      * @param newTheme 新主题
      */
     public static void easyChanger(String newTheme) {
+        if (newTheme.equals("System Theme Style")) {
+            newTheme = SystemThemeDetector.isDarkMode() ? "Mac Dark" : "Mac Light";
+        }
+        if(newTheme.equals(theme)) return;
+        theme = newTheme;
         changer(switch (newTheme) {
             case "Mac Dark" -> new FlatMacDarkLaf();
             case "Mac Light" -> new FlatMacLightLaf();
