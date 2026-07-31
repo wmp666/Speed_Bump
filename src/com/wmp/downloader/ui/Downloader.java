@@ -579,7 +579,8 @@ public class Downloader extends JFrame implements WindowListener {
 
         {
             String[] laugs = new String[]{
-                    "简体中文(zh_cn)", "English(en_us)", "日本語(ja_JP)", "Русский язык(ru_RU)"
+                    "简体中文(zh_cn)", "English(en_us)", "日本語(ja_JP)", "Русский язык(ru_RU)",
+                    "繁體中文|臺灣(zh_TW)", "繁體中文|香港地區(zh_HK)"
             };
 
             var lauguage = DataControl.get("laug", "zh_cn");

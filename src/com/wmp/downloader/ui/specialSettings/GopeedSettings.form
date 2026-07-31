@@ -35,7 +35,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="com/wmp/downloader/laug/special_settings" key="gopeed_special_settings.port"/>
+              <text resource-bundle="com/wmp/downloader/laug/laug" key="gopeed_special_settings.port"/>
             </properties>
           </component>
           <component id="42537" class="javax.swing.JTextField" binding="gopeedPortTextField">
@@ -55,7 +55,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="com/wmp/downloader/laug/special_settings" key="gopeed_special_settings.tip"/>
+          <text resource-bundle="com/wmp/downloader/laug/laug" key="gopeed_special_settings.tip"/>
         </properties>
       </component>
       <component id="3be17" class="javax.swing.JLabel">
@@ -63,7 +63,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="com/wmp/downloader/laug/special_settings" key="gopeed_special_settings.selection_path.tip"/>
+          <text resource-bundle="com/wmp/downloader/laug/laug" key="gopeed_special_settings.selection_path.tip"/>
         </properties>
       </component>
     </children>

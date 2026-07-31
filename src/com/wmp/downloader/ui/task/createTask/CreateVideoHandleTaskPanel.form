@@ -23,14 +23,14 @@
               <component id="3da27" class="javax.swing.JButton" binding="createMergeTaskButton">
                 <constraints/>
                 <properties>
-                  <text resource-bundle="com/wmp/downloader/laug/video_handle" key="video_handle.create_merge_task"/>
+                  <text resource-bundle="com/wmp/downloader/laug/laug" key="video_handle.create_merge_task"/>
                 </properties>
               </component>
               <component id="d9909" class="javax.swing.JButton" binding="resetVideoInfoButton">
                 <constraints/>
                 <properties>
-                  <text resource-bundle="com/wmp/downloader/laug/video_handle" key="video_handle.reset_video_info"/>
-                  <toolTipText resource-bundle="com/wmp/downloader/laug/video_handle" key="video_handle.reset_video_info.tip"/>
+                  <text resource-bundle="com/wmp/downloader/laug/laug" key="video_handle.reset_video_info"/>
+                  <toolTipText resource-bundle="com/wmp/downloader/laug/laug" key="video_handle.reset_video_info.tip"/>
                 </properties>
               </component>
             </children>

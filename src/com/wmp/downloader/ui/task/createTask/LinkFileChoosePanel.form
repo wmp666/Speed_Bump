@@ -32,20 +32,20 @@
             <constraints/>
             <properties>
               <label value="全选"/>
-              <text resource-bundle="com/wmp/downloader/laug/common" key="selection_all"/>
+              <text resource-bundle="com/wmp/downloader/laug/laug" key="selection_all"/>
             </properties>
           </component>
           <component id="87650" class="javax.swing.JButton" binding="selectionNoneButton">
             <constraints/>
             <properties>
-              <label resource-bundle="com/wmp/downloader/laug/common" key="selection_none"/>
-              <text resource-bundle="com/wmp/downloader/laug/common" key="selection_none"/>
+              <label resource-bundle="com/wmp/downloader/laug/laug" key="selection_none"/>
+              <text resource-bundle="com/wmp/downloader/laug/laug" key="selection_none"/>
             </properties>
           </component>
           <component id="893d2" class="javax.swing.JButton" binding="selectionReverseButton">
             <constraints/>
             <properties>
-              <text resource-bundle="com/wmp/downloader/laug/common" key="selection_reverse"/>
+              <text resource-bundle="com/wmp/downloader/laug/laug" key="selection_reverse"/>
             </properties>
           </component>
         </children>

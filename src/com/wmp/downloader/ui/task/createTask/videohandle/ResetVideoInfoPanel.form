@@ -21,7 +21,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="com/wmp/downloader/laug/video_handle" key="video_handle.reset_video_info.edit_video_format"/>
+              <text resource-bundle="com/wmp/downloader/laug/laug" key="video_handle.reset_video_info.edit_video_format"/>
             </properties>
           </component>
           <component id="36861" class="javax.swing.JComboBox" binding="videoFormatComboBox">
@@ -52,7 +52,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="com/wmp/downloader/laug/video_handle" key="video_handle.reset_video_info.edit_video_codecs"/>
+              <text resource-bundle="com/wmp/downloader/laug/laug" key="video_handle.reset_video_info.edit_video_codecs"/>
             </properties>
           </component>
           <component id="ae501" class="javax.swing.JComboBox" binding="videoCodecsComboBox">
@@ -78,7 +78,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="com/wmp/downloader/laug/video_handle" key="video_handle.reset_video_info.edit_audio_codecs"/>
+              <text resource-bundle="com/wmp/downloader/laug/laug" key="video_handle.reset_video_info.edit_audio_codecs"/>
             </properties>
           </component>
           <component id="acf0b" class="javax.swing.JComboBox" binding="audioCodecsComboBox">
@@ -104,7 +104,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="com/wmp/downloader/laug/video_handle" key="video_handle.reset_video_info.edit_file_name"/>
+              <text resource-bundle="com/wmp/downloader/laug/laug" key="video_handle.reset_video_info.edit_file_name"/>
             </properties>
           </component>
           <component id="98fd1" class="javax.swing.JTextField" binding="fileNameTextField">
