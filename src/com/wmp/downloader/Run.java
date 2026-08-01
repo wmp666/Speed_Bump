@@ -9,13 +9,21 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static final String VERSION = "0.2.6";
+    public static String VERSION = "0.2.6.1";
 
     static void main(String[] args) {
+        var argList = List.of(args);
+        {
+            var versionIndex = argList.indexOf("-set:version") + 1;
+            VERSION = versionIndex == 0?VERSION: argList.get(versionIndex);
+        }
+
+
         DataControl.load();
 
         WebSetter.SSLControl(DataControl.get("isUseSSL", false));
