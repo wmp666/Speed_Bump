@@ -39,4 +39,12 @@ public class UITools {
         }
         return panel;
     }
+
+    public static JScrollPane setScrollPaneUnOpaque(JScrollPane scrollPane){
+        scrollPane.setBorder(null);
+        scrollPane.getViewport().setBorder(null);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        return scrollPane;
+    }
 }

@@ -7,6 +7,8 @@ import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.tools.ui.UITools;
+import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.ui.settings.BasicSpecialSettings;
 import com.wmp.downloader.ui.specialSettings.BiliSettings;
@@ -42,7 +44,7 @@ public class Downloader extends JFrame implements WindowListener {
     private final List<DownloadTask> taskFinalyTipList = new ArrayList<>();
     private JPanel UIPanel;
     private JPanel settingsPanel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane mainTabbedPane;
     private JCheckBox isUseSSLCheckBox;
     private JButton saveButton;
     private JButton refreshButton;
@@ -95,7 +97,7 @@ public class Downloader extends JFrame implements WindowListener {
     private JComboBox<String> laugComboBox;
     private PathSelectionPanel backgroundSelectionPanel;
     private JComboBox<String> BackgroundModeComboBox;
-    private JScrollPane settingsScrollPane;
+    private JScrollPane downloadSetsScrollPane;
     private JSlider alphaSlider;
     private JCheckBox alibabaFastjsonCheckBox;
     private JCheckBox log4jLog4jCheckBox;
@@ -103,6 +105,12 @@ public class Downloader extends JFrame implements WindowListener {
     private JCheckBox isUseHeavyWeightToastCheckBox;
     private JCheckBox isUseHeavyWeightFunctionDialogCheckBox;
     private JScrollPane TasksScrollPane;
+    private JTabbedPane tabbedPane2;
+    private JButton checkUpdateButton;
+    private JButton ProjectLinkButton;
+    private JScrollPane personalizedSetsScrollPane;
+    private JScrollPane DataControlSetsScrollPane;
+    private JCheckBox isStartCheckUpdateCheckBox;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -158,13 +166,17 @@ public class Downloader extends JFrame implements WindowListener {
 
         IconControl.addInDynamicConverter(
                 () -> {
-                    var size = tabbedPane1.getFont().getSize();
-                    tabbedPane1.setIconAt(tabbedPane1.indexOfComponent(downloaderPanel), IconControl.getIcon("task", size));
-                    tabbedPane1.setIconAt(tabbedPane1.indexOfComponent(settingsPanel), IconControl.getIcon("settings", size));
-                    tabbedPane1.setIconAt(tabbedPane1.indexOfComponent(SpecialSettingsPanel), IconControl.getIcon("settings", size));
-                    tabbedPane1.setIconAt(tabbedPane1.indexOfComponent(aboutPanel), IconControl.getIcon("about", size));
+                    var size = mainTabbedPane.getFont().getSize();
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(downloaderPanel), IconControl.getIcon("task", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(settingsPanel), IconControl.getIcon("settings", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(SpecialSettingsPanel), IconControl.getIcon("settings", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(aboutPanel), IconControl.getIcon("about", size));
                 }
         );
+
+        UITools.setScrollPaneUnOpaque(downloadSetsScrollPane);
+        UITools.setScrollPaneUnOpaque(personalizedSetsScrollPane);
+        UITools.setScrollPaneUnOpaque(DataControlSetsScrollPane);
 
         // 使用JLayeredPane包装主界面
         initLayeredPane();
@@ -289,10 +301,7 @@ public class Downloader extends JFrame implements WindowListener {
 
         for (var specialSettings : basicSpecialSettings) {
             var jScrollPane1 = new JScrollPane(specialSettings.getSettings());
-            jScrollPane1.setOpaque(false);
-            jScrollPane1.getViewport().setOpaque(false);
-            jScrollPane1.setBorder(null);
-            jScrollPane1.getViewport().setBorder(null);
+            UITools.setScrollPaneUnOpaque(jScrollPane1);
             SpecialSettingsTabbedPane.addTab(specialSettings.getSettingsName(), jScrollPane1);
         }
     }
@@ -428,7 +437,7 @@ public class Downloader extends JFrame implements WindowListener {
         AppMenu.add(DisclaimerMenuItem);
 
         var aboutMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "app.about"));
-        aboutMenuItem.addActionListener(e -> tabbedPane1.setSelectedIndex(tabbedPane1.getTabCount() - 1));
+        aboutMenuItem.addActionListener(e -> mainTabbedPane.setSelectedIndex(mainTabbedPane.getTabCount() - 1));
         AppMenu.add(aboutMenuItem);
 
         menuBar.add(AppMenu);
@@ -438,11 +447,6 @@ public class Downloader extends JFrame implements WindowListener {
 
     private void createUIComponents() {
 
-        settingsScrollPane = new JScrollPane(settingsPanel);
-        settingsScrollPane.setBorder(null);
-        settingsScrollPane.getViewport().setBorder(null);
-        settingsScrollPane.getViewport().setOpaque(false);
-        settingsScrollPane.setOpaque(false);
 
         TasksPanel = new JPanel(new GridBagLayout());
         TasksPanel.setOpaque(false);
@@ -450,10 +454,7 @@ public class Downloader extends JFrame implements WindowListener {
         TasksScrollPane = new JScrollPane(TasksPanel);
         TasksScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // 关闭水平滚动
         TasksScrollPane.getViewport().setLayout(new ViewportLayout()); // 默认布局，会拉伸组件
-        TasksScrollPane.setBorder(null);
-        TasksScrollPane.getViewport().setBorder(null);
-        TasksScrollPane.getViewport().setOpaque(false);
-        TasksScrollPane.setOpaque(false);
+        UITools.setScrollPaneUnOpaque(TasksScrollPane);
 
         backgroundSelectionPanel = new PathSelectionPanel(StringFormat.translate("settings", "settings.personalized.background_path"), new File(DataControl.get("background", "")), SystemFileChooser.FILES_ONLY);
         pathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
@@ -465,8 +466,12 @@ public class Downloader extends JFrame implements WindowListener {
     private void initAboutComponents() {
         nameLabel.setText(StringFormat.translate("common", "app_name") + " V" + DataControl.get("version", "0.0.0"));
         nameLabel.putClientProperty("FlatLaf.style", "font: bold $h0.font");
+        checkUpdateButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
+        ProjectLinkButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
         IconControl.addInDynamicConverter(
-                () -> nameLabel.setIcon(IconControl.getIcon("icon", nameLabel.getFont().getSize()))
+                () -> nameLabel.setIcon(IconControl.getIcon("icon", nameLabel.getFont().getSize())),
+                () -> checkUpdateButton.setIcon(IconControl.getIcon("update", checkUpdateButton.getFont().getSize())),
+                () -> ProjectLinkButton.setIcon(IconControl.getIcon("link", ProjectLinkButton.getFont().getSize()))
         );
 
         authorCheckBox.addActionListener(e -> {
@@ -486,7 +491,59 @@ public class Downloader extends JFrame implements WindowListener {
             IconControl.runDynamicConverters();
         });
 
+        checkUpdateButton.addActionListener(e -> {
+            checkUpdate();
+        });
+
+        ProjectLinkButton.addActionListener(e -> {
+            try {
+                Desktop.getDesktop().browse(URI.create("https://github.com/wmp666/Speed_Bump"));
+            } catch (Exception ex) {
+                ToastMessage.show(StringFormat.translate("open_link.error"));
+                logger.error("网站打开失败", ex);
+            }
+        });
+
         aboutScrollPane.getViewport().setOpaque(false);
+    }
+
+    public void checkUpdate() {
+        try {
+            var update = GetUpdateInfo.getUpdateInfo();
+            if (update == null) {
+                //没有新版本
+                ToastMessage.show(StringFormat.translate("check_update.no_update"), ToastMessage.INFO);
+            }else{
+                ToastMessage.showConfirm(
+                        String.format(StringFormat.translate("check_update.new_update"),
+                                update.version()),
+                        new FunctionDialog.CustomButtons[]{
+                            new FunctionDialog.CustomButtons(StringFormat.translate("learn"), 100),
+                            new FunctionDialog.CustomButtons(StringFormat.translate("download"), 200)
+                        },
+                        (allCount, count, result)->{
+                            if(result == 100){
+
+                                var panel = new JPanel();
+                                var textArea = new JTextArea(update.body());
+                                panel.add(textArea);
+                                FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
+                                        _ -> {},
+                                        FunctionDialog.DEFAULT_BUTTONS, 0,
+                                        null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+                            } else if (count == 1 && result == 200) {
+                                //创建更新任务
+                                mainTabbedPane.setSelectedIndex(0);
+
+                                createDownloadTask(update.url(), false);
+                            }
+                        }
+                );
+            }
+        } catch (Exception ex) {
+            ToastMessage.show(StringFormat.translate("check_update.failed"), ToastMessage.ERROR);
+            logger.error("网络数据获取失败");
+        }
     }
 
     private void initTaskComponents() {
@@ -520,13 +577,36 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void createDownloadTask(String url) {
-        if (this.createTaskPanel == null)
-            this.createTaskPanel = new CreateTaskPanel();
+        createDownloadTask(url, true);
+    }
+
+    private void createDownloadTask(String url, boolean showDialog) {
+        var createTaskPanel = new CreateTaskPanel();
+
         if (url != null) {
             createTaskPanel.setLink(url);
         }
+
+
+
+        if (!showDialog) {
+            Thread.ofVirtual().start(() -> {
+                while (createTaskPanel.getDownloadTasks().size() != 1){
+
+                }
+                if (createTaskPanel.getDownloadTasks().size() == 1) {
+                    addDownloadTask(createTaskPanel);
+                    return;
+                }
+            });
+            return;
+        }
+        //附属UI
+        if (this.createTaskPanel == null)
+            this.createTaskPanel = createTaskPanel;
         var mainPanel = createTaskPanel.MainPanel;
-        var learnMoreButton = new JButton(StringFormat.translate("common", "learn"));
+
+        var learnMoreButton = new JButton(StringFormat.translate("learn"));
         learnMoreButton.addActionListener(_ -> {
             var panel = new JPanel();
             var textArea = new JTextArea("""
@@ -534,7 +614,7 @@ public class Downloader extends JFrame implements WindowListener {
                     """);
             panel.add(textArea);
 
-            FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
+            FunctionDialog.showDialog(this, StringFormat.translate("learn"), panel,
                     _ -> {
                     },
                     FunctionDialog.DEFAULT_BUTTONS, 0,
@@ -542,7 +622,7 @@ public class Downloader extends JFrame implements WindowListener {
                     true, true);
         });
 
-        var SupportButton = new JButton(StringFormat.translate("common", "support"));
+        var SupportButton = new JButton(StringFormat.translate("support"));
         SupportButton.addActionListener(_ -> {
             var panel = new JPanel();
             var textArea = new JTextArea(StringFormat.translate("common", "support_text_area"));
@@ -559,15 +639,7 @@ public class Downloader extends JFrame implements WindowListener {
         FunctionDialog.showDialog(this, StringFormat.translate("task", "task.creat_task"), mainPanel,
                 result -> {
                     if (result == FunctionDialog.RESULT_OK) {
-                        createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
-                            taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-                            taskList.add(taskPanel);
-
-                            TasksPanel.add(taskPanel, gbc);
-                            TasksPanel.revalidate();
-                            TasksPanel.repaint();
-                        });
+                        addDownloadTask(this.createTaskPanel);
                     }
                     this.createTaskPanel = null;
                 }
@@ -575,18 +647,33 @@ public class Downloader extends JFrame implements WindowListener {
                 new JButton[]{learnMoreButton, SupportButton}, FunctionDialog.NORTH_DIRECTION_RIGHT);
     }
 
+    private void addDownloadTask(CreateTaskPanel createTaskPanel) {
+        createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
+            taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            taskList.add(taskPanel);
+
+            TasksPanel.add(taskPanel, gbc);
+            TasksPanel.revalidate();
+            TasksPanel.repaint();
+
+            taskPanel.start();
+        });
+    }
+
     private void initSettingsComponents() {
         ThemeChanger.addInDynamicConverter(
                 this::updateDefaultButton
         );
 
-        settingsScrollPane.getVerticalScrollBar().setUnitIncrement(10);
+        downloadSetsScrollPane.getVerticalScrollBar().setUnitIncrement(10);
 
         isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
         isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
         ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
         alphaSlider.setValue((int) (DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue() * 100));
+        isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -649,7 +736,7 @@ public class Downloader extends JFrame implements WindowListener {
         );
 
         //添加监听
-        tabbedPane1.addChangeListener(e -> updateDefaultButton());
+        mainTabbedPane.addChangeListener(e -> updateDefaultButton());
         ThreadNumSlider.addChangeListener(e -> {
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
             ThreadNumLabel.setSize(ThreadNumLabel.getPreferredSize());
@@ -677,6 +764,7 @@ public class Downloader extends JFrame implements WindowListener {
             isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
             isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
             isUseHeavyWeightFunctionDialogCheckBox.setSelected(DataControl.get("is_use_heavy_weight.function_dialog", false));
+            isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
 
             ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
@@ -732,6 +820,7 @@ public class Downloader extends JFrame implements WindowListener {
             DataControl.put("FontSize", fontSizeSpinner.getValue());
             DataControl.put("is_use_heavy_weight.toast", isUseHeavyWeightToastCheckBox.isSelected());
             DataControl.put("is_use_heavy_weight.function_dialog", isUseHeavyWeightFunctionDialogCheckBox.isSelected());
+            DataControl.put("is_start_check_update", isStartCheckUpdateCheckBox.isSelected());
 
             DataControl.save();
             DataControl.load();
@@ -785,7 +874,7 @@ public class Downloader extends JFrame implements WindowListener {
 
     private void showLinkDetectedDialog(String url) {
         this.setVisible(true);
-        tabbedPane1.setSelectedIndex(0);
+        mainTabbedPane.setSelectedIndex(0);
         this.toFront();
 
         if (createTaskPanel == null) {
@@ -862,15 +951,17 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void updateDefaultButton() {
-        int selectedIndex = tabbedPane1.getSelectedIndex();
-        if (selectedIndex == tabbedPane1.indexOfComponent(downloaderPanel)) {
+        int selectedIndex = mainTabbedPane.getSelectedIndex();
+        if (selectedIndex == mainTabbedPane.indexOfComponent(downloaderPanel)) {
             getRootPane().setDefaultButton(createTaskButton);
-        } else if (selectedIndex == tabbedPane1.indexOfComponent(settingsPanel)) {
+        } else if (selectedIndex == mainTabbedPane.indexOfComponent(settingsPanel)) {
             getRootPane().setDefaultButton(saveButton);
-        } else if (selectedIndex == tabbedPane1.indexOfComponent(SpecialSettingsPanel)) {
+        } else if (selectedIndex == mainTabbedPane.indexOfComponent(SpecialSettingsPanel)) {
             if (SpecialSettingsTabbedPane.getSelectedComponent() instanceof BasicSpecialSettings.SpecialSettingsPanel specialSettingsPanel) {
                 specialSettingsPanel.setDefaultButton();
             }
+        } else if (selectedIndex == mainTabbedPane.indexOfComponent(aboutPanel)) {
+            getRootPane().setDefaultButton(checkUpdateButton);
         } else getRootPane().setDefaultButton(null);
     }
 

@@ -93,6 +93,7 @@ public class ThemeChanger {
                     }
                 }
             }
+
         //主体部分数据更新
         UIManager.put("TabbedPane.tabsOpaque", false);
         UIManager.put("TabbedPane.contentOpaque", false);

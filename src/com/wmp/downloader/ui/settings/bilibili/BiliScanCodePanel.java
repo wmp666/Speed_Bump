@@ -48,7 +48,7 @@ public class BiliScanCodePanel extends JPanel {
             try {
                 Desktop.getDesktop().browse(URI.create(loginURL));
             } catch (IOException ex) {
-                ToastMessage.show(null, StringFormat.translate("special_settings", "bili_special_settings.open_link.error"), ToastMessage.ERROR);
+                ToastMessage.show(null, StringFormat.translate("special_settings", "open_link.error"), ToastMessage.ERROR);
                 logger.error(StringFormat.translate("special_settings", "bili_special_settings.cannot_open_browser"), ex);
             }
         });

@@ -3,13 +3,11 @@ package com.wmp.downloader.ui.task;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
-import com.wmp.downloader.tools.ui.DynamicConverterTask;
-import com.wmp.downloader.tools.ui.IconControl;
-import com.wmp.downloader.tools.ui.ThemeChanger;
-import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.tools.ui.*;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -71,6 +69,7 @@ public abstract class DownloadTask extends JPanel {
                     // 重新添加 alpha 通道（例如 80）
                     Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 100);
                     mainPanel.setBackground(translucent);
+
                     mainPanel.setOpaque(true);
 
                     SwingUtilities.invokeLater(this::updateNameLabel); // 字体变化时重新计算
@@ -269,10 +268,7 @@ public abstract class DownloadTask extends JPanel {
         ProgressBarsScrollPane = new JScrollPane(ProgressBarsPanel);
         ProgressBarsScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         ProgressBarsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        ProgressBarsScrollPane.setBorder(null);
-        ProgressBarsScrollPane.getViewport().setBorder(null);
-        ProgressBarsScrollPane.getViewport().setOpaque(false);
-        ProgressBarsScrollPane.setOpaque(false);
+        UITools.setScrollPaneUnOpaque(ProgressBarsScrollPane);
 
     }
 

@@ -12,7 +12,7 @@ import java.awt.*;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static final String VERSION = "0.2.4";
+    public static final String VERSION = "0.2.5";
 
     static void main(String[] args) {
         DataControl.load();
@@ -35,6 +35,11 @@ public class Run {
             JPanel panel = new JPanel(new BorderLayout());
             JTextArea textArea = new JTextArea();
             textArea.setText("""
+                    0.2.5
+                    1.增加更新按钮...
+                    2.增加新的非模态通知类型
+                    3.新增更新功能（目前仅Windows）
+                    
                     0.2.4
                     1.支持跟随系统变更主题
                     2.更新任务界面UI
@@ -87,13 +92,17 @@ public class Run {
                     panel, null,
                     FunctionDialog.DEFAULT_BUTTONS, 0,
                     null, FunctionDialog.NORTH_DIRECTION_CENTER,
-                    false, true);
+                    true, true);
 
 
             DataControl.putAndSave("last_version", DataControl.get("version", "0.0.0"));
         }
 
         downloader.setVisible(true);
+
+        if (DataControl.get("is_start_check_update", true)) {
+            downloader.checkUpdate();
+        }
 
 
     }
