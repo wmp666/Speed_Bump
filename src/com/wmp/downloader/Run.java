@@ -2,6 +2,7 @@ package com.wmp.downloader;
 
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.downloader.ui.FunctionDialog;
 import org.apache.log4j.Logger;
@@ -12,7 +13,7 @@ import java.awt.*;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static final String VERSION = "0.2.5";
+    public static final String VERSION = "0.2.6";
 
     static void main(String[] args) {
         DataControl.load();
@@ -30,11 +31,12 @@ public class Run {
         //获取上次的版本
         var version = DataControl.get("last_version", "0.0.0");
         logger.info("Last version: " + version);
-        if (!version.equals(DataControl.get("version", "0.0.0"))) {
+        /*if (!GetUpdateInfo.versionGreaterThan(version, DataControl.get("version", "0.0.0"))) {
             //弹出更新日志
             JPanel panel = new JPanel(new BorderLayout());
             JTextArea textArea = new JTextArea();
             textArea.setText("""
+
                     0.2.5
                     1.增加更新按钮...
                     2.增加新的非模态通知类型
@@ -96,7 +98,7 @@ public class Run {
 
 
             DataControl.putAndSave("last_version", DataControl.get("version", "0.0.0"));
-        }
+        }*/
 
         downloader.setVisible(true);
 

@@ -9,26 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新README">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/icon/close.svg" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增更新功能&#10;1.增加更新按钮...&#10;2.增加新的非模态通知类型&#10;3.新增更新功能（目前仅Windows）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/UITools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/UITools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/settings/bilibili/BiliScanCodePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/DownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +123,7 @@
     "project.structure.last.edited": "库",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "vcs.Git",
     "应用程序.BTTest.executor": "Run",
     "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
@@ -295,7 +281,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="deleteJavaCV" />
+                        <option value="main/master" />
                       </list>
                     </value>
                   </entry>
@@ -308,7 +294,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加视频转码，转格式" />
     <MESSAGE value="增加硬件加速功能，默认启动" />
     <MESSAGE value="增加。。。" />
     <MESSAGE value="更新issue模板" />
@@ -333,7 +318,8 @@
     <MESSAGE value="支持跟随系统变更主题" />
     <MESSAGE value="支持跟随系统变更主题，下载任务名称显示优化" />
     <MESSAGE value="更新README" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新README" />
+    <MESSAGE value="新增更新功能&#10;1.增加更新按钮...&#10;2.增加新的非模态通知类型&#10;3.新增更新功能（目前仅Windows）" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增更新功能&#10;1.增加更新按钮...&#10;2.增加新的非模态通知类型&#10;3.新增更新功能（目前仅Windows）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -344,9 +330,9 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/Run.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java</url>
+          <line>259</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -18,6 +18,8 @@ import com.wmp.downloader.ui.specialSettings.GopeedSettings;
 import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -523,10 +525,18 @@ public class Downloader extends JFrame implements WindowListener {
                         },
                         (allCount, count, result)->{
                             if(result == 100){
-
                                 var panel = new JPanel();
-                                var textArea = new JTextArea(update.body());
-                                panel.add(textArea);
+
+                                // 1. 使用 commonmark 将 Markdown 转换为 HTML
+                                Parser parser = Parser.builder().build();
+                                HtmlRenderer renderer = HtmlRenderer.builder().build();
+                                String html = renderer.render(parser.parse(update.body()));
+
+                                // 2. 在 Swing 的 JEditorPane 中显示 HTML
+                                JEditorPane editorPane = new JEditorPane("text/html", html);
+                                editorPane.setEditable(false);
+
+                                panel.add(editorPane);
                                 FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                                         _ -> {},
                                         FunctionDialog.DEFAULT_BUTTONS, 0,
