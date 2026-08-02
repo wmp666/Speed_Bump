@@ -109,7 +109,7 @@ public class BiliFileDownloadTask extends DownloadTask {
                 if (videoSuccess && audioSuccess) {
                     ProgressBarsPanel.removeAll();
                     var jProgressBar = new JProgressBar();
-                    jProgressBar.setStringPainted(true);
+                    jProgressBar.setStringPainted(false);
                     ProgressBarsPanel.add(UITools.createProgressBarPanel(jProgressBar));
                     infoLabel.setText(StringFormat.translate("task", "task.download_task.merging_file"));
                     var isConverged = ConvergenceTool.converge(new File(tempDir, "video.m4s"), new File(tempDir, "audio.m4s"), new File(savePath, fileName), jProgressBar);
@@ -153,7 +153,7 @@ public class BiliFileDownloadTask extends DownloadTask {
         progressTimer.start();
 
         JProgressBar progressBar = new JProgressBar(0, 100);
-        progressBar.setStringPainted(true);
+        progressBar.setStringPainted(false);
         threadProgressBarList.add(progressBar);
         ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
 

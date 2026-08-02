@@ -55,7 +55,7 @@ public class GopeedDownloadTask extends DownloadTask {
             var uploaded = progress.getLongValue("uploaded", 0);
             var uploadSpeed = progress.getLongValue("uploadSpeed", 0);
             var extractProgress = (downloaded * 100)/fileSize;
-            progressBar.setStringPainted(true);
+            progressBar.setStringPainted(false);
             if (fileSize <= 0) progressBar.setIndeterminate(true);
             else{
                 progressBar.setIndeterminate(false);

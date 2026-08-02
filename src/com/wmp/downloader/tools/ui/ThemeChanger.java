@@ -4,6 +4,7 @@ import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.sun.source.tree.NewArrayTree;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 
@@ -17,6 +18,7 @@ public class ThemeChanger {
     private static final List<DynamicConverterTask> dynamicConverterTasks = new ArrayList<>();
 
     private static String theme = "";
+    private static String themeStyle = "";
 
     private static final Timer timer = new Timer(1000, e -> easyChanger());
 
@@ -60,10 +62,9 @@ public class ThemeChanger {
         FlatAnimatedLafChange.showSnapshot();
 
 
-        //主题更新
+        //主题更新，如果前后主题相同就跳过
+        if (!isSameTheme(newTheme)) {
             if (!EasterEggData.canUseFlatLaf) {
-
-
                 if (!(newTheme instanceof FlatLaf)) {
                     if (newTheme instanceof LookAndFeel laf)
                         FlatLaf.setup(laf);
@@ -93,13 +94,12 @@ public class ThemeChanger {
                     }
                 }
             }
+        }
 
         //主体部分数据更新
         UIManager.put("TabbedPane.tabsOpaque", false);
         UIManager.put("TabbedPane.contentOpaque", false);
         FlatLaf.setUseNativeWindowDecorations(true);
-        //UIManager.put("TitlePane.unifiedBackground", true);
-        //UIManager.put("TitlePane.unifiedBackground", false);
 
 
         //组件更新
@@ -118,6 +118,49 @@ public class ThemeChanger {
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
+    private static boolean isSameTheme(Object newTheme){
+        if (newTheme instanceof LookAndFeel lookAndFeel) {
+            if (!themeStyle.equals("LookAndFeel")) {
+                themeStyle = "LookAndFeel";
+                return false;
+            }else{
+                var newThemeStr = lookAndFeel.getClass().getName();
+                if (newThemeStr.equals(theme)) {
+                    return true;
+                }else {
+                    theme = newThemeStr;
+                    return false;
+                }
+            }
+        }else if(newTheme instanceof String string){
+            if (!themeStyle.equals("String")) {
+                themeStyle = "String";
+                return false;
+            }else{
+                if (string.equals(theme)) {
+                    return true;
+                }else {
+                    theme = string;
+                    return false;
+                }
+            }
+        }else{
+            var typeName = newTheme.getClass().getTypeName();
+            if (!themeStyle.equals(typeName)) {
+                themeStyle = typeName;
+                return false;
+            }else{
+                var newThemeStr = newTheme.toString();
+                if (newThemeStr.equals(theme)) {
+                    return true;
+                }else {
+                    theme = newThemeStr;
+                    return false;
+                }
+            }
+        }
+    }
+
     /**
      * 简单主题切换
      */
@@ -134,8 +177,7 @@ public class ThemeChanger {
         if (newTheme.equals("System Theme Style")) {
             newTheme = SystemThemeDetector.isDarkMode() ? "Mac Dark" : "Mac Light";
         }
-        if(newTheme.equals(theme)) return;
-        theme = newTheme;
+
         changer(switch (newTheme) {
             case "Mac Dark" -> new FlatMacDarkLaf();
             case "Mac Light" -> new FlatMacLightLaf();

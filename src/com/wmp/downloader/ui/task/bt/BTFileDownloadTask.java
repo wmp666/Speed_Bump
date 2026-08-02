@@ -95,7 +95,7 @@ public class BTFileDownloadTask extends DownloadTask {
         handle.renameFile(0, fileName);
 
         JProgressBar progressBar = new JProgressBar();
-        progressBar.setStringPainted(true);
+        progressBar.setStringPainted(false);
         progressBar.setMaximum(100);
         ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
 

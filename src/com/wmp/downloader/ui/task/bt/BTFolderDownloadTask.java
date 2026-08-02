@@ -93,7 +93,7 @@ public class BTFolderDownloadTask extends DownloadTask {
 
         // 6. 创建进度条
         JProgressBar progressBar = new JProgressBar();
-        progressBar.setStringPainted(true);
+        progressBar.setStringPainted(false);
         progressBar.setMaximum(100);
         ProgressBarsPanel.add(UITools.createProgressBarsPanel(
                 UITools.createProgressBarPanel(progressBar)));

@@ -189,7 +189,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
             if (videoUrl != null) {
                 SwingUtilities.invokeLater(() -> infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.downloading_video_file"), outputName)));
                 JProgressBar videoProgressBar = new JProgressBar(0, 100);
-                videoProgressBar.setStringPainted(true);
+                videoProgressBar.setStringPainted(false);
                 SwingUtilities.invokeLater(() -> progressPanel.add(videoProgressBar));
                 SwingUtilities.invokeLater(() -> progressPanel.revalidate());
 
@@ -216,7 +216,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
             if (audioUrl != null) {
                 SwingUtilities.invokeLater(() -> infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.downloading_audio_file"), outputName)));
                 JProgressBar audioProgressBar = new JProgressBar(0, 100);
-                audioProgressBar.setStringPainted(true);
+                audioProgressBar.setStringPainted(false);
                 SwingUtilities.invokeLater(() -> progressPanel.add(audioProgressBar));
                 SwingUtilities.invokeLater(() -> progressPanel.revalidate());
 
@@ -241,7 +241,7 @@ public class BiliFolderDownloadTask extends DownloadTask {
                 });
 
                 JProgressBar mergeProgressBar = new JProgressBar(0, 100);
-                mergeProgressBar.setStringPainted(true);
+                mergeProgressBar.setStringPainted(false);
                 SwingUtilities.invokeLater(() -> {
                     progressPanel.add(mergeProgressBar);
                     progressPanel.revalidate();

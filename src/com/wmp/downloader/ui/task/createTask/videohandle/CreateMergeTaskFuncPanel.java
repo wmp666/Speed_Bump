@@ -67,7 +67,7 @@ public class CreateMergeTaskFuncPanel extends JPanel {
         @Override
         public void doWhenStart() throws Exception {
             var jProgressBar = new JProgressBar(0, 100);
-            jProgressBar.setStringPainted(true);
+            jProgressBar.setStringPainted(false);
             infoLabel.setText(StringFormat.translate("video_handle", "video_handle.create_merge_task.run_tip"));
             ProgressBarsPanel.add(UITools.createProgressBarPanel(jProgressBar));
             var converged = ConvergenceTool.converge(paths[0], paths[1], new File(paths[2], fileName), jProgressBar);

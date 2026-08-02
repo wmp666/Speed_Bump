@@ -142,7 +142,7 @@ public class ResetVideoInfoPanel extends JPanel {
         public void doWhenStart() throws Exception {
             Thread.ofVirtual().start(() -> {
                 JProgressBar progressBar = new JProgressBar();
-                progressBar.setStringPainted(true);
+                progressBar.setStringPainted(false);
                 progressBar.setMinimum(0);
                 progressBar.setMaximum(100);
                 progressBar.setValue(0);

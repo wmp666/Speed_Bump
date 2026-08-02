@@ -190,7 +190,7 @@ public class DouyinImageDownloadTask extends DownloadTask {
                 ArrayList<JProgressBar> threadBars = new ArrayList<>();
                 for (int t = 0; t < threadNum; t++) {
                     JProgressBar bar = new JProgressBar(0, 100);
-                    bar.setStringPainted(true);
+                    bar.setStringPainted(false);
                     threadBars.add(bar);
                     SwingUtilities.invokeLater(() -> {
                         progressPanel.add(bar);
@@ -233,7 +233,7 @@ public class DouyinImageDownloadTask extends DownloadTask {
                     infoLabel.setText(String.format("正在合并图片: %s", fileName));
                     progressPanel.removeAll();
                     JProgressBar mergeBar = new JProgressBar(0, 100);
-                    mergeBar.setStringPainted(true);
+                    mergeBar.setStringPainted(false);
                     progressPanel.add(mergeBar);
                     progressPanel.revalidate();
                 });
@@ -267,7 +267,7 @@ public class DouyinImageDownloadTask extends DownloadTask {
                         infoLabel.setText(String.format("正在单线程下载图片: %s", fileName)));
 
                 JProgressBar singleBar = new JProgressBar(0, 100);
-                singleBar.setStringPainted(true);
+                singleBar.setStringPainted(false);
                 SwingUtilities.invokeLater(() -> {
                     progressPanel.add(singleBar);
                     progressPanel.revalidate();

@@ -163,108 +163,6 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <scrollpane id="d773b" binding="downloadSetsScrollPane">
-                    <constraints>
-                      <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="settings.web"/>
-                    </constraints>
-                    <properties>
-                      <enabled value="true"/>
-                      <opaque value="false"/>
-                    </properties>
-                    <border type="none"/>
-                    <children>
-                      <grid id="85220" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                        <margin top="0" left="0" bottom="0" right="0"/>
-                        <constraints/>
-                        <properties>
-                          <opaque value="false"/>
-                        </properties>
-                        <border type="none"/>
-                        <children>
-                          <component id="348ac" class="javax.swing.JCheckBox" binding="isUseSSLCheckBox" default-binding="true">
-                            <constraints>
-                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <opaque value="false"/>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseSsl"/>
-                            </properties>
-                          </component>
-                          <grid id="7d82e" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                            <margin top="0" left="0" bottom="0" right="0"/>
-                            <constraints>
-                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <opaque value="false"/>
-                            </properties>
-                            <border type="none"/>
-                            <children>
-                              <component id="ac6b3" class="javax.swing.JLabel">
-                                <constraints>
-                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.thread_num"/>
-                                </properties>
-                              </component>
-                              <component id="f7478" class="javax.swing.JTextField" binding="ThreadNumLabel">
-                                <constraints>
-                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <editable value="false"/>
-                                  <opaque value="false"/>
-                                  <text value="Label"/>
-                                </properties>
-                              </component>
-                              <hspacer id="c28da">
-                                <constraints>
-                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                              </hspacer>
-                              <component id="2a621" class="javax.swing.JSlider" binding="ThreadNumSlider">
-                                <constraints>
-                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <maximum value="512"/>
-                                  <minimum value="1"/>
-                                  <opaque value="false"/>
-                                  <value value="64"/>
-                                  <valueIsAdjusting value="false"/>
-                                </properties>
-                              </component>
-                            </children>
-                          </grid>
-                          <nested-form id="aa722" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="pathSelectionPanel" custom-create="true">
-                            <constraints>
-                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                          </nested-form>
-                          <nested-form id="69fa5" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="tempPathSelectionPanel" custom-create="true">
-                            <constraints>
-                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                          </nested-form>
-                          <component id="86fbb" class="javax.swing.JCheckBox" binding="isUseClipBoardListenerCheckBox">
-                            <constraints>
-                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <opaque value="false"/>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseClipBoardListener"/>
-                            </properties>
-                          </component>
-                          <vspacer id="6a04d">
-                            <constraints>
-                              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                          </vspacer>
-                        </children>
-                      </grid>
-                    </children>
-                  </scrollpane>
                   <scrollpane id="5c253" binding="personalizedSetsScrollPane">
                     <constraints>
                       <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="settings.personalized"/>
@@ -272,7 +170,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <grid id="7c25a" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                      <grid id="7c25a" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                         <margin top="0" left="0" bottom="0" right="0"/>
                         <constraints/>
                         <properties>
@@ -399,7 +297,7 @@
                               </component>
                             </children>
                           </grid>
-                          <grid id="bc86c" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="bc86c" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints>
                               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -484,13 +382,115 @@
                                   </component>
                                 </children>
                               </grid>
-                              <vspacer id="3c16b">
-                                <constraints>
-                                  <grid row="2" column="0" row-span="1" col-span="4" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                              </vspacer>
                             </children>
                           </grid>
+                          <vspacer id="50fef">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </vspacer>
+                        </children>
+                      </grid>
+                    </children>
+                  </scrollpane>
+                  <scrollpane id="d773b" binding="downloadSetsScrollPane">
+                    <constraints>
+                      <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="settings.web"/>
+                    </constraints>
+                    <properties>
+                      <enabled value="true"/>
+                      <opaque value="false"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <grid id="85220" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints/>
+                        <properties>
+                          <opaque value="false"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="348ac" class="javax.swing.JCheckBox" binding="isUseSSLCheckBox" default-binding="true">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <opaque value="false"/>
+                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseSsl"/>
+                            </properties>
+                          </component>
+                          <grid id="7d82e" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <opaque value="false"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="ac6b3" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.thread_num"/>
+                                </properties>
+                              </component>
+                              <component id="f7478" class="javax.swing.JTextField" binding="ThreadNumLabel">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <editable value="false"/>
+                                  <opaque value="false"/>
+                                  <text value="Label"/>
+                                </properties>
+                              </component>
+                              <hspacer id="c28da">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="2a621" class="javax.swing.JSlider" binding="ThreadNumSlider">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <maximum value="512"/>
+                                  <minimum value="1"/>
+                                  <opaque value="false"/>
+                                  <value value="64"/>
+                                  <valueIsAdjusting value="false"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <nested-form id="aa722" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="pathSelectionPanel" custom-create="true">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </nested-form>
+                          <nested-form id="69fa5" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="tempPathSelectionPanel" custom-create="true">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </nested-form>
+                          <component id="86fbb" class="javax.swing.JCheckBox" binding="isUseClipBoardListenerCheckBox">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <opaque value="false"/>
+                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseClipBoardListener"/>
+                            </properties>
+                          </component>
+                          <vspacer id="6a04d">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </vspacer>
                         </children>
                       </grid>
                     </children>
