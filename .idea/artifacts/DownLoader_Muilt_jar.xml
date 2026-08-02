@@ -13,6 +13,10 @@
       <element id="library" level="project" name="formdev.flatlaf" />
       <element id="library" level="project" name="google.zxing.core" />
       <element id="library" level="project" name="google.zxing.javase" />
+      <element id="library" level="project" name="commonmark" />
+      <element id="library" level="project" name="commons.net" />
+      <element id="library" level="project" name="jlibtorrent-2.0.12.9" />
+      <element id="library" level="project" name="jlibtorrent-windows-2.0.12.9" />
     </root>
   </artifact>
 </component>

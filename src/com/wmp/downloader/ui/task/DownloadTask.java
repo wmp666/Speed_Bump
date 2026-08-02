@@ -66,9 +66,6 @@ public abstract class DownloadTask extends JPanel {
                     } else {
                         adjusted = ColorFunctions.darken(base, 0.1f);
                     }
-                    // 重新添加 alpha 通道（例如 80）
-                    Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 100);
-                    mainPanel.setBackground(translucent);
 
                     mainPanel.setOpaque(true);
 

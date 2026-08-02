@@ -94,6 +94,7 @@ public class DataControl {
      * @param defaultValue 用户设置的默认值
      * @return 值，如果不存在则返回 defaultValue
      */
+    @SuppressWarnings("unchecked")
     public static <T> T get(String key, T defaultValue) {
         return (T) data.getOrDefault(key, defaultValue);
     }

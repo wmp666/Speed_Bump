@@ -14,7 +14,7 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.2.6.2";
+    public static String VERSION = "0.2.7";
 
     static void main(String[] args) {
         var argList = List.of(args);

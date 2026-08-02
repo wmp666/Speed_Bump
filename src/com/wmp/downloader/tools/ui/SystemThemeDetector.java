@@ -29,7 +29,7 @@ public class SystemThemeDetector {
     private static boolean detectWindows() throws Exception {
         // 读取注册表: AppsUseLightTheme = 1 为浅色，0 为深色
         Process process = Runtime.getRuntime().exec(
-                "reg query HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize /v AppsUseLightTheme"
+                new String[]{"reg", "query", "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "/v", "AppsUseLightTheme"}
         );
         process.waitFor(3, TimeUnit.SECONDS);
 
