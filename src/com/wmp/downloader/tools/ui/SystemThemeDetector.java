@@ -8,6 +8,7 @@ public class SystemThemeDetector {
 
     /**
      * 检测当前系统是否为深色模式
+     *
      * @return true=深色，false=浅色（或无法检测时默认浅色）
      */
     public static boolean isDarkMode() {

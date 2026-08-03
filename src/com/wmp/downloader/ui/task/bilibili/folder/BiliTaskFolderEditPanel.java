@@ -13,17 +13,15 @@ import java.util.HashMap;
 public class BiliTaskFolderEditPanel extends JPanel {
 
     private static final Logger logger = Logger.getLogger(BiliTaskFolderEditPanel.class);
-
-    private JTextField folderNameTextField;
-    private JPanel mainPanel;
-    private JComboBox<String> QualityComboBox;
-    private JComboBox<String> VideoQualityComboBox;
-    private JComboBox<String> SoundQualityComboBox;
-    //private int[] quality_int = new int[0];
-
     //记录指定质量信息的对应下载链接
     private final HashMap<String, String[]> videoUrlMap = new HashMap<>();
     private final HashMap<String, String[]> audioUrlMap = new HashMap<>();
+    private JTextField folderNameTextField;
+    private JPanel mainPanel;
+    private JComboBox<String> QualityComboBox;
+    //private int[] quality_int = new int[0];
+    private JComboBox<String> VideoQualityComboBox;
+    private JComboBox<String> SoundQualityComboBox;
 
     /**
      * 编辑器

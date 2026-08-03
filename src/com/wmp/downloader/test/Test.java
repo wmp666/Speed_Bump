@@ -1,5 +1,9 @@
 package com.wmp.downloader.test;
 
+interface TestLambda {
+    int test(int a, int b);
+}
+
 public class Test {
     static void main() {
         TestLambda testLambda = (int a, int b) -> {
@@ -12,8 +16,4 @@ public class Test {
 
         TestLambda testLambda3 = (int a, int b) -> 0;
     }
-}
-
-interface TestLambda {
-    int test(int a, int b);
 }

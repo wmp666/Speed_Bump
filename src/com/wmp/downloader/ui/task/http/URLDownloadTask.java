@@ -23,8 +23,8 @@ public class URLDownloadTask extends DownloadTask {
     private final long fileSize;
     private final int mode;
     private final ArrayList<JProgressBar> threadProgressBarList = new ArrayList<>();
-    private URLDownloadTool.PauseController pauseController = new PauseController();
-    private URLDownloadTool.DownloadProgress downloadProgress = new DownloadProgress();
+    private final URLDownloadTool.PauseController pauseController = new PauseController();
+    private final URLDownloadTool.DownloadProgress downloadProgress = new DownloadProgress();
     private Timer progressTimer;
 
     /**
@@ -52,9 +52,6 @@ public class URLDownloadTask extends DownloadTask {
 
         pauseController.resume();
         downloadProgress.resetSpeed();
-
-        pauseController = new PauseController();
-        downloadProgress = new DownloadProgress();
 
         //清除已有的进度条
         ProgressBarsPanel.removeAll();
@@ -121,6 +118,8 @@ public class URLDownloadTask extends DownloadTask {
                             //清除已有的进度条
                             ProgressBarsPanel.removeAll();
                             threadProgressBarList.clear();
+                            exitButton.setEnabled(false);
+                            downloadControlButton.setEnabled(false);
 
                             downloadProgress.resetMergedBytes();
                             SwingUtilities.invokeLater(() -> infoLabel.setText(StringFormat.translate("task", "task.download_task.merging_file")));
@@ -137,6 +136,7 @@ public class URLDownloadTask extends DownloadTask {
                             threadProgressBarList.clear();
 
                             downloadControlButton.setEnabled(false);
+                            exitButton.setEnabled(true);
 
                             isFinally = true;
 
@@ -148,7 +148,8 @@ public class URLDownloadTask extends DownloadTask {
                             hasError = true;
                             progressTimer.stop();
                             logger.error("合并文件发生异常", e);
-                            downloadControlButton.setEnabled(false);
+                            exitButton.setEnabled(true);
+                            downloadControlButton.setEnabled(true);
                             infoLabel.setText(StringFormat.translate("task", "task.download_task.merge_error"));
                             ToastMessage.show(this, StringFormat.translate("task", "task.download_task.merge_error"), ToastMessage.ERROR);
                         }
@@ -164,6 +165,9 @@ public class URLDownloadTask extends DownloadTask {
                     logger.error("多线程下载发生异常", e);
                     ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_multi"), ToastMessage.ERROR);
                     isStart = false;
+                    startCount--;
+                    exitButton.setEnabled(true);
+                    downloadControlButton.setEnabled(true);
                 }
             });
 
@@ -207,10 +211,18 @@ public class URLDownloadTask extends DownloadTask {
                     logger.error("单线程下载发生异常", e);
                     ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_single"), ToastMessage.ERROR);
                     isStart = false;
+                    startCount--;
                 }
             });
         }
 
+
+    }
+
+    @Override
+    public void doWhenRestart() throws Exception {
+        pauseController.resume();
+        if (progressTimer != null) progressTimer.restart();
 
     }
 

@@ -16,18 +16,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Time;
 
 public class GopeedDownloadTask extends DownloadTask {
 
     private static final Logger logger = Logger.getLogger(GopeedDownloadTask.class);
 
     private final String baseUrl;
-    private String taskID = "";
-
-    private long fileSize;
-
     private final JProgressBar progressBar = new JProgressBar(0, 100);
+    private final String content;
+    private String taskID = "";
+    private long fileSize;
 
     private final Timer infoUpdateTimer = new Timer(500, _ -> {
         var body = getBody("/tasks/" + taskID, null, Connection.Method.GET);
@@ -44,7 +42,6 @@ public class GopeedDownloadTask extends DownloadTask {
             //data -> meta -> res -> size
 
 
-
             var data = taskInfo.getJSONObject("data");
 
             fileSize = data.getJSONObject("meta").getJSONObject("res").getLongValue("size", fileSize);
@@ -54,10 +51,10 @@ public class GopeedDownloadTask extends DownloadTask {
             var speed = progress.getLongValue("speed", 0);
             var uploaded = progress.getLongValue("uploaded", 0);
             var uploadSpeed = progress.getLongValue("uploadSpeed", 0);
-            var extractProgress = (downloaded * 100)/fileSize;
+            var extractProgress = (downloaded * 100) / fileSize;
             progressBar.setStringPainted(false);
             if (fileSize <= 0) progressBar.setIndeterminate(true);
-            else{
+            else {
                 progressBar.setIndeterminate(false);
                 progressBar.setValue((int) extractProgress);
             }
@@ -77,9 +74,8 @@ public class GopeedDownloadTask extends DownloadTask {
         }
     });
 
-    private final String content;
 
-    public GopeedDownloadTask(String fileName, File savePath, String content){
+    public GopeedDownloadTask(String fileName, File savePath, String content) {
         this(fileName, savePath, 0, content);
     }
 
@@ -106,7 +102,7 @@ public class GopeedDownloadTask extends DownloadTask {
 
         int choice = FunctionDialog.showDialog(null,
                 StringFormat.translate("task", "task.gopeed_task.gopeed_run_failed"),
-                panel, result ->{
+                panel, result -> {
 
                 }, FunctionDialog.OK_CANCEL_BUTTONS, 0,
                 null, 0
@@ -139,6 +135,7 @@ public class GopeedDownloadTask extends DownloadTask {
 
     /**
      * 检查 Gopeed API 是否可访问
+     *
      * @param baseUrl Gopeed 的 API 基础地址，例如 "<a href="http://127.0.0.1:9999/api/v1">http://127.0.0.1:9999/api/v1</a>"
      * @return true 表示连接成功，false 表示无法连接
      */
@@ -166,7 +163,7 @@ public class GopeedDownloadTask extends DownloadTask {
             if (taskInfo.getIntValue("code", -1) != 0) {
                 ToastMessage.show(this,
                         StringFormat.translate("task", "task.gopeed_task.task_delete_failed") +
-                        " code=" + taskInfo.getIntValue("code"), ToastMessage.ERROR);
+                                " code=" + taskInfo.getIntValue("code"), ToastMessage.ERROR);
                 logger.error("任务删除失败");
 
                 return;
@@ -181,31 +178,6 @@ public class GopeedDownloadTask extends DownloadTask {
 
     @Override
     public void doWhenStart() throws Exception {
-        //再次调用，重启下载
-        if (startCount > 1 && !taskID.isBlank()){
-            var body = getBody("/tasks/" + taskID + "/continue", null, Connection.Method.PUT);
-            logger.info(body);
-            try {
-                var taskInfo = JSONObject.parseObject(body);
-                if (taskInfo.getIntValue("code", -1) != 0) {
-                    ToastMessage.show(this,
-                            StringFormat.translate("task", "task.gopeed_task.task_info_error") +
-                            " code=" + taskInfo.getIntValue("code"), ToastMessage.ERROR);
-                    logger.error("获取gopeed数据异常");
-                    isStart = false;
-                    startCount = 0;
-                    return;
-                }
-            } catch (Exception e) {
-                ToastMessage.show(this, StringFormat.translate("task", "task.gopeed_task.task_info_error"), ToastMessage.ERROR);
-                logger.error("json数据解析异常", e);
-                isStart = false;
-                startCount = 0;
-                return;
-            }
-            infoUpdateTimer.start();
-            return;
-        }
 
 
         //初次调用
@@ -255,6 +227,36 @@ public class GopeedDownloadTask extends DownloadTask {
     }
 
     @Override
+    public void doWhenRestart() throws Exception {
+        //再次调用，重启下载
+        if (!taskID.isBlank()) {
+            var body = getBody("/tasks/" + taskID + "/continue", null, Connection.Method.PUT);
+            logger.info(body);
+            try {
+                var taskInfo = JSONObject.parseObject(body);
+                if (taskInfo.getIntValue("code", -1) != 0) {
+                    ToastMessage.show(this,
+                            StringFormat.translate("task", "task.gopeed_task.task_info_error") +
+                                    " code=" + taskInfo.getIntValue("code"), ToastMessage.ERROR);
+                    logger.error("获取gopeed数据异常");
+                    isStart = false;
+                    startCount = 0;
+                    return;
+                }
+            } catch (Exception e) {
+                ToastMessage.show(this, StringFormat.translate("task", "task.gopeed_task.task_info_error"), ToastMessage.ERROR);
+                logger.error("json数据解析异常", e);
+                isStart = false;
+                startCount = 0;
+                return;
+            }
+            infoUpdateTimer.start();
+        } else {
+            throw new NullPointerException("taskID值为空");
+        }
+    }
+
+    @Override
     public void doWhenStop() {
         var body = getBody("/tasks/" + taskID + "/pause", null, Connection.Method.PUT);
         logger.info(body);
@@ -263,7 +265,7 @@ public class GopeedDownloadTask extends DownloadTask {
             if (taskInfo.getIntValue("code", -1) != 0) {
                 ToastMessage.show(this,
                         StringFormat.translate("task", "task.gopeed_task.task_info_error") +
-                        " code=" + taskInfo.getIntValue("code"), ToastMessage.ERROR);
+                                " code=" + taskInfo.getIntValue("code"), ToastMessage.ERROR);
                 logger.error("获取gopeed数据异常");
                 isStart = true;
                 return;
@@ -279,7 +281,7 @@ public class GopeedDownloadTask extends DownloadTask {
 
     }
 
-    private String getBody(String modeStr, String jsonBody, Connection.Method method){
+    private String getBody(String modeStr, String jsonBody, Connection.Method method) {
         Connection.Response response = null;
         try {
             Connection conn = Jsoup.connect(baseUrl + modeStr)
@@ -287,7 +289,7 @@ public class GopeedDownloadTask extends DownloadTask {
                     .ignoreContentType(true)
                     .timeout(30000)
                     .method(method);
-            response =  (jsonBody == null ? conn : conn.requestBody(jsonBody))
+            response = (jsonBody == null ? conn : conn.requestBody(jsonBody))
                     .execute();
 
         } catch (IOException e) {

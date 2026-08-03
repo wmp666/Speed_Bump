@@ -35,8 +35,8 @@ public class BiliFolderDownloadTask extends DownloadTask {
 
     private final ArrayList<PauseController> pauseControllerList = new ArrayList<>();
     private final ArrayList<DownloadProgress> downloadProgressList = new ArrayList<>();
-    private Timer progressTimer;
     private final ArrayList<JPanel> progressBarPanelList = new ArrayList<>();
+    private Timer progressTimer;
     private AtomicInteger completedCount;
     private volatile boolean hasAnyError = false;
 
@@ -138,7 +138,6 @@ public class BiliFolderDownloadTask extends DownloadTask {
             }
 
 
-
             Thread.ofVirtual().start(() -> {
                 try {
                     downloadAndConvergePart(fileIndex, videoUrl, audioUrl,
@@ -171,6 +170,14 @@ public class BiliFolderDownloadTask extends DownloadTask {
             }
         });
         progressTimer.start();
+    }
+
+    @Override
+    public void doWhenRestart() throws Exception {
+        pauseControllerList.forEach(PauseController::resume);
+        if (progressTimer != null) {
+            progressTimer.start();
+        }
     }
 
     private void downloadAndConvergePart(int fileIndex, String videoUrl, String audioUrl,
@@ -247,15 +254,20 @@ public class BiliFolderDownloadTask extends DownloadTask {
                     progressPanel.revalidate();
                 });
 
+                exitButton.setEnabled(false);
+                downloadControlButton.setEnabled(false);
                 boolean converged = ConvergenceTool.converge(
                         new File(partTempDir, "video.m4s"),
                         new File(partTempDir, "audio.m4s"),
                         new File(parentDir, outputName),
                         mergeProgressBar);
-
+                exitButton.setEnabled(true);
+                downloadControlButton.setEnabled(true);
                 if (!converged) {
                     logger.error(StringFormat.translate("task", "task.download_task.merge_failed") + ": " + outputName);
                     hasAnyError = true;
+                }else{
+                    downloadControlButton.setEnabled(false);
                 }
 
                 SwingUtilities.invokeLater(() -> {

@@ -1,13 +1,11 @@
 package com.wmp.downloader.tools.ui;
 
-import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.downloader.ui.FunctionDialog;
 import raven.modal.Toast;
-import raven.modal.toast.ToastCustom;
 import raven.modal.toast.option.ToastLayoutOption;
 import raven.modal.toast.option.ToastLocation;
 import raven.modal.toast.option.ToastOption;
@@ -43,11 +41,11 @@ public class ToastMessage {
         show(c, message, type, false);
     }
 
-    public static void show(String message, Toast.Type type){
+    public static void show(String message, Toast.Type type) {
         show(null, message, type);
     }
 
-    public static void show(String message){
+    public static void show(String message) {
         show(message, Toast.Type.DEFAULT);
     }
 
@@ -121,12 +119,8 @@ public class ToastMessage {
         return showComponent(c, component, false);
     }
 
-    public static String showComponent(Component component){
+    public static String showComponent(Component component) {
         return showComponent(null, component);
-    }
-
-    public interface ToastFunction {
-        void run(int AllClickCount, int clickCount, int result);
     }
 
     private static JButton createCloseButton(ToastOption option, Runnable stop) {
@@ -173,5 +167,9 @@ public class ToastMessage {
         frame.add(createCloseButton(new ToastOption(), () -> {
             System.out.println(1);
         }), BorderLayout.CENTER);
+    }
+
+    public interface ToastFunction {
+        void run(int AllClickCount, int clickCount, int result);
     }
 }

@@ -40,7 +40,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CreateTaskPanel {
     private final ArrayList<JPanel> linkFileInfoPanels = new ArrayList<>();
     private final Logger logger = Logger.getLogger(CreateTaskPanel.class);
-
+    // ---------- 新增：增量解析状态 ----------
+    private final Map<String, JPanel> linkPanelMap = new LinkedHashMap<>();      // 链接 -> 已解析的面板
+    private final Set<String> parsingLinks = ConcurrentHashMap.newKeySet();      // 正在解析的链接集合
     public JPanel MainPanel;
     private JTabbedPane tabbedPane1;
     private JTextArea DownloaderURLTextArea;
@@ -52,12 +54,7 @@ public class CreateTaskPanel {
     private JTextField ThreadNumLabel;
     private JProgressBar tipProgressBar;
     private CreateVideoHandleTaskPanel CreateVideoHandleTaskPanel;
-
     private ArrayList<DownloadTask> moreDownloadTasks = new ArrayList<>();
-
-    // ---------- 新增：增量解析状态 ----------
-    private final Map<String, JPanel> linkPanelMap = new LinkedHashMap<>();      // 链接 -> 已解析的面板
-    private final Set<String> parsingLinks = ConcurrentHashMap.newKeySet();      // 正在解析的链接集合
 
     public CreateTaskPanel() {
         CreateVideoHandleTaskPanel.setDownloadTaskAddListener(downloadTask -> moreDownloadTasks.add(downloadTask));

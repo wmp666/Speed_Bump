@@ -4,9 +4,9 @@ import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.sun.source.tree.NewArrayTree;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,11 +16,10 @@ import java.util.List;
 public class ThemeChanger {
 
     private static final List<DynamicConverterTask> dynamicConverterTasks = new ArrayList<>();
-
+    private static final Logger logger = Logger.getLogger(ThemeChanger.class);
+    private static final Timer timer = new Timer(1000, e -> easyThemeRefresh());
     private static String theme = "";
     private static String themeStyle = "";
-
-    private static final Timer timer = new Timer(1000, e -> easyChanger());
 
     static {
         timer.start();
@@ -62,28 +61,28 @@ public class ThemeChanger {
         FlatAnimatedLafChange.showSnapshot();
 
 
-        //主题更新，如果前后主题相同就跳过
-        if (!isSameTheme(newTheme)) {
-            if (!EasterEggData.canUseFlatLaf) {
-                if (!(newTheme instanceof FlatLaf)) {
-                    if (newTheme instanceof LookAndFeel laf)
-                        FlatLaf.setup(laf);
-                    else if (newTheme instanceof String className) {
-                        try {
-                            UIManager.setLookAndFeel(className);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
+        ThemeRefresh(newTheme);
 
-                } else {
-                    try {
-                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            } else {
+        //字体更新
+        UIManager.put("defaultFont", new Font(DataControl.get("Font", "Microsoft YaHei"), Font.PLAIN, DataControl.get("FontSize", 12)));
+
+        for (var window : JWindow.getOwnerlessWindows()) {
+            try {
+                SwingUtilities.updateComponentTreeUI(window);
+            } catch (Exception e) {
+                logger.error("窗口刷新失败", e);
+            }
+        }
+
+        FlatAnimatedLafChange.hideSnapshotWithAnimation();
+    }
+
+    private static void ThemeRefresh(Object newTheme) {
+        //主题更新，如果前后主题相同就跳过
+        if (isSameTheme(newTheme)) return;
+
+        if (!EasterEggData.canUseFlatLaf) {
+            if (!(newTheme instanceof FlatLaf)) {
                 if (newTheme instanceof LookAndFeel laf)
                     FlatLaf.setup(laf);
                 else if (newTheme instanceof String className) {
@@ -92,6 +91,23 @@ public class ThemeChanger {
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+                }
+
+            } else {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            if (newTheme instanceof LookAndFeel laf)
+                FlatLaf.setup(laf);
+            else if (newTheme instanceof String className) {
+                try {
+                    UIManager.setLookAndFeel(className);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
@@ -107,53 +123,44 @@ public class ThemeChanger {
 
         //图标更新
         IconControl.runDynamicConverters();
-
-        //字体更新
-        UIManager.put("defaultFont", new Font(DataControl.get("Font", "Microsoft YaHei"), Font.PLAIN, DataControl.get("FontSize", 12)));
-
-        for (var window : JWindow.getOwnerlessWindows()) {
-            SwingUtilities.updateComponentTreeUI(window);
-        }
-
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
-    private static boolean isSameTheme(Object newTheme){
+    private static boolean isSameTheme(Object newTheme) {
         if (newTheme instanceof LookAndFeel lookAndFeel) {
             if (!themeStyle.equals("LookAndFeel")) {
                 themeStyle = "LookAndFeel";
                 return false;
-            }else{
+            } else {
                 var newThemeStr = lookAndFeel.getClass().getName();
                 if (newThemeStr.equals(theme)) {
                     return true;
-                }else {
+                } else {
                     theme = newThemeStr;
                     return false;
                 }
             }
-        }else if(newTheme instanceof String string){
+        } else if (newTheme instanceof String string) {
             if (!themeStyle.equals("String")) {
                 themeStyle = "String";
                 return false;
-            }else{
+            } else {
                 if (string.equals(theme)) {
                     return true;
-                }else {
+                } else {
                     theme = string;
                     return false;
                 }
             }
-        }else{
+        } else {
             var typeName = newTheme.getClass().getTypeName();
             if (!themeStyle.equals(typeName)) {
                 themeStyle = typeName;
                 return false;
-            }else{
+            } else {
                 var newThemeStr = newTheme.toString();
                 if (newThemeStr.equals(theme)) {
                     return true;
-                }else {
+                } else {
                     theme = newThemeStr;
                     return false;
                 }
@@ -167,6 +174,11 @@ public class ThemeChanger {
     public static void easyChanger() {
         easyChanger(DataControl.get("theme", "System Theme Style"));
     }
+
+    public static void easyThemeRefresh() {
+        ThemeRefresh(DataControl.get("theme", "System Theme Style"));
+    }
+
 
     /**
      * 简单主题切换

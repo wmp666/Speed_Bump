@@ -10,8 +10,6 @@ import com.wmp.downloader.ui.task.http.HTTPParser;
 import javax.swing.*;
 
 public abstract class Parser {
-    public abstract JPanel parse(String content);
-
     public static Parser getParser(String url) {
         if (url.strip().startsWith("gopeed://")) {
             return new GopeedParser();
@@ -23,11 +21,13 @@ public abstract class Parser {
             return new HTTPParser();
         } else if (url.strip().endsWith(".torrent") || url.strip().startsWith("magnet:")) {
             return new BTParser();
-        } else if(url.strip().startsWith("ed2k://")){
+        } else if (url.strip().startsWith("ed2k://")) {
             return new Ed2kParser();
         }
         return null;
     }
+
+    public abstract JPanel parse(String content);
 
 
 }

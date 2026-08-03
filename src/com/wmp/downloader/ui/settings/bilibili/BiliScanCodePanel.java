@@ -21,16 +21,16 @@ import java.net.URI;
 public class BiliScanCodePanel extends JPanel {
 
     private static final Logger logger = Logger.getLogger(BiliScanCodePanel.class);
-
+    // 保存登录成功后获取的 Cookie（包含 SESSDATA）
+    private static String cookies = "";
     private JLabel QRLabel;
     private JButton QRRefreshButton;
     private JButton linkButton;
     private JPanel mainPanel;
     private JLabel QRStatusLabel;
-
     private String loginURL;
-
     private boolean isExit = false;
+
 
     public BiliScanCodePanel() {
         this.setLayout(new BorderLayout());
@@ -53,10 +53,6 @@ public class BiliScanCodePanel extends JPanel {
             }
         });
     }
-
-
-    // 保存登录成功后获取的 Cookie（包含 SESSDATA）
-    private static String cookies = "";
 
     private void refreshQR() {
         Thread.ofVirtual().start(() -> {

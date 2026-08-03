@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +18,7 @@ public class GopeedClient {
 
     /**
      * 构造客户端
+     *
      * @param host GopeedClient 服务地址，如 "127.0.0.1"
      * @param port GopeedClient API 端口，如 9999
      */
@@ -25,8 +26,28 @@ public class GopeedClient {
         this.baseUrl = "http://" + host + ":" + port + "/api/v1";
     }
 
+    public static void main(String[] args) throws Exception {
+        // 1. 创建客户端（替换为实际地址、端口和令牌）
+        GopeedClient client = new GopeedClient("127.0.0.1", 9999);
 
+        // 2. 添加下载任务
+        String link =
+                "E:\\Users\\21348\\Downloads\\[DL] Escape the Backrooms [P] [RUS + ENG + 7 ENG] (2025, Horror) (1.2510) [Portable] [rutracker-6247724].torrent";
+        //"magnet:?xt=urn:btih:509135ce29acc152de151c1e37e09930f16f23b5&dn=zh-cn_windows_11_consumer_editions_version_25h2_updated_june_2026_x64_dvd_2045a41c.iso&xl=8762877952";
 
+        //"ed2k://|file|zh-cn_windows_11_consumer_editions_version_26h1_updated_july_2026_x64_dvd_f69a9a1e.iso|8309725184|8410831F58154C4D3222BD462A9E76B6|/";
+        String taskId = client.createTask(link);
+        System.out.println("任务创建成功，ID: " + taskId);
+
+        // 3. 轮询查看进度
+        for (int i = 0; true; i++) {
+            Thread.sleep(3000);
+            List<TaskInfo> tasks = client.listTasks();
+            for (TaskInfo t : tasks) {
+                System.out.println(t);
+            }
+        }
+    }
 
     /**
      * 发送带认证的 GET 请求
@@ -38,6 +59,8 @@ public class GopeedClient {
                 .execute();
         return response.body();
     }
+
+    // ========== 核心业务方法 ==========
 
     /**
      * 发送带认证的 POST 请求（JSON 请求体）
@@ -52,8 +75,6 @@ public class GopeedClient {
                 .execute();
         return response.body();
     }
-
-    // ========== 核心业务方法 ==========
 
     /**
      * 创建下载任务
@@ -105,6 +126,8 @@ public class GopeedClient {
         return response.statusCode() == 200;
     }
 
+    // ========== 数据类 ==========
+
     /**
      * 获取所有任务列表
      */
@@ -153,7 +176,7 @@ public class GopeedClient {
         return list;
     }
 
-    // ========== 数据类 ==========
+    // ========== 测试 ==========
 
     public static class TaskInfo {
         public String id;
@@ -163,6 +186,19 @@ public class GopeedClient {
         public long downloaded;      // 已下载字节
         public long total;           // 总字节
         public String status;        // "running", "paused", "done", "error"
+
+        private static String formatSize(long bytes) {
+            if (bytes < 1024) return bytes + "B";
+            if (bytes < 1024 * 1024) return String.format("%.1fKB", bytes / 1024.0);
+            if (bytes < 1024 * 1024 * 1024) return String.format("%.1fMB", bytes / (1024.0 * 1024));
+            return String.format("%.2fGB", bytes / (1024.0 * 1024 * 1024));
+        }
+
+        private static String formatSpeed(long bytes) {
+            if (bytes < 1024) return bytes + "B/s";
+            if (bytes < 1024 * 1024) return String.format("%.1fKB/s", bytes / 1024.0);
+            return String.format("%.1fMB/s", bytes / (1024.0 * 1024));
+        }
 
         public String getProgressStr() {
             return String.format("%.1f%%", progress);
@@ -185,44 +221,6 @@ public class GopeedClient {
             return String.format("[%s] %s %s (%.1f%%) %s/%s @ %s",
                     status, id, name, progress,
                     getDownloadedStr(), getTotalStr(), getSpeedStr());
-        }
-
-        private static String formatSize(long bytes) {
-            if (bytes < 1024) return bytes + "B";
-            if (bytes < 1024 * 1024) return String.format("%.1fKB", bytes / 1024.0);
-            if (bytes < 1024 * 1024 * 1024) return String.format("%.1fMB", bytes / (1024.0 * 1024));
-            return String.format("%.2fGB", bytes / (1024.0 * 1024 * 1024));
-        }
-
-        private static String formatSpeed(long bytes) {
-            if (bytes < 1024) return bytes + "B/s";
-            if (bytes < 1024 * 1024) return String.format("%.1fKB/s", bytes / 1024.0);
-            return String.format("%.1fMB/s", bytes / (1024.0 * 1024));
-        }
-    }
-
-    // ========== 测试 ==========
-
-    public static void main(String[] args) throws Exception {
-        // 1. 创建客户端（替换为实际地址、端口和令牌）
-        GopeedClient client = new GopeedClient("127.0.0.1", 9999);
-
-        // 2. 添加下载任务
-        String link =
-                "E:\\Users\\21348\\Downloads\\[DL] Escape the Backrooms [P] [RUS + ENG + 7 ENG] (2025, Horror) (1.2510) [Portable] [rutracker-6247724].torrent";
-                //"magnet:?xt=urn:btih:509135ce29acc152de151c1e37e09930f16f23b5&dn=zh-cn_windows_11_consumer_editions_version_25h2_updated_june_2026_x64_dvd_2045a41c.iso&xl=8762877952";
-
-                //"ed2k://|file|zh-cn_windows_11_consumer_editions_version_26h1_updated_july_2026_x64_dvd_f69a9a1e.iso|8309725184|8410831F58154C4D3222BD462A9E76B6|/";
-        String taskId = client.createTask(link);
-        System.out.println("任务创建成功，ID: " + taskId);
-
-        // 3. 轮询查看进度
-        for (int i = 0; true; i++) {
-            Thread.sleep(3000);
-            List<TaskInfo> tasks = client.listTasks();
-            for (TaskInfo t : tasks) {
-                System.out.println(t);
-            }
         }
     }
 }

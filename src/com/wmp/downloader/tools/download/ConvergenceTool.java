@@ -16,6 +16,8 @@ import java.util.Set;
 public class ConvergenceTool {
 
     private static final Logger logger = Logger.getLogger(ConvergenceTool.class);
+    // ---------- 硬件加速自动检测 ----------
+    private static HardwareAccelConfig cachedConfig = null;
 
     /**
      * 将分离的视频流和音频流合并为一个完整的MP4文件
@@ -270,25 +272,6 @@ public class ConvergenceTool {
         }
     }
 
-
-    // ---------- 硬件加速自动检测 ----------
-    private static HardwareAccelConfig cachedConfig = null;
-
-    /**
-     * 硬件加速配置
-     */
-    private static class HardwareAccelConfig {
-        final String hwaccel;          // 如 "cuda", "qsv"，或 "none"
-        final String videoEncoder;     // 如 "h264_nvenc"
-        final String pixelFormat;      // 如 "nv12"
-
-        HardwareAccelConfig(String hwaccel, String videoEncoder, String pixelFormat) {
-            this.hwaccel = hwaccel;
-            this.videoEncoder = videoEncoder;
-            this.pixelFormat = pixelFormat;
-        }
-    }
-
     /**
      * 使用本地 ffmpeg 检测最优硬件加速配置（仅当 ffmpeg 可用时）
      */
@@ -411,6 +394,21 @@ public class ConvergenceTool {
                 return "flac";
             default:
                 return name;
+        }
+    }
+
+    /**
+     * 硬件加速配置
+     */
+    private static class HardwareAccelConfig {
+        final String hwaccel;          // 如 "cuda", "qsv"，或 "none"
+        final String videoEncoder;     // 如 "h264_nvenc"
+        final String pixelFormat;      // 如 "nv12"
+
+        HardwareAccelConfig(String hwaccel, String videoEncoder, String pixelFormat) {
+            this.hwaccel = hwaccel;
+            this.videoEncoder = videoEncoder;
+            this.pixelFormat = pixelFormat;
         }
     }
 }

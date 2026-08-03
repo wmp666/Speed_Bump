@@ -17,16 +17,12 @@ import java.util.List;
 public class BiliLinkFolderInfoPanel extends LinkFolderInfoPanel {
 
     private static Logger logger = Logger.getLogger(BiliLinkFolderInfoPanel.class);
-
+    private final long[][] sizes;
     private BiliDownloadInfo[] downloadInfos;
-
     private int videoQualityInfoIndex = 0;
     private int audioQualityInfoIndex = 0;
-
     private ArrayList<String> allVideoUrlList = new ArrayList<>();
     private ArrayList<String> allAudioUrlList = new ArrayList<>();
-
-    private final long[][] sizes;
 
     //private int[] qualities;
     //private String[] qualityStrList;

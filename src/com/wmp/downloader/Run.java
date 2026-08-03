@@ -2,13 +2,9 @@ package com.wmp.downloader;
 
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
-import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.Downloader;
-import com.wmp.downloader.ui.FunctionDialog;
 import org.apache.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
 public class Run {
@@ -20,7 +16,7 @@ public class Run {
         var argList = List.of(args);
         {
             var versionIndex = argList.indexOf("-set:version") + 1;
-            VERSION = versionIndex == 0?VERSION: argList.get(versionIndex);
+            VERSION = versionIndex == 0 ? VERSION : argList.get(versionIndex);
         }
 
 

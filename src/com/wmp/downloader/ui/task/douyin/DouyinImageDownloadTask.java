@@ -32,8 +32,8 @@ public class DouyinImageDownloadTask extends DownloadTask {
 
     private final ArrayList<PauseController> pauseControllerList = new ArrayList<>();
     private final ArrayList<DownloadProgress> downloadProgressList = new ArrayList<>();
-    private Timer progressTimer;
     private final ArrayList<JPanel> progressBarPanelList = new ArrayList<>();
+    private Timer progressTimer;
     //private JTabbedPane fileTabbedPane;
     private AtomicInteger completedCount;
     private volatile boolean hasAnyError = false;
@@ -161,6 +161,13 @@ public class DouyinImageDownloadTask extends DownloadTask {
             }
         });
         progressTimer.start();
+    }
+
+    @Override
+    public void doWhenRestart() throws Exception {
+        pauseControllerList.forEach(PauseController::resume);
+        if (progressTimer != null) progressTimer.restart();
+
     }
 
     /**

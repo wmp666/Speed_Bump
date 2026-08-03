@@ -147,6 +147,8 @@ public class ResetVideoInfoPanel extends JPanel {
                 progressBar.setMaximum(100);
                 progressBar.setValue(0);
                 ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
+                exitButton.setEnabled(false);
+                downloadControlButton.setEnabled(false);
                 boolean success = ConvergenceTool.transcodeVideo(
                         inputFile, outputFile,
                         containerFormat, videoCodec, audioCodec,
@@ -154,12 +156,20 @@ public class ResetVideoInfoPanel extends JPanel {
                 );
                 ProgressBarsPanel.removeAll();
                 if (!success) {
+                    exitButton.setEnabled(true);
+                    downloadControlButton.setEnabled(false);
                     logger.error("转码失败");
                 } else {
+                    exitButton.setEnabled(true);
                     downloadControlButton.setEnabled(false);
                     isFinally = true;
                 }
             });
+        }
+
+        @Override
+        public void doWhenRestart() throws Exception {
+
         }
 
         @Override

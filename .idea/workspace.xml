@@ -9,13 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="界面更新&#10;修复主题可能不刷新&#10;调整通用设置的位置&#10;统一进度条UI">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Muilt_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Muilt_jar.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复重启下载的问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/DataControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/SystemThemeDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/SystemThemeDetector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/DownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/task/bilibili/folder/BiliFolderDownloadTask.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,7 +291,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="更新issue模板" />
     <MESSAGE value="修复一些界面问题" />
     <MESSAGE value="增加更新日志，功能性弹窗升级" />
     <MESSAGE value="增加更新日志，功能性弹窗升级，修改“文件”图标" />
@@ -320,7 +315,8 @@
     <MESSAGE value="新增更新功能&#10;1.增加更新按钮...&#10;2.增加新的非模态通知类型&#10;3.新增更新功能（目前仅Windows）" />
     <MESSAGE value="去除了旧的更新日志，增加了更新内容整合" />
     <MESSAGE value="界面更新&#10;修复主题可能不刷新&#10;调整通用设置的位置&#10;统一进度条UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="界面更新&#10;修复主题可能不刷新&#10;调整通用设置的位置&#10;统一进度条UI" />
+    <MESSAGE value="修复重启下载的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复重启下载的问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -332,7 +328,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java</url>
-          <line>259</line>
+          <line>258</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>

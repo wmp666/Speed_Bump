@@ -31,8 +31,11 @@ public class FunctionDialog extends JDialog {
     public static final CustomButtons[] SAVE_CANCEL_BUTTONS = {SAVE_BUTTON, CANCEL_BUTTON};
 
     private Component parent = null;
-
     private int result = RESULT_EXIT;
+    private JPanel UIPanel;
+    private JPanel taskPanel;
+    private JPanel ButtonsPanel;
+    private JPanel northButtonPanel;
 
     private final Timer packTimer = new Timer(50, e -> {
         this.revalidate();
@@ -41,17 +44,12 @@ public class FunctionDialog extends JDialog {
         if (parent != null)
             this.setLocationRelativeTo(parent);
     });
-
-    private JPanel UIPanel;
-    private JPanel taskPanel;
-    private JPanel ButtonsPanel;
     private final DynamicConverterTask task = () -> {
         if (DataControl.get("theme_type", "light").equals("dark"))
             ButtonsPanel.setBackground(ColorFunctions.lighten(UIManager.getColor("Panel.background"), 0.1f));
         else
             ButtonsPanel.setBackground(ColorFunctions.darken(UIManager.getColor("Panel.background"), 0.1f));
     };
-    private JPanel northButtonPanel;
 
     /**
      * @param c                     父组件
@@ -211,7 +209,7 @@ public class FunctionDialog extends JDialog {
 
                 @Override
                 protected JButton createButtonOption(Option option) {
-                    JButton button = new JButton(option.getText()){
+                    JButton button = new JButton(option.getText()) {
                         @Override
                         public boolean isDefaultButton() {
                             return finalButtons[defaultButtonIndex].result == option.getType();
@@ -261,9 +259,6 @@ public class FunctionDialog extends JDialog {
                 isAlwaysTop, isUseScrollPane).getResult();
     }
 
-    public int getResult(){
-        return this.result;
-    }
     static void main() {
         FlatMacDarkLaf.setup();
 
@@ -276,6 +271,10 @@ public class FunctionDialog extends JDialog {
         showDialog(frame, "提示", new JPanel(), result -> {
             System.out.println("Result: " + result);
         }, new CustomButtons[]{new CustomButtons("确定", RESULT_OK), new CustomButtons("保存", 4), new CustomButtons("取消", RESULT_CANCEL)}, 1, new JButton[]{new JButton("一个按钮")}, NORTH_DIRECTION_RIGHT);
+    }
+
+    public int getResult() {
+        return this.result;
     }
 
     private void createUIComponents() {

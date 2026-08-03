@@ -84,6 +84,12 @@ public class IconControl {
      * 运行动态转换图标任务
      */
     public static void runDynamicConverters() {
-        for (var task : dynamicConverterTasks) task.task();
+        for (var task : dynamicConverterTasks) {
+            try {
+                task.task();
+            } catch (Exception e) {
+                logger.error("图标刷新失败", e);
+            }
+        }
     }
 }

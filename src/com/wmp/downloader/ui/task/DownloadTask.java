@@ -7,7 +7,6 @@ import com.wmp.downloader.tools.ui.*;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -26,16 +25,15 @@ public abstract class DownloadTask extends JPanel {
     protected JLabel infoLabel;
     protected JScrollPane ProgressBarsScrollPane;
     protected JPanel ProgressBarsPanel;
-    private String originalFileName;
     protected String fileName;
     protected File savePath;
     protected boolean isStart = false;
     protected boolean isFinally = false;
     protected boolean isCanExit = false;
+    protected int startCount = 0;
+    private String originalFileName;
     private DynamicConverterTask[] IconDynamicConverterTasks = new DynamicConverterTask[0];
     private DynamicConverterTask[] ThemeDynamicConverterTasks = new DynamicConverterTask[0];
-
-    protected int startCount = 0;
 
     public DownloadTask(String fileName, File savePath) {
         this.fileName = StringFormat.sanitizeName(fileName);
@@ -66,6 +64,7 @@ public abstract class DownloadTask extends JPanel {
                     } else {
                         adjusted = ColorFunctions.darken(base, 0.1f);
                     }
+                    mainPanel.setBackground(adjusted);
 
                     mainPanel.setOpaque(true);
 
@@ -218,12 +217,14 @@ public abstract class DownloadTask extends JPanel {
 
         //判断是否支持多线程
         try {
-
-
-            doWhenStart();
+            if (startCount == 1) {
+                doWhenStart();
+            } else doWhenRestart();
 
 
         } catch (Exception e) {
+            startCount--;
+            isStart = false;
             logger.error("下载异常", e);
             ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_error.confirm"), ToastMessage.ERROR);
         }
@@ -249,6 +250,8 @@ public abstract class DownloadTask extends JPanel {
     public abstract void doWhenExit();
 
     public abstract void doWhenStart() throws Exception;
+
+    public abstract void doWhenRestart() throws Exception;
 
     public abstract void doWhenStop();
 

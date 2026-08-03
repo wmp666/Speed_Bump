@@ -17,20 +17,21 @@ import java.awt.event.ActionEvent;
  */
 public abstract class LinkFileInfoPanel extends JPanel {
 
+
     protected long fileSizeNum;
     protected String url;
-
     protected JLabel nameLabel;
     protected JLabel sizeLabel;
     protected JPanel mainPanel;
+    protected JButton editButton;
+    protected JLabel modeLabel;
+
     protected final DynamicConverterTask task = () -> {
         if (DataControl.get("theme_type", "light").equals("dark"))
             mainPanel.setBackground(ColorFunctions.lighten(UIManager.getColor("Panel.background"), 0.1f));
         else
             mainPanel.setBackground(ColorFunctions.darken(UIManager.getColor("Panel.background"), 0.1f));
     };
-    protected JButton editButton;
-    protected JLabel modeLabel;
 
     public LinkFileInfoPanel(String name, long size, String mode, String url) {
 
@@ -75,6 +76,21 @@ public abstract class LinkFileInfoPanel extends JPanel {
         return String.format("%.2f %s", value, units[digitGroups]);
     }
 
+    public static LinkFileInfoPanel createBasicLinkFileInfoPanel(String name, long size, String mode, String url) {
+        return new LinkFileInfoPanel(name, size, mode, url) {
+            @Override
+            public void editButtonAction(ActionEvent e) {
+                var taskFileEditPanel = new TaskFileEditPanel(nameLabel.getText());
+                FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
+                        result -> {
+                            if (result == FunctionDialog.RESULT_SAVE)
+                                nameLabel.setText(taskFileEditPanel.getFileName());
+                        },
+                        FunctionDialog.SAVE_CANCEL_BUTTONS, 0, null, 0);
+            }
+        };
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
@@ -103,19 +119,4 @@ public abstract class LinkFileInfoPanel extends JPanel {
     }
 
     public abstract void editButtonAction(ActionEvent e);
-
-    public static LinkFileInfoPanel createBasicLinkFileInfoPanel(String name, long size, String mode, String url) {
-        return new LinkFileInfoPanel(name, size, mode, url) {
-            @Override
-            public void editButtonAction(ActionEvent e) {
-                var taskFileEditPanel = new TaskFileEditPanel(nameLabel.getText());
-                FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
-                        result -> {
-                            if (result == FunctionDialog.RESULT_SAVE)
-                                nameLabel.setText(taskFileEditPanel.getFileName());
-                        },
-                        FunctionDialog.SAVE_CANCEL_BUTTONS, 0, null, 0);
-            }
-        };
-    }
 }

@@ -30,7 +30,7 @@ public class UITools {
         return panel;
     }
 
-    public static JPanel createProgressBarsPanel(JPanel... progressBarsPanel){
+    public static JPanel createProgressBarsPanel(JPanel... progressBarsPanel) {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -40,7 +40,7 @@ public class UITools {
         return panel;
     }
 
-    public static JScrollPane setScrollPaneUnOpaque(JScrollPane scrollPane){
+    public static JScrollPane setScrollPaneUnOpaque(JScrollPane scrollPane) {
         scrollPane.setBorder(null);
         scrollPane.getViewport().setBorder(null);
         scrollPane.setOpaque(false);

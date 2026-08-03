@@ -1,6 +1,5 @@
 package com.wmp.downloader.ui.task.bt;
 
-import com.frostwire.jlibtorrent.FileStorage;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.MagnetToTorrent;
@@ -17,6 +16,14 @@ public class BTParser extends Parser {
 
     private static final Logger logger = Logger.getLogger(BTParser.class);
 
+    public static int getLinkMode(String content) {
+        if (content.endsWith(".torrent")) {
+            return 0;
+        } else if (content.startsWith("magnet:")) {
+            return 1;
+        } else return -1;
+    }
+
     @Override
     public JPanel parse(String content) {
         if (content.endsWith(".torrent")) {
@@ -26,7 +33,7 @@ public class BTParser extends Parser {
             if (ti.numFiles() == 1) {
                 return LinkFileInfoPanel
                         .createBasicLinkFileInfoPanel(ti.name(), ti.totalSize(), "BT-Torrent", content);
-            }else if (ti.numFiles() > 1){
+            } else if (ti.numFiles() > 1) {
                 var fileStorage = ti.files();
 
                 String[] torrentLink = new String[fileStorage.numFiles()];
@@ -43,13 +50,12 @@ public class BTParser extends Parser {
                 }
 
 
-
                 return LinkFolderInfoPanel
                         .createBasicLinkFolderInfoPanel(ti.name(),
                                 fileSizes, //size
                                 "BT-Torrent",
                                 torrentLink, //url
-                                fileNames , //filesName
+                                fileNames, //filesName
                                 fileTypes); //fileTypes
 
             }
@@ -62,7 +68,7 @@ public class BTParser extends Parser {
             if (ti.numFiles() == 1) {
                 return LinkFileInfoPanel
                         .createBasicLinkFileInfoPanel(ti.name(), ti.totalSize(), "BT-Magnet", torrentPath);
-            }else if (ti.numFiles() > 1){
+            } else if (ti.numFiles() > 1) {
                 var fileStorage = ti.files();
 
                 String[] torrentLink = new String[fileStorage.numFiles()];
@@ -79,26 +85,17 @@ public class BTParser extends Parser {
                 }
 
 
-
                 return LinkFolderInfoPanel
                         .createBasicLinkFolderInfoPanel(ti.name(),
                                 fileSizes, //size
                                 "BT-Magnet",
                                 torrentLink, //url
-                                fileNames , //filesName
+                                fileNames, //filesName
                                 fileTypes); //fileTypes
 
             }
         }
 
         return null;
-    }
-
-    public static int getLinkMode(String content) {
-        if (content.endsWith(".torrent")) {
-            return 0;
-        } else if (content.startsWith("magnet:")) {
-            return 1;
-        } else return -1;
     }
 }

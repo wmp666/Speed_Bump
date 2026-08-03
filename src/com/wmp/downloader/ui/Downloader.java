@@ -39,11 +39,13 @@ import java.util.regex.Pattern;
 
 public class Downloader extends JFrame implements WindowListener {
 
+    private static final Logger logger = Logger.getLogger(Downloader.class);
     public static Downloader mainFrame;
     public static TrayIcon trayIcon;
-    private static final Logger logger = Logger.getLogger(Downloader.class);
     private final List<DownloadTask> taskList = new ArrayList<>();
     private final List<DownloadTask> taskFinalyTipList = new ArrayList<>();
+    private final GridBagConstraints gbc = new GridBagConstraints();
+
     private JPanel UIPanel;
     private JPanel settingsPanel;
     private JTabbedPane mainTabbedPane;
@@ -66,29 +68,6 @@ public class Downloader extends JFrame implements WindowListener {
     private JLabel nameLabel;
     private JCheckBox authorCheckBox;
     private JPanel TasksPanel;
-    private final GridBagConstraints gbc = new GridBagConstraints();
-    private final Timer taskListener = new Timer(100, e -> {
-        taskList.removeIf(DownloadTask ->
-        {
-            if (DownloadTask.isCanExit()) {
-                TasksPanel.remove(DownloadTask);
-                return true;
-            } else return false;
-        });
-        taskList.forEach(urlDownloadTask -> {
-            if (urlDownloadTask.isFinally()) {
-                if (!taskFinalyTipList.contains(urlDownloadTask)) {
-                    taskFinalyTipList.add(urlDownloadTask);
-                    ToastMessage.show(this,
-                            String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
-                            ToastMessage.SUCCESS);
-                    trayIcon.displayMessage(null,
-                            String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
-                            TrayIcon.MessageType.INFO);
-                }
-            }
-        });
-    });
     private JButton allStartButton;
     private JButton allPauseButton;
     private PathSelectionPanel tempPathSelectionPanel;
@@ -130,6 +109,28 @@ public class Downloader extends JFrame implements WindowListener {
     private Timer backgroundupdateTimer = new Timer(100, e -> {
         updateBackground();
         updateChildBounds(); // FIX 使用统一方法
+    });
+    private final Timer taskListener = new Timer(100, e -> {
+        taskList.removeIf(DownloadTask ->
+        {
+            if (DownloadTask.isCanExit()) {
+                TasksPanel.remove(DownloadTask);
+                return true;
+            } else return false;
+        });
+        taskList.forEach(urlDownloadTask -> {
+            if (urlDownloadTask.isFinally()) {
+                if (!taskFinalyTipList.contains(urlDownloadTask)) {
+                    taskFinalyTipList.add(urlDownloadTask);
+                    ToastMessage.show(this,
+                            String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
+                            ToastMessage.SUCCESS);
+                    trayIcon.displayMessage(null,
+                            String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
+                            TrayIcon.MessageType.INFO);
+                }
+            }
+        });
     });
     // FIX 删除了无用的 backgroundTimer 字段
 
@@ -501,7 +502,7 @@ public class Downloader extends JFrame implements WindowListener {
             try {
                 Desktop.getDesktop().browse(URI.create("https://github.com/wmp666/Speed_Bump"));
             } catch (Exception ex) {
-                ToastMessage.show(StringFormat.translate("open_link.error"));
+                ToastMessage.show(StringFormat.translate("open_link.error"), ToastMessage.ERROR);
                 logger.error("网站打开失败", ex);
             }
         });
@@ -515,16 +516,16 @@ public class Downloader extends JFrame implements WindowListener {
             if (update == null) {
                 //没有新版本
                 ToastMessage.show(StringFormat.translate("check_update.no_update"), ToastMessage.INFO);
-            }else{
+            } else {
                 ToastMessage.showConfirm(
                         String.format(StringFormat.translate("check_update.new_update"),
                                 update.version()),
                         new FunctionDialog.CustomButtons[]{
-                            new FunctionDialog.CustomButtons(StringFormat.translate("learn"), 100),
-                            new FunctionDialog.CustomButtons(StringFormat.translate("download"), 200)
+                                new FunctionDialog.CustomButtons(StringFormat.translate("learn"), 100),
+                                new FunctionDialog.CustomButtons(StringFormat.translate("download"), 200)
                         },
-                        (allCount, count, result)->{
-                            if(result == 100){
+                        (allCount, count, result) -> {
+                            if (result == 100) {
                                 var panel = new JPanel();
 
                                 // 1. 使用 commonmark 将 Markdown 转换为 HTML
@@ -538,7 +539,8 @@ public class Downloader extends JFrame implements WindowListener {
 
                                 panel.add(editorPane);
                                 FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
-                                        _ -> {},
+                                        _ -> {
+                                        },
                                         FunctionDialog.DEFAULT_BUTTONS, 0,
                                         null, FunctionDialog.NORTH_DIRECTION_RIGHT);
                             } else if (count == 1 && result == 200) {
@@ -598,10 +600,9 @@ public class Downloader extends JFrame implements WindowListener {
         }
 
 
-
         if (!showDialog) {
             Thread.ofVirtual().start(() -> {
-                while (createTaskPanel.getDownloadTasks().size() != 1){
+                while (createTaskPanel.getDownloadTasks().size() != 1) {
 
                 }
                 if (createTaskPanel.getDownloadTasks().size() == 1) {

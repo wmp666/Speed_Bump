@@ -1,6 +1,5 @@
 package com.wmp.downloader.tools.update;
 
-import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.Run;
@@ -10,16 +9,13 @@ import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GetUpdateInfo {
@@ -28,6 +24,7 @@ public class GetUpdateInfo {
 
     /**
      * 获取更新信息
+     *
      * @return 更新信息（没有时，为null）
      */
     public static UpdateInfo getUpdateInfo() {
@@ -60,7 +57,7 @@ public class GetUpdateInfo {
                     //有新版
                     AtomicReference<String> targetUrl = new AtomicReference<>("");
                     json.getJSONArray("assets").forEach(obj -> {
-                        if (obj instanceof JSONObject jsonObject){
+                        if (obj instanceof JSONObject jsonObject) {
                             //获取系统名称
                             var osName = System.getProperty("os.name");
                             var name = jsonObject.getString("name");
@@ -82,7 +79,7 @@ public class GetUpdateInfo {
                     //获取更多
                     var infoWithinInterval = getAllUpdateInfoWithinInterval(useGithubAccelerate,
                             Run.VERSION, urlVersion);
-                    body = infoWithinInterval == null?body:infoWithinInterval;
+                    body = infoWithinInterval == null ? body : infoWithinInterval;
 
                     return new UpdateInfo(urlVersion, body, targetUrl.get());
                 } else {
@@ -91,7 +88,7 @@ public class GetUpdateInfo {
                 }
             } else if (useGithubAccelerate && status == 403) {
                 return getUpdateInfo(false);
-            } else{
+            } else {
                 ToastMessage.show(String.format(
                         "Status = %s message = %s",
                         status,
@@ -108,6 +105,7 @@ public class GetUpdateInfo {
 
     /**
      * 比较两个版本号的大小（格式：数字段用点分隔，如 "1.2.3"）
+     *
      * @param v1 版本1，不能为 null
      * @param v2 版本2，不能为 null
      * @return 负数表示 v1 < v2，0 表示相等，正数表示 v1 > v2
@@ -132,6 +130,7 @@ public class GetUpdateInfo {
 
     /**
      * 判断版本号是否在指定区间内（包含端点）
+     *
      * @param version      待检查的版本号
      * @param startVersion 区间起始版本
      * @param lastVersion  区间结束版本
@@ -157,7 +156,7 @@ public class GetUpdateInfo {
         return compareVersions(v1, v2) > 0;
     }
 
-    private static String getAllUpdateInfoWithinInterval(boolean useGithubAccelerate, String startVersion, String lastVersion){
+    private static String getAllUpdateInfoWithinInterval(boolean useGithubAccelerate, String startVersion, String lastVersion) {
         var apiUrl = "https://api.github.com/repos/wmp666/Speed_Bump/releases";
 
         if (useGithubAccelerate) {
@@ -216,7 +215,7 @@ public class GetUpdateInfo {
 
             } else if (useGithubAccelerate && status == 403) {
                 return getAllUpdateInfoWithinInterval(false, startVersion, lastVersion);
-            } else{
+            } else {
                 ToastMessage.show(String.format(
                         "Status = %s message = %s",
                         status,
@@ -231,7 +230,7 @@ public class GetUpdateInfo {
         return null;
     }
 
-    private static String IntegrationUpdateInfo(String[] versions, String[] updateInfos){
+    private static String IntegrationUpdateInfo(String[] versions, String[] updateInfos) {
 
         //### 新增功能
         HashSet<String> newFunctionStrList = new HashSet<>();
@@ -251,13 +250,13 @@ public class GetUpdateInfo {
         //1-新增功能 2-体验优化 3-问题修复
         int status = 4;
         //格式化数据
-        for (int i = 0;i < updateInfos.length;i++) {
+        for (int i = 0; i < updateInfos.length; i++) {
             String s = updateInfos[i];
             String version = versions[i];
             for (var string : s.replaceAll("\\r|\\r\\n", "\n").split("\\n")) {
-                if (!string.isBlank()){
+                if (!string.isBlank()) {
                     //判断开头 ### /-
-                    if (string.startsWith("### ")){
+                    if (string.startsWith("### ")) {
                         if (string.contentEquals("### 新增功能")) {
                             status = 1;
                         } else if (string.contentEquals("### 体验优化")) {
@@ -265,10 +264,10 @@ public class GetUpdateInfo {
                         } else if (string.contentEquals("### 问题修复")) {
                             status = 3;
                         } else status = 4;
-                    }else if(string.startsWith("- ")){
+                    } else if (string.startsWith("- ")) {
                         if (string.substring(2).isBlank()) continue;
                         infoMap.get(status).add(string + " (Version **" + version + "**)");
-                    }else infoMap.get(4).add(string + " (Version **" + version + "**)");
+                    } else infoMap.get(4).add(string + " (Version **" + version + "**)");
                 }
             }
 

@@ -44,12 +44,6 @@ public class BTFileDownloadTask extends DownloadTask {
     @Override
     public void doWhenStart() throws Exception {
 
-        if (this.startCount > 0 && handle != null) {
-            handle.resume();
-
-            return;
-        }
-
 
         // 1. 创建 SessionManager（替代了旧的 Session）
         manager = new SessionManager();
@@ -87,7 +81,6 @@ public class BTFileDownloadTask extends DownloadTask {
 
         //开始下载
         manager.download(ti, savePath);
-
 
 
         var sha1 = ti.infoHashV1();
@@ -145,6 +138,15 @@ public class BTFileDownloadTask extends DownloadTask {
                 infoLabel.setText(StringFormat.translate("task", "task.download_task.download_exception"));
             }
         });
+    }
+
+    @Override
+    public void doWhenRestart() throws Exception {
+        if (handle != null) {
+            handle.resume();
+        } else {
+            throw new NullPointerException("handle值为空");
+        }
     }
 
     @Override

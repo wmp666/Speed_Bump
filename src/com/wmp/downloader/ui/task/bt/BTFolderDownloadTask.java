@@ -5,7 +5,6 @@ import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.frostwire.jlibtorrent.swig.error_code;
-import com.frostwire.jlibtorrent.swig.torrent_flags_t;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
@@ -43,11 +42,7 @@ public class BTFolderDownloadTask extends DownloadTask {
 
     @Override
     public void doWhenStart() throws Exception {
-        // 如果是恢复下载
-        if (this.startCount > 0 && handle != null && handle.isValid()) {
-            handle.resume();
-            return;
-        }
+
 
         // 1. 创建并启动会话
         manager = new SessionManager();
@@ -170,6 +165,17 @@ public class BTFolderDownloadTask extends DownloadTask {
             }
         });
     }
+
+    @Override
+    public void doWhenRestart() throws Exception {
+        // 如果是恢复下载
+        if (handle != null && handle.isValid()) {
+            handle.resume();
+        } else {
+            throw new NullPointerException("handle值为空");
+        }
+    }
+
     @Override
     public void doWhenStop() {
         if (handle != null) {

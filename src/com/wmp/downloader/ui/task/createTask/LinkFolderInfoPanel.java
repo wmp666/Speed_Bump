@@ -19,28 +19,28 @@ import java.util.List;
  */
 public abstract class LinkFolderInfoPanel extends JPanel {
 
-    private long selectedFileSize;
-    protected long[] allFileSizes;
     protected final String[] allFileNames;
+    private final ArrayList<String> selectedUrls = new ArrayList<>();
+    protected long[] allFileSizes;
     protected String[] fileTypes;
     protected String[] AllUrls;
-    private final ArrayList<String> selectedUrls = new ArrayList<>();
-
     protected boolean[] fileSelectionStatus;
 
     protected JLabel folderNameLabel;
     protected JLabel sizeLabel;
     protected JPanel mainPanel;
+    protected JButton editButton;
+    protected JLabel modeLabel;
+    private long selectedFileSize;
+    private JLabel IconLabel;
+    private JButton fileChooseButton;
+
     protected final DynamicConverterTask task = () -> {
         if (DataControl.get("theme_type", "light").equals("dark"))
             mainPanel.setBackground(ColorFunctions.lighten(UIManager.getColor("Panel.background"), 0.1f));
         else
             mainPanel.setBackground(ColorFunctions.darken(UIManager.getColor("Panel.background"), 0.1f));
     };
-    protected JButton editButton;
-    protected JLabel modeLabel;
-    private JLabel IconLabel;
-    private JButton fileChooseButton;
 
     /**
      * 创建链接文件组信息面板
@@ -123,6 +123,32 @@ public abstract class LinkFolderInfoPanel extends JPanel {
         return String.format("%.2f %s", value, units[digitGroups]);
     }
 
+    public static LinkFolderInfoPanel createBasicLinkFolderInfoPanel(String folderName, long[] size, String mode, String[] url, String[] fileNames, String[] fileTypes) {
+        return new LinkFolderInfoPanel(folderName, size, mode, url, fileNames, fileTypes) {
+            @Override
+            public void editButtonAction(ActionEvent e) {
+                var taskFileEditPanel = new TaskFileEditPanel(folderNameLabel.getText());
+                FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
+                        result -> {
+                            if (result == FunctionDialog.RESULT_SAVE)
+                                folderNameLabel.setText(taskFileEditPanel.getFileName());
+                        },
+                        FunctionDialog.SAVE_CANCEL_BUTTONS, 0, null, 0);
+            }
+
+            @Override
+            public void selectionFileListChangeAction() {
+                long newSelectedFileSize = 0;
+                for (int i = 0; i < fileSelectionStatus.length; i++) {
+                    if (fileSelectionStatus[i]) {
+                        newSelectedFileSize += allFileSizes[i];
+                    }
+                }
+                sizeLabel.setText(formatFileSize(newSelectedFileSize));
+            }
+        };
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
@@ -196,31 +222,5 @@ public abstract class LinkFolderInfoPanel extends JPanel {
 
     public boolean[] getFileSelectionStatus() {
         return fileSelectionStatus;
-    }
-
-    public static LinkFolderInfoPanel createBasicLinkFolderInfoPanel(String folderName, long[] size, String mode, String[] url, String[] fileNames, String[] fileTypes) {
-        return new LinkFolderInfoPanel(folderName, size, mode, url, fileNames, fileTypes) {
-            @Override
-            public void editButtonAction(ActionEvent e) {
-                var taskFileEditPanel = new TaskFileEditPanel(folderNameLabel.getText());
-                FunctionDialog.showDialog(SwingUtilities.getWindowAncestor(this), StringFormat.translate("task", "task.create_task.download_settings.task_edit"), taskFileEditPanel,
-                        result -> {
-                            if (result == FunctionDialog.RESULT_SAVE)
-                                folderNameLabel.setText(taskFileEditPanel.getFileName());
-                        },
-                        FunctionDialog.SAVE_CANCEL_BUTTONS, 0, null, 0);
-            }
-
-            @Override
-            public void selectionFileListChangeAction() {
-                long newSelectedFileSize = 0;
-                for (int i = 0; i < fileSelectionStatus.length; i++) {
-                    if (fileSelectionStatus[i]) {
-                        newSelectedFileSize += allFileSizes[i];
-                    }
-                }
-                sizeLabel.setText(formatFileSize(newSelectedFileSize));
-            }
-        };
     }
 }

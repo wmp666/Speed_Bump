@@ -70,13 +70,23 @@ public class CreateMergeTaskFuncPanel extends JPanel {
             jProgressBar.setStringPainted(false);
             infoLabel.setText(StringFormat.translate("video_handle", "video_handle.create_merge_task.run_tip"));
             ProgressBarsPanel.add(UITools.createProgressBarPanel(jProgressBar));
+            exitButton.setEnabled(false);
+            downloadControlButton.setEnabled(false);
             var converged = ConvergenceTool.converge(paths[0], paths[1], new File(paths[2], fileName), jProgressBar);
             ProgressBarsPanel.removeAll();
             if (converged) {
+                exitButton.setEnabled(true);
                 downloadControlButton.setEnabled(false);
             } else {
+                exitButton.setEnabled(true);
+                downloadControlButton.setEnabled(true);
                 ToastMessage.show(null, StringFormat.translate("video_handle", "video_handle.create_merge_task.merge_fail"), ToastMessage.ERROR);
             }
+        }
+
+        @Override
+        public void doWhenRestart() throws Exception {
+
         }
 
         @Override

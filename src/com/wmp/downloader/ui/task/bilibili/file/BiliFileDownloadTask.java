@@ -12,7 +12,6 @@ import com.wmp.downloader.ui.task.DownloadTask;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
@@ -28,8 +27,8 @@ public class BiliFileDownloadTask extends DownloadTask {
     private final long[] fileSize;
     private final int mode;
     private final ArrayList<JProgressBar> threadProgressBarList = new ArrayList<>();
-    private PauseController pauseController = new PauseController();
-    private DownloadProgress downloadProgress = new DownloadProgress();
+    private final PauseController pauseController = new PauseController();
+    private final DownloadProgress downloadProgress = new DownloadProgress();
     private Timer progressTimer;
 
     public BiliFileDownloadTask(String fileName, long[] fileSize, String[] url, File savePath, int threadNum, int mode) {
@@ -57,8 +56,6 @@ public class BiliFileDownloadTask extends DownloadTask {
     }
 
     public void doWhenStart() throws Exception {
-        pauseController = new PauseController();
-        downloadProgress = new DownloadProgress();
 
         ProgressBarsPanel.removeAll();
         threadProgressBarList.clear();
@@ -93,11 +90,10 @@ public class BiliFileDownloadTask extends DownloadTask {
                 ProgressBarsPanel.removeAll();
                 threadProgressBarList.clear();
 
-                pauseController = new PauseController();
-                downloadProgress = new DownloadProgress();
                 pauseController.resume();
 
                 try {
+                    progressTimer.restart();
                     audioSuccess = downloadFile(audioUri, tempDir, "audio.m4s", headers, fileSize[1]);
                     //if (!audioSuccess) return;
                 } catch (Exception e) {
@@ -107,6 +103,8 @@ public class BiliFileDownloadTask extends DownloadTask {
 
                 //合并文件
                 if (videoSuccess && audioSuccess) {
+                    exitButton.setEnabled(false);
+                    downloadControlButton.setEnabled(false);
                     ProgressBarsPanel.removeAll();
                     var jProgressBar = new JProgressBar();
                     jProgressBar.setStringPainted(false);
@@ -121,10 +119,11 @@ public class BiliFileDownloadTask extends DownloadTask {
 
                 isFinally = true;
                 downloadControlButton.setEnabled(false);
+                exitButton.setEnabled(true);
                 ProgressBarsPanel.removeAll();
                 SwingUtilities.invokeLater(() -> infoLabel.setText(String.format(
                         StringFormat.translate("task.download_task.download_complete"),
-                                URLDownloadTool.DownloadProgress.formatSize(fileSize[0] + fileSize[1]), DownloadProgress.formatSize(fileSize[0] + fileSize[1]))));
+                        URLDownloadTool.DownloadProgress.formatSize(fileSize[0] + fileSize[1]), DownloadProgress.formatSize(fileSize[0] + fileSize[1]))));
                 this.revalidate();
                 this.repaint();
             } catch (Exception e) {
@@ -132,8 +131,16 @@ public class BiliFileDownloadTask extends DownloadTask {
                 logger.error(StringFormat.translate("task", "task.download_task.download_exception"), e);
                 ToastMessage.show(this, String.format(StringFormat.translate("task", "task.download_task.download_failed_detail"), e.getMessage()), ToastMessage.ERROR);
                 isStart = false;
+                downloadControlButton.setEnabled(true);
+                exitButton.setEnabled(true);
             }
         });
+    }
+
+    @Override
+    public void doWhenRestart() throws Exception {
+        pauseController.resume();
+        if (progressTimer != null) progressTimer.restart();
     }
 
     private boolean downloadFile(URI uri, File tempDir, String targetFileName, Map<String, String> headers, long size) throws Exception {

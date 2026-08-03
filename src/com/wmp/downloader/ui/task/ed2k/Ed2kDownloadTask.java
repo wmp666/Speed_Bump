@@ -1,6 +1,5 @@
 package com.wmp.downloader.ui.task.ed2k;
 
-import com.wmp.downloader.ui.task.DownloadTask;
 import com.wmp.downloader.ui.task.gopeed.GopeedDownloadTask;
 
 import java.io.File;

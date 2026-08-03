@@ -86,47 +86,47 @@ public class StringFormat {
         }
     }
 
-        /**
-         * 将纳秒数格式化为最合适的单位字符串（自动选择 ns、μs、ms、s、min、h、d、y）
-         *
-         * @param nanos 纳秒数（可为负数，将显示负号）
-         * @return 格式化后的字符串，例如 "1.23 ms"、"5.00 s"、"150 ns"
-         */
-        public static String formatNanos(long nanos) {
-            if (nanos == 0) return "0 ns";
+    /**
+     * 将纳秒数格式化为最合适的单位字符串（自动选择 ns、μs、ms、s、min、h、d、y）
+     *
+     * @param nanos 纳秒数（可为负数，将显示负号）
+     * @return 格式化后的字符串，例如 "1.23 ms"、"5.00 s"、"150 ns"
+     */
+    public static String formatNanos(long nanos) {
+        if (nanos == 0) return "0 ns";
 
-            // 处理负数
-            if (nanos < 0) {
-                return "-" + formatNanos(-nanos);
-            }
+        // 处理负数
+        if (nanos < 0) {
+            return "-" + formatNanos(-nanos);
+        }
 
-            // 单位定义（从大到小）
-            long[] thresholds = {
-                    31_536_000_000_000_000L, // 1 year  (365天)
-                    86_400_000_000_000L,     // 1 day
-                    3_600_000_000_000L,      // 1 hour
-                    60_000_000_000L,         // 1 minute
-                    1_000_000_000L,          // 1 second
-                    1_000_000L,              // 1 millisecond
-                    1_000L                   // 1 microsecond
-            };
+        // 单位定义（从大到小）
+        long[] thresholds = {
+                31_536_000_000_000_000L, // 1 year  (365天)
+                86_400_000_000_000L,     // 1 day
+                3_600_000_000_000L,      // 1 hour
+                60_000_000_000L,         // 1 minute
+                1_000_000_000L,          // 1 second
+                1_000_000L,              // 1 millisecond
+                1_000L                   // 1 microsecond
+        };
 
-            String[] units = {"y", "d", "h", "min", "s", "ms", "μs"};
+        String[] units = {"y", "d", "h", "min", "s", "ms", "μs"};
 
-            // 从最大的单位开始尝试
-            for (int i = 0; i < thresholds.length; i++) {
-                if (nanos >= thresholds[i]) {
-                    double value = (double) nanos / thresholds[i];
-                    // 数值较大时只保留整数，避免冗长的小数
-                    if (value >= 100) {
-                        return String.format("%.0f %s", value, units[i]);
-                    } else {
-                        return String.format("%.2f %s", value, units[i]);
-                    }
+        // 从最大的单位开始尝试
+        for (int i = 0; i < thresholds.length; i++) {
+            if (nanos >= thresholds[i]) {
+                double value = (double) nanos / thresholds[i];
+                // 数值较大时只保留整数，避免冗长的小数
+                if (value >= 100) {
+                    return String.format("%.0f %s", value, units[i]);
+                } else {
+                    return String.format("%.2f %s", value, units[i]);
                 }
             }
-
-            // 小于 1 微秒（≤ 999 ns）
-            return nanos + " ns";
         }
+
+        // 小于 1 微秒（≤ 999 ns）
+        return nanos + " ns";
+    }
 }
