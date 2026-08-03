@@ -61,7 +61,7 @@ public class ThemeChanger {
         FlatAnimatedLafChange.showSnapshot();
 
 
-        ThemeRefresh(newTheme);
+        ThemeRefresh(newTheme, false);
 
         //字体更新
         UIManager.put("defaultFont", new Font(DataControl.get("Font", "Microsoft YaHei"), Font.PLAIN, DataControl.get("FontSize", 12)));
@@ -77,9 +77,11 @@ public class ThemeChanger {
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
-    private static void ThemeRefresh(Object newTheme) {
+    private static void ThemeRefresh(Object newTheme, boolean isUseSnapshot) {
         //主题更新，如果前后主题相同就跳过
         if (isSameTheme(newTheme)) return;
+
+        if (isUseSnapshot) FlatAnimatedLafChange.showSnapshot();
 
         if (!EasterEggData.canUseFlatLaf) {
             if (!(newTheme instanceof FlatLaf)) {
@@ -123,6 +125,18 @@ public class ThemeChanger {
 
         //图标更新
         IconControl.runDynamicConverters();
+
+        if (isUseSnapshot) {
+            for (var window : JWindow.getOwnerlessWindows()) {
+                try {
+                    SwingUtilities.updateComponentTreeUI(window);
+                } catch (Exception e) {
+                    logger.error("窗口刷新失败", e);
+                }
+            }
+
+            FlatAnimatedLafChange.hideSnapshotWithAnimation();
+        }
     }
 
     private static boolean isSameTheme(Object newTheme) {
@@ -181,7 +195,7 @@ public class ThemeChanger {
             newTheme = SystemThemeDetector.isDarkMode() ? "Mac Dark" : "Mac Light";
         }
 
-        FlatAnimatedLafChange.showSnapshot();
+
 
         ThemeRefresh(switch (newTheme) {
             case "Mac Dark" -> new FlatMacDarkLaf();
@@ -194,17 +208,9 @@ public class ThemeChanger {
             case "Windows Classic" -> "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
             case "Metal" -> "javax.swing.plaf.metal.MetalLookAndFeel";
             default -> null;
-        });
+        }, true);
 
-        for (var window : JWindow.getOwnerlessWindows()) {
-            try {
-                SwingUtilities.updateComponentTreeUI(window);
-            } catch (Exception e) {
-                logger.error("窗口刷新失败", e);
-            }
-        }
 
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
 

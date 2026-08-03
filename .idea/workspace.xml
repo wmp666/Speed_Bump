@@ -9,9 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复主题刷新问题">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加更多文件">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -147,9 +147,9 @@
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\task\createTask" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\specialSettings" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\laug" />
     </key>
@@ -292,7 +292,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加更新日志，功能性弹窗升级" />
     <MESSAGE value="增加更新日志，功能性弹窗升级，修改“文件”图标" />
     <MESSAGE value="增加新的功能性弹窗样式" />
     <MESSAGE value="增加新的功能性弹窗样式，新的通知样式" />
@@ -317,7 +316,8 @@
     <MESSAGE value="界面更新&#10;修复主题可能不刷新&#10;调整通用设置的位置&#10;统一进度条UI" />
     <MESSAGE value="修复重启下载的问题" />
     <MESSAGE value="修复主题刷新问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复主题刷新问题" />
+    <MESSAGE value="增加更多文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加更多文件" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

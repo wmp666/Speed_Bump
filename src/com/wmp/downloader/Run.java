@@ -10,7 +10,7 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.2.7.1";
+    public static String VERSION = "0.2.7.2";
 
     static void main(String[] args) {
         var argList = List.of(args);
