@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复重启下载的问题">
-      <change afterPath="$PROJECT_DIR$/src/Muilt/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Windows/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Muilt_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Muilt_jar.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复主题刷新问题">
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
@@ -295,7 +292,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复一些界面问题" />
     <MESSAGE value="增加更新日志，功能性弹窗升级" />
     <MESSAGE value="增加更新日志，功能性弹窗升级，修改“文件”图标" />
     <MESSAGE value="增加新的功能性弹窗样式" />
@@ -320,7 +316,8 @@
     <MESSAGE value="去除了旧的更新日志，增加了更新内容整合" />
     <MESSAGE value="界面更新&#10;修复主题可能不刷新&#10;调整通用设置的位置&#10;统一进度条UI" />
     <MESSAGE value="修复重启下载的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复重启下载的问题" />
+    <MESSAGE value="修复主题刷新问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复主题刷新问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

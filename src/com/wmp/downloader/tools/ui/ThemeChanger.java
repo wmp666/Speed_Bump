@@ -181,6 +181,8 @@ public class ThemeChanger {
             newTheme = SystemThemeDetector.isDarkMode() ? "Mac Dark" : "Mac Light";
         }
 
+        FlatAnimatedLafChange.showSnapshot();
+
         ThemeRefresh(switch (newTheme) {
             case "Mac Dark" -> new FlatMacDarkLaf();
             case "Mac Light" -> new FlatMacLightLaf();
@@ -193,6 +195,16 @@ public class ThemeChanger {
             case "Metal" -> "javax.swing.plaf.metal.MetalLookAndFeel";
             default -> null;
         });
+
+        for (var window : JWindow.getOwnerlessWindows()) {
+            try {
+                SwingUtilities.updateComponentTreeUI(window);
+            } catch (Exception e) {
+                logger.error("窗口刷新失败", e);
+            }
+        }
+
+        FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
 
