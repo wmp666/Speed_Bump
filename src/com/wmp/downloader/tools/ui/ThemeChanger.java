@@ -176,7 +176,23 @@ public class ThemeChanger {
     }
 
     public static void easyThemeRefresh() {
-        ThemeRefresh(DataControl.get("theme", "System Theme Style"));
+        var newTheme = DataControl.get("theme", "System Theme Style");
+        if (newTheme.equals("System Theme Style")) {
+            newTheme = SystemThemeDetector.isDarkMode() ? "Mac Dark" : "Mac Light";
+        }
+
+        ThemeRefresh(switch (newTheme) {
+            case "Mac Dark" -> new FlatMacDarkLaf();
+            case "Mac Light" -> new FlatMacLightLaf();
+            case "Dark" -> new FlatDarkLaf();
+            case "Light" -> new FlatLightLaf();
+            case "Darcula" -> new FlatDarculaLaf();
+            case "IntelliJ" -> new FlatIntelliJLaf();
+            case "System" -> UIManager.getSystemLookAndFeelClassName();
+            case "Windows Classic" -> "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
+            case "Metal" -> "javax.swing.plaf.metal.MetalLookAndFeel";
+            default -> null;
+        });
     }
 
 

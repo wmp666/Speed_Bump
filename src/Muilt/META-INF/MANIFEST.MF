@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Main-Class: com.wmp.downloader.Run
+Class-Path: jlibtorrent-2.0.12.9.jar core-3.5.3.jar jlibtorrent-windows-
+ 2.0.12.9.jar commons-net-3.9.0.jar modal-dialog-2.6.1.jar flatlaf-3.7.1
+ .jar flatlaf-extras-3.7.1.jar jsvg-2.0.0.jar miglayout-swing-5.3.jar mi
+ glayout-core-5.3.jar javase-3.5.3.jar flatlaf-3.7.2.jar log4j-1.2.17.ja
+ r fastjson-2.0.15.jar fastjson2-extension-2.0.15.jar fastjson2-2.0.15.j
+ ar commonmark-0.29.0.jar jsoup-1.15.1.jar flatlaf-extras-3.7.2.jar flat
+ laf-3.7.2.jar jsvg-2.1.0.jar
+
