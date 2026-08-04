@@ -20,6 +20,8 @@
       <element id="library" level="project" name="commonmark" />
       <element id="library" level="project" name="jsoup" />
       <element id="library" level="project" name="formdev.flatlaf.extras" />
+      <element id="library" level="project" name="jlibtorrent-linux-arm64-2.0.12.9" />
+      <element id="library" level="project" name="jlibtorrent-linux-x86_64-2.0.12.9" />
     </root>
   </artifact>
 </component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jlibtorrent-linux-arm64-2.0.12.9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jlibtorrent-linux-arm64-2.0.12.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

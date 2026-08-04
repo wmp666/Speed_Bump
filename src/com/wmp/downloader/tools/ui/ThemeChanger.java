@@ -196,7 +196,6 @@ public class ThemeChanger {
         }
 
 
-
         ThemeRefresh(switch (newTheme) {
             case "Mac Dark" -> new FlatMacDarkLaf();
             case "Mac Light" -> new FlatMacLightLaf();

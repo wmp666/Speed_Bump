@@ -129,4 +129,13 @@ public class StringFormat {
         // 小于 1 微秒（≤ 999 ns）
         return nanos + " ns";
     }
+
+    public static String formatSize(long bytes) {
+        if (bytes <= 0) return "0 B";
+        final String[] units = {"B", "KB", "MB", "GB", "TB", "PB"};
+        int digitGroups = (int) (Math.log10(bytes) / Math.log10(1024));
+        double value = bytes / Math.pow(1024, digitGroups);
+        // 保留两位小数，如果单位是 B 则不留小数
+        return String.format("%.2f %s", value, units[digitGroups]);
+    }
 }

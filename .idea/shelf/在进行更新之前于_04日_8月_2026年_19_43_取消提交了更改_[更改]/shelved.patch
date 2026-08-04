@@ -1,0 +1,221 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ArtifactsWorkspaceSettings\">\r\n    <artifacts-to-build>\r\n      <artifact name=\"DownLoader_Windows:jar\" />\r\n    </artifacts-to-build>\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e26adb01-3985-464d-8125-217249e16a2b\" name=\"更改\" comment=\"增加更多文件\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/com/wmp/downloader/Run.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/com/wmp/downloader/Run.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Record\" />\r\n        <option value=\"Exception\" />\r\n        <option value=\"module-info\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"RESET_MODE\" value=\"HARD\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;wmp666&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"recentBranches\">\r\n      <RecentBranches>\r\n        <option name=\"branchesForRepo\">\r\n          <list>\r\n            <RecentBranchesForRepo>\r\n              <option name=\"branches\">\r\n                <list>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"deleteJavaCV\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1785158890\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"master\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1785158889\" />\r\n                  </RecentBranch>\r\n                </list>\r\n              </option>\r\n              <option name=\"repositoryRootUrl\" value=\"file://$PROJECT_DIR$\" />\r\n            </RecentBranchesForRepo>\r\n          </list>\r\n        </option>\r\n      </RecentBranches>\r\n    </option>\r\n  </component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/wmp666/Speed_Bump.git&quot;,\r\n    &quot;accountId&quot;: &quot;c51a7f04-ee90-4407-b229-192e7c709c13&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 4,\r\n  &quot;fromUser&quot;: true\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3GdnVjhWbgsY6hnknjOE1D1U8OT\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"autoscrollToSource\" value=\"true\" />\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n    <option name=\"showMembers\" value=\"true\" />\r\n    <option name=\"showScratchesAndConsoles\" value=\"false\" />\r\n    <option name=\"sortByType\" value=\"true\" />\r\n    <option name=\"sortKey\" value=\"BY_TYPE\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,\r\n    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;261&quot;,\r\n    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,\r\n    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;302&quot;,\r\n    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/src/icon&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15426998&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.26498002&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,\r\n    &quot;应用程序.BTTest.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.BiliVideoInfo.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.BilibiliQRLoginWithJsoup.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.BilibiliUserInfo.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.ConvergenceTool.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.FTPDownloader.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.FunctionDialog.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.GetMagnet3.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.GopeedClient.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.MagnetToTorrent.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.Run.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.TikTokDownloader.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.ToastMessage.executor&quot;: &quot;Run&quot;,\r\n    &quot;应用程序.VideoInfoReader.executor&quot;: &quot;Run&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\src\\icon\" />\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\lib\" />\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\" />\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\src\\com\\wmp\\downloader\\ui\\task\\bilibili\" />\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\src\\com\\wmp\\downloader\\ui\\task\\createTask\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\" />\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\src\\com\\wmp\" />\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\src\\com\\wmp\\downloader\" />\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\src\\com\\wmp\\downloader\\ui\\specialSettings\" />\r\n      <recent name=\"C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\src\\com\\wmp\\downloader\\laug\" />\r\n    </key>\r\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\r\n      <recent name=\"com.wmp.downloader.ui.task.douyin\" />\r\n      <recent name=\"com.wmp.downloader.ui.task.bilibili\" />\r\n      <recent name=\"com.wmp.downloader.ui.task.createTask\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"应用程序.Run\">\r\n    <configuration name=\"FTPDownloader\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.wmp.downloader.test.FTPDownloader\" />\r\n      <module name=\"DownLoader\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.wmp.downloader.test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"GopeedClient\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.wmp.downloader.tools.download.GopeedClient\" />\r\n      <module name=\"DownLoader\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.wmp.downloader.tools.download.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"MagnetToTorrent\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.wmp.downloader.tools.MagnetToTorrent\" />\r\n      <module name=\"DownLoader\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.wmp.downloader.tools.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Run\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.wmp.downloader.Run\" />\r\n      <module name=\"DownLoader\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.wmp.downloader.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ToastMessage\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.wmp.downloader.tools.ui.ToastMessage\" />\r\n      <module name=\"DownLoader\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.wmp.downloader.tools.ui.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"应用程序.FTPDownloader\" />\r\n      <item itemvalue=\"应用程序.GopeedClient\" />\r\n      <item itemvalue=\"应用程序.MagnetToTorrent\" />\r\n      <item itemvalue=\"应用程序.Run\" />\r\n      <item itemvalue=\"应用程序.ToastMessage\" />\r\n    </list>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"应用程序.Run\" />\r\n        <item itemvalue=\"应用程序.ToastMessage\" />\r\n        <item itemvalue=\"应用程序.MagnetToTorrent\" />\r\n        <item itemvalue=\"应用程序.GopeedClient\" />\r\n        <item itemvalue=\"应用程序.FTPDownloader\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-30f59d01ecdd-63390994e64e-intellij.indexing.shared.core-IU-262.8665.337\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.8665.337\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"默认任务\">\r\n      <changelist id=\"e26adb01-3985-464d-8125-217249e16a2b\" name=\"更改\" comment=\"\" />\r\n      <created>1784310353189</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1784310353189</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TerminalProjectNonSharedOptionsProvider\">\r\n    <envs>\r\n      <env key=\"Git\" value=\"C:\\Program Files\\Git\\bin\\\" />\r\n    </envs>\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"main/master\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"增加更新日志，功能性弹窗升级，修改“文件”图标\" />\r\n    <MESSAGE value=\"增加新的功能性弹窗样式\" />\r\n    <MESSAGE value=\"增加新的功能性弹窗样式，新的通知样式\" />\r\n    <MESSAGE value=\"考虑到大小问题，这个版本删除了JavaCV\" />\r\n    <MESSAGE value=\"更新 更新日志\" />\r\n    <MESSAGE value=\"更新 README.md\" />\r\n    <MESSAGE value=\"增加种子下载（单个文件）&#10;优化功能性弹窗（内嵌式），点击四周会关闭的问题\" />\r\n    <MESSAGE value=\"增加磁力下载（单个文件）\" />\r\n    <MESSAGE value=\"增强种子、磁力下载能力\" />\r\n    <MESSAGE value=\"更新创建链接功能，更加智能\" />\r\n    <MESSAGE value=\"更新创建链接功能，更加智能&#10;添加ED2K链接下载（依赖gopeed）&#10;支持将下载链接强制挂载到gopeed\" />\r\n    <MESSAGE value=\"增加新的设置项，个性化开放度更高\" />\r\n    <MESSAGE value=\"整顿部分UI，提升性能\" />\r\n    <MESSAGE value=\"更新翻译文件\" />\r\n    <MESSAGE value=\"将多个翻译文件统一为一个\" />\r\n    <MESSAGE value=\"补全繁体中文翻译，修复部分问题\" />\r\n    <MESSAGE value=\"支持跟随系统变更主题\" />\r\n    <MESSAGE value=\"支持跟随系统变更主题，下载任务名称显示优化\" />\r\n    <MESSAGE value=\"更新README\" />\r\n    <MESSAGE value=\"新增更新功能&#10;1.增加更新按钮...&#10;2.增加新的非模态通知类型&#10;3.新增更新功能（目前仅Windows）\" />\r\n    <MESSAGE value=\"去除了旧的更新日志，增加了更新内容整合\" />\r\n    <MESSAGE value=\"界面更新&#10;修复主题可能不刷新&#10;调整通用设置的位置&#10;统一进度条UI\" />\r\n    <MESSAGE value=\"修复重启下载的问题\" />\r\n    <MESSAGE value=\"修复主题刷新问题\" />\r\n    <MESSAGE value=\"增加更多文件\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"增加更多文件\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/test/FTPDownloader.java</url>\r\n          <line>75</line>\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java</url>\r\n          <line>258</line>\r\n          <option name=\"timeStamp\" value=\"8\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 4f36a2de42978b6c02a9a84c3290854b91d1fe7a)
++++ b/.idea/workspace.xml	(date 1785843491198)
+@@ -9,10 +9,10 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加更多文件">
++    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="再次修复主题刷新导致的问题">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/SpeedBump.exe4j" beforeDir="false" afterPath="$PROJECT_DIR$/SpeedBump.exe4j" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/减速带.iss" beforeDir="false" afterPath="$PROJECT_DIR$/减速带.iss" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -92,59 +92,59 @@
+     <option name="sortByType" value="true" />
+     <option name="sortKey" value="BY_TYPE" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+-    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
+-    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
+-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;261&quot;,
+-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
+-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;302&quot;,
+-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/src/icon&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
+-    &quot;project.structure.proportion&quot;: &quot;0.15426998&quot;,
+-    &quot;project.structure.side.proportion&quot;: &quot;0.26498002&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+-    &quot;应用程序.BTTest.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.BiliVideoInfo.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.BilibiliQRLoginWithJsoup.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.BilibiliUserInfo.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.ConvergenceTool.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.FTPDownloader.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.FunctionDialog.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.GetMagnet3.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.GopeedClient.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.MagnetToTorrent.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.Run.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.TikTokDownloader.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.ToastMessage.executor&quot;: &quot;Run&quot;,
+-    &quot;应用程序.VideoInfoReader.executor&quot;: &quot;Run&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "Downloaded.Files.Path.Enabled": "false",
++    "ModuleVcsDetector.initialDetectionPerformed": "true",
++    "Repository.Attach.Annotations": "false",
++    "Repository.Attach.JavaDocs": "true",
++    "Repository.Attach.Sources": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
++    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
++    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
++    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "302",
++    "codeWithMe.voiceChat.enabledByDefault": "false",
++    "git-widget-placeholder": "master",
++    "kotlin-language-version-configured": "true",
++    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/src/com/wmp/downloader/abstractTask/linkInfoPanel",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.jshint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.jshint": "",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "project.structure.last.edited": "工件",
++    "project.structure.proportion": "0.15426998",
++    "project.structure.side.proportion": "0.26498002",
++    "settings.editor.selected.configurable": "preferences.pluginManager",
++    "应用程序.BTTest.executor": "Run",
++    "应用程序.BiliVideoInfo.executor": "Run",
++    "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
++    "应用程序.BilibiliUserInfo.executor": "Run",
++    "应用程序.ConvergenceTool.executor": "Run",
++    "应用程序.FTPDownloader.executor": "Run",
++    "应用程序.FunctionDialog.executor": "Run",
++    "应用程序.GetMagnet3.executor": "Run",
++    "应用程序.GopeedClient.executor": "Run",
++    "应用程序.MagnetToTorrent.executor": "Run",
++    "应用程序.Run.executor": "Run",
++    "应用程序.TikTokDownloader.executor": "Run",
++    "应用程序.ToastMessage.executor": "Run",
++    "应用程序.VideoInfoReader.executor": "Run"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
++      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\abstractTask\linkInfoPanel" />
++      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\abstractTask" />
+       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\icon" />
+       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\lib" />
+       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
+-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\task\bilibili" />
+-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\ui\task\createTask" />
+     </key>
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
+@@ -292,7 +292,6 @@
+     </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+-    <MESSAGE value="增加更新日志，功能性弹窗升级，修改“文件”图标" />
+     <MESSAGE value="增加新的功能性弹窗样式" />
+     <MESSAGE value="增加新的功能性弹窗样式，新的通知样式" />
+     <MESSAGE value="考虑到大小问题，这个版本删除了JavaCV" />
+@@ -317,7 +316,8 @@
+     <MESSAGE value="修复重启下载的问题" />
+     <MESSAGE value="修复主题刷新问题" />
+     <MESSAGE value="增加更多文件" />
+-    <option name="LAST_COMMIT_MESSAGE" value="增加更多文件" />
++    <MESSAGE value="再次修复主题刷新导致的问题" />
++    <option name="LAST_COMMIT_MESSAGE" value="再次修复主题刷新导致的问题" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+Index: SpeedBump.exe4j
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<exe4j version=\"10.1\" transformSequenceNumber=\"3\">\r\n  <directoryPresets config=\"C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/out/artifacts\" />\r\n  <application name=\"SpeedBump\" distributionSourceDir=\"E:/Users/21348/Desktop\" />\r\n  <executable name=\"SpeedBump\" iconSet=\"true\" iconFile=\"C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/icon.ico\" executableDir=\".\" redirectStderr=\"false\" executableMode=\"gui\" checkConsoleParameter=\"true\" wrapperType=\"embed\">\r\n    <versionInfo include=\"true\" fileVersion=\"0.2.7.1\" companyName=\"wmp\" productVersion=\"0.2.7.1\" />\r\n    <messageSet>\r\n      <message id=\"MessageBoxTitle\" text=\"错误\" />\r\n      <message id=\"ErrorDialogCaption\" text=\"错误\" />\r\n      <message id=\"ErrorDialogOk\" text=\"是\" />\r\n      <message id=\"ErrorDialogText\" text=\"启动{0}时发生错误：\" />\r\n      <message id=\"PowerUserRequired\" text=\"您必须至少是高级用户才能运行此程序。\" />\r\n      <message id=\"NoJvmFound3264\" text=\"在您的系统上找不到JVM。&#xA;请设置 EXE4J_JAVA_HOME 指向已安装的 {0} 位 JDK 或 JRE，或者从 https://adoptium.net 下载 JRE。\" />\r\n      <message id=\"JvmInPath3264\" text=\"在您的路径中找到的JVM已损坏。&#xA;请重新安装或定义EXE4J_JAVA_HOME&#xA;以指向已安装的{0}位JDK或JRE。\" />\r\n      <message id=\"JvmEnvVar32\" text=\"{0} 环境变量未指向&#xA;一个可用的32位JDK或JRE。\" />\r\n      <message id=\"JvmEnvVar64\" text=\"{0} 环境变量未指向&#xA;一个可用的64位JDK或JRE。\" />\r\n      <message id=\"MainMethodNotFound\" text=\"未找到 main 方法。\" />\r\n      <message id=\"MainClassNotFound\" text=\"无法加载主类。\" />\r\n      <message id=\"InternalError\" text=\"发生内部错误（错误代码：{0}）\" />\r\n      <message id=\"EnvVarNotDefined\" text=\"必须定义环境变量 {0}。\" />\r\n      <message id=\"WrongParameters\" text=\"错误的参数使用方式\" />\r\n      <message id=\"FileNotFound\" text=\"文件或目录 {0} 不存在或为空。\" />\r\n      <message id=\"UnpackAntiVirus\" text=\"无法解压 JVM。可能是防病毒软件正在干扰。\" />\r\n      <message id=\"JvmDefinedPath64\" text=\"在 {0} 找到的JVM已损坏。&#xA;请重新安装或定义 EXE4J_JAVA_HOME&#xA;以指向已安装的64位JDK或JRE。\" />\r\n      <message id=\"JvmDefinedPath32\" text=\"在 {0} 找到的JVM已损坏。&#xA;请重新安装或定义 EXE4J_JAVA_HOME&#xA;以指向已安装的32位JDK或JRE。\" />\r\n      <message id=\"JvmStart2\" text=\"无法启动JVM。最大堆大小（-Xmx）可能过大，或者防病毒软件或防火墙工具可能阻止了执行。\" />\r\n      <message id=\"JvmStart\" text=\"*无法启动 JVM。最大堆大小（-Xmx）可能过大，或者防病毒软件或防火墙工具可能阻止了执行。\" />\r\n      <message id=\"JvmDefinedPath\" text=\"在 {0} 找到的JVM已损坏。&#xA;请重新安装或定义 EXE4J_JAVA_HOME&#xA;以指向已安装的JDK或JRE。\" />\r\n      <message id=\"JvmEnvVar\" text=\"{0}环境变量未指向&#xA;一个可用的JDK或JRE。\" />\r\n      <message id=\"JvmInPath\" text=\"在您的路径中找到的JVM已损坏。&#xA;请重新安装或定义 EXE4J_JAVA_HOME&#xA;以指向已安装的JDK或JRE。\" />\r\n      <message id=\"NoJvmFound\" text=\"在您的系统上找不到JVM。&#xA;请定义 EXE4J_JAVA_HOME&#xA;以指向已安装的JDK或JRE，或从 https://adoptium.net 下载JRE。\" />\r\n    </messageSet>\r\n  </executable>\r\n  <splashScreen show=\"true\" width=\"384\" height=\"243\" bitmapFile=\"C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/preload.png\" textOverlay=\"true\">\r\n    <text>\r\n      <statusLine x=\"239\" y=\"81\" text=\"正在启动\" fontSize=\"15\" />\r\n      <versionLine x=\"239\" y=\"148\" text=\"version %VERSION%\" fontSize=\"15\" />\r\n    </text>\r\n  </splashScreen>\r\n  <java mainClass=\"com.wmp.downloader.Run\" minVersion=\"25\" allowBetaVM=\"true\">\r\n    <searchSequence>\r\n      <directory location=\"./jdk-25\" />\r\n      <registry />\r\n      <envVar name=\"JAVA_HOME\" />\r\n      <envVar name=\"JDK_HOME\" />\r\n    </searchSequence>\r\n    <classPath>\r\n      <archive location=\"C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/out/artifacts/DownLoader_Windows_jar/DownLoader_windows.jar\" failOnError=\"false\" />\r\n    </classPath>\r\n  </java>\r\n</exe4j>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpeedBump.exe4j b/SpeedBump.exe4j
+--- a/SpeedBump.exe4j	(revision 4f36a2de42978b6c02a9a84c3290854b91d1fe7a)
++++ b/SpeedBump.exe4j	(date 1785738747322)
+@@ -3,7 +3,7 @@
+   <directoryPresets config="C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/out/artifacts" />
+   <application name="SpeedBump" distributionSourceDir="E:/Users/21348/Desktop" />
+   <executable name="SpeedBump" iconSet="true" iconFile="C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/icon.ico" executableDir="." redirectStderr="false" executableMode="gui" checkConsoleParameter="true" wrapperType="embed">
+-    <versionInfo include="true" fileVersion="0.2.7.1" companyName="wmp" productVersion="0.2.7.1" />
++    <versionInfo include="true" fileVersion="0.2.7.2" companyName="wmp" productVersion="0.2.7.2" />
+     <messageSet>
+       <message id="MessageBoxTitle" text="错误" />
+       <message id="ErrorDialogCaption" text="错误" />
+Index: src/com/wmp/downloader/tools/StringFormat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wmp.downloader.tools;\r\n\r\nimport java.io.File;\r\nimport java.util.Locale;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class StringFormat {\r\n    private static final String BUNDLE_PREFIX = \"com.wmp.downloader.laug.\";\r\n\r\n    public static String translate(String key) {\r\n        return translate(null, key);\r\n    }\r\n\r\n    public static String translate(String rootLocal, String key) {\r\n        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_PREFIX + \"laug\", Locale.getDefault());\r\n        try {\r\n            return bundle.getString(key);\r\n        } catch (Exception e) {\r\n            return String.format(\"%s: %s\", \"laug\", key);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * 根据当前操作系统净化文件名或目录名，将非法字符替换为 '_'\r\n     * <p>\r\n     * Windows 禁用字符：\\ / : * ? \" < > |\r\n     * Unix/Linux 禁用字符：/ 和 NUL (空字符)\r\n     *\r\n     * @param name 原始名称（不含路径）\r\n     * @return 净化后的名称，如果输入为 null 或空则原样返回\r\n     */\r\n    public static String sanitizeName(String name) {\r\n        if (name == null || name.isEmpty()) {\r\n            return name;\r\n        }\r\n\r\n        String os = System.getProperty(\"os.name\").toLowerCase();\r\n        String regex;\r\n        if (os.contains(\"win\")) {\r\n            regex = \"[\\\\\\\\/:*?\\\"<>|]\";\r\n        } else {\r\n            // Unix/Linux/macOS：只禁止 '/' 和 NUL 字符\r\n            regex = \"[/\\0]\";\r\n        }\r\n        return name.replaceAll(regex, \"_\");\r\n    }\r\n\r\n    /**\r\n     * 净化整个文件路径（除根目录外），递归处理每一级目录和最终文件名\r\n     *\r\n     * @param file 原始 File 对象（可表示文件或目录）\r\n     * @return 新的 File 对象，其路径中所有非根目录的名称都已净化，根目录保持不变\r\n     */\r\n    public static File sanitizeFile(File file) {\r\n        if (file == null) {\r\n            return null;\r\n        }\r\n\r\n        File parent = file.getParentFile();\r\n        String name = file.getName();\r\n\r\n        // 如果是根目录（无父目录且名称为空），直接返回原对象\r\n        if (parent == null && name.isEmpty()) {\r\n            return file;\r\n        }\r\n\r\n        // 净化当前名称（目录名或文件名）\r\n        String sanitizedName = sanitizeName(name);\r\n\r\n        if (parent == null) {\r\n            // 没有父目录，可能是一个相对路径的单独文件/目录\r\n            // 如果名称没变，返回原对象，否则新建\r\n            if (sanitizedName.equals(name)) {\r\n                return file;\r\n            } else {\r\n                return new File(sanitizedName);\r\n            }\r\n        } else {\r\n            // 递归净化父目录\r\n            File sanitizedParent = sanitizeFile(parent);\r\n            // 如果父目录和当前名称都没变，返回原对象\r\n            if (sanitizedParent.equals(parent) && sanitizedName.equals(name)) {\r\n                return file;\r\n            }\r\n            return new File(sanitizedParent, sanitizedName);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * 将纳秒数格式化为最合适的单位字符串（自动选择 ns、μs、ms、s、min、h、d、y）\r\n     *\r\n     * @param nanos 纳秒数（可为负数，将显示负号）\r\n     * @return 格式化后的字符串，例如 \"1.23 ms\"、\"5.00 s\"、\"150 ns\"\r\n     */\r\n    public static String formatNanos(long nanos) {\r\n        if (nanos == 0) return \"0 ns\";\r\n\r\n        // 处理负数\r\n        if (nanos < 0) {\r\n            return \"-\" + formatNanos(-nanos);\r\n        }\r\n\r\n        // 单位定义（从大到小）\r\n        long[] thresholds = {\r\n                31_536_000_000_000_000L, // 1 year  (365天)\r\n                86_400_000_000_000L,     // 1 day\r\n                3_600_000_000_000L,      // 1 hour\r\n                60_000_000_000L,         // 1 minute\r\n                1_000_000_000L,          // 1 second\r\n                1_000_000L,              // 1 millisecond\r\n                1_000L                   // 1 microsecond\r\n        };\r\n\r\n        String[] units = {\"y\", \"d\", \"h\", \"min\", \"s\", \"ms\", \"μs\"};\r\n\r\n        // 从最大的单位开始尝试\r\n        for (int i = 0; i < thresholds.length; i++) {\r\n            if (nanos >= thresholds[i]) {\r\n                double value = (double) nanos / thresholds[i];\r\n                // 数值较大时只保留整数，避免冗长的小数\r\n                if (value >= 100) {\r\n                    return String.format(\"%.0f %s\", value, units[i]);\r\n                } else {\r\n                    return String.format(\"%.2f %s\", value, units[i]);\r\n                }\r\n            }\r\n        }\r\n\r\n        // 小于 1 微秒（≤ 999 ns）\r\n        return nanos + \" ns\";\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wmp/downloader/tools/StringFormat.java b/src/com/wmp/downloader/tools/StringFormat.java
+--- a/src/com/wmp/downloader/tools/StringFormat.java	(revision 4f36a2de42978b6c02a9a84c3290854b91d1fe7a)
++++ b/src/com/wmp/downloader/tools/StringFormat.java	(date 1785843017853)
+@@ -129,4 +129,13 @@
+         // 小于 1 微秒（≤ 999 ns）
+         return nanos + " ns";
+     }
++
++    public static String formatSize(long bytes){
++        if (bytes <= 0) return "0 B";
++        final String[] units = {"B", "KB", "MB", "GB", "TB", "PB"};
++        int digitGroups = (int) (Math.log10(bytes) / Math.log10(1024));
++        double value = bytes / Math.pow(1024, digitGroups);
++        // 保留两位小数，如果单位是 B 则不留小数
++        return String.format("%.2f %s", value, units[digitGroups]);
++    }
+ }
+\ No newline at end of file
+Index: 减速带.iss
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>; Script generated by the Inno Setup Script Wizard.\r\n; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!\r\n; Non-commercial use only\r\n\r\n#define MyAppName \"Speed Bump\"\r\n#define MyAppVersion \"0.2.7.1\"\r\n#define MyAppPublisher \"wmp\"\r\n#define MyAppURL \"https://github.com/wmp666/Speed_Bump\"\r\n#define MyAppExeName \"SpeedBump.exe\"\r\n\r\n[Setup]\r\n; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.\r\n; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)\r\nAppId={{D2534130-7E2F-4A26-8B3D-E022FA0EFD2F}\r\nAppName={#MyAppName}\r\nAppVersion={#MyAppVersion}\r\n;AppVerName={#MyAppName} {#MyAppVersion}\r\nAppPublisher={#MyAppPublisher}\r\nAppPublisherURL={#MyAppURL}\r\nAppSupportURL={#MyAppURL}\r\nAppUpdatesURL={#MyAppURL}\r\nDefaultDirName={autopf}\\{#MyAppName}\r\nUninstallDisplayIcon={app}\\{#MyAppExeName}\r\n; \"ArchitecturesAllowed=x64compatible\" specifies that Setup cannot run\r\n; on anything but x64 and Windows 11 on Arm.\r\nArchitecturesAllowed=x64compatible\r\n; \"ArchitecturesInstallIn64BitMode=x64compatible\" requests that the\r\n; install be done in \"64-bit mode\" on x64 or Windows 11 on Arm,\r\n; meaning it should use the native 64-bit Program Files directory and\r\n; the 64-bit view of the registry.\r\nArchitecturesInstallIn64BitMode=x64compatible\r\nDefaultGroupName={#MyAppName}\r\nAllowNoIcons=yes\r\nLicenseFile=C:\\Users\\21348\\Desktop\\吴鹤轩\\Java\\DownLoader\\LICENSE\r\n; Remove the following line to run in administrative install mode (install for all users).\r\nPrivilegesRequired=lowest\r\nPrivilegesRequiredOverridesAllowed=dialog\r\nOutputDir=C:\\Users\\21348\\Desktop\r\nOutputBaseFilename=Speed_Bump_Setup_{#MyAppVersion}\r\nSolidCompression=yes\r\nWizardStyle=modern dynamic polar\r\n\r\n[Languages]\r\nName: \"english\"; MessagesFile: \"compiler:Default.isl\"\r\nName: \"ctchinese\"; MessagesFile: \"compiler:Languages\\CTChinese.isl\"\r\n\r\n[Tasks]\r\nName: \"desktopicon\"; Description: \"{cm:CreateDesktopIcon}\"; GroupDescription: \"{cm:AdditionalIcons}\"; Flags: unchecked\r\n\r\n[Files]\r\nSource: \"E:\\Users\\21348\\Desktop\\{#MyAppExeName}\"; DestDir: \"{app}\"; Flags: ignoreversion\r\nSource: \"C:\\Program Files\\Java\\jdk-25\\*\"; DestDir: \"{app}\\jdk-25\"; Flags: ignoreversion recursesubdirs createallsubdirs\r\n; NOTE: Don't use \"Flags: ignoreversion\" on any shared system files\r\n\r\n[Icons]\r\nName: \"{group}\\{#MyAppName}\"; Filename: \"{app}\\{#MyAppExeName}\"\r\nName: \"{group}\\{cm:ProgramOnTheWeb,{#MyAppName}}\"; Filename: \"{#MyAppURL}\"\r\nName: \"{group}\\{cm:UninstallProgram,{#MyAppName}}\"; Filename: \"{uninstallexe}\"\r\nName: \"{autodesktop}\\{#MyAppName}\"; Filename: \"{app}\\{#MyAppExeName}\"; Tasks: desktopicon\r\n\r\n[Run]\r\nFilename: \"{app}\\{#MyAppExeName}\"; Description: \"{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}\"; Flags: nowait postinstall skipifsilent\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/减速带.iss b/减速带.iss
+--- a/减速带.iss	(revision 4f36a2de42978b6c02a9a84c3290854b91d1fe7a)
++++ b/减速带.iss	(date 1785738877475)
+@@ -3,7 +3,7 @@
+ ; Non-commercial use only
+ 
+ #define MyAppName "Speed Bump"
+-#define MyAppVersion "0.2.7.1"
++#define MyAppVersion "0.2.7.2"
+ #define MyAppPublisher "wmp"
+ #define MyAppURL "https://github.com/wmp666/Speed_Bump"
+ #define MyAppExeName "SpeedBump.exe"
+@@ -49,7 +49,7 @@
+ 
+ [Files]
+ Source: "E:\Users\21348\Desktop\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+-Source: "C:\Program Files\Java\jdk-25\*"; DestDir: "{app}\jdk-25"; Flags: ignoreversion recursesubdirs createallsubdirs
++Source: "C:\Users\21348\Desktop\吴鹤轩\安装包\exe\减速带\jdk-25\*"; DestDir: "{app}\jdk-25"; Flags: ignoreversion recursesubdirs createallsubdirs
+ ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+ 
+ [Icons]

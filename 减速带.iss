@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "Speed Bump"
-#define MyAppVersion "0.2.7.1"
+#define MyAppVersion "0.2.7.2"
 #define MyAppPublisher "wmp"
 #define MyAppURL "https://github.com/wmp666/Speed_Bump"
 #define MyAppExeName "SpeedBump.exe"
@@ -49,7 +49,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "E:\Users\21348\Desktop\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Program Files\Java\jdk-25\*"; DestDir: "{app}\jdk-25"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\21348\Desktop\吴鹤轩\安装包\exe\减速带\jdk-25\*"; DestDir: "{app}\jdk-25"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

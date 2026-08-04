@@ -72,6 +72,10 @@ public class DataControl {
 
                 DataControl.saveData.putAll(jsonData.getInnerMap());
                 DataControl.data.putAll(jsonData.getInnerMap());
+            } else {
+                var file = DATA_FILE.toFile();
+                file.getParentFile().mkdirs();
+                file.createNewFile();
             }
             logger.debug("文本数据加载完成");
 

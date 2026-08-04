@@ -1,0 +1,232 @@
+package com.wmp.downloader.newArchitecture.ui.task.http;
+
+import com.alibaba.fastjson2.JSONObject;
+import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FileDownloadTask;
+import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.download.URLDownloadTool;
+import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.downloader.tools.ui.UITools;
+import org.apache.log4j.Logger;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+
+public class HTTPDownloadTask extends FileDownloadTask {
+
+    private static final Logger logger = Logger.getLogger(HTTPDownloadTask.class);
+    private final URI url;
+    private final int threadNum;
+    private final long fileSize;
+    private final int mode;
+    private final ArrayList<JProgressBar> threadProgressBarList = new ArrayList<>();
+    private final URLDownloadTool.PauseController pauseController = new URLDownloadTool.PauseController();
+    private final URLDownloadTool.DownloadProgress downloadProgress = new URLDownloadTool.DownloadProgress();
+    private Timer progressTimer;
+
+
+    public HTTPDownloadTask(JSONObject jsonObject) {
+        super(jsonObject);
+
+        this.fileSize = jsonObject.getLongValue("size", 0);
+
+        this.url = URI.create(jsonObject.getString("url"));
+        this.threadNum = jsonObject.getIntValue("threadNum", 0);
+        this.mode = jsonObject.getIntValue("threadMode", 0);
+
+    }
+
+    public void doWhenStart() throws Exception {
+
+        pauseController.resume();
+        downloadProgress.resetSpeed();
+
+        //清除已有的进度条
+        ProgressBarsPanel.removeAll();
+        threadProgressBarList.clear();
+
+        //判断是否支持多线程
+
+
+        if (mode == 0 && URLDownloadTool.isCanUseMultithreading(url, fileSize)) {
+            for (var i = 0; i < threadNum; i++) {
+                var progressBar = new JProgressBar(0, 100);
+                progressBar.setStringPainted(false);
+                threadProgressBarList.add(progressBar);
+
+            }
+            ProgressBarsPanel.add(
+                    UITools.createProgressBarsPanel(
+                            UITools.createProgressBarPanel(threadProgressBarList.toArray(JProgressBar[]::new))));
+            var downloadingInfo = URLDownloadTool.download(url, savePath, fileName, fileSize, threadNum, 10, threadProgressBarList, pauseController, downloadProgress);
+
+            var latch = downloadingInfo.latch();
+            var executor = downloadingInfo.executor();
+            var tasks = downloadingInfo.downloadTasks();
+
+            Thread.ofVirtual().start(() -> {
+                try {
+                    progressTimer = new Timer(1000, e -> {
+                        if (isStart) {
+                            downloadProgress.updateSpeed();
+                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.progress_multi"),
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getSpeed()),
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getMergedBytes())));
+                        }
+                    });
+                    progressTimer.start();
+                    // 等待所有任务完成（或异常中断）
+                    latch.await();
+                    progressTimer.stop();
+                    executor.shutdown();
+                    // 检查是否有任务失败（通过任务内部标记）
+                    boolean hasError = false;
+                    for (URLDownloadTool.DownloadTaskRunnable task : tasks) {
+                        if (task.hasError()) {
+                            hasError = true;
+                            break;
+                        }
+                    }
+
+                    if (hasError) {
+                        logger.error("部分分段下载失败，请检查日志后重试。");
+                        downloadControlButton.setEnabled(false);
+                        infoLabel.setText(StringFormat.translate("task", "task.download_task.multi_thread_error"));
+                        ToastMessage.show(this, StringFormat.translate("task", "task.download_task.multi_thread_error"), ToastMessage.ERROR);
+                        stop();
+
+                    }
+                    logger.debug("下载完成！");
+
+                    //合并文件
+
+                    if (!hasError) {
+                        try {
+                            //清除已有的进度条
+                            ProgressBarsPanel.removeAll();
+                            threadProgressBarList.clear();
+                            exitButton.setEnabled(false);
+                            downloadControlButton.setEnabled(false);
+
+                            downloadProgress.resetMergedBytes();
+                            SwingUtilities.invokeLater(() -> infoLabel.setText(StringFormat.translate("task", "task.download_task.merging_file")));
+                            JProgressBar margePartProgressBar = new JProgressBar(0, 100);
+                            margePartProgressBar.setStringPainted(false);
+                            ProgressBarsPanel.add(UITools.createProgressBarPanel(margePartProgressBar));
+
+                            URLDownloadTool.mergeParts(savePath, fileName, threadNum, fileSize, margePartProgressBar, pauseController, downloadProgress);
+
+                            progressTimer.stop();
+                            SwingUtilities.invokeLater(() -> infoLabel.setText(""));
+                            //清除已有的进度条
+                            ProgressBarsPanel.removeAll();
+                            threadProgressBarList.clear();
+
+                            downloadControlButton.setEnabled(false);
+                            exitButton.setEnabled(true);
+
+                            isFinally = true;
+
+                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.download_complete"), URLDownloadTool.DownloadProgress.formatSize(fileSize)));
+
+                            this.revalidate();
+                            this.repaint();
+                        } catch (IOException e) {
+                            hasError = true;
+                            progressTimer.stop();
+                            logger.error("合并文件发生异常", e);
+                            exitButton.setEnabled(true);
+                            downloadControlButton.setEnabled(true);
+                            infoLabel.setText(StringFormat.translate("task", "task.download_task.merge_error"));
+                            ToastMessage.show(this, StringFormat.translate("task", "task.download_task.merge_error"), ToastMessage.ERROR);
+                        }
+                    }
+                    if (hasError) {
+                        JProgressBar progressBar = new JProgressBar(0, 100);
+                        progressBar.setStringPainted(false);
+                        ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
+                        URLDownloadTool.deletePartFiles(fileName, progressBar);
+                    }
+                } catch (Exception e) {
+                    if (progressTimer != null) progressTimer.stop();
+                    logger.error("多线程下载发生异常", e);
+                    ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_multi"), ToastMessage.ERROR);
+                    isStart = false;
+                    startCount--;
+                    exitButton.setEnabled(true);
+                    downloadControlButton.setEnabled(true);
+                }
+            });
+
+
+        } else {
+            Thread.ofVirtual().start(() -> {
+                try {
+                    progressTimer = new Timer(1000, e -> {
+                        if (isStart) {
+                            downloadProgress.updateSpeed();
+                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.progress_single"),
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getSpeed())));
+                        }
+                    });
+                    progressTimer.start();
+                    JProgressBar progressBar = new JProgressBar(0, 100);
+                    progressBar.setStringPainted(false);
+                    threadProgressBarList.add(progressBar);
+                    ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
+                    var isSuccess = URLDownloadTool.singleThreadDownload(url, savePath, fileName, fileSize, 10, progressBar, pauseController, downloadProgress);
+                    progressTimer.stop();
+                    if (!isSuccess) {
+                        downloadControlButton.setEnabled(false);
+                        infoLabel.setText(StringFormat.translate("task", "task.download_task.download_failed_single"));
+                        ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_single"), ToastMessage.ERROR);
+                        stop();
+                    } else {
+                        isFinally = true;
+                        infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.download_complete"), URLDownloadTool.DownloadProgress.formatSize(fileSize)));
+                    }
+                    downloadControlButton.setEnabled(false);
+                    //清除已有的进度条
+                    ProgressBarsPanel.removeAll();
+                    threadProgressBarList.clear();
+
+                    this.revalidate();
+                    this.repaint();
+                } catch (Exception e) {
+                    if (progressTimer != null) progressTimer.stop();
+                    logger.error("单线程下载发生异常", e);
+                    ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_single"), ToastMessage.ERROR);
+                    isStart = false;
+                    startCount--;
+                }
+            });
+        }
+
+
+    }
+
+    @Override
+    public void doWhenRestart() throws Exception {
+        pauseController.resume();
+        if (progressTimer != null) progressTimer.restart();
+
+    }
+
+    public void doWhenStop() {
+        pauseController.pause();
+        progressTimer.stop();
+        infoLabel.setText(StringFormat.translate("task", "task.download_task.paused"));
+
+        if (progressTimer != null) progressTimer.stop();
+
+    }
+
+    @Override
+    public void doWhenExit() {
+        if (progressTimer != null) progressTimer.stop();
+        threadProgressBarList.clear();
+    }
+}

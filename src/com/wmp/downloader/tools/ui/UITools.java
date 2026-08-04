@@ -21,8 +21,6 @@ public class UITools {
             bar.setStringPainted(false);
 
             panel.add(bar);
-            // 可添加小间距
-            panel.add(Box.createHorizontalStrut(2));
         }
 
         // 移除最后一个多余间隔（可选）

@@ -38,7 +38,8 @@
 
 ### 贡献者
 1. 作者：开发者
-2. [Karagarasu](https://github.com/Karagarasu)：提供功能建议
+2. 工具：AI——减少了不必要的重复工作
+3. [Karagarasu](https://github.com/Karagarasu)：提供功能建议
 
 ### 其他
 - [Ghost Downloader 3](https://github.com/XiaoYouChR/Ghost-Downloader-3/releases)：提供 **UI** + **功能** 启发

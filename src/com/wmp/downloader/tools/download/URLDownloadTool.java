@@ -25,35 +25,40 @@ public class URLDownloadTool {
 
     private static final Logger logger = Logger.getLogger(URLDownloadTool.class);
 
-    public static boolean isCanUseMultithreading(URI uri, long fileSize) throws Exception {
+    public static boolean isCanUseMultithreading(URI uri, long fileSize){
         return isCanUseMultithreading(uri, fileSize, null);
     }
 
-    public static boolean isCanUseMultithreading(URI uri, long fileSize, Map<String, String> headers) throws Exception {
-        URL url = uri.toURL();
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("HEAD");
-        if (headers != null) {
-            for (var entry : headers.entrySet()) {
-                conn.setRequestProperty(entry.getKey(), entry.getValue());
+    public static boolean isCanUseMultithreading(URI uri, long fileSize, Map<String, String> headers){
+        try {
+            URL url = uri.toURL();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("HEAD");
+            if (headers != null) {
+                for (var entry : headers.entrySet()) {
+                    conn.setRequestProperty(entry.getKey(), entry.getValue());
+                }
             }
-        }
-        conn.connect();
+            conn.connect();
 
-        boolean acceptRanges = "bytes".equalsIgnoreCase(conn.getHeaderField("Accept-Ranges"));
-        conn.disconnect();
+            boolean acceptRanges = "bytes".equalsIgnoreCase(conn.getHeaderField("Accept-Ranges"));
+            conn.disconnect();
 
-        if (fileSize <= 0) {
-            logger.warn("无法获取文件大小，使用单线程下载...");
+            if (fileSize <= 0) {
+                logger.warn("无法获取文件大小，使用单线程下载...");
+                return false;
+            }
+
+            if (!acceptRanges) {
+                logger.warn("服务器不支持 Range，使用单线程下载...");
+                return false;
+            }
+
+            return true;
+        } catch (IOException e) {
+            logger.error("错误！", e);
             return false;
         }
-
-        if (!acceptRanges) {
-            logger.warn("服务器不支持 Range，使用单线程下载...");
-            return false;
-        }
-
-        return true;
     }
 
     public static DownloadingInfo download(URI uri, File destFile, String fileName, long fileSize, int numThreads, int maxRetries, List<JProgressBar> progressBarList, PauseController pauseController, DownloadProgress progress) throws Exception {

@@ -1,6 +1,10 @@
 package com.wmp.downloader.ui;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
+import com.wmp.downloader.newArchitecture.TaskInfo;
+import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
+import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
+import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.StringFormat;
@@ -10,13 +14,8 @@ import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
-import com.wmp.downloader.ui.settings.BasicSpecialSettings;
-import com.wmp.downloader.ui.specialSettings.BiliSettings;
-import com.wmp.downloader.ui.specialSettings.FFmpegSettings;
-import com.wmp.downloader.ui.specialSettings.GithubAccelerateSettings;
-import com.wmp.downloader.ui.specialSettings.GopeedSettings;
-import com.wmp.downloader.ui.task.DownloadTask;
-import com.wmp.downloader.ui.task.createTask.CreateTaskPanel;
+import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
+import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -42,8 +41,8 @@ public class Downloader extends JFrame implements WindowListener {
     private static final Logger logger = Logger.getLogger(Downloader.class);
     public static Downloader mainFrame;
     public static TrayIcon trayIcon;
-    private final List<DownloadTask> taskList = new ArrayList<>();
-    private final List<DownloadTask> taskFinalyTipList = new ArrayList<>();
+    private final List<AbstractTask> taskList = new ArrayList<>();
+    private final List<AbstractTask> taskFinalyTipList = new ArrayList<>();
     private final GridBagConstraints gbc = new GridBagConstraints();
 
     private JPanel UIPanel;
@@ -119,7 +118,7 @@ public class Downloader extends JFrame implements WindowListener {
             } else return false;
         });
         taskList.forEach(urlDownloadTask -> {
-            if (urlDownloadTask.isFinally()) {
+            if (SystemTray.isSupported() && urlDownloadTask.isFinally()) {
                 if (!taskFinalyTipList.contains(urlDownloadTask)) {
                     taskFinalyTipList.add(urlDownloadTask);
                     ToastMessage.show(this,
@@ -298,12 +297,19 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void initSpecialSettingsComponents() {
-        BasicSpecialSettings[] basicSpecialSettings = new BasicSpecialSettings[]{
+        /*AbstractSpecialSettingsPage[] basicSpecialSettingsr = new AbstractSpecialSettingsPage[]{
                 new BiliSettings(), new FFmpegSettings(), new GithubAccelerateSettings(), new GopeedSettings()
-        };
+        };*/
 
+        var parserList = TaskInfo.getParserList();
+        var basicSpecialSettings =
+                new ArrayList<>(parserList.stream()
+                        .map(AbstractParser::getSettingsPage)
+                        .filter(Objects::nonNull)
+                        .toList());
+        basicSpecialSettings.add(new FFmpegSettings());
         for (var specialSettings : basicSpecialSettings) {
-            var jScrollPane1 = new JScrollPane(specialSettings.getSettings());
+            var jScrollPane1 = new JScrollPane(specialSettings);
             UITools.setScrollPaneUnOpaque(jScrollPane1);
             SpecialSettingsTabbedPane.addTab(specialSettings.getSettingsName(), jScrollPane1);
         }
@@ -312,7 +318,7 @@ public class Downloader extends JFrame implements WindowListener {
     private void initTrayIcon() {
         if (SystemTray.isSupported()) {
             SystemTray.getSystemTray().remove(trayIcon);
-        }
+        } else return;
 
         trayIcon = new TrayIcon(IconControl.getImage("download", 256), StringFormat.translate("common", "app_name"));
 
@@ -327,6 +333,7 @@ public class Downloader extends JFrame implements WindowListener {
         showMenuItem.addActionListener(e -> {
             this.setVisible(true);
             this.setState(JFrame.NORMAL);
+            this.requestFocus();
         });
         showMenuItem.addActionListener(actionListener);
         trayIconMenu.add(showMenuItem);
@@ -620,9 +627,7 @@ public class Downloader extends JFrame implements WindowListener {
         var learnMoreButton = new JButton(StringFormat.translate("learn"));
         learnMoreButton.addActionListener(_ -> {
             var panel = new JPanel();
-            var textArea = new JTextArea("""
-                    
-                    """);
+            var textArea = new JTextArea("");
             panel.add(textArea);
 
             FunctionDialog.showDialog(this, StringFormat.translate("learn"), panel,
@@ -636,7 +641,17 @@ public class Downloader extends JFrame implements WindowListener {
         var SupportButton = new JButton(StringFormat.translate("support"));
         SupportButton.addActionListener(_ -> {
             var panel = new JPanel();
-            var textArea = new JTextArea(StringFormat.translate("common", "support_text_area"));
+            StringBuilder sb = new StringBuilder();
+            TaskInfo.getParserList().stream()
+                    .map(AbstractParser::getSupportTip)
+                    .forEach(tip ->{
+                        sb.append(tip).append(", ");
+                    });
+            sb.deleteCharAt(sb.length() - 1)
+                    .deleteCharAt(sb.length() - 1);
+            var textArea = new JTextArea(String.format(
+                    StringFormat.translate("common", "support_text_area"),
+                    sb));
             panel.add(textArea);
 
             FunctionDialog.showDialog(this, StringFormat.translate("common", "support"), panel,
@@ -659,16 +674,18 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void addDownloadTask(CreateTaskPanel createTaskPanel) {
-        createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
-            taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        Thread.ofVirtual().start(()->{
+            createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
+                taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            taskList.add(taskPanel);
+                taskList.add(taskPanel);
 
-            TasksPanel.add(taskPanel, gbc);
-            TasksPanel.revalidate();
-            TasksPanel.repaint();
+                TasksPanel.add(taskPanel, gbc);
+                TasksPanel.revalidate();
+                TasksPanel.repaint();
 
-            taskPanel.start();
+                taskPanel.start();
+            });
         });
     }
 
@@ -968,7 +985,7 @@ public class Downloader extends JFrame implements WindowListener {
         } else if (selectedIndex == mainTabbedPane.indexOfComponent(settingsPanel)) {
             getRootPane().setDefaultButton(saveButton);
         } else if (selectedIndex == mainTabbedPane.indexOfComponent(SpecialSettingsPanel)) {
-            if (SpecialSettingsTabbedPane.getSelectedComponent() instanceof BasicSpecialSettings.SpecialSettingsPanel specialSettingsPanel) {
+            if (SpecialSettingsTabbedPane.getSelectedComponent() instanceof AbstractSpecialSettingsPage specialSettingsPanel) {
                 specialSettingsPanel.setDefaultButton();
             }
         } else if (selectedIndex == mainTabbedPane.indexOfComponent(aboutPanel)) {
