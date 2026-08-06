@@ -752,6 +752,7 @@ public class Downloader extends JFrame implements WindowListener {
         FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
 
         isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
+        isUseHeavyWeightFunctionDialogCheckBox.setSelected(DataControl.get("is_use_heavy_weight.function_dialog", false));
 
         //添加图标
         IconControl.addInDynamicConverter(
