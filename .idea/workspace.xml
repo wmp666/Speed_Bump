@@ -12,26 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="引入新的任务架构，用于中心化管理，转移了史山位置:(&#10;把半透明任务背景添加回来">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/file/BiliFileDownloadTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/file/BiliLinkFileInfoPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/file/BiliTaskFileEditPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/file/BiliTaskFileEditPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/folder/BiliFolderDownloadTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/folder/BiliLinkFolderInfoPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/folder/BiliTaskFolderEditPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/folder/BiliTaskFolderEditPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/info/BiliAudioInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/info/BiliDownloadInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/info/BiliVideoInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/AbstractLinkInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/AbstractLinkInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFileInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFileInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/BiliParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/BiliParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/json数据表.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/json数据表.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/拓展解析器制作.md" beforeDir="false" afterPath="$PROJECT_DIR$/拓展解析器制作.md" afterDir="false" />
-    </list>
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="引入新的任务架构，用于中心化管理，转移了史山位置:(&#10;把半透明任务背景添加回来" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="new-architecture" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -126,7 +107,7 @@
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "302",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "new-architecture",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/src/com/wmp/downloader/newArchitecture/ui/task/bilibili",
     "node.js.detected.package.eslint": "true",
