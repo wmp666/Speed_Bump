@@ -2,7 +2,9 @@ package com.wmp.downloader.newArchitecture;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.wmp.downloader.Run;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
+import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
 import com.wmp.downloader.newArchitecture.ui.task.bilibili.BiliParser;
 import com.wmp.downloader.newArchitecture.ui.task.bt.BTParser;
 import com.wmp.downloader.newArchitecture.ui.task.douyin.DouyinParser;
@@ -11,8 +13,11 @@ import com.wmp.downloader.newArchitecture.ui.task.github.GithubParser;
 import com.wmp.downloader.newArchitecture.ui.task.gopeed.GopeedParser;
 import com.wmp.downloader.newArchitecture.ui.task.http.HTTPParser;
 import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.update.GetUpdateInfo;
 import org.apache.log4j.Logger;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -25,7 +30,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class TaskInfo {
-    private static final ArrayList<AbstractParser> parserList = new ArrayList<>();
+    private static final ArrayList<PluginParserInfo> parserList = new ArrayList<>();
     private static final ArrayList<AbstractParser> basicParserList = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(TaskInfo.class);
     private static final String PARSER_JSON = "Parser.json";
@@ -54,7 +59,12 @@ public class TaskInfo {
         File[] jarFiles = parsersDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".jar"));
         if (jarFiles != null) {
             for (File jar : jarFiles) {
-                String id = getParserIdFromJar(jar);
+                String[] info = getParserInfoFromJar(jar);
+                if (info == null) {
+                    logger.warn("No info found in info.json of " + jar.getName() + ", skip.");
+                    continue;
+                }
+                var id = info[0];
                 if (id != null && deleteSet.contains(id)) {
                     if (jar.delete()) {
                         logger.info("Deleted parser JAR: " + jar.getName() + " (id: " + id + ")");
@@ -69,7 +79,12 @@ public class TaskInfo {
         jarFiles = parsersDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".jar"));
         if (jarFiles != null) {
             for (File jar : jarFiles) {
-                String id = getParserIdFromJar(jar);
+                String[] info = getParserInfoFromJar(jar);
+                if (info == null) {
+                    logger.warn("No info found in info.json of " + jar.getName() + ", skip.");
+                    continue;
+                }
+                var id = info[0];
                 if (id == null) {
                     logger.warn("No id found in info.json of " + jar.getName() + ", skip.");
                     continue;
@@ -78,9 +93,29 @@ public class TaskInfo {
                     logger.info("Parser " + id + " is disabled, skip loading.");
                     continue;
                 }
+                //判断版本是否符合条件
+                var startVersion = info[1];
+                var lastVersion = info[2];
+                if (!GetUpdateInfo.isVersionInRange(Run.PLUGIN_SUPPORT_VERSION,
+                        startVersion, lastVersion)) {
+                    var i = JOptionPane.showConfirmDialog(
+                            null,
+                            String.format(
+                                    StringFormat.translate("load_local_parser.version_error"),
+                                    jar, startVersion, lastVersion, Run.PLUGIN_SUPPORT_VERSION),
+                            StringFormat.translate("warn"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                    if (i == JOptionPane.NO_OPTION ||
+                    i == JOptionPane.CLOSED_OPTION) {
+                        continue;
+                    }
+                }
+
                 AbstractParser parser = loadParserFromJar(jar);
                 if (parser != null) {
-                    parserList.add(parser);
+                    parserList.add(new PluginParserInfo(parser, info[3], startVersion, lastVersion, info[4], false));
                     logger.info("Loaded parser: " + id + " from " + jar.getName());
                 } else {
                     logger.warn("Failed to load parser from " + jar.getName());
@@ -90,9 +125,12 @@ public class TaskInfo {
 
 
         //添加
-        parserList.add(new BiliParser());
-        parserList.add(new DouyinParser());
-        parserList.add(new GithubParser());
+
+
+
+        parserList.add(new PluginParserInfo(new DouyinParser(), "1.0.1", "+", "+", "无名牌", true));
+        parserList.add(new PluginParserInfo(new GithubParser(), "1.0.0", "+", "+", "无名牌", true));
+        parserList.add(new PluginParserInfo(new BiliParser(), "1.0.0", "+", "+", "无名牌", true));
 
         basicParserList.add(new BTParser());
         basicParserList.add(new ED2KParser());
@@ -137,13 +175,17 @@ public class TaskInfo {
         return set;
     }
 
-    private static String getParserIdFromJar(File jar) {
+    private static String[] getParserInfoFromJar(File jar) {
         try (JarFile jarFile = new JarFile(jar)) {
             JarEntry entry = jarFile.getJarEntry(INFO_JSON);
             if (entry == null) return null;
             String content = new String(jarFile.getInputStream(entry).readAllBytes(), StandardCharsets.UTF_8);
             JSONObject info = JSONObject.parseObject(content);
-            return info.getString("id");
+            return new String[]{info.getString("id"),
+                    info.getString("plugin_support_version_start"),
+                    info.getString("plugin_support_version_last"),
+                    info.getString("version"),
+                    info.getString("author")};
         } catch (IOException e) {
             logger.error("Error reading info.json from " + jar.getName(), e);
             return null;
@@ -168,24 +210,13 @@ public class TaskInfo {
 
             // 加载类并查找方法（优先 getInstance，其次 getParser）
             Class<?> clazz = Class.forName(mainClass, true, classLoader);
-            Method method = null;
-            try {
-                method = clazz.getMethod("getInstance");
-            } catch (NoSuchMethodException e1) {
-                try {
-                    method = clazz.getMethod("getParser");
-                } catch (NoSuchMethodException e2) {
-                    logger.error("No getInstance() or getParser() method found in " + mainClass);
-                    return null;
-                }
-            }
 
             // 调用方法，安全转换为 AbstractParser（不使用强制转型，通过 instanceof 校验）
-            Object result = method.invoke(null);
+            Object result = clazz.getDeclaredConstructor().newInstance();
             if (result instanceof AbstractParser) {
                 return (AbstractParser) result;
             } else {
-                logger.error("Method " + method.getName() + " does not return AbstractParser instance in " + mainClass);
+                logger.error("Class " + clazz.getName() + " does not AbstractParser instance in " + mainClass);
                 return null;
             }
         } catch (Exception e) {
@@ -219,9 +250,9 @@ public class TaskInfo {
     }
 
     private static void removeParserFromList(String id) {
-        Iterator<AbstractParser> iterator = parserList.iterator();
+        Iterator<PluginParserInfo> iterator = parserList.iterator();
         while (iterator.hasNext()) {
-            AbstractParser parser = iterator.next();
+            AbstractParser parser = iterator.next().parser();
             if (id.equals(parser.getID())) {
                 iterator.remove();
                 logger.info("Removed parser: " + id);
@@ -276,8 +307,8 @@ public class TaskInfo {
             File[] jarFiles = parsersDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".jar"));
             if (jarFiles != null) {
                 for (File jar : jarFiles) {
-                    String jarId = getParserIdFromJar(jar);
-                    if (id.equals(jarId)) {
+                    String[] jarInfo = getParserInfoFromJar(jar);
+                    if (id.equals(jarInfo[0])) {
                         if (jar.delete()) {
                             logger.info("Deleted parser JAR: " + jar.getName() + " for id: " + id);
                         } else {
@@ -294,7 +325,8 @@ public class TaskInfo {
     }
 
     public static AbstractParser.Info getInfo(String link) {
-        for (AbstractParser parser : parserList) {
+        for (PluginParserInfo parserInfo : parserList) {
+            var parser = parserInfo.parser();
             if (parser.isMeetRequirements(link)) {
                 return parser.setLink(link);
             }
@@ -309,8 +341,12 @@ public class TaskInfo {
 
     public static List<AbstractParser> getParserList() {
         ArrayList<AbstractParser> tempList = new ArrayList<>();
-        tempList.addAll(parserList);
+        tempList.addAll(parserList.stream().map(PluginParserInfo::parser).toList());
         tempList.addAll(basicParserList);
         return List.of(tempList.toArray(AbstractParser[]::new));
+    }
+
+    public static List<PluginParserInfo> getPluginParserList(){
+        return List.of(parserList.toArray(PluginParserInfo[]::new));
     }
 }

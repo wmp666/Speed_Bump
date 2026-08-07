@@ -129,7 +129,7 @@ public class GetUpdateInfo {
     }
 
     /**
-     * 判断版本号是否在指定区间内（包含端点）
+     * 判断版本号是否在指定区间内（包含端点）,+表示这一端始终符合
      *
      * @param version      待检查的版本号
      * @param startVersion 区间起始版本
@@ -142,13 +142,13 @@ public class GetUpdateInfo {
             throw new IllegalArgumentException("Version strings must not be null");
         }
         // 确保 start <= last，若反向则交换
-        if (compareVersions(startVersion, lastVersion) > 0) {
+        if (!(startVersion.equals("+") || lastVersion.equals("+")) && compareVersions(startVersion, lastVersion) > 0) {
             String temp = startVersion;
             startVersion = lastVersion;
             lastVersion = temp;
         }
-        return compareVersions(version, startVersion) > 0
-                && compareVersions(version, lastVersion) <= 0;
+        return (startVersion.equals("+") || compareVersions(version, startVersion) >= 0)
+                && (lastVersion.equals("+") || compareVersions(version, lastVersion) <= 0);
     }
 
     // 若仍需要原来的布尔语义，可保留：
@@ -204,6 +204,7 @@ public class GetUpdateInfo {
                         var version = jsonObject.getString("tag_name");
                         // 只收集处于区间内的版本
                         if (isVersionInRange(version, startVersion, lastVersion)) {
+                            if (version.equals(Run.VERSION)) continue;
                             versionList.add(version);
                             infoList.add(jsonObject.getString("body"));
                         }

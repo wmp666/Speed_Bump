@@ -15,7 +15,7 @@ public class GithubParser extends AbstractParser {
 
     @Override
     public String getID() {
-        return "github";
+        return "Github解析器";
     }
 
     @Override

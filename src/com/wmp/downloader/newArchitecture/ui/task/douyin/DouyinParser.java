@@ -22,7 +22,7 @@ public class DouyinParser extends AbstractParser {
 
     @Override
     public String getID() {
-        return "douyin";
+        return "抖音分享链接解析器";
     }
 
     @Override
@@ -109,9 +109,9 @@ public class DouyinParser extends AbstractParser {
     @Override
     protected AbstractTask getTask(String link, JSONObject infoJson) {
         try {
-            if (infos.getIntValue("linkStyle") == 0) {
+            if (infoJson.getIntValue("linkStyle") == 0) {
                 return new DouyinVideoDownloadTask(infoJson);
-            } else if (infos.getIntValue("linkStyle") == 1) {
+            } else if (infoJson.getIntValue("linkStyle") == 1) {
                 return new DouyinImageDownloadTask(infoJson);
             }
         } catch (Exception e) {

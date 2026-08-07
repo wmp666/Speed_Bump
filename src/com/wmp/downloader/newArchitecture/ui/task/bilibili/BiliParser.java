@@ -90,7 +90,7 @@ public class BiliParser extends AbstractParser {
 
     @Override
     public String getID() {
-        return "bilibili";
+        return "哔哩哔哩链接解析器";
     }
 
     @Override

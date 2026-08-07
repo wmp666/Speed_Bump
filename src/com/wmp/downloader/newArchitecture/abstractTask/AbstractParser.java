@@ -5,7 +5,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLin
 
 public abstract class AbstractParser {
 
-    protected JSONObject infos;
+    protected JSONObject infos = new JSONObject();
 
     public abstract String getID();
 

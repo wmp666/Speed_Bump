@@ -1,10 +1,12 @@
 package com.wmp.downloader.ui;
 
+import com.formdev.flatlaf.util.ColorFunctions;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.newArchitecture.TaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
+import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
 import com.wmp.downloader.tools.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.StringFormat;
@@ -16,6 +18,7 @@ import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -91,6 +94,18 @@ public class Downloader extends JFrame implements WindowListener {
     private JScrollPane personalizedSetsScrollPane;
     private JScrollPane DataControlSetsScrollPane;
     private JCheckBox isStartCheckUpdateCheckBox;
+    private JTabbedPane tabbedPane1;
+    private JPanel installedPluginsPanel;
+    private JPanel downloadPluginsPanel;
+    private JList<PluginParserInfo> PluginParserList;
+    private JPanel PluginInfoPanel;
+    private JLabel pluginParserIDLabel;
+    private JLabel pluginParserAuthorLabel;
+    private JLabel pluginParserVersionLabel;
+    private JLabel pluginParserStartVersionLabel;
+    private JLabel pluginParserLastVersionLabel;
+    private JButton pluginParserStatusControlButton;
+    private JButton PluginParserUninstallButton;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -191,6 +206,8 @@ public class Downloader extends JFrame implements WindowListener {
         initTaskComponents();
         //设置
         initSettingsComponents();
+        //拓展管理
+        initPluginParserComponents();
         //专项设置
         initSpecialSettingsComponents();
         //关于
@@ -205,6 +222,106 @@ public class Downloader extends JFrame implements WindowListener {
         SwingUtilities.invokeLater(this::updateChildBounds);
 
         backgroundupdateTimer.start();
+    }
+
+    private void initPluginParserComponents() {
+        PluginInfoPanel.setVisible(false);
+
+        pluginParserIDLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
+        pluginParserAuthorLabel.putClientProperty("FlatLaf.style", "font: $h4.font");
+        pluginParserVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
+        pluginParserStartVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
+        pluginParserLastVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
+
+        PluginParserList.putClientProperty("FlatLaf.style", "font: $h3.font");
+
+        var pluginParserArrayList = TaskInfo.getPluginParserList();
+        PluginParserList.setListData(pluginParserArrayList.toArray(PluginParserInfo[]::new));
+
+        ThemeChanger.addInDynamicConverter(() -> PluginParserList.repaint());
+
+        PluginParserList.setCellRenderer(new ListCellRenderer<>() {
+            private boolean isSelected;  // 当前选中状态
+
+            private final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    //super.paintComponent(g);
+                    // 根据成员变量绘制背景
+                    if (isSelected) {
+                        Graphics2D g2 = (Graphics2D) g.create();
+                        g2.setColor(UIManager.getColor("Component.accentColor"));
+                        g2.fillRect(0, 0, getWidth(), getHeight());
+                        g2.dispose();
+                    } else {
+                        Graphics2D g2 = (Graphics2D) g.create();
+                        Color base = UIManager.getColor("Panel.background");
+
+                        Color adjusted = DataControl.get("theme_type", "light").equals("dark")
+                                ? ColorFunctions.lighten(base, 0.1f)
+                                : ColorFunctions.darken(base, 0.1f);
+                        Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
+
+
+                        g2.setColor(translucent);
+                        g2.fillRect(0, 0, getWidth(), getHeight());
+                        g2.dispose();
+                    }
+
+                    // 子组件由 paintChildren 绘制
+                }
+            };
+            private final JLabel nameLabel = new JLabel();
+            private final JLabel otherInfoLabel = new JLabel();
+
+            {
+                panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                //panel.setOpaque(false);
+                nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
+                panel.add(nameLabel, BorderLayout.CENTER);
+                panel.add(otherInfoLabel, BorderLayout.SOUTH);
+            }
+
+            @Override
+            public Component getListCellRendererComponent(JList<? extends PluginParserInfo> list,
+                                                          PluginParserInfo value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                // 更新数据
+                nameLabel.setText(value.parser().getID());
+                otherInfoLabel.setText(value.version() + " " + value.author());
+
+                nameLabel.setForeground(UIManager.getColor("Label.foreground"));
+                otherInfoLabel.setForeground(UIManager.getColor("Label.foreground"));
+
+                // 更新选中状态（供 paintComponent 使用）
+                this.isSelected = isSelected;
+
+
+                // 强制重绘面板（因为选中状态变化，需要刷新背景）
+                panel.repaint();
+
+                return panel;
+            }
+        });
+        PluginParserList.addListSelectionListener(e -> {
+            var pluginParserInfo = pluginParserArrayList.get(PluginParserList.getSelectedIndex());
+            PluginInfoPanel.setVisible(true);
+            pluginParserIDLabel.setText(pluginParserInfo.parser().getID());
+            pluginParserAuthorLabel.setText(pluginParserInfo.author());
+            pluginParserVersionLabel.setText(pluginParserInfo.version());
+            pluginParserStartVersionLabel.setText(pluginParserInfo.startVersion());
+            pluginParserLastVersionLabel.setText(pluginParserInfo.lastVersion());
+
+            if (pluginParserInfo.isAppPlugin()) {
+                pluginParserStatusControlButton.setEnabled(false);
+                PluginParserUninstallButton.setEnabled(false);
+            }else{
+                pluginParserStatusControlButton.setEnabled(true);
+                PluginParserUninstallButton.setEnabled(true);
+            }
+        });
+
+        PluginParserList.setSelectedIndex(0);
     }
 
     private void initLayeredPane() {

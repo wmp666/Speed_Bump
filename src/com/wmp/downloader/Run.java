@@ -11,7 +11,9 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.3.0";
+    public static String VERSION = "0.3.1";
+
+    public static String PLUGIN_SUPPORT_VERSION = "1.0.0";
 
     static void main(String[] args) {
         var argList = List.of(args);
