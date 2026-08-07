@@ -246,10 +246,15 @@ public class GetUpdateInfo {
         infoMap.put(1, newFunctionStrList);
         infoMap.put(2, ExperienceOptimizationStrList);
         infoMap.put(3, ProblemFixedStrList);
-        infoMap.put(4, unknownStrList);
+        infoMap.put(999, unknownStrList);
 
-        //1-新增功能 2-体验优化 3-问题修复
-        int status = 4;
+        //1-新增功能 2-体验优化 3-问题修复 4，5，6...
+        int status = 999;
+
+        int maxStatus = 3;
+        HashMap<String, Integer> titleIndexMap = new HashMap<>();
+        HashMap<Integer, String> IndexTitleMap = new HashMap<>();
+
         //格式化数据
         for (int i = 0; i < updateInfos.length; i++) {
             String s = updateInfos[i];
@@ -264,11 +269,19 @@ public class GetUpdateInfo {
                             status = 2;
                         } else if (string.contentEquals("### 问题修复")) {
                             status = 3;
-                        } else status = 4;
+                        } else {
+                            var substring = string.substring(4);
+                            if(!substring.isBlank()){
+                                status = titleIndexMap.getOrDefault(substring, maxStatus = maxStatus + 1);
+                                titleIndexMap.put(substring, status);
+                                IndexTitleMap.put(status, substring);
+                                infoMap.put(status, new HashSet<>());
+                            }else status = 999;
+                        }
                     } else if (string.startsWith("- ")) {
                         if (string.substring(2).isBlank()) continue;
                         infoMap.get(status).add(string + " (Version **" + version + "**)");
-                    } else infoMap.get(4).add(string + " (Version **" + version + "**)");
+                    } else infoMap.get(999).add(string + " (Version **" + version + "**)");
                 }
             }
 
@@ -277,30 +290,35 @@ public class GetUpdateInfo {
         //拼接数据
         StringBuilder sb = new StringBuilder();
 
-        if (!infoMap.get(1).isEmpty()) {
-            sb.append("## 新增功能\n");
-            infoMap.get(1).forEach(s -> {
-                sb.append(s).append("\n");
-            });
-        }
-        if (!infoMap.get(2).isEmpty()) {
-            sb.append("\n## 体验优化\n");
-            infoMap.get(2).forEach(s -> {
-                sb.append(s).append("\n");
-            });
-        }
-        if (!infoMap.get(3).isEmpty()) {
-            sb.append("\n## 问题修复\n");
-            infoMap.get(3).forEach(s -> {
-                sb.append(s).append("\n");
-            });
-        }
-        if (!infoMap.get(4).isEmpty()) {
-            sb.append("\n## 未知\n");
-            infoMap.get(4).forEach(s -> {
-                sb.append(s).append("\n");
-            });
-        }
+        infoMap.forEach((index, info) ->{
+            if (index == 1 && !info.isEmpty()) {
+                sb.append("## 新增功能\n");
+                info.forEach(s -> {
+                    sb.append(s).append("\n");
+                });
+            }else if (index == 2 && !info.isEmpty()) {
+                sb.append("\n## 体验优化\n");
+                info.forEach(s -> {
+                    sb.append(s).append("\n");
+                });
+            }else if (index == 3 && !info.isEmpty()) {
+                sb.append("\n## 问题修复\n");
+                info.forEach(s -> {
+                    sb.append(s).append("\n");
+                });
+            }else if(index == 999 && !info.isEmpty()){
+                sb.append("\n## 未知\n");
+                info.forEach(s -> {
+                    sb.append(s).append("\n");
+                });
+            }else{
+                sb.append("\n## ").append(IndexTitleMap.getOrDefault(index, "")).append("\n");
+                info.forEach(s -> {
+                    sb.append(s).append("\n");
+                });
+            }
+        });
+
 
         return sb.toString();
 
