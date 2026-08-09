@@ -2,7 +2,7 @@ package com.wmp.downloader.test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

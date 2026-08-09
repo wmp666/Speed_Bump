@@ -7,9 +7,10 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.file.FileOperation;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
@@ -18,10 +19,7 @@ import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,7 +94,7 @@ public class Downloader extends JFrame implements WindowListener {
     private JCheckBox isStartCheckUpdateCheckBox;
     private JTabbedPane tabbedPane1;
     private JPanel installedPluginsPanel;
-    private JPanel downloadPluginsPanel;
+    private JPanel installPluginsPanel;
     private JList<PluginParserInfo> PluginParserList;
     private JPanel PluginInfoPanel;
     private JLabel pluginParserIDLabel;
@@ -106,6 +104,19 @@ public class Downloader extends JFrame implements WindowListener {
     private JLabel pluginParserLastVersionLabel;
     private JButton pluginParserStatusControlButton;
     private JButton PluginParserUninstallButton;
+    private JScrollPane PluginInfoScrollPane;
+    private JPanel PluginInfoIntroductionPanel;
+    private JButton PluginParserInstallButton;
+    private JList installPuginParserList;
+    private JScrollPane installPluginInfoScrollPane;
+    private JPanel installPluginInfoPanel;
+    private JLabel installPluginParserIDLabel;
+    private JLabel installPluginParserAuthorLabel;
+    private JLabel installPluginParserVersionLabel;
+    private JPanel installPluginInfoIntroductionPanel;
+    private JLabel installPluginParserStartVersionLabel;
+    private JLabel installPluginParserLastVersionLabel;
+    private JToolBar PluginControlToolBar;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -225,6 +236,43 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void initPluginParserComponents() {
+        initToolBar();
+
+        initInstalledPluginParserComponents();
+    }
+
+    private void initToolBar() {
+        JButton importLocalButton = new JButton(StringFormat.translate("plugins.control_tool_bar.import_local"));
+        IconControl.addInDynamicConverter(() ->
+                importLocalButton.setIcon(IconControl.getIcon("import",
+                        importLocalButton.getFont().getSize())));
+        importLocalButton.addActionListener(e -> {
+            var path = DataControl.getPath(Downloader.this, SystemFileChooser.OPEN_DIALOG, SystemFileChooser.FILES_ONLY);
+            if (path == null) return;
+            if (!path.getName().endsWith(".jar")) {
+                ToastMessage.show(StringFormat.translate("plugins.control_tool_bar.import_local.is_not_jar"), ToastMessage.WARNING);
+            }else{
+                if (FileOperation.copy(path, DataControl.getPATPath())){
+                    TaskInfo.loadParsers();
+                    updateInstalledPluginParserList();
+                }
+            }
+
+        });
+        PluginControlToolBar.add(importLocalButton);
+
+        JButton refreshButton = new JButton(StringFormat.translate("refresh"));
+        IconControl.addInDynamicConverter(() ->
+                refreshButton.setIcon(IconControl.getIcon("refresh",
+                        refreshButton.getFont().getSize())));
+        refreshButton.addActionListener(e -> {
+            TaskInfo.loadParsers();
+            updateInstalledPluginParserList();
+        });
+        PluginControlToolBar.add(refreshButton);
+    }
+
+    private void initInstalledPluginParserComponents() {
         PluginInfoPanel.setVisible(false);
 
         pluginParserIDLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
@@ -235,82 +283,82 @@ public class Downloader extends JFrame implements WindowListener {
 
         PluginParserList.putClientProperty("FlatLaf.style", "font: $h3.font");
 
-        var pluginParserArrayList = TaskInfo.getPluginParserList();
-        PluginParserList.setListData(pluginParserArrayList.toArray(PluginParserInfo[]::new));
+        updateInstalledPluginParserList();
 
         ThemeChanger.addInDynamicConverter(() -> PluginParserList.repaint());
 
         PluginParserList.setCellRenderer(new ListCellRenderer<>() {
-            private boolean isSelected;  // 当前选中状态
 
-            private final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    //super.paintComponent(g);
-                    // 根据成员变量绘制背景
-                    if (isSelected) {
-                        Graphics2D g2 = (Graphics2D) g.create();
-                        g2.setColor(UIManager.getColor("Component.accentColor"));
-                        g2.fillRect(0, 0, getWidth(), getHeight());
-                        g2.dispose();
-                    } else {
-                        Graphics2D g2 = (Graphics2D) g.create();
-                        Color base = UIManager.getColor("Panel.background");
-
-                        Color adjusted = DataControl.get("theme_type", "light").equals("dark")
-                                ? ColorFunctions.lighten(base, 0.1f)
-                                : ColorFunctions.darken(base, 0.1f);
-                        Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
-
-
-                        g2.setColor(translucent);
-                        g2.fillRect(0, 0, getWidth(), getHeight());
-                        g2.dispose();
-                    }
-
-                    // 子组件由 paintChildren 绘制
-                }
-            };
-            private final JLabel nameLabel = new JLabel();
-            private final JLabel otherInfoLabel = new JLabel();
-
-            {
-                panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-                //panel.setOpaque(false);
-                nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
-                panel.add(nameLabel, BorderLayout.CENTER);
-                panel.add(otherInfoLabel, BorderLayout.SOUTH);
-            }
 
             @Override
             public Component getListCellRendererComponent(JList<? extends PluginParserInfo> list,
                                                           PluginParserInfo value, int index,
                                                           boolean isSelected, boolean cellHasFocus) {
+
+                final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        //super.paintComponent(g);
+                        // 根据成员变量绘制背景
+                        if (isSelected) {
+                            Graphics2D g2 = (Graphics2D) g.create();
+                            g2.setColor(UIManager.getColor("Component.accentColor"));
+                            g2.fillRect(0, 0, getWidth(), getHeight());
+                            g2.dispose();
+                        } else {
+                            Graphics2D g2 = (Graphics2D) g.create();
+                            Color base = UIManager.getColor("Panel.background");
+
+                            Color adjusted = DataControl.get("theme_type", "light").equals("dark")
+                                    ? ColorFunctions.lighten(base, 0.1f)
+                                    : ColorFunctions.darken(base, 0.1f);
+                            Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
+
+
+                            g2.setColor(translucent);
+                            g2.fillRect(0, 0, getWidth(), getHeight());
+                            g2.dispose();
+                        }
+
+                        // 子组件由 paintChildren 绘制
+                    }
+                };
+
+                final JLabel nameLabel = new JLabel();
+                final JLabel otherInfoLabel = new JLabel();
+
+                {
+                    panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                    //panel.setOpaque(false);
+                    nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
+                    panel.add(nameLabel, BorderLayout.CENTER);
+                    panel.add(otherInfoLabel, BorderLayout.SOUTH);
+                }
+
                 // 更新数据
                 nameLabel.setText(value.parser().getID());
                 otherInfoLabel.setText(value.version() + " " + value.author());
 
-                nameLabel.setForeground(UIManager.getColor("Label.foreground"));
-                otherInfoLabel.setForeground(UIManager.getColor("Label.foreground"));
-
-                // 更新选中状态（供 paintComponent 使用）
-                this.isSelected = isSelected;
-
+                //nameLabel.setForeground(UIManager.getColor("Label.foreground"));
+                //otherInfoLabel.setForeground(UIManager.getColor("Label.foreground"));
 
                 // 强制重绘面板（因为选中状态变化，需要刷新背景）
                 panel.repaint();
+                PluginInfoPanel.repaint();
 
                 return panel;
             }
         });
         PluginParserList.addListSelectionListener(e -> {
-            var pluginParserInfo = pluginParserArrayList.get(PluginParserList.getSelectedIndex());
+            var pluginParserInfo = PluginParserList.getSelectedValue();
             PluginInfoPanel.setVisible(true);
             pluginParserIDLabel.setText(pluginParserInfo.parser().getID());
             pluginParserAuthorLabel.setText(pluginParserInfo.author());
             pluginParserVersionLabel.setText(pluginParserInfo.version());
             pluginParserStartVersionLabel.setText(pluginParserInfo.startVersion());
             pluginParserLastVersionLabel.setText(pluginParserInfo.lastVersion());
+            PluginInfoIntroductionPanel.removeAll();
+            PluginInfoIntroductionPanel.add(UITools.createMarkdownPane(pluginParserInfo.introduction()), BorderLayout.CENTER);
 
             if (pluginParserInfo.isAppPlugin()) {
                 pluginParserStatusControlButton.setEnabled(false);
@@ -320,8 +368,21 @@ public class Downloader extends JFrame implements WindowListener {
                 PluginParserUninstallButton.setEnabled(true);
             }
         });
+        PluginParserUninstallButton.addActionListener(e -> {
+            var id = pluginParserIDLabel.getText();
+            TaskInfo.setDeleteParser(id);
+
+            ToastMessage.show(StringFormat.translate("plugins.delete_plugin.tip"), ToastMessage.INFO);
+
+            updateInstalledPluginParserList();
+        });
 
         PluginParserList.setSelectedIndex(0);
+    }
+
+    private void updateInstalledPluginParserList() {
+        var pluginParserArrayList = TaskInfo.getPluginParserList();
+        PluginParserList.setListData(pluginParserArrayList.toArray(PluginParserInfo[]::new));
     }
 
     private void initLayeredPane() {
@@ -485,7 +546,7 @@ public class Downloader extends JFrame implements WindowListener {
 
         windowMenu.addSeparator();
 
-        var refreshMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.refresh"));
+        var refreshMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "refresh"));
         refreshMenuItem.setToolTipText(StringFormat.translate("download_menu_bar", "frame.refresh.tooltip"));
         refreshMenuItem.addActionListener(e -> {
             DataControl.load();
@@ -583,6 +644,9 @@ public class Downloader extends JFrame implements WindowListener {
         TasksScrollPane.getViewport().setLayout(new ViewportLayout()); // 默认布局，会拉伸组件
         UITools.setScrollPaneUnOpaque(TasksScrollPane);
 
+        installPluginInfoScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(installPluginInfoPanel));
+        PluginInfoScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(PluginInfoPanel));
+
         backgroundSelectionPanel = new PathSelectionPanel(StringFormat.translate("settings", "settings.personalized.background_path"), new File(DataControl.get("background", "")), SystemFileChooser.FILES_ONLY);
         pathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
         tempPathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "temp_path"), new File(DataControl.get("TempFilePath", DataControl.getDefaultTempPath().getAbsolutePath())));
@@ -652,16 +716,8 @@ public class Downloader extends JFrame implements WindowListener {
                             if (result == 100) {
                                 var panel = new JPanel();
 
-                                // 1. 使用 commonmark 将 Markdown 转换为 HTML
-                                Parser parser = Parser.builder().build();
-                                HtmlRenderer renderer = HtmlRenderer.builder().build();
-                                String html = renderer.render(parser.parse(update.body()));
+                                panel.add(UITools.createMarkdownPane(update.body()));
 
-                                // 2. 在 Swing 的 JEditorPane 中显示 HTML
-                                JEditorPane editorPane = new JEditorPane("text/html", html);
-                                editorPane.setEditable(false);
-
-                                panel.add(editorPane);
                                 FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                                         _ -> {
                                         },

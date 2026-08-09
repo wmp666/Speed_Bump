@@ -1,7 +1,7 @@
 package com.wmp.downloader.newArchitecture.ui.task.github;
 
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 
 import javax.swing.*;

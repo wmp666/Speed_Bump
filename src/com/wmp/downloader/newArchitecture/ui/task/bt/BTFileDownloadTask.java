@@ -8,7 +8,7 @@ import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FileDownloadTask;
 import com.wmp.downloader.newArchitecture.exception.DownloadException;
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;

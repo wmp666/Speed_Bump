@@ -13,7 +13,7 @@ import com.wmp.downloader.newArchitecture.ui.task.bilibili.folder.BiliLinkFolder
 import com.wmp.downloader.newArchitecture.ui.task.bilibili.info.BiliAudioInfo;
 import com.wmp.downloader.newArchitecture.ui.task.bilibili.info.BiliDownloadInfo;
 import com.wmp.downloader.newArchitecture.ui.task.bilibili.info.BiliVideoInfo;
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;

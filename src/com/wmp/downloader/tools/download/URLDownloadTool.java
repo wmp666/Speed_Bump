@@ -1,6 +1,6 @@
 package com.wmp.downloader.tools.download;
 
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import org.apache.log4j.Logger;
 

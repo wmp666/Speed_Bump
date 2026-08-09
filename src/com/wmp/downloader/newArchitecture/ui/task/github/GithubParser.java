@@ -6,8 +6,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPa
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.ui.task.http.HTTPParser;
-import com.wmp.downloader.tools.DataControl;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.file.DataControl;
 
 public class GithubParser extends AbstractParser {
     private final HTTPParser parser = new HTTPParser();

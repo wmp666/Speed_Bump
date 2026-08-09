@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture.abstractTask;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.ColorFunctions;
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.*;
 import org.apache.log4j.Logger;

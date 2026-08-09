@@ -1,8 +1,11 @@
-package com.wmp.downloader.tools;
+package com.wmp.downloader.tools.file;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.Run;
+import com.wmp.downloader.tools.EasterEggData;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.SystemThemeDetector;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.Downloader;
@@ -11,6 +14,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -86,7 +90,7 @@ public class DataControl {
             });
             DataControl.data.putAll(tempDataMap);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("加载数据失败", e);
         }
     }
@@ -234,5 +238,31 @@ public class DataControl {
 
     public static File getDefaultTempPath() {
         return new File(System.getProperty("java.io.tmpdir"), "speed-bump");
+    }
+
+    public static File[] getPaths(Component c, int dialogType, int FileSelectionMode){
+        var systemFileChooser = new SystemFileChooser();
+        systemFileChooser.setDialogType(dialogType);
+        systemFileChooser.setFileHidingEnabled(true);
+        systemFileChooser.setFileSelectionMode(FileSelectionMode);
+        if (systemFileChooser.showOpenDialog(c) == SystemFileChooser.APPROVE_OPTION) {
+            return systemFileChooser.getSelectedFiles();
+        }
+        return null;
+    }
+
+    public static File getPath(Component c, int dialogType, int FileSelectionMode){
+        var systemFileChooser = new SystemFileChooser();
+        systemFileChooser.setDialogType(dialogType);
+        systemFileChooser.setFileHidingEnabled(true);
+        systemFileChooser.setFileSelectionMode(FileSelectionMode);
+        if (systemFileChooser.showOpenDialog(c) == SystemFileChooser.APPROVE_OPTION) {
+            return systemFileChooser.getSelectedFile();
+        }
+        return null;
+    }
+
+    public static File getPATPath() {
+        return new File(DATA_DIR.toFile(), "ParsersATools");
     }
 }
