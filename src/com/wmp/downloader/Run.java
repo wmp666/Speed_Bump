@@ -1,19 +1,22 @@
 package com.wmp.downloader;
 
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.WebSetter;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.ui.Downloader;
+import com.wmp.downloader.ui.FunctionDialog;
+import com.wmp.downloader.ui.PreloadDialog;
 import org.apache.log4j.Logger;
 
+import javax.swing.*;
 import java.util.List;
 
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.3.1";
+    public static String VERSION = "0.3.2";
 
-    public static String PLUGIN_SUPPORT_VERSION = "1.0.0";
+    public static String PLUGIN_SUPPORT_VERSION = "1.0.1";
 
     static void main(String[] args) {
         var argList = List.of(args);
@@ -21,21 +24,31 @@ public class Run {
             var versionIndex = argList.indexOf("-set:version") + 1;
             VERSION = versionIndex == 0 ? VERSION : argList.get(versionIndex);
         }
+        var preloadDialog = new PreloadDialog();
+        preloadDialog.setVisible(true);
+
+        Downloader downloader = null;
+        try {
+            DataControl.load();
+
+            WebSetter.SSLControl(DataControl.get("isUseSSL", false));
+            WebSetter.proxies(true);
 
 
-        DataControl.load();
+            ThemeChanger.easyChanger();
 
-        WebSetter.SSLControl(DataControl.get("isUseSSL", false));
-        WebSetter.proxies(true);
+            downloader = new Downloader();
 
-
-        ThemeChanger.easyChanger();
-
-        var downloader = new Downloader();
-
-        ThemeChanger.easyChanger();
+            ThemeChanger.easyChanger();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "启动发生错误\n"+e);
+            logger.error("启动发生错误", e);
+            throw new RuntimeException(e);
+        }
 
         downloader.setVisible(true);
+
+        preloadDialog.setVisible(false);
 
         if (DataControl.get("is_start_check_update", true)) {
             downloader.checkUpdate();

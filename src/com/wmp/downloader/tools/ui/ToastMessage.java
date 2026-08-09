@@ -2,7 +2,7 @@ package com.wmp.downloader.tools.ui;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.downloader.ui.FunctionDialog;
 import raven.modal.Toast;

@@ -1,5 +1,8 @@
 package com.wmp.downloader.tools.ui;
 
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -44,5 +47,26 @@ public class UITools {
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         return scrollPane;
+    }
+
+    public static JEditorPane createMarkdownPane(String markdownText){
+        if (markdownText == null) {
+            var jEditorPane = new JEditorPane();
+            jEditorPane.setOpaque(false);
+            jEditorPane.setEditable(false);
+            return jEditorPane;
+        }
+
+        // 1. 使用 commonmark 将 Markdown 转换为 HTML
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        String html = renderer.render(parser.parse(markdownText));
+
+        // 2. 在 Swing 的 JEditorPane 中显示 HTML
+        JEditorPane editorPane = new JEditorPane("text/html", html);
+        editorPane.setOpaque(false);
+        editorPane.setEditable(false);
+
+        return editorPane;
     }
 }

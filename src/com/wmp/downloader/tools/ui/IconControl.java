@@ -1,6 +1,6 @@
 package com.wmp.downloader.tools.ui;
 
-import com.wmp.downloader.tools.DataControl;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import org.apache.log4j.Logger;
 

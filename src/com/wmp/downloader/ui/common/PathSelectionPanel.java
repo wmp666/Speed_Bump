@@ -1,6 +1,7 @@
 package com.wmp.downloader.ui.common;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
 
 import javax.swing.*;
@@ -23,15 +24,11 @@ public class PathSelectionPanel extends JPanel {
 
     public PathSelectionPanel(String prompt, File defaultFile, int FileSelectionMode) {
         LocationChooseButton.addActionListener(e -> {
-            var systemFileChooser = new SystemFileChooser();
-            systemFileChooser.setDialogType(SystemFileChooser.OPEN_DIALOG);
-            systemFileChooser.setFileHidingEnabled(true);
-            systemFileChooser.setFileSelectionMode(FileSelectionMode);
-            if (systemFileChooser.showDialog(this, "选择") == SystemFileChooser.APPROVE_OPTION) {
-                var path = systemFileChooser.getSelectedFile().getAbsolutePath();
-                FileTextField.setText(path);
-                pathChangeListener.pathChanged(path);
-            }
+            var path = DataControl.getPath(this, SystemFileChooser.OPEN_DIALOG, FileSelectionMode);
+            if (path == null) return;
+            var str = path.getAbsolutePath();
+            FileTextField.setText(str);
+            pathChangeListener.pathChanged(str);
         });
         FileTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
