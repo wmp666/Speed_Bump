@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="DownLoader_plugin:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/DownLoader_plugin_jar</output-path>
-    <root id="archive" name="DownLoader_plugin.jar">
-      <element id="module-output" name="DownLoader_plugin" />
-    </root>
-  </artifact>
-</component>

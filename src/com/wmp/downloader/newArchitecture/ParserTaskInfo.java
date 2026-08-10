@@ -158,21 +158,26 @@ public class ParserTaskInfo {
                     }
                 }
 
-                AbstractParser parser = loadParserFromJar(jar);
-                if (parser != null) {
-                    var parserInfo = new PluginParserInfo(parser, info[3],
-                            startVersion, lastVersion,
-                            info[4], false, info[5]);
-                    ALL_PARSER_LIST.add(parserInfo);
-                    if (disableSet.contains(id)) {
-                        logger.info("解析器 " + id + " 被禁用,已跳过");
-                        continue;
-                    }
+                try {
 
-                    ENABLE_PLUGIN_PARSER_LIST.add(parserInfo);
-                    logger.info("Loaded parser: " + id + " from " + jar.getName());
-                } else {
-                    logger.warn("Failed to load parser from " + jar.getName());
+                        AbstractParser parser = loadParserFromJar(jar);
+                        if (parser != null) {
+                            var parserInfo = new PluginParserInfo(parser, info[3],
+                                    startVersion, lastVersion,
+                                    info[4], false, info[5]);
+                            ALL_PARSER_LIST.add(parserInfo);
+                            if (disableSet.contains(id)) {
+                                logger.info("解析器 " + id + " 被禁用,已跳过");
+                                continue;
+                            }
+
+                            ENABLE_PLUGIN_PARSER_LIST.add(parserInfo);
+                            logger.info("Loaded parser: " + id + " from " + jar.getName());
+                        } else {
+                            logger.warn("Failed to load parser from " + jar.getName());
+                        }
+                } catch (Exception e) {
+                    logger.error("类加载失败");
                 }
             }
         }
@@ -183,7 +188,9 @@ public class ParserTaskInfo {
 
     private static void addAppPlugin() {
         //添加
-        ENABLE_PLUGIN_PARSER_LIST.add(new PluginParserInfo(new GithubParser(), "1.0.1", "+", "+", "无名牌", true, null));
+        var githubParserInfo = new PluginParserInfo(new GithubParser(), "1.0.1", "+", "+", "无名牌", true, null);
+        ENABLE_PLUGIN_PARSER_LIST.add(githubParserInfo);
+        ALL_PARSER_LIST.add(githubParserInfo);
 
         BASIC_PARSER_LIST.add(new BTParser());
         BASIC_PARSER_LIST.add(new ED2KParser());
@@ -254,7 +261,7 @@ public class ParserTaskInfo {
         }
     }
 
-    private static AbstractParser loadParserFromJar(File jar) {
+    private static AbstractParser loadParserFromJar(File jar) throws Exception{
         try (URLClassLoader classLoader = new URLClassLoader(new URL[]{jar.toURI().toURL()})) {
             // 读取 info.json 获取 mainClass
             String mainClass;
@@ -278,8 +285,77 @@ public class ParserTaskInfo {
             if (result instanceof AbstractParser) {
                 return (AbstractParser) result;
             } else {
+                //进行向下兼容
                 logger.error("Class " + clazz.getName() + " does not AbstractParser instance in " + mainClass);
-                return null;
+                logger.error("将采用向下兼容");
+                return new AbstractParser(){
+                    @Override
+                    public String getID() {
+                        try {
+                            return clazz.getDeclaredMethod("getID").invoke(result).toString();
+                        } catch (Exception e) {
+                            return "错误";
+                        }
+                    }
+
+                    @Override
+                    public String getSupportTip() {
+                        try {
+                            return clazz.getDeclaredMethod("getSupportTip").invoke(result).toString();
+                        } catch (Exception e) {
+                            return "错误";
+                        }
+                    }
+
+                    @Override
+                    protected void updateLinkInfo(String link) {
+                        try {
+                            clazz.getDeclaredMethod("updateLinkInfo", String.class).invoke(result, link);
+                        } catch (Exception _) {
+                        }
+                    }
+
+                    @Override
+                    protected AbstractLinkInfoPanel getLinkedInfoPanel(String link, Info info) {
+                        try {
+                            return (AbstractLinkInfoPanel) clazz.getDeclaredMethod("getLinkedInfoPanel", String.class, ProcessHandle.Info.class).invoke(result, new Object[]{link, info});
+                        } catch (Exception e) {
+                            return new AbstractLinkInfoPanel(info) {
+                                @Override
+                                public JSONObject getJsonInfo() {
+                                    return jsonInfo;
+                                }
+                            };
+                        }
+                    }
+
+                    @Override
+                    public boolean isMeetRequirements(String link) {
+                        try {
+                            return (boolean) clazz.getDeclaredMethod("isMeetRequirements", String.class).invoke(result, link);
+                        } catch (Exception e) {
+                            return false;
+                        }
+                    }
+
+                    @Override
+                    protected AbstractTask getTask(String link, JSONObject infoJson) {
+                        try {
+                            return (AbstractTask) clazz.getDeclaredMethod("getTask", String.class, JSONObject.class).invoke(result, link, infoJson);
+                        } catch (Exception e) {
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    public AbstractSpecialSettingsPage getSettingsPage() {
+                        try {
+                            return (AbstractSpecialSettingsPage) clazz.getDeclaredMethod("getSettingsPage").invoke(result);
+                        } catch (Exception e) {
+                            return null;
+                        }
+                    }
+                };
             }
         } catch (Exception e) {
             logger.error("Error loading parser from " + jar.getName(), e);

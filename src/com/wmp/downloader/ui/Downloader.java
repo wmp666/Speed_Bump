@@ -824,7 +824,13 @@ public class Downloader extends JFrame implements WindowListener {
         //软件
         var AppMenu = new JMenu(StringFormat.translate("download_menu_bar", "app"));
 
-        var DisclaimerMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "app.disclaimer"));
+        var checkUpdateMenuItem = new JMenuItem(StringFormat.translate("check_update"));
+        checkUpdateMenuItem.addActionListener(e -> checkUpdate());
+        AppMenu.add(checkUpdateMenuItem);
+
+        AppMenu.addSeparator();
+
+        var DisclaimerMenuItem = new JMenuItem(StringFormat.translate("app.disclaimer"));
         DisclaimerMenuItem.addActionListener(e -> {
             var panel = new JPanel(new BorderLayout());
             var textArea = new JTextArea("""
@@ -861,7 +867,7 @@ public class Downloader extends JFrame implements WindowListener {
         });
         AppMenu.add(DisclaimerMenuItem);
 
-        var aboutMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "app.about"));
+        var aboutMenuItem = new JMenuItem(StringFormat.translate("app.about"));
         aboutMenuItem.addActionListener(e -> mainTabbedPane.setSelectedIndex(mainTabbedPane.getTabCount() - 1));
         AppMenu.add(aboutMenuItem);
 

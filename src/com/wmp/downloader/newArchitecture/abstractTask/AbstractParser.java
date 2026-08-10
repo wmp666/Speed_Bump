@@ -9,7 +9,7 @@ public abstract class AbstractParser {
 
     public abstract String getSupportTip();
 
-    public Info getParserInfo(String link) {
+    public final Info getParserInfo(String link) {
         return new Info(link);
     }
 

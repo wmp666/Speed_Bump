@@ -2,17 +2,26 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
+      <artifact name="BiliParser:jar" />
       <artifact name="DouyinParser:jar" />
+      <artifact name="DownLoader_Linux:jar" />
+      <artifact name="DownLoader_Windows:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/BiliParser_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DouyinParser_jar.xml" beforeDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="在&quot;软件&quot;中增加检查更新&#10;增加向下兼容&#10;对部分代码进行优化">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Muilt_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_plugin_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SpeedBump.exe4j" beforeDir="false" afterPath="$PROJECT_DIR$/SpeedBump.exe4j" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/减速带.iss" beforeDir="false" afterPath="$PROJECT_DIR$/减速带.iss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -423,7 +432,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="整顿部分UI，提升性能" />
     <MESSAGE value="更新翻译文件" />
     <MESSAGE value="将多个翻译文件统一为一个" />
     <MESSAGE value="补全繁体中文翻译，修复部分问题" />
@@ -448,7 +456,8 @@
     <MESSAGE value="新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取可下载列表拓展" />
     <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题" />
     <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器" />
-    <option name="LAST_COMMIT_MESSAGE" value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器" />
+    <MESSAGE value="在&quot;软件&quot;中增加检查更新&#10;增加向下兼容&#10;对部分代码进行优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="在&quot;软件&quot;中增加检查更新&#10;增加向下兼容&#10;对部分代码进行优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
