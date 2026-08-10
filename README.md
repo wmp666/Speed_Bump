@@ -11,7 +11,8 @@
 - HTTP/HTTPS
   - Github加速
 - BT（Torrent、Magnet）
-- ED2K
+- Gopeed
+  - ED2K
 
 ### 官方提供的拓展支持格式
 - 哔哩哔哩（视频、视频合集）
