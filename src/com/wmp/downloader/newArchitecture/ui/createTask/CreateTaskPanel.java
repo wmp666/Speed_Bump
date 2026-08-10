@@ -1,7 +1,7 @@
 package com.wmp.downloader.newArchitecture.ui.createTask;
 
 import com.wmp.downloader.exception.LinkParserException;
-import com.wmp.downloader.newArchitecture.TaskInfo;
+import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInfoPanel;
@@ -137,7 +137,7 @@ public class CreateTaskPanel {
     }
 
     private void createUIComponents() {
-        PathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
+        PathSelectionPanel = new PathSelectionPanel(StringFormat.translate("save_path"), DataControl.getDownloadFilePath());
         linkInfoPanel = new JPanel(new GridLayout(0, 1, 5, 5));
     }
 
@@ -240,7 +240,7 @@ public class CreateTaskPanel {
 
     // ========== 实际解析逻辑（只返回面板，不操作UI） ==========
     private AbstractLinkInfoPanel parseLinkInternal(String link) throws Exception {
-        var info = TaskInfo.getInfo(link);
+        var info = ParserTaskInfo.getInfo(link);
         logger.debug(info);
         if (info == null) {
             return null;

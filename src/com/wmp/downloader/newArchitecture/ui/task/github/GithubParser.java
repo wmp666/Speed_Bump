@@ -26,7 +26,7 @@ public class GithubParser extends AbstractParser {
     protected void updateLinkInfo(String link) {
         if (isMeetRequirements(link)) {
             link = "https://" + DataControl.get("github_accelerate_link", "gh-proxy.org") + "/" + link;
-            info = parser.setLink(link);
+            info = parser.getParserInfo(link);
         }
 
     }
@@ -40,7 +40,6 @@ public class GithubParser extends AbstractParser {
     public boolean isMeetRequirements(String link) {
 
         return link.strip().startsWith("http") &&
-                DataControl.get("is_use_github_accelerate", false) &&
                 link.contains("github.com");
     }
 

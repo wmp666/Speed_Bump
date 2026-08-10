@@ -149,9 +149,9 @@ public abstract class AbstractTask extends JPanel {
 
                     //删除文件
                     if (isDeleteCheckBox.isSelected()) {
-                        DataControl.putAndSave("isDeleteWhenCloseTask", isDeleteCheckBox.isSelected());
                         DataControl.delete(new File(savePath, fileName), true);
                     }
+                    DataControl.putAndSave("isDeleteWhenCloseTask", isDeleteCheckBox.isSelected());
 
                     this.setVisible(false);
                     isCanExit = true;
@@ -175,8 +175,9 @@ public abstract class AbstractTask extends JPanel {
             }
         });
 
-// 并且为了确保初始显示正确，在窗口完全展示后再调用一次
+        // 并且为了确保初始显示正确，在窗口完全展示后再调用一次
         SwingUtilities.invokeLater(this::updateNameLabel);
+
     }
 
     /**
@@ -253,8 +254,6 @@ public abstract class AbstractTask extends JPanel {
             if (startCount == 1) {
                 doWhenStart();
             } else doWhenRestart();
-
-
         } catch (Exception e) {
             startCount--;
             isStart = false;
@@ -349,4 +348,6 @@ public abstract class AbstractTask extends JPanel {
     public void setSupportDeleteWhenExit(boolean supportDeleteWhenExit) {
         isSupportDeleteWhenExit = supportDeleteWhenExit;
     }
+
+    public void runWhenFinally(){}
 }

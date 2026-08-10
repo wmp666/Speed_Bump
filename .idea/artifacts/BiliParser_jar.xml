@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BiliParser:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BiliParser_jar</output-path>
+    <root id="archive" name="BiliParser.jar">
+      <element id="module-output" name="BiliParser" />
+    </root>
+  </artifact>
+</component>

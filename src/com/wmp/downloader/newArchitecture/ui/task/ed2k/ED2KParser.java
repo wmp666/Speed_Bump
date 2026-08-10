@@ -7,7 +7,6 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInfoPanel;
 import com.wmp.downloader.newArchitecture.ui.task.gopeed.GopeedParser;
-import com.wmp.downloader.tools.StringFormat;
 
 public class ED2KParser extends AbstractParser {
 
@@ -26,7 +25,7 @@ public class ED2KParser extends AbstractParser {
 
     @Override
     protected void updateLinkInfo(String link) {
-        info = parser.setLink(link);
+        info = parser.getParserInfo(link);
     }
 
     @Override

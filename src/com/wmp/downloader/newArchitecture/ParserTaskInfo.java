@@ -5,9 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.Run;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
-import com.wmp.downloader.newArchitecture.ui.task.bilibili.BiliParser;
 import com.wmp.downloader.newArchitecture.ui.task.bt.BTParser;
-import com.wmp.downloader.newArchitecture.ui.task.douyin.DouyinParser;
 import com.wmp.downloader.newArchitecture.ui.task.ed2k.ED2KParser;
 import com.wmp.downloader.newArchitecture.ui.task.github.GithubParser;
 import com.wmp.downloader.newArchitecture.ui.task.gopeed.GopeedParser;
@@ -30,10 +28,11 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class TaskInfo {
-    private static final ArrayList<PluginParserInfo> parserList = new ArrayList<>();
-    private static final ArrayList<AbstractParser> basicParserList = new ArrayList<>();
-    private static final Logger logger = Logger.getLogger(TaskInfo.class);
+public class ParserTaskInfo {
+    private static final ArrayList<PluginParserInfo> ENABLE_PLUGIN_PARSER_LIST = new ArrayList<>();
+    private static final ArrayList<PluginParserInfo> ALL_PARSER_LIST = new ArrayList<>();
+    private static final ArrayList<AbstractParser> BASIC_PARSER_LIST = new ArrayList<>();
+    private static final Logger logger = Logger.getLogger(ParserTaskInfo.class);
     private static final String PARSER_JSON = "Parser.json";
     //private static final String PARSERS_DIR = "ParsersATools";
     private static final String DISABLE_ID_KEY = "disable_id";
@@ -48,8 +47,8 @@ public class TaskInfo {
 
     public static void loadParsers() {
 
-        parserList.clear();
-        basicParserList.clear();
+        ENABLE_PLUGIN_PARSER_LIST.clear();
+        BASIC_PARSER_LIST.clear();
 
         // 1. 初始化 Parser.json（若不存在则创建）
         File dataPath = DataControl.getDataPath();
@@ -83,7 +82,7 @@ public class TaskInfo {
                             editParserJSONArray(1, id, DELETE_ID_KEY);
                             logger.info("删除解析器 JAR: " + jar.getName() + " (id: " + id + ")");
                         } else {
-                            logger.error("Failed to delete JAR: " + jar.getAbsolutePath());
+                            logger.error("解析器删除失败 JAR: " + jar.getAbsolutePath());
                         }
                     }
                 }
@@ -106,10 +105,7 @@ public class TaskInfo {
                     logger.warn("No id found in info.json of " + jar.getName() + ", skip.");
                     continue;
                 }
-                if (disableSet.contains(id)) {
-                    logger.info("Parser " + id + " is disabled, skip loading.");
-                    continue;
-                }
+
                 if (deleteSet.contains(id)) {
                     logger.info("解析器 " + id + " 需要被删除，已跳过");
                     continue;
@@ -164,9 +160,16 @@ public class TaskInfo {
 
                 AbstractParser parser = loadParserFromJar(jar);
                 if (parser != null) {
-                    parserList.add(new PluginParserInfo(parser, info[3],
+                    var parserInfo = new PluginParserInfo(parser, info[3],
                             startVersion, lastVersion,
-                            info[4], false, info[5]));
+                            info[4], false, info[5]);
+                    ALL_PARSER_LIST.add(parserInfo);
+                    if (disableSet.contains(id)) {
+                        logger.info("解析器 " + id + " 被禁用,已跳过");
+                        continue;
+                    }
+
+                    ENABLE_PLUGIN_PARSER_LIST.add(parserInfo);
                     logger.info("Loaded parser: " + id + " from " + jar.getName());
                 } else {
                     logger.warn("Failed to load parser from " + jar.getName());
@@ -175,30 +178,17 @@ public class TaskInfo {
         }
 
 
+        addAppPlugin();
+    }
+
+    private static void addAppPlugin() {
         //添加
+        ENABLE_PLUGIN_PARSER_LIST.add(new PluginParserInfo(new GithubParser(), "1.0.1", "+", "+", "无名牌", true, null));
 
-
-        parserList.add(new PluginParserInfo(new DouyinParser(), "1.0.1", "+", "+", "无名牌", true,
-                """
-                        # 抖音分享链接解析
-                        支持解析大部分抖音的分享链接,这主要取决于**遇见API**是否支持
-                        ## :)
-                        
-                        ## 注意
-                        - 不支持多线程下载"""));
-        parserList.add(new PluginParserInfo(new GithubParser(), "1.0.0", "+", "+", "无名牌", true, null));
-        parserList.add(new PluginParserInfo(new BiliParser(), "1.0.0", "+", "+", "无名牌", true,
-                """
-                        # 哔哩哔哩解析器
-                        支持大部分哔哩哔哩网页链接/BV号
-                        
-                        ## 注意
-                        - 不支持多线程下载"""));
-
-        basicParserList.add(new BTParser());
-        basicParserList.add(new ED2KParser());
-        basicParserList.add(new GopeedParser());
-        basicParserList.add(new HTTPParser());
+        BASIC_PARSER_LIST.add(new BTParser());
+        BASIC_PARSER_LIST.add(new ED2KParser());
+        BASIC_PARSER_LIST.add(new GopeedParser());
+        BASIC_PARSER_LIST.add(new HTTPParser());
     }
 
     // ---------- 工具方法 ----------
@@ -322,11 +312,21 @@ public class TaskInfo {
     }
 
     private static void removeParserFromList(String id) {
-        Iterator<PluginParserInfo> iterator = parserList.iterator();
+        Iterator<PluginParserInfo> iterator = ENABLE_PLUGIN_PARSER_LIST.iterator();
         while (iterator.hasNext()) {
             AbstractParser parser = iterator.next().parser();
             if (id.equals(parser.getID())) {
                 iterator.remove();
+                logger.info("Removed parser: " + id);
+                break;
+            }
+        }
+    }
+
+    private static void addParserFromList(String id) {
+        for (PluginParserInfo pluginParserInfo : ALL_PARSER_LIST) {
+            if (id.equals(pluginParserInfo.parser().getID())) {
+                ENABLE_PLUGIN_PARSER_LIST.add(pluginParserInfo);
                 logger.info("Removed parser: " + id);
                 break;
             }
@@ -364,6 +364,14 @@ public class TaskInfo {
         removeParserFromList(id);
     }
 
+    // ---------- 公开 API ----------
+    public static void removeDisableParser(String id) {
+        editParserJSONArray(1, id, DISABLE_ID_KEY);
+
+        // 从内存中移除
+        addParserFromList(id);
+    }
+
     public static void setDeleteParser(String id) {
         editParserJSONArray(0, id, DELETE_ID_KEY);
 
@@ -372,29 +380,29 @@ public class TaskInfo {
     }
 
     public static AbstractParser.Info getInfo(String link) {
-        for (PluginParserInfo parserInfo : parserList) {
+        for (PluginParserInfo parserInfo : ENABLE_PLUGIN_PARSER_LIST) {
             var parser = parserInfo.parser();
             if (parser.isMeetRequirements(link)) {
-                return parser.setLink(link);
+                return parser.getParserInfo(link);
             }
         }
-        for (AbstractParser parser : basicParserList) {
+        for (AbstractParser parser : BASIC_PARSER_LIST) {
             if (parser.isMeetRequirements(link)) {
-                return parser.setLink(link);
+                return parser.getParserInfo(link);
             }
         }
         return null;
     }
 
-    public static List<AbstractParser> getParserList() {
+    public static List<AbstractParser> getEnablePluginParserList() {
         ArrayList<AbstractParser> tempList = new ArrayList<>();
-        tempList.addAll(parserList.stream().map(PluginParserInfo::parser).toList());
-        tempList.addAll(basicParserList);
+        tempList.addAll(ENABLE_PLUGIN_PARSER_LIST.stream().map(PluginParserInfo::parser).toList());
+        tempList.addAll(BASIC_PARSER_LIST);
         return List.of(tempList.toArray(AbstractParser[]::new));
     }
 
     public static List<PluginParserInfo> getPluginParserList(){
-        return List.of(parserList.toArray(PluginParserInfo[]::new));
+        return List.of(ENABLE_PLUGIN_PARSER_LIST.toArray(PluginParserInfo[]::new));
     }
 
     public static List<InstallPluginParserInfo> getInstallPluginParserInfoList(){
@@ -531,7 +539,7 @@ public class TaskInfo {
                 } else if (trimmed.startsWith("version:")) {
                     version = trimmed.substring(8).strip();
                 } else if (trimmed.startsWith("plugin_support_version:")) {
-                    supportVersion = trimmed.substring(22).strip();
+                    supportVersion = trimmed.substring("plugin_support_version: ".length()).strip();
                 } else if (trimmed.startsWith("support_platform:")) {
                     supportPlatform = trimmed.substring(17).strip();
                 }
@@ -539,7 +547,7 @@ public class TaskInfo {
 
             // 介绍节：从 "->" 开始的内容作为介绍
             if (inIntroSection) {
-                if (!introduction.isEmpty() && !trimmed.isEmpty()) {
+                if (!trimmed.isEmpty()) {
                     // 如果已开始介绍，后续行（非空）也视为介绍的一部分（可能多行）
                     introduction.append(trimmed).append("\n");
                 }
@@ -612,5 +620,16 @@ public class TaskInfo {
                 false,          // isAppPlugin 默认为 false，可根据需要调整
                 introduction.toString().strip()
         );
+    }
+
+    public static List<PluginParserInfo> getAllPluginParserList(){
+        return List.of(ALL_PARSER_LIST.toArray(PluginParserInfo[]::new));
+    }
+
+    public static boolean isEnable(String id){
+        var allIDList = ALL_PARSER_LIST.stream().map(pluginParserInfo -> pluginParserInfo.parser().getID()).toList();
+        var enableIDlist = ENABLE_PLUGIN_PARSER_LIST.stream().map(pluginParserInfo -> pluginParserInfo.parser().getID()).toList();
+        if (!allIDList.contains(id)) return false;
+        return enableIDlist.contains(id);
     }
 }

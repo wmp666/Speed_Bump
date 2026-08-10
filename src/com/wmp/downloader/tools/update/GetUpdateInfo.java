@@ -108,7 +108,7 @@ public class GetUpdateInfo {
      *
      * @param v1 版本1，不能为 null
      * @param v2 版本2，不能为 null
-     * @return 负数表示 v1 < v2，0 表示相等，正数表示 v1 > v2
+     * @return 负数(<0)表示 v1 < v2，0 表示相等，正数(>0)表示 v1 > v2
      * @throws IllegalArgumentException 如果任一版本号为 null 或包含非数字段
      */
     public static int compareVersions(String v1, String v2) {
@@ -151,7 +151,10 @@ public class GetUpdateInfo {
                 && (lastVersion.equals("+") || compareVersions(version, lastVersion) <= 0);
     }
 
-    // 若仍需要原来的布尔语义，可保留：
+    /**
+     *
+     * @return v1 > v2
+     */
     public static boolean versionGreaterThan(String v1, String v2) {
         return compareVersions(v1, v2) > 0;
     }

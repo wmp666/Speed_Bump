@@ -2,42 +2,17 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Douyin_tset:jar" />
+      <artifact name="DouyinParser:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取可下载列表拓展">
-      <change afterPath="$PROJECT_DIR$/installPlugin.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/InstallPluginParserInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Linux_arm64_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Linux_x86_64_jar.xml" beforeDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/BiliParser_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DouyinParser_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpeedBump.exe4j" beforeDir="false" afterPath="$PROJECT_DIR$/SpeedBump.exe4j" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/TaskInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/TaskInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/folder/BiliLinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/folder/BiliLinkFolderInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/gopeed/GopeedDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/gopeed/GopeedDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/减速带.iss" beforeDir="false" afterPath="$PROJECT_DIR$/减速带.iss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/拓展解析器制作.md" beforeDir="false" afterPath="$PROJECT_DIR$/拓展解析器制作.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,8 +24,8 @@
       <list>
         <option value="module-info" />
         <option value="Exception" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -117,67 +92,67 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;261&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;342&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/DouyinParser/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15426998&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.26498002&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;应用程序.BTTest.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.BiliVideoInfo.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.BilibiliQRLoginWithJsoup.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.BilibiliUserInfo.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.ConvergenceTool.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.FTPDownloader.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.FunctionDialog.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.GetMagnet3.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.GopeedClient.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.MagnetToTorrent.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.Run.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.TikTokDownloader.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.ToastMessage.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.VideoInfoReader.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "true",
+    "Repository.Attach.Sources": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "342",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src/Main.java",
+    "project.structure.last.edited": "工件",
+    "project.structure.proportion": "0.15426998",
+    "project.structure.side.proportion": "0.26498002",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "应用程序.BTTest.executor": "Run",
+    "应用程序.BiliVideoInfo.executor": "Run",
+    "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
+    "应用程序.BilibiliUserInfo.executor": "Run",
+    "应用程序.ConvergenceTool.executor": "Run",
+    "应用程序.FTPDownloader.executor": "Run",
+    "应用程序.FunctionDialog.executor": "Run",
+    "应用程序.GetMagnet3.executor": "Run",
+    "应用程序.GopeedClient.executor": "Run",
+    "应用程序.MagnetToTorrent.executor": "Run",
+    "应用程序.Run.executor": "Run",
+    "应用程序.TikTokDownloader.executor": "Run",
+    "应用程序.ToastMessage.executor": "Run",
+    "应用程序.VideoInfoReader.executor": "Run"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src\com\wmp\parser" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src\com\wmp\parser" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\newArchitecture\ui\task\bilibili" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\newArchitecture\ui\task\bt" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\abstractTask\linkInfoPanel" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\abstractTask" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\newArchitecture\ui\createTask" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\newArchitecture\ui\task\bilibili" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\newArchitecture\ui\task" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\newArchitecture\ui\task\gopeed" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\newArchitecture\ui\task\github" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.wmp.downloader.ui.task.douyin" />
@@ -448,9 +423,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="更新创建链接功能，更加智能" />
-    <MESSAGE value="更新创建链接功能，更加智能&#10;添加ED2K链接下载（依赖gopeed）&#10;支持将下载链接强制挂载到gopeed" />
-    <MESSAGE value="增加新的设置项，个性化开放度更高" />
     <MESSAGE value="整顿部分UI，提升性能" />
     <MESSAGE value="更新翻译文件" />
     <MESSAGE value="将多个翻译文件统一为一个" />
@@ -473,7 +445,10 @@
     <MESSAGE value="制作了一个比较简易的拓展解析器展示页&#10;修复抖音下载会解析任务失败" />
     <MESSAGE value="增强更新信息整合的功能" />
     <MESSAGE value="拓展功能完善与问题修复&#10;修复初次启动会反复报错&#10;增加预加载进度条&#10;增加拓展介绍页&#10;实现了卸载拓展的功能&#10;增加了导入本地拓展的功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="拓展功能完善与问题修复&#10;修复初次启动会反复报错&#10;增加预加载进度条&#10;增加拓展介绍页&#10;实现了卸载拓展的功能&#10;增加了导入本地拓展的功能" />
+    <MESSAGE value="新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取可下载列表拓展" />
+    <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题" />
+    <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器" />
+    <option name="LAST_COMMIT_MESSAGE" value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -485,13 +460,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java</url>
-          <line>264</line>
+          <line>267</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bilibili/folder/BiliLinkFolderInfoPanel.java</url>
           <line>127</line>
           <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/http/HTTPParser.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
+          <line>594</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
@@ -505,6 +490,15 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/github/GithubParser.java</url>
+          <line>25</line>
+          <properties class="com.wmp.downloader.newArchitecture.ui.task.github.GithubParser" method="updateLinkInfo">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

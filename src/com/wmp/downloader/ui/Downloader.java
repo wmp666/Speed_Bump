@@ -2,8 +2,10 @@ package com.wmp.downloader.ui;
 
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.formdev.flatlaf.util.SystemFileChooser;
-import com.wmp.downloader.newArchitecture.TaskInfo;
+import com.wmp.downloader.Run;
+import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
+import com.wmp.downloader.newArchitecture.ui.task.PluginParserGithubDownloadTask;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.StringFormat;
@@ -19,7 +21,6 @@ import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -145,15 +146,18 @@ public class Downloader extends JFrame implements WindowListener {
             } else return false;
         });
         taskList.forEach(urlDownloadTask -> {
-            if (SystemTray.isSupported() && urlDownloadTask.isFinally()) {
-                if (!taskFinalyTipList.contains(urlDownloadTask)) {
-                    taskFinalyTipList.add(urlDownloadTask);
-                    ToastMessage.show(this,
-                            String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
-                            ToastMessage.SUCCESS);
+            if (!taskFinalyTipList.contains(urlDownloadTask)) {
+                taskFinalyTipList.add(urlDownloadTask);
+            if (urlDownloadTask.isFinally()) {
+                urlDownloadTask.runWhenFinally();
+                ToastMessage.show(this,
+                    String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
+                    ToastMessage.SUCCESS);
+                if (SystemTray.isSupported()) {
                     trayIcon.displayMessage(null,
-                            String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
-                            TrayIcon.MessageType.INFO);
+                                String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
+                                TrayIcon.MessageType.INFO);
+                    }
                 }
             }
         });
@@ -214,26 +218,59 @@ public class Downloader extends JFrame implements WindowListener {
         // 初始化背景相关
         initBackgroundSettings();
 
-        var ref = new Object() {
-            ChangeListener l = null;
-        };
-        ref.l = e -> {
-            //拓展管理
-            initPluginParserComponents();
-            mainTabbedPane.removeChangeListener(ref.l);
-        };
-        mainTabbedPane.addChangeListener(ref.l);
+        //拓展管理
+        {
+            var ref = new Object() {
+                ChangeListener l = null;
+            };
+            ref.l = e -> {
+                if (pluginParserControlPanel == mainTabbedPane.getSelectedComponent()) {
+
+                    initPluginParserComponents();
+                    mainTabbedPane.removeChangeListener(ref.l);
+                }
+
+            };
+            mainTabbedPane.addChangeListener(ref.l);
+        }
 
         //任务
         initTaskComponents();
+
         //设置
-        initSettingsComponents();
+        {
+            var ref = new Object() {
+                ChangeListener l = null;
+            };
+            ref.l = e -> {
+                if (settingsPanel == mainTabbedPane.getSelectedComponent()) {
+
+                    initSettingsComponents();
+                    mainTabbedPane.removeChangeListener(ref.l);
+                }
+
+            };
+            mainTabbedPane.addChangeListener(ref.l);
+        }
 
         //专项设置
-        initSpecialSettingsComponents();
+        {
+            var ref = new Object() {
+                ChangeListener l = null;
+            };
+            ref.l = e -> {
+                if (SpecialSettingsPanel == mainTabbedPane.getSelectedComponent()) {
+
+                    initSpecialSettingsComponents();
+                    mainTabbedPane.removeChangeListener(ref.l);
+                }
+
+            };
+            mainTabbedPane.addChangeListener(ref.l);
+        }
+
         //关于
         initAboutComponents();
-
         startClipboardListener();
 
         pack();
@@ -334,22 +371,73 @@ public class Downloader extends JFrame implements WindowListener {
         });
         installPluginParserList.addListSelectionListener(e -> {
             var installPluginParserInfo = installPluginParserList.getSelectedValue();
-            installPluginInfoPanel.setVisible(true);
-            installPluginParserIDLabel.setText(installPluginParserInfo.pluginParserInfo().parser().getID());
-            installPluginParserAuthorLabel.setText(installPluginParserInfo.pluginParserInfo().author());
-            installPluginParserVersionLabel.setText(installPluginParserInfo.pluginParserInfo().version());
-            installPluginParserStartVersionLabel.setText(installPluginParserInfo.pluginParserInfo().startVersion());
-            installPluginParserLastVersionLabel.setText(installPluginParserInfo.pluginParserInfo().lastVersion());
-            installPluginInfoIntroductionPanel.removeAll();
-            installPluginInfoIntroductionPanel.add(UITools.createMarkdownPane(installPluginParserInfo.pluginParserInfo().introduction()), BorderLayout.CENTER);
+            if (installPluginParserInfo == null) return;
+            try {
+                PluginParserInstallButton.setEnabled(true);
+                PluginParserInstallButton.setText(
+                        StringFormat.translate("install")
+                );
+
+                installPluginInfoPanel.setVisible(true);
+                var id = installPluginParserInfo.pluginParserInfo().parser().getID();
+                installPluginParserIDLabel.setText(id);
+                installPluginParserAuthorLabel.setText(installPluginParserInfo.pluginParserInfo().author());
+                installPluginParserVersionLabel.setText(installPluginParserInfo.pluginParserInfo().version());
+
+                //设置开发版本
+                var lastVersion = installPluginParserInfo.pluginParserInfo().lastVersion();
+                var startVersion = installPluginParserInfo.pluginParserInfo().startVersion();
+                installPluginParserStartVersionLabel.setText(startVersion);
+                installPluginParserLastVersionLabel.setText(lastVersion);
+                //判断是否适合当前程序
+                if (!GetUpdateInfo.isVersionInRange(Run.PLUGIN_SUPPORT_VERSION,
+                        startVersion, lastVersion)) {
+                    installPluginParserStartVersionLabel.setForeground(Color.RED);
+                    installPluginParserLastVersionLabel.setForeground(Color.RED);
+                }else {
+                    installPluginParserStartVersionLabel.setForeground(null);
+                    installPluginParserLastVersionLabel.setForeground(null);
+                }
+
+                installPluginInfoIntroductionPanel.removeAll();
+                installPluginInfoIntroductionPanel.add(UITools.createMarkdownPane(installPluginParserInfo.pluginParserInfo().introduction()), BorderLayout.CENTER);
+
+
+                var pluginParserList = ParserTaskInfo.getPluginParserList();
+                var idList = pluginParserList.stream().map(pluginParserInfo -> pluginParserInfo.parser().getID()).toList();
+                if (idList.contains(id)) {
+                    if (GetUpdateInfo.versionGreaterThan(installPluginParserInfo.pluginParserInfo().version(), pluginParserList.get(idList.indexOf(id)).version())) {
+                        PluginParserInstallButton.setText(
+                                StringFormat.translate("update")
+                        );
+                    }else{
+                        PluginParserInstallButton.setText(
+                                StringFormat.translate("installed")
+                        );
+                        PluginParserInstallButton.setEnabled(false);
+                    }
+                }
+            } catch (Exception ex) {
+                logger.error("安装信息加载过程抛出错误", ex);
+            }
 
         });
         installPluginParserListRefreshButton.addActionListener(e -> updateInstallPluginParserList());
         PluginParserInstallButton.addActionListener(e -> {
             logger.info(installPluginParserList.getSelectedValue().url());
-        });
+            //创建下载任务
 
-        installPluginParserList.setSelectedIndex(0);
+
+            var info = new PluginParserGithubDownloadTask(this::updateInstalledPluginParserList)
+                    .getParserInfo(installPluginParserList.getSelectedValue().url());
+            var jsonInfo = info.getLinkedInfoPanel().getJsonInfo();
+            jsonInfo.put("savePath", DataControl.getPATPath().getAbsolutePath());
+            jsonInfo.put("threadMode", 0);
+            jsonInfo.put("threadNum", DataControl.get("ThreadNum", 64));
+            jsonInfo.put("linkStyle", 0);
+            var task = info.getTask(jsonInfo);
+            addDownloadTask(task);
+        });
     }
 
     private void initToolBar() {
@@ -370,7 +458,7 @@ public class Downloader extends JFrame implements WindowListener {
                 ToastMessage.show(StringFormat.translate("plugins.control_tool_bar.import_local.is_not_jar"), ToastMessage.WARNING);
             }else{
                 if (FileOperation.copy(path, DataControl.getPATPath())){
-                    TaskInfo.loadParsers();
+                    ParserTaskInfo.loadParsers();
                     updateInstalledPluginParserList();
                     updateInstallPluginParserList();
                 }
@@ -385,13 +473,18 @@ public class Downloader extends JFrame implements WindowListener {
                 refreshButton.setIcon(IconControl.getIcon("refresh",
                         refreshButton.getFont().getSize())));
         refreshButton.addActionListener(e -> {
-            TaskInfo.loadParsers();
+            ParserTaskInfo.loadParsers();
+            updateInstallPluginParserList();
             updateInstalledPluginParserList();
         });
         PluginControlToolBar.add(refreshButton);
     }
 
     private void initInstalledPluginParserComponents() {
+        IconControl.addInDynamicConverter(
+                () -> installPluginParserListRefreshButton.setIcon(IconControl.getIcon("refresh", installPluginParserListRefreshButton.getFont().getSize()))
+        );
+
         PluginInfoPanel.setVisible(false);
 
         pluginParserIDLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
@@ -469,38 +562,54 @@ public class Downloader extends JFrame implements WindowListener {
             }
         });
         PluginParserList.addListSelectionListener(e -> {
-            var pluginParserInfo = PluginParserList.getSelectedValue();
-            PluginInfoPanel.setVisible(true);
-            pluginParserIDLabel.setText(pluginParserInfo.parser().getID());
-            pluginParserAuthorLabel.setText(pluginParserInfo.author());
-            pluginParserVersionLabel.setText(pluginParserInfo.version());
-            pluginParserStartVersionLabel.setText(pluginParserInfo.startVersion());
-            pluginParserLastVersionLabel.setText(pluginParserInfo.lastVersion());
-            PluginInfoIntroductionPanel.removeAll();
-            PluginInfoIntroductionPanel.add(UITools.createMarkdownPane(pluginParserInfo.introduction()), BorderLayout.CENTER);
+            try {
+                var pluginParserInfo = PluginParserList.getSelectedValue();
+                PluginInfoPanel.setVisible(true);
+                var id = pluginParserInfo.parser().getID();
+                pluginParserIDLabel.setText(id);
+                pluginParserAuthorLabel.setText(pluginParserInfo.author());
+                pluginParserVersionLabel.setText(pluginParserInfo.version());
+                pluginParserStartVersionLabel.setText(pluginParserInfo.startVersion());
+                pluginParserLastVersionLabel.setText(pluginParserInfo.lastVersion());
+                PluginInfoIntroductionPanel.removeAll();
+                PluginInfoIntroductionPanel.add(UITools.createMarkdownPane(pluginParserInfo.introduction()), BorderLayout.CENTER);
 
-            if (pluginParserInfo.isAppPlugin()) {
-                pluginParserStatusControlButton.setEnabled(false);
-                PluginParserUninstallButton.setEnabled(false);
-            }else{
-                pluginParserStatusControlButton.setEnabled(true);
-                PluginParserUninstallButton.setEnabled(true);
+                if (pluginParserInfo.isAppPlugin()) {
+                    pluginParserStatusControlButton.setEnabled(false);
+                    PluginParserUninstallButton.setEnabled(false);
+                }else{
+                    pluginParserStatusControlButton.setEnabled(true);
+                    PluginParserUninstallButton.setEnabled(true);
+                    //处理管理按钮
+                    pluginParserStatusControlButton.setText(
+                            StringFormat.translate(ParserTaskInfo.isEnable(id)?"disable":"enable")
+                    );
+                }
+
+
+            } catch (Exception ex) {
+                logger.error("已安装的解析器加载失败", ex);
             }
         });
         PluginParserUninstallButton.addActionListener(e -> {
             var id = pluginParserIDLabel.getText();
-            TaskInfo.setDeleteParser(id);
+            ParserTaskInfo.setDeleteParser(id);
 
             ToastMessage.show(StringFormat.translate("plugins.delete_plugin.tip"), ToastMessage.INFO);
 
+            ParserTaskInfo.loadParsers();
             updateInstalledPluginParserList();
         });
-
-        PluginParserList.setSelectedIndex(0);
+        pluginParserStatusControlButton.addActionListener(e -> {
+            var id = pluginParserIDLabel.getText();
+            if (ParserTaskInfo.isEnable(id)) ParserTaskInfo.setDisableParser(id);
+            else ParserTaskInfo.removeDisableParser(id);
+            pluginParserStatusControlButton.setText(StringFormat.translate(ParserTaskInfo.isEnable(id)?"disable":"enable"));
+        });
     }
 
     private void updateInstalledPluginParserList() {
-        var pluginParserArrayList = TaskInfo.getPluginParserList();
+        var pluginParserArrayList = ParserTaskInfo.getAllPluginParserList();
         PluginParserList.setListData(pluginParserArrayList.toArray(PluginParserInfo[]::new));
     }
 
@@ -510,7 +619,7 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private List<InstallPluginParserInfo> getInstallPluginParserInfoList(){
-        return TaskInfo.getInstallPluginParserInfoList();
+        return ParserTaskInfo.getInstallPluginParserInfoList();
     }
 
     private void initLayeredPane() {
@@ -607,7 +716,7 @@ public class Downloader extends JFrame implements WindowListener {
                 new BiliSettings(), new FFmpegSettings(), new GithubAccelerateSettings(), new GopeedSettings()
         };*/
 
-        var parserList = TaskInfo.getParserList();
+        var parserList = ParserTaskInfo.getEnablePluginParserList();
         var basicSpecialSettings =
                 new ArrayList<>(parserList.stream()
                         .map(AbstractParser::getSettingsPage)
@@ -722,7 +831,7 @@ public class Downloader extends JFrame implements WindowListener {
                     本工具（以下简称“本软件”）仅用于 个人学习、技术研究和学术交流 之目的，旨在帮助用户了解视频平台的数据传输机制与文件格式。
                     用户在使用本软件下载任何视频内容前， 必须 仔细阅读并同意以下条款：
                     1.  版权归属  \s
-                       所有通过本软件下载的视频、音频、封面图等内容的版权均归原始权利人（包括但不限于抖音/字节跳动、哔哩哔哩/上海宽娱及相应创作者）所有。本软件不占有、不修改、不转授任何下载内容的版权。
+                       所有通过本软件下载的视频、音频、封面图等内容的版权均归原始权利人所有。本软件不占有、不修改、不转授任何下载内容的版权。
                     2.  合法使用承诺  \s
                        用户承诺仅下载 自己拥有合法授权 或 已获权利人明确许可 的内容，或下载用于 合理引用、解说、学术研究 等符合《中华人民共和国著作权法》第二十四条规定的“合理使用”情形。
                     3.  禁止行为  \s
@@ -913,7 +1022,6 @@ public class Downloader extends JFrame implements WindowListener {
                 }
                 if (createTaskPanel.getDownloadTasks().size() == 1) {
                     addDownloadTask(createTaskPanel);
-                    return;
                 }
             });
             return;
@@ -941,7 +1049,7 @@ public class Downloader extends JFrame implements WindowListener {
         SupportButton.addActionListener(_ -> {
             var panel = new JPanel();
             StringBuilder sb = new StringBuilder();
-            TaskInfo.getParserList().stream()
+            ParserTaskInfo.getEnablePluginParserList().stream()
                     .map(AbstractParser::getSupportTip)
                     .forEach(tip ->{
                         sb.append(tip).append(", ");
@@ -970,6 +1078,25 @@ public class Downloader extends JFrame implements WindowListener {
                 }
                 , FunctionDialog.OK_CANCEL_BUTTONS, 0,
                 new JButton[]{learnMoreButton, SupportButton}, FunctionDialog.NORTH_DIRECTION_RIGHT);
+    }
+
+    private void addDownloadTask(AbstractTask... tasks) {
+        if (tasks == null) {
+            return;
+        }
+        Thread.ofVirtual().start(() -> {
+            for (var task : tasks) {
+                task.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+                taskList.add(task);
+
+                TasksPanel.add(task, gbc);
+                TasksPanel.revalidate();
+                TasksPanel.repaint();
+
+                task.start();
+            }
+        });
     }
 
     private void addDownloadTask(CreateTaskPanel createTaskPanel) {
@@ -1295,7 +1422,9 @@ public class Downloader extends JFrame implements WindowListener {
 
     @Override
     public void windowOpened(WindowEvent e) {
-
+        if (DataControl.get("is_start_check_update", true)) {
+            checkUpdate();
+        }
     }
 
     @Override

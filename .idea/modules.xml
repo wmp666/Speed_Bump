@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/BiliParser/BiliParser.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/BiliParser/BiliParser.iml" />
       <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/DouyinParser.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/DouyinParser.iml" />
       <module fileurl="file://$PROJECT_DIR$/DownLoader.iml" filepath="$PROJECT_DIR$/DownLoader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/DownLoader_plugin.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/DownLoader_plugin.iml" />
     </modules>
   </component>
 </project>

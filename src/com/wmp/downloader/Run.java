@@ -16,7 +16,7 @@ public class Run {
 
     public static String VERSION = "0.3.3";
 
-    public static String PLUGIN_SUPPORT_VERSION = "1.0";
+    public static String PLUGIN_SUPPORT_VERSION = "1.0.0";
 
     static void main(String[] args) {
         var argList = List.of(args);
@@ -52,9 +52,7 @@ public class Run {
 
         preloadDialog.setVisible(false);
 
-        if (DataControl.get("is_start_check_update", true)) {
-            downloader.checkUpdate();
-        }
+
 
 
     }

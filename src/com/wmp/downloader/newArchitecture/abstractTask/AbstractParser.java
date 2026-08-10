@@ -5,13 +5,11 @@ import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLin
 
 public abstract class AbstractParser {
 
-    protected JSONObject infos = new JSONObject();
-
     public abstract String getID();
 
     public abstract String getSupportTip();
 
-    public Info setLink(String link) {
+    public Info getParserInfo(String link) {
         return new Info(link);
     }
 
@@ -70,10 +68,6 @@ public abstract class AbstractParser {
 
         public AbstractTask getTask(JSONObject infoJson){
             return AbstractParser.this.getTask(link, infoJson);
-        }
-
-        public final JSONObject getInfos() {
-            return infos;
         }
 
         @Override

@@ -742,7 +742,9 @@
                             <constraints>
                               <splitpane position="left"/>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <opaque value="false"/>
+                            </properties>
                             <border type="none"/>
                             <children>
                               <component id="47cfd" class="javax.swing.JList" binding="installPluginParserList">
