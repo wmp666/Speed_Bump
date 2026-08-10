@@ -32,7 +32,7 @@ public class GetUpdateInfo {
     }
 
     public static UpdateInfo getUpdateInfo(boolean useGithubAccelerate) {
-        var apiUrl = "https://api.github.com/repos/wmp666/Speed_Bump/releases/latest";
+        var apiUrl = DataControl.APP_GITHUB_API_HEAD + "/releases/latest";
 
         if (useGithubAccelerate) {
             apiUrl = "https://" + DataControl.get("github_accelerate_link", "gh-proxy.org") + "/" + apiUrl;
@@ -157,7 +157,7 @@ public class GetUpdateInfo {
     }
 
     private static String getAllUpdateInfoWithinInterval(boolean useGithubAccelerate, String startVersion, String lastVersion) {
-        var apiUrl = "https://api.github.com/repos/wmp666/Speed_Bump/releases";
+        var apiUrl = DataControl.APP_GITHUB_API_HEAD + "/releases";
 
         if (useGithubAccelerate) {
             apiUrl = "https://" + DataControl.get("github_accelerate_link", "gh-proxy.org") + "/" + apiUrl;

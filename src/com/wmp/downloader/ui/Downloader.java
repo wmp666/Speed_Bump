@@ -3,10 +3,7 @@ package com.wmp.downloader.ui;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.newArchitecture.TaskInfo;
-import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
-import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
-import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
-import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
+import com.wmp.downloader.newArchitecture.abstractTask.*;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.StringFormat;
@@ -22,6 +19,8 @@ import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -92,9 +91,6 @@ public class Downloader extends JFrame implements WindowListener {
     private JScrollPane personalizedSetsScrollPane;
     private JScrollPane DataControlSetsScrollPane;
     private JCheckBox isStartCheckUpdateCheckBox;
-    private JTabbedPane tabbedPane1;
-    private JPanel installedPluginsPanel;
-    private JPanel installPluginsPanel;
     private JList<PluginParserInfo> PluginParserList;
     private JPanel PluginInfoPanel;
     private JLabel pluginParserIDLabel;
@@ -106,17 +102,22 @@ public class Downloader extends JFrame implements WindowListener {
     private JButton PluginParserUninstallButton;
     private JScrollPane PluginInfoScrollPane;
     private JPanel PluginInfoIntroductionPanel;
-    private JButton PluginParserInstallButton;
-    private JList installPuginParserList;
     private JScrollPane installPluginInfoScrollPane;
     private JPanel installPluginInfoPanel;
+    private JToolBar PluginControlToolBar;
+    private JTabbedPane tabbedPane1;
+    private JPanel installPluginsPanel;
+    private JList<InstallPluginParserInfo> installPluginParserList;
     private JLabel installPluginParserIDLabel;
     private JLabel installPluginParserAuthorLabel;
     private JLabel installPluginParserVersionLabel;
-    private JPanel installPluginInfoIntroductionPanel;
     private JLabel installPluginParserStartVersionLabel;
     private JLabel installPluginParserLastVersionLabel;
-    private JToolBar PluginControlToolBar;
+    private JPanel installPluginInfoIntroductionPanel;
+    private JButton PluginParserInstallButton;
+    private JPanel installedPluginsPanel;
+    private JButton installPluginParserListRefreshButton;
+    private JPanel pluginParserControlPanel;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -198,6 +199,7 @@ public class Downloader extends JFrame implements WindowListener {
                     mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(downloaderPanel), IconControl.getIcon("task", size));
                     mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(settingsPanel), IconControl.getIcon("settings", size));
                     mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(SpecialSettingsPanel), IconControl.getIcon("settings", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(pluginParserControlPanel), IconControl.getIcon("plugin", size));
                     mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(aboutPanel), IconControl.getIcon("about", size));
                 }
         );
@@ -212,13 +214,21 @@ public class Downloader extends JFrame implements WindowListener {
         // 初始化背景相关
         initBackgroundSettings();
 
+        var ref = new Object() {
+            ChangeListener l = null;
+        };
+        ref.l = e -> {
+            //拓展管理
+            initPluginParserComponents();
+            mainTabbedPane.removeChangeListener(ref.l);
+        };
+        mainTabbedPane.addChangeListener(ref.l);
 
         //任务
         initTaskComponents();
         //设置
         initSettingsComponents();
-        //拓展管理
-        initPluginParserComponents();
+
         //专项设置
         initSpecialSettingsComponents();
         //关于
@@ -238,11 +248,118 @@ public class Downloader extends JFrame implements WindowListener {
     private void initPluginParserComponents() {
         initToolBar();
 
+        initInstallPluginParserComponents();
+
         initInstalledPluginParserComponents();
+
+
+    }
+
+    private void initInstallPluginParserComponents() {
+        installPluginInfoPanel.setVisible(false);
+
+        installPluginParserIDLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
+        installPluginParserAuthorLabel.putClientProperty("FlatLaf.style", "font: $h4.font");
+        installPluginParserVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
+        installPluginParserStartVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
+        installPluginParserLastVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
+
+        installPluginParserList.putClientProperty("FlatLaf.style", "font: $h3.font");
+
+        updateInstallPluginParserList();
+
+        ThemeChanger.addInDynamicConverter(() -> installPluginParserList.repaint());
+
+        installPluginParserList.setCellRenderer(new ListCellRenderer<>() {
+
+
+            @Override
+            public Component getListCellRendererComponent(JList<? extends InstallPluginParserInfo> list,
+                                                          InstallPluginParserInfo value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+
+                final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        //super.paintComponent(g);
+                        // 根据成员变量绘制背景
+                        if (isSelected) {
+                            Graphics2D g2 = (Graphics2D) g.create();
+                            g2.setColor(UIManager.getColor("Component.accentColor"));
+                            g2.fillRect(0, 0, getWidth(), getHeight());
+                            g2.dispose();
+                        } else {
+                            Graphics2D g2 = (Graphics2D) g.create();
+                            Color base = UIManager.getColor("Panel.background");
+
+                            Color adjusted = DataControl.get("theme_type", "light").equals("dark")
+                                    ? ColorFunctions.lighten(base, 0.1f)
+                                    : ColorFunctions.darken(base, 0.1f);
+                            Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
+
+
+                            g2.setColor(translucent);
+                            g2.fillRect(0, 0, getWidth(), getHeight());
+                            g2.dispose();
+                        }
+
+                        // 子组件由 paintChildren 绘制
+                    }
+                };
+
+                final JLabel nameLabel = new JLabel();
+                final JLabel otherInfoLabel = new JLabel();
+
+                {
+                    panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                    //panel.setOpaque(false);
+                    nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
+                    panel.add(nameLabel, BorderLayout.CENTER);
+                    panel.add(otherInfoLabel, BorderLayout.SOUTH);
+                }
+
+                // 更新数据
+                nameLabel.setText(value.pluginParserInfo().parser().getID());
+                otherInfoLabel.setText(value.pluginParserInfo().version() + " " + value.pluginParserInfo().author());
+
+                //nameLabel.setForeground(UIManager.getColor("Label.foreground"));
+                //otherInfoLabel.setForeground(UIManager.getColor("Label.foreground"));
+
+                // 强制重绘面板（因为选中状态变化，需要刷新背景）
+                panel.repaint();
+                installPluginInfoPanel.repaint();
+
+                return panel;
+            }
+        });
+        installPluginParserList.addListSelectionListener(e -> {
+            var installPluginParserInfo = installPluginParserList.getSelectedValue();
+            installPluginInfoPanel.setVisible(true);
+            installPluginParserIDLabel.setText(installPluginParserInfo.pluginParserInfo().parser().getID());
+            installPluginParserAuthorLabel.setText(installPluginParserInfo.pluginParserInfo().author());
+            installPluginParserVersionLabel.setText(installPluginParserInfo.pluginParserInfo().version());
+            installPluginParserStartVersionLabel.setText(installPluginParserInfo.pluginParserInfo().startVersion());
+            installPluginParserLastVersionLabel.setText(installPluginParserInfo.pluginParserInfo().lastVersion());
+            installPluginInfoIntroductionPanel.removeAll();
+            installPluginInfoIntroductionPanel.add(UITools.createMarkdownPane(installPluginParserInfo.pluginParserInfo().introduction()), BorderLayout.CENTER);
+
+        });
+        installPluginParserListRefreshButton.addActionListener(e -> updateInstallPluginParserList());
+        PluginParserInstallButton.addActionListener(e -> {
+            logger.info(installPluginParserList.getSelectedValue().url());
+        });
+
+        installPluginParserList.setSelectedIndex(0);
     }
 
     private void initToolBar() {
-        JButton importLocalButton = new JButton(StringFormat.translate("plugins.control_tool_bar.import_local"));
+
+        PluginControlToolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+        JButton importLocalButton = new JButton();
+        importLocalButton.setToolTipText(
+                StringFormat.translate("plugins.control_tool_bar.import_local")
+        );
         IconControl.addInDynamicConverter(() ->
                 importLocalButton.setIcon(IconControl.getIcon("import",
                         importLocalButton.getFont().getSize())));
@@ -255,13 +372,15 @@ public class Downloader extends JFrame implements WindowListener {
                 if (FileOperation.copy(path, DataControl.getPATPath())){
                     TaskInfo.loadParsers();
                     updateInstalledPluginParserList();
+                    updateInstallPluginParserList();
                 }
             }
 
         });
         PluginControlToolBar.add(importLocalButton);
 
-        JButton refreshButton = new JButton(StringFormat.translate("refresh"));
+        JButton refreshButton = new JButton();
+        refreshButton.setToolTipText(StringFormat.translate("refresh"));
         IconControl.addInDynamicConverter(() ->
                 refreshButton.setIcon(IconControl.getIcon("refresh",
                         refreshButton.getFont().getSize())));
@@ -383,6 +502,15 @@ public class Downloader extends JFrame implements WindowListener {
     private void updateInstalledPluginParserList() {
         var pluginParserArrayList = TaskInfo.getPluginParserList();
         PluginParserList.setListData(pluginParserArrayList.toArray(PluginParserInfo[]::new));
+    }
+
+    private void updateInstallPluginParserList() {
+        var installPluginParserArrayList = getInstallPluginParserInfoList();
+        installPluginParserList.setListData(installPluginParserArrayList.toArray(InstallPluginParserInfo[]::new));
+    }
+
+    private List<InstallPluginParserInfo> getInstallPluginParserInfoList(){
+        return TaskInfo.getInstallPluginParserInfoList();
     }
 
     private void initLayeredPane() {
@@ -665,7 +793,7 @@ public class Downloader extends JFrame implements WindowListener {
                 () -> ProjectLinkButton.setIcon(IconControl.getIcon("link", ProjectLinkButton.getFont().getSize()))
         );
 
-        authorCheckBox.addActionListener(e -> {
+        authorCheckBox.addActionListener(_ -> {
             if (!authorCheckBox.isSelected()) {
                 var panel = new JPanel(new BorderLayout());
                 var textArea = new JTextArea("你真的要这么做吗!\n这样做真的很危险!\n不要继续呀!");
@@ -673,20 +801,18 @@ public class Downloader extends JFrame implements WindowListener {
 
             }
         });
-        FlatLafCheckBox.addActionListener(e -> {
+        FlatLafCheckBox.addActionListener(_ -> {
             EasterEggData.canUseFlatLaf = FlatLafCheckBox.isSelected();
             ThemeChanger.easyChanger();
         });
-        IconPackCheckBox.addActionListener(e -> {
+        IconPackCheckBox.addActionListener(_ -> {
             EasterEggData.canUseIcon = IconPackCheckBox.isSelected();
             IconControl.runDynamicConverters();
         });
 
-        checkUpdateButton.addActionListener(e -> {
-            checkUpdate();
-        });
+        checkUpdateButton.addActionListener(_ -> checkUpdate());
 
-        ProjectLinkButton.addActionListener(e -> {
+        ProjectLinkButton.addActionListener(_ -> {
             try {
                 Desktop.getDesktop().browse(URI.create("https://github.com/wmp666/Speed_Bump"));
             } catch (Exception ex) {
@@ -701,7 +827,7 @@ public class Downloader extends JFrame implements WindowListener {
     public void checkUpdate() {
         try {
             var update = GetUpdateInfo.getUpdateInfo();
-            if (update == null) {
+            if (update == null || update.url() == null) {
                 //没有新版本
                 ToastMessage.show(StringFormat.translate("check_update.no_update"), ToastMessage.INFO);
             } else {
@@ -725,8 +851,8 @@ public class Downloader extends JFrame implements WindowListener {
                                         null, FunctionDialog.NORTH_DIRECTION_RIGHT);
                             } else if (count == 1 && result == 200) {
                                 //创建更新任务
-                                mainTabbedPane.setSelectedIndex(0);
 
+                                mainTabbedPane.setSelectedIndex(0);
                                 createDownloadTask(update.url(), false);
                             }
                         }
@@ -1169,6 +1295,7 @@ public class Downloader extends JFrame implements WindowListener {
 
     @Override
     public void windowOpened(WindowEvent e) {
+
     }
 
     @Override

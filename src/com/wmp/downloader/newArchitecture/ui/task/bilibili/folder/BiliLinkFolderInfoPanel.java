@@ -125,9 +125,9 @@ public class BiliLinkFolderInfoPanel extends LinkFolderInfoPanel {
         }
 
         // 写入 jsonInfo
-        jsonInfo.put("selectedFileNames", selectedNames.toArray(new String[0]));
-        jsonInfo.put("videoUrls", videoUrlList.toArray(new String[0]));
-        jsonInfo.put("audioUrls", audioUrlList.toArray(new String[0]));
+        jsonInfo.put("selectedFileNames", selectedNames.toArray(String[]::new));
+        jsonInfo.put("videoUrls", videoUrlList.toArray(String[]::new));
+        jsonInfo.put("audioUrls", audioUrlList.toArray(String[]::new));
         jsonInfo.put("videoSizes", videoSizeList.stream().mapToLong(Long::longValue).toArray());
         jsonInfo.put("audioSizes", audioSizeList.stream().mapToLong(Long::longValue).toArray());
         // 可选：总大小

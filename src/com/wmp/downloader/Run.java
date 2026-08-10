@@ -14,9 +14,9 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.3.2";
+    public static String VERSION = "0.3.3";
 
-    public static String PLUGIN_SUPPORT_VERSION = "1.0.1";
+    public static String PLUGIN_SUPPORT_VERSION = "1.0";
 
     static void main(String[] args) {
         var argList = List.of(args);
@@ -43,7 +43,9 @@ public class Run {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "启动发生错误\n"+e);
             logger.error("启动发生错误", e);
+            System.exit(0);
             throw new RuntimeException(e);
+
         }
 
         downloader.setVisible(true);

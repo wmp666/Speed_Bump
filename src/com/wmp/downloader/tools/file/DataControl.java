@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class DataControl {
+
+    public static final String APP_GITHUB_API_HEAD = "https://api.github.com/repos/wmp666/Speed_Bump";
+    public static final String PLUGIN_GITHUB_API_HEAD = "https://api.github.com/repos/wmp666/Speed_Bump_Plugin";
+
     public static final ArrayList<String> themeList = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(DataControl.class);
     private static final Path DATA_DIR = Paths.get(
@@ -265,4 +269,5 @@ public class DataControl {
     public static File getPATPath() {
         return new File(DATA_DIR.toFile(), "ParsersATools");
     }
+
 }

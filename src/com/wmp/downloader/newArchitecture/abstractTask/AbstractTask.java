@@ -37,6 +37,11 @@ public abstract class AbstractTask extends JPanel {
     private DynamicConverterTask[] IconDynamicConverterTasks;
     private DynamicConverterTask[] ThemeDynamicConverterTasks;
 
+    /**
+     * 删除的文件是否正确这取决于你设置的savePath/filename
+     */
+    private boolean isSupportDeleteWhenExit = true;
+
     public AbstractTask(JSONObject jsonObject) {
         jsonObject.put("ProgressBarsPanel", ProgressBarsPanel);
         this.jsonObject = jsonObject;
@@ -117,10 +122,36 @@ public abstract class AbstractTask extends JPanel {
         });
 
         exitButton.addActionListener(e -> {
-            if (JOptionPane.showConfirmDialog(this, StringFormat.translate("task", "task.download_task.close.confirm")) == JOptionPane.YES_OPTION) {
+
+            JPanel panel = new JPanel(new BorderLayout(5, 5));
+            panel.add(new JLabel(StringFormat.translate("task.download_task.close.confirm")), BorderLayout.CENTER);
+            var isDeleteCheckBox = new JCheckBox(StringFormat.translate("task.download_task.close.is_delete"));
+            isDeleteCheckBox.setSelected(DataControl.get("isDeleteWhenCloseTask", false));
+            panel.add(isDeleteCheckBox, BorderLayout.SOUTH);
+
+            var i = JOptionPane.showConfirmDialog(
+                            this,
+                            panel,
+                            StringFormat.translate("close"),
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null
+                            );
+            if (i == JOptionPane.YES_OPTION) {
+                //暂停成功
                 if (stop()) {
 
-                    doWhenExit();
+                    try {
+                        doWhenExit();
+                    } catch (Exception ex) {
+                        logger.error("关闭任务执行失败");
+                        ToastMessage.show(this, StringFormat.translate("task", "task.stop_failed"), ToastMessage.ERROR);
+
+                    }
+
+                    //删除文件
+                    if (isDeleteCheckBox.isSelected()) {
+                        DataControl.putAndSave("isDeleteWhenCloseTask", isDeleteCheckBox.isSelected());
+                        DataControl.delete(new File(savePath, fileName), true);
+                    }
 
                     this.setVisible(false);
                     isCanExit = true;
@@ -311,4 +342,11 @@ public abstract class AbstractTask extends JPanel {
         return IconControl.getIcon("file", size);
     }
 
+    public boolean isSupportDeleteWhenExit() {
+        return isSupportDeleteWhenExit;
+    }
+
+    public void setSupportDeleteWhenExit(boolean supportDeleteWhenExit) {
+        isSupportDeleteWhenExit = supportDeleteWhenExit;
+    }
 }

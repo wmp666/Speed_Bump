@@ -270,7 +270,12 @@ public class CreateTaskPanel {
 
             var info = panel.getInfo();
             //var info = parser.setLink(infoJson.getString("url"));
-            var task = info.getTask(infoJson);
+            AbstractTask task = null;
+            try {
+                task = info.getTask(infoJson);
+            } catch (Exception e) {
+                logger.error("加载失败");
+            }
             if (task != null) downloadTasks.add(task);
             else {
                 logger.error(String.format("解析失败，解析器：%s | 链接：%s | 数据：%s",

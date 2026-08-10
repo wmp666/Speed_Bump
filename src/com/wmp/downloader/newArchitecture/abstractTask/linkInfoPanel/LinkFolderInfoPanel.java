@@ -164,21 +164,20 @@ public abstract class LinkFolderInfoPanel extends AbstractLinkInfoPanel {
 
     @Override
     public JSONObject getJsonInfo() {
-        var jsonObject = new JSONObject();
-        jsonObject.put("rootName", this.folderName);
-        jsonObject.put("selectedUrls", this.selectedUrls.toArray(String[]::new));
+        jsonInfo.put("rootName", this.folderName);
+        jsonInfo.put("selectedUrls", this.selectedUrls.toArray(String[]::new));
         var selectedFileSizes = getSelectedFileSizes();
-        jsonObject.put("sizes", selectedFileSizes);
-        jsonObject.put("selectedFileNames", getSelectedFileNames());
-        jsonObject.put("selectedStatus", fileSelectionStatus);
-        jsonObject.put("mode", modeLabel.getText());
+        jsonInfo.put("sizes", selectedFileSizes);
+        jsonInfo.put("selectedFileNames", getSelectedFileNames());
+        jsonInfo.put("selectedStatus", fileSelectionStatus);
+        jsonInfo.put("mode", modeLabel.getText());
         var size = 0L;
         for (var fileSize : selectedFileSizes) {
             size += fileSize;
         }
-        jsonObject.put("size", size);
+        jsonInfo.put("size", size);
 
-        return jsonObject;
+        return jsonInfo;
     }
 
     public static LinkFolderInfoPanel createPanel(

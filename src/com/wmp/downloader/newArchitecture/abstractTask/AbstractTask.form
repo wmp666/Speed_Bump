@@ -48,7 +48,7 @@
             <properties>
               <opaque value="false"/>
               <text value=""/>
-              <toolTipText resource-bundle="com/wmp/downloader/laug/laug" key="task.download_task.close"/>
+              <toolTipText resource-bundle="com/wmp/downloader/laug/laug" key="close"/>
             </properties>
           </component>
           <component id="792bf" class="javax.swing.JButton" binding="openInFolderButton">

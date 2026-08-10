@@ -176,7 +176,7 @@ public class GopeedDownloadTask extends AbstractTask {
         } catch (Exception e) {
             ToastMessage.show(this, StringFormat.translate("task", "task.gopeed_task.task_delete_failed"), ToastMessage.ERROR);
             logger.error("json数据解析异常", e);
-            throw new DownloadException("无法解析gopeed的数据");
+            //throw new DownloadException("无法解析gopeed的数据");
         }
         infoUpdateTimer.stop();
     }

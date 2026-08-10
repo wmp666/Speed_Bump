@@ -3,8 +3,8 @@ package com.wmp.downloader.newArchitecture;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.Run;
-import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
-import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
+import com.wmp.downloader.newArchitecture.abstractTask.*;
+import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.ui.task.bilibili.BiliParser;
 import com.wmp.downloader.newArchitecture.ui.task.bt.BTParser;
 import com.wmp.downloader.newArchitecture.ui.task.douyin.DouyinParser;
@@ -14,12 +14,14 @@ import com.wmp.downloader.newArchitecture.ui.task.gopeed.GopeedParser;
 import com.wmp.downloader.newArchitecture.ui.task.http.HTTPParser;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import org.apache.log4j.Logger;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
@@ -126,9 +128,37 @@ public class TaskInfo {
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.WARNING_MESSAGE
                     );
-                    if (i == JOptionPane.NO_OPTION ||
-                    i == JOptionPane.CLOSED_OPTION) {
+                    if (i != JOptionPane.YES_OPTION) {
                         continue;
+                    }
+                }
+
+                //0-all 1-windows 2-linux 3-mac
+                var supportPlatform = 0;
+                if (info[6] != null) {
+                    supportPlatform = switch (info[6]){
+                        case "windows" -> 1;
+                        case "linux" -> 2;
+                        case "mac" -> 3;
+                        default -> 0;
+                    };
+                }
+                if (supportPlatform != 0) {
+                    if (!((System.getProperty("os.name").startsWith("win") && supportPlatform == 1) ||
+                            (System.getProperty("os.name").startsWith("linux") && supportPlatform == 2) ||
+                            (System.getProperty("os.name").startsWith("mac") && supportPlatform == 3))) {
+                        var i = JOptionPane.showConfirmDialog(
+                                null,
+                                String.format(
+                                        StringFormat.translate("load_local_parser.platform_error"),
+                                        jar, info[6],
+                                StringFormat.translate("warn"),
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.WARNING_MESSAGE
+                        ));
+                        if (i != JOptionPane.YES_OPTION) {
+                            continue;
+                        }
                     }
                 }
 
@@ -178,7 +208,7 @@ public class TaskInfo {
             root.put(DISABLE_ID_KEY, new JSONArray());
             root.put(DELETE_ID_KEY, new JSONArray());
             try {
-                Files.write(file.toPath(), root.toJSONString().getBytes(StandardCharsets.UTF_8));
+                Files.writeString(file.toPath(), root.toJSONString());
             } catch (IOException e) {
                 logger.error("Failed to create Parser.json", e);
             }
@@ -226,7 +256,8 @@ public class TaskInfo {
                     info.getString("plugin_support_version_start"),
                     info.getString("plugin_support_version_last"),
                     info.getString("version"),
-                    info.getString("author"), introductionStr};
+                    info.getString("author"), introductionStr,
+                    info.getString("support_platform")};
         } catch (IOException e) {
             logger.error("Error reading info.json from " + jar.getName(), e);
             return null;
@@ -284,7 +315,7 @@ public class TaskInfo {
 
     private static void writeParserJson(File file, JSONObject root) {
         try {
-            Files.write(file.toPath(), root.toJSONString().getBytes(StandardCharsets.UTF_8));
+            Files.writeString(file.toPath(), root.toJSONString());
         } catch (IOException e) {
             logger.error("Failed to write Parser.json", e);
         }
@@ -364,5 +395,222 @@ public class TaskInfo {
 
     public static List<PluginParserInfo> getPluginParserList(){
         return List.of(parserList.toArray(PluginParserInfo[]::new));
+    }
+
+    public static List<InstallPluginParserInfo> getInstallPluginParserInfoList(){
+        return getInstallPluginParserInfoList(DataControl.get("use_github_accelerate", false));
+    }
+
+    private static List<InstallPluginParserInfo> getInstallPluginParserInfoList(boolean useGithubAccelerate) {
+        var apiUrl = DataControl.PLUGIN_GITHUB_API_HEAD + "/releases";
+
+        if (useGithubAccelerate) {
+            apiUrl = "https://" + DataControl.get("github_accelerate_link", "gh-proxy.org") + "/" + apiUrl;
+        }
+
+        try {
+            Connection.Response response = Jsoup.connect(apiUrl)
+                    .userAgent("Mozilla/5.0")
+                    .ignoreContentType(true)
+                    .followRedirects(false)
+                    .method(Connection.Method.GET)
+                    .execute();
+
+            int status = 404;
+            String message = "";
+
+            InputStream is = response.bodyStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            String body = sb.toString();
+
+            if (body.startsWith("{")) {
+                var json = JSONObject.parseObject(body);
+                message = json.getString("message");
+                status = json.getIntValue("status", 200);
+            } else if (body.startsWith("[")) {
+                status = 200;
+            }
+
+            if (status == 200) {
+                var jsonArray = JSONArray.parseArray(body);
+                var list = new ArrayList<InstallPluginParserInfo>();
+
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    JSONObject release = jsonArray.getJSONObject(i);
+                    String tag = release.getString("tag_name");
+                    String title = release.getString("name"); // GitHub 的 name 字段即为 Release 标题
+                    String releaseBody = release.getString("body");
+
+                    // 解析 Release Body 获取插件信息
+                    PluginParserInfo info = parsePluginInfoFromBody(releaseBody, tag, title);
+                    if (info == null) {
+                        // 解析失败则跳过该 Release
+                        logger.warn("跳过 Release: " + tag + "，因为 Body 内容不符合规范");
+                        continue;
+                    }
+
+                    // 获取第一个 asset 的下载链接
+                    JSONArray assets = release.getJSONArray("assets");
+                    if (assets.isEmpty()) {
+                        logger.warn("Release " + tag + " 没有 asset，跳过");
+                        continue;
+                    }
+                    String downloadUrl = assets.getJSONObject(0).getString("browser_download_url");
+
+                    list.add(new InstallPluginParserInfo(downloadUrl, info));
+                }
+
+                return list;
+            } else if (useGithubAccelerate && status == 403) {
+                return null;
+            } else {
+                ToastMessage.show(String.format(
+                        "Status = %s message = %s",
+                        status,
+                        message
+                ), ToastMessage.ERROR);
+                logger.error("Json数据存在问题 status=" + status);
+            }
+        } catch (Exception e) {
+            logger.error("网络数据获取失败", e);
+        }
+
+        return null;
+    }
+
+    /**
+     * 从 Release Body 中解析插件信息
+     * @param body   Release 的正文内容
+     * @param tag    Release 的 Tag（通常和插件名称一致）
+     * @param title  Release 的标题（通常和插件名称一致）
+     * @return PluginParserInfo 对象，若解析失败返回 null
+     */
+    private static PluginParserInfo parsePluginInfoFromBody(String body, String tag, String title) {
+        if (body == null || body.isEmpty()) {
+            return null;
+        }
+
+        // 按行分割
+        String[] lines = body.split("\\n");
+        String name = null;
+        String author = null;
+        String version = null;
+        String supportVersion = null; // 形如 "start~last"
+        String supportPlatform = "all";
+        StringBuilder introduction = new StringBuilder();
+
+        boolean inInfoSection = false;
+        boolean inIntroSection = false;
+
+        for (String line : lines) {
+            String trimmed = line.strip();
+
+            // 检测节标题
+            if (trimmed.startsWith("### 信息")) {
+                inInfoSection = true;
+                inIntroSection = false;
+                continue;
+            } else if (trimmed.startsWith("### 介绍")) {
+                inInfoSection = false;
+                inIntroSection = true;
+                continue;
+            }
+
+            // 在信息节中解析键值对
+            if (inInfoSection) {
+                if (trimmed.startsWith("name:")) {
+                    name = trimmed.substring(5).strip();
+                } else if (trimmed.startsWith("author:")) {
+                    author = trimmed.substring(7).strip();
+                } else if (trimmed.startsWith("version:")) {
+                    version = trimmed.substring(8).strip();
+                } else if (trimmed.startsWith("plugin_support_version:")) {
+                    supportVersion = trimmed.substring(22).strip();
+                } else if (trimmed.startsWith("support_platform:")) {
+                    supportPlatform = trimmed.substring(17).strip();
+                }
+            }
+
+            // 介绍节：从 "->" 开始的内容作为介绍
+            if (inIntroSection) {
+                if (!introduction.isEmpty() && !trimmed.isEmpty()) {
+                    // 如果已开始介绍，后续行（非空）也视为介绍的一部分（可能多行）
+                    introduction.append(trimmed).append("\n");
+                }
+            }
+        }
+
+        // 检查必要字段是否齐全
+        if (name == null || author == null || version == null || supportVersion == null) {
+            return null;
+        }
+
+        // 解析 supportVersion 为 start 和 last
+        String startVersion = "";
+        String lastVersion = "";
+        if (supportVersion.contains("~")) {
+            String[] parts = supportVersion.split("~", -1);
+            if (parts.length >= 1) startVersion = parts[0].strip();
+            if (parts.length >= 2) lastVersion = parts[1].strip();
+            // 处理 + 符号（无限）——直接保留字符串，后续在比较时特殊处理
+        } else {
+            // 如果没有 ~，则视为单一版本（start=last）
+            startVersion = supportVersion.strip();
+            lastVersion = supportVersion.strip();
+        }
+
+        // 构建 PluginParserInfo，AbstractParser 传 null
+
+        String finalName = name;
+        return new PluginParserInfo(
+                new AbstractParser() {
+                    @Override
+                    public String getID() {
+                        return finalName;
+                    }
+
+                    @Override
+                    public String getSupportTip() {
+                        return finalName;
+                    }
+
+                    @Override
+                    protected void updateLinkInfo(String link) {
+
+                    }
+
+                    @Override
+                    protected AbstractLinkInfoPanel getLinkedInfoPanel(String link, Info info) {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean isMeetRequirements(String link) {
+                        return false;
+                    }
+
+                    @Override
+                    protected AbstractTask getTask(String link, JSONObject infoJson) {
+                        return null;
+                    }
+
+                    @Override
+                    public AbstractSpecialSettingsPage getSettingsPage() {
+                        return null;
+                    }
+                },           // parser
+                version,
+                startVersion,
+                lastVersion,
+                author,
+                false,          // isAppPlugin 默认为 false，可根据需要调整
+                introduction.toString().strip()
+        );
     }
 }
