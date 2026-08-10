@@ -47,6 +47,7 @@ public class ParserTaskInfo {
 
     public static void loadParsers() {
 
+        ALL_PARSER_LIST.clear();
         ENABLE_PLUGIN_PARSER_LIST.clear();
         BASIC_PARSER_LIST.clear();
 

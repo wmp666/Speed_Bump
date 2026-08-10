@@ -747,27 +747,36 @@
                             </properties>
                             <border type="none"/>
                             <children>
-                              <component id="47cfd" class="javax.swing.JList" binding="installPluginParserList">
-                                <constraints border-constraint="Center"/>
-                                <properties>
-                                  <layoutOrientation value="0"/>
-                                  <model>
-                                    <item value="测试项目1"/>
-                                    <item value="Test Project 2"/>
-                                  </model>
-                                  <name value=""/>
-                                  <opaque value="false"/>
-                                  <selectedIndex value="-1"/>
-                                  <selectionMode value="0"/>
-                                  <visible value="true"/>
-                                </properties>
-                              </component>
                               <component id="d1ffa" class="javax.swing.JButton" binding="installPluginParserListRefreshButton">
                                 <constraints border-constraint="South"/>
                                 <properties>
                                   <text resource-bundle="com/wmp/downloader/laug/laug" key="plugins.install.list_resfresh"/>
                                 </properties>
                               </component>
+                              <scrollpane id="6be2" binding="installPluginParserScrollPane">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <opaque value="false"/>
+                                </properties>
+                                <border type="none"/>
+                                <children>
+                                  <component id="47cfd" class="javax.swing.JList" binding="installPluginParserList">
+                                    <constraints/>
+                                    <properties>
+                                      <layoutOrientation value="0"/>
+                                      <model>
+                                        <item value="测试项目1"/>
+                                        <item value="Test Project 2"/>
+                                      </model>
+                                      <name value=""/>
+                                      <opaque value="false"/>
+                                      <selectedIndex value="-1"/>
+                                      <selectionMode value="0"/>
+                                      <visible value="true"/>
+                                    </properties>
+                                  </component>
+                                </children>
+                              </scrollpane>
                             </children>
                           </grid>
                         </children>
@@ -797,23 +806,6 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="c6add" class="javax.swing.JList" binding="PluginParserList">
-                            <constraints>
-                              <splitpane position="left"/>
-                            </constraints>
-                            <properties>
-                              <layoutOrientation value="0"/>
-                              <model>
-                                <item value="123"/>
-                                <item value="456"/>
-                              </model>
-                              <name value=""/>
-                              <opaque value="false"/>
-                              <selectedIndex value="0"/>
-                              <selectionMode value="0"/>
-                              <visible value="true"/>
-                            </properties>
-                          </component>
                           <scrollpane id="70e11" binding="PluginInfoScrollPane" custom-create="true">
                             <constraints>
                               <splitpane position="right"/>
@@ -946,6 +938,30 @@
                                   </component>
                                 </children>
                               </grid>
+                            </children>
+                          </scrollpane>
+                          <scrollpane id="ee1b8" binding="PluginParserScrollPane">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="c6add" class="javax.swing.JList" binding="PluginParserList">
+                                <constraints/>
+                                <properties>
+                                  <layoutOrientation value="0"/>
+                                  <model>
+                                    <item value="123"/>
+                                    <item value="456"/>
+                                  </model>
+                                  <name value=""/>
+                                  <opaque value="false"/>
+                                  <selectedIndex value="0"/>
+                                  <selectionMode value="0"/>
+                                  <visible value="true"/>
+                                </properties>
+                              </component>
                             </children>
                           </scrollpane>
                         </children>

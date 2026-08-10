@@ -119,6 +119,8 @@ public class Downloader extends JFrame implements WindowListener {
     private JPanel installedPluginsPanel;
     private JButton installPluginParserListRefreshButton;
     private JPanel pluginParserControlPanel;
+    private JScrollPane installPluginParserScrollPane;
+    private JScrollPane PluginParserScrollPane;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -283,6 +285,10 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void initPluginParserComponents() {
+
+        UITools.setScrollPaneUnOpaque(installPluginParserScrollPane);
+        UITools.setScrollPaneUnOpaque(PluginParserScrollPane);
+
         initToolBar();
 
         initInstallPluginParserComponents();
@@ -428,7 +434,10 @@ public class Downloader extends JFrame implements WindowListener {
             //创建下载任务
 
 
-            var info = new PluginParserGithubDownloadTask(this::updateInstalledPluginParserList)
+            var info = new PluginParserGithubDownloadTask(() -> {
+                ParserTaskInfo.loadParsers();
+                updateInstalledPluginParserList();
+            })
                     .getParserInfo(installPluginParserList.getSelectedValue().url());
             var jsonInfo = info.getLinkedInfoPanel().getJsonInfo();
             jsonInfo.put("savePath", DataControl.getPATPath().getAbsolutePath());
