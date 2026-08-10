@@ -25,6 +25,7 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -40,12 +41,21 @@ public class ParserTaskInfo {
     private static final String INFO_JSON = "info.json";
     private static final String INTRODUCTION_MD = "introduction.md";
 
-    static {
-        loadParsers();
+    private static Map<String, URLClassLoader> pluginLoaders = new ConcurrentHashMap<>();
 
-    }
+    static {loadParsers();}
+
+
 
     public static void loadParsers() {
+
+        for (URLClassLoader loader : pluginLoaders.values()) {
+            try {
+                loader.close();
+            } catch (IOException ignored) {
+            }
+        }
+        pluginLoaders.clear();
 
         ALL_PARSER_LIST.clear();
         ENABLE_PLUGIN_PARSER_LIST.clear();
@@ -178,7 +188,7 @@ public class ParserTaskInfo {
                             logger.warn("Failed to load parser from " + jar.getName());
                         }
                 } catch (Exception e) {
-                    logger.error("类加载失败");
+                    logger.error("类加载失败", e);
                 }
             }
         }
@@ -263,29 +273,27 @@ public class ParserTaskInfo {
     }
 
     private static AbstractParser loadParserFromJar(File jar) throws Exception{
-        try (URLClassLoader classLoader = new URLClassLoader(new URL[]{jar.toURI().toURL()})) {
-            // 读取 info.json 获取 mainClass
-            String mainClass;
-            try (JarFile jarFile = new JarFile(jar)) {
-                JarEntry entry = jarFile.getJarEntry(INFO_JSON);
-                if (entry == null) return null;
-                String content = new String(jarFile.getInputStream(entry).readAllBytes(), StandardCharsets.UTF_8);
-                JSONObject info = JSONObject.parseObject(content);
-                mainClass = info.getString("mainClass");
-                if (mainClass == null || mainClass.isEmpty()) {
-                    logger.error("mainClass not specified in info.json of " + jar.getName());
-                    return null;
-                }
+        URLClassLoader classLoader = new URLClassLoader(new URL[]{jar.toURI().toURL()});
+        String mainClass, id;
+        try (JarFile jarFile = new JarFile(jar)) {
+            JarEntry entry = jarFile.getJarEntry(INFO_JSON);
+            if (entry == null) return null;
+            String content = new String(jarFile.getInputStream(entry).readAllBytes(), StandardCharsets.UTF_8);
+            JSONObject info = JSONObject.parseObject(content);
+            mainClass = info.getString("mainClass");
+            id = info.getString("id");
+            if (mainClass == null || mainClass.isEmpty()) {
+                logger.error("mainClass not specified in info.json of " + jar.getName());
+                return null;
             }
-
-            // 加载类并查找方法（优先 getInstance，其次 getParser）
-            Class<?> clazz = Class.forName(mainClass, true, classLoader);
-
-            // 调用方法，安全转换为 AbstractParser（不使用强制转型，通过 instanceof 校验）
-            Object result = clazz.getDeclaredConstructor().newInstance();
-            if (result instanceof AbstractParser) {
-                return (AbstractParser) result;
-            } else {
+        }
+        Class<?> clazz = Class.forName(mainClass, true, classLoader);
+        Object result = clazz.getDeclaredConstructor().newInstance();
+        if (result instanceof AbstractParser) {
+            AbstractParser parser = (AbstractParser) result;
+            pluginLoaders.put(id, classLoader);  // 保存加载器
+            return parser;
+        } else {
                 //进行向下兼容
                 logger.error("Class " + clazz.getName() + " does not AbstractParser instance in " + mainClass);
                 logger.error("将采用向下兼容");
@@ -358,10 +366,6 @@ public class ParserTaskInfo {
                     }
                 };
             }
-        } catch (Exception e) {
-            logger.error("Error loading parser from " + jar.getName(), e);
-            return null;
-        }
     }
 
     private static JSONObject readParserJson(File file) {

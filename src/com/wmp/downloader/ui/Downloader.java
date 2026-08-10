@@ -144,14 +144,14 @@ public class Downloader extends JFrame implements WindowListener {
         {
             if (DownloadTask.isCanExit()) {
                 TasksPanel.remove(DownloadTask);
+                taskFinalyTipList.remove(DownloadTask);
                 return true;
             } else return false;
         });
         taskList.forEach(urlDownloadTask -> {
-            if (!taskFinalyTipList.contains(urlDownloadTask)) {
+            if (urlDownloadTask.isFinally() && !taskFinalyTipList.contains(urlDownloadTask)) {
                 taskFinalyTipList.add(urlDownloadTask);
-            if (urlDownloadTask.isFinally()) {
-                urlDownloadTask.runWhenFinally();
+                Thread.ofVirtual().start(urlDownloadTask::runWhenFinally);
                 ToastMessage.show(this,
                     String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
                     ToastMessage.SUCCESS);
@@ -161,7 +161,6 @@ public class Downloader extends JFrame implements WindowListener {
                                 TrayIcon.MessageType.INFO);
                     }
                 }
-            }
         });
     });
     // FIX 删除了无用的 backgroundTimer 字段
@@ -313,67 +312,60 @@ public class Downloader extends JFrame implements WindowListener {
 
         ThemeChanger.addInDynamicConverter(() -> installPluginParserList.repaint());
 
-        installPluginParserList.setCellRenderer(new ListCellRenderer<>() {
+        installPluginParserList.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
+
+            final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    //super.paintComponent(g);
+                    // 根据成员变量绘制背景
+                    if (isSelected) {
+                        Graphics2D g2 = (Graphics2D) g.create();
+                        g2.setColor(UIManager.getColor("Component.accentColor"));
+                        g2.fillRect(0, 0, getWidth(), getHeight());
+                        g2.dispose();
+                    } else {
+                        Graphics2D g2 = (Graphics2D) g.create();
+                        Color base = UIManager.getColor("Panel.background");
+
+                        Color adjusted = DataControl.get("theme_type", "light").equals("dark")
+                                ? ColorFunctions.lighten(base, 0.1f)
+                                : ColorFunctions.darken(base, 0.1f);
+                        Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
 
 
-            @Override
-            public Component getListCellRendererComponent(JList<? extends InstallPluginParserInfo> list,
-                                                          InstallPluginParserInfo value, int index,
-                                                          boolean isSelected, boolean cellHasFocus) {
-
-                final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        //super.paintComponent(g);
-                        // 根据成员变量绘制背景
-                        if (isSelected) {
-                            Graphics2D g2 = (Graphics2D) g.create();
-                            g2.setColor(UIManager.getColor("Component.accentColor"));
-                            g2.fillRect(0, 0, getWidth(), getHeight());
-                            g2.dispose();
-                        } else {
-                            Graphics2D g2 = (Graphics2D) g.create();
-                            Color base = UIManager.getColor("Panel.background");
-
-                            Color adjusted = DataControl.get("theme_type", "light").equals("dark")
-                                    ? ColorFunctions.lighten(base, 0.1f)
-                                    : ColorFunctions.darken(base, 0.1f);
-                            Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
-
-
-                            g2.setColor(translucent);
-                            g2.fillRect(0, 0, getWidth(), getHeight());
-                            g2.dispose();
-                        }
-
-                        // 子组件由 paintChildren 绘制
+                        g2.setColor(translucent);
+                        g2.fillRect(0, 0, getWidth(), getHeight());
+                        g2.dispose();
                     }
-                };
 
-                final JLabel nameLabel = new JLabel();
-                final JLabel otherInfoLabel = new JLabel();
-
-                {
-                    panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-                    //panel.setOpaque(false);
-                    nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
-                    panel.add(nameLabel, BorderLayout.CENTER);
-                    panel.add(otherInfoLabel, BorderLayout.SOUTH);
+                    // 子组件由 paintChildren 绘制
                 }
+            };
 
-                // 更新数据
-                nameLabel.setText(value.pluginParserInfo().parser().getID());
-                otherInfoLabel.setText(value.pluginParserInfo().version() + " " + value.pluginParserInfo().author());
+            final JLabel nameLabel = new JLabel();
+            final JLabel otherInfoLabel = new JLabel();
 
-                //nameLabel.setForeground(UIManager.getColor("Label.foreground"));
-                //otherInfoLabel.setForeground(UIManager.getColor("Label.foreground"));
-
-                // 强制重绘面板（因为选中状态变化，需要刷新背景）
-                panel.repaint();
-                installPluginInfoPanel.repaint();
-
-                return panel;
+            {
+                panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                //panel.setOpaque(false);
+                nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
+                panel.add(nameLabel, BorderLayout.CENTER);
+                panel.add(otherInfoLabel, BorderLayout.SOUTH);
             }
+
+            // 更新数据
+            nameLabel.setText(value.pluginParserInfo().parser().getID());
+            otherInfoLabel.setText(value.pluginParserInfo().version() + " " + value.pluginParserInfo().author());
+
+            //nameLabel.setForeground(UIManager.getColor("Label.foreground"));
+            //otherInfoLabel.setForeground(UIManager.getColor("Label.foreground"));
+
+            // 强制重绘面板（因为选中状态变化，需要刷新背景）
+            panel.repaint();
+            installPluginInfoPanel.repaint();
+
+            return panel;
         });
         installPluginParserList.addListSelectionListener(e -> {
             var installPluginParserInfo = installPluginParserList.getSelectedValue();
@@ -409,7 +401,7 @@ public class Downloader extends JFrame implements WindowListener {
                 installPluginInfoIntroductionPanel.add(UITools.createMarkdownPane(installPluginParserInfo.pluginParserInfo().introduction()), BorderLayout.CENTER);
 
 
-                var pluginParserList = ParserTaskInfo.getPluginParserList();
+                var pluginParserList = ParserTaskInfo.getAllPluginParserList();
                 var idList = pluginParserList.stream().map(pluginParserInfo -> pluginParserInfo.parser().getID()).toList();
                 if (idList.contains(id)) {
                     if (GetUpdateInfo.versionGreaterThan(installPluginParserInfo.pluginParserInfo().version(), pluginParserList.get(idList.indexOf(id)).version())) {
@@ -436,6 +428,7 @@ public class Downloader extends JFrame implements WindowListener {
 
             var info = new PluginParserGithubDownloadTask(() -> {
                 ParserTaskInfo.loadParsers();
+                updateInstallPluginParserList();
                 updateInstalledPluginParserList();
             })
                     .getParserInfo(installPluginParserList.getSelectedValue().url());
@@ -601,6 +594,7 @@ public class Downloader extends JFrame implements WindowListener {
             }
         });
         PluginParserUninstallButton.addActionListener(e -> {
+            var oldIndex = PluginParserList.getSelectedIndex();
             var id = pluginParserIDLabel.getText();
             ParserTaskInfo.setDeleteParser(id);
 
@@ -608,6 +602,8 @@ public class Downloader extends JFrame implements WindowListener {
 
             ParserTaskInfo.loadParsers();
             updateInstalledPluginParserList();
+
+            PluginParserList.setSelectedIndex(oldIndex != 0?oldIndex - 1:0);
         });
         pluginParserStatusControlButton.addActionListener(e -> {
             var id = pluginParserIDLabel.getText();
@@ -726,12 +722,28 @@ public class Downloader extends JFrame implements WindowListener {
         };*/
 
         var parserList = ParserTaskInfo.getEnablePluginParserList();
-        var basicSpecialSettings =
-                new ArrayList<>(parserList.stream()
-                        .map(AbstractParser::getSettingsPage)
-                        .filter(Objects::nonNull)
-                        .toList());
-        basicSpecialSettings.add(new FFmpegSettings());
+        ArrayList<AbstractSpecialSettingsPage> basicSpecialSettings =
+                null;
+        try {
+            var list = parserList.stream()
+                    .map(parser -> {
+                        try {
+                            return parser.getSettingsPage();
+                        } catch (Exception e) {
+                            ToastMessage.show(e.getMessage(), ToastMessage.ERROR);
+                        }
+                        return null;
+                    })
+                    .filter(Objects::nonNull)
+                    .toList();
+            basicSpecialSettings = new ArrayList<>(list);
+        } catch (Exception e) {
+            logger.error("发生错误", e);
+            ToastMessage.show(e.getMessage(), ToastMessage.ERROR);
+        }
+        if (basicSpecialSettings != null) {
+            basicSpecialSettings.add(new FFmpegSettings());
+        }
         for (var specialSettings : basicSpecialSettings) {
             var jScrollPane1 = new JScrollPane(specialSettings);
             UITools.setScrollPaneUnOpaque(jScrollPane1);
