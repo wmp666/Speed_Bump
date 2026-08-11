@@ -235,9 +235,10 @@ public class Downloader extends JFrame implements WindowListener {
                     SwingUtilities.invokeLater(() -> {
                         initPluginParserComponents();
                         waitProgressBar.setVisible(false);
+                        mainTabbedPane.removeChangeListener(ref.l);
                     });
 
-                    mainTabbedPane.removeChangeListener(ref.l);
+
                 }
 
             };
@@ -259,9 +260,8 @@ public class Downloader extends JFrame implements WindowListener {
                     SwingUtilities.invokeLater(() -> {
                         initSettingsComponents();
                         waitProgressBar.setVisible(false);
+                        mainTabbedPane.removeChangeListener(ref.l);
                     });
-
-                    mainTabbedPane.removeChangeListener(ref.l);
                 }
 
             };
@@ -280,9 +280,8 @@ public class Downloader extends JFrame implements WindowListener {
                     SwingUtilities.invokeLater(() -> {
                         initSpecialSettingsComponents();
                         waitProgressBar.setVisible(false);
+                        mainTabbedPane.removeChangeListener(ref.l);
                     });
-
-                    mainTabbedPane.removeChangeListener(ref.l);
                 }
 
             };

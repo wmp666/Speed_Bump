@@ -2,43 +2,15 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="ED2KParser:jar" />
+      <artifact name="DownLoader_Linux:jar" />
+      <artifact name="DownLoader_Windows:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="推送">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/ED2KParser_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/formdev_flatlaf_swingx.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/io_github_homebeaver_swingx_core.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/TaskPaneContainerDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/.idea/git_toolbox_prj.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/ED2KParser.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/src/com/wmp/parser/ed2k/ED2KParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/src/info.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/src/introduction.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DownLoader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DownLoader.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/ed2k/ED2KParser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/PreloadDialog.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/PreloadDialog.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/PreloadDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/PreloadDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="将ED2K下载提取为拓展&#10;新增主题色设置&#10;更新预加载进度弹窗&#10;更新任务进度条样式" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -450,7 +422,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="补全繁体中文翻译，修复部分问题" />
     <MESSAGE value="支持跟随系统变更主题" />
     <MESSAGE value="支持跟随系统变更主题，下载任务名称显示优化" />
     <MESSAGE value="更新README" />
@@ -475,7 +446,8 @@
     <MESSAGE value="在&quot;软件&quot;中增加检查更新&#10;增加向下兼容&#10;对部分代码进行优化" />
     <MESSAGE value="增加下载拓展后自动刷新&#10;修复一点小小问题" />
     <MESSAGE value="推送" />
-    <option name="LAST_COMMIT_MESSAGE" value="推送" />
+    <MESSAGE value="将ED2K下载提取为拓展&#10;新增主题色设置&#10;更新预加载进度弹窗&#10;更新任务进度条样式" />
+    <option name="LAST_COMMIT_MESSAGE" value="将ED2K下载提取为拓展&#10;新增主题色设置&#10;更新预加载进度弹窗&#10;更新任务进度条样式" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
