@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ED2KParser:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ED2KParser_jar</output-path>
+    <root id="archive" name="ED2KParser.jar">
+      <element id="module-output" name="ED2KParser" />
+    </root>
+  </artifact>
+</component>

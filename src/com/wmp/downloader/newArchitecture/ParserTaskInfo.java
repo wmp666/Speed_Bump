@@ -6,7 +6,6 @@ import com.wmp.downloader.Run;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.ui.task.bt.BTParser;
-import com.wmp.downloader.newArchitecture.ui.task.ed2k.ED2KParser;
 import com.wmp.downloader.newArchitecture.ui.task.github.GithubParser;
 import com.wmp.downloader.newArchitecture.ui.task.gopeed.GopeedParser;
 import com.wmp.downloader.newArchitecture.ui.task.http.HTTPParser;
@@ -204,7 +203,6 @@ public class ParserTaskInfo {
         ALL_PARSER_LIST.add(githubParserInfo);
 
         BASIC_PARSER_LIST.add(new BTParser());
-        BASIC_PARSER_LIST.add(new ED2KParser());
         BASIC_PARSER_LIST.add(new GopeedParser());
         BASIC_PARSER_LIST.add(new HTTPParser());
     }

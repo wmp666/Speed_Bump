@@ -2,24 +2,42 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="BiliParser:jar" />
-      <artifact name="DouyinParser:jar" />
-      <artifact name="DownLoader_Linux:jar" />
-      <artifact name="DownLoader_Windows:jar" />
+      <artifact name="ED2KParser:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加下载拓展后自动刷新&#10;修复一点小小问题">
-      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsonSchemas.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="推送">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/ED2KParser_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/formdev_flatlaf_swingx.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/io_github_homebeaver_swingx_core.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/TaskPaneContainerDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/.idea/git_toolbox_prj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/ED2KParser.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/src/com/wmp/parser/ed2k/ED2KParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/src/info.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/src/introduction.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpeedBump.exe4j" beforeDir="false" afterPath="$PROJECT_DIR$/SpeedBump.exe4j" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DownLoader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DownLoader.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/ed2k/ED2KParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/减速带.iss" beforeDir="false" afterPath="$PROJECT_DIR$/减速带.iss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/PreloadDialog.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/PreloadDialog.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/PreloadDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/PreloadDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +62,7 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -110,14 +129,14 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "false",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "342",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src",
+    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/ED2KParser/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
@@ -126,10 +145,10 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src/Main.java",
-    "project.structure.last.edited": "工件",
+    "project.structure.last.edited": "库",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "editor.preferences.appearance",
     "应用程序.BTTest.executor": "Run",
     "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
@@ -141,6 +160,7 @@
     "应用程序.GopeedClient.executor": "Run",
     "应用程序.MagnetToTorrent.executor": "Run",
     "应用程序.Run.executor": "Run",
+    "应用程序.TaskPaneContainerDemo.executor": "Run",
     "应用程序.TikTokDownloader.executor": "Run",
     "应用程序.ToastMessage.executor": "Run",
     "应用程序.VideoInfoReader.executor": "Run"
@@ -148,11 +168,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ED2KParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src\com\wmp\parser" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src\com\wmp\parser" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
@@ -194,129 +214,129 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FTPDownloader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.FTPDownloader" />
+    <configuration name="GopeedClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.GopeedClient" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GopeedClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.GopeedClient" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GopeedClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.GopeedClient" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MagnetToTorrent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.MagnetToTorrent" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.tools.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MagnetToTorrent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.MagnetToTorrent" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.tools.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MagnetToTorrent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.MagnetToTorrent" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.tools.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TaskPaneContainerDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.TaskPaneContainerDemo" />
       <module name="DownLoader" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.wmp.downloader.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GopeedClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.GopeedClient" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GopeedClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.GopeedClient" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GopeedClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.GopeedClient" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MagnetToTorrent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.MagnetToTorrent" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MagnetToTorrent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.MagnetToTorrent" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MagnetToTorrent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.MagnetToTorrent" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -364,7 +384,7 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="应用程序.FTPDownloader" />
+      <item itemvalue="应用程序.TaskPaneContainerDemo" />
       <item itemvalue="应用程序.GopeedClient" />
       <item itemvalue="应用程序.MagnetToTorrent" />
       <item itemvalue="应用程序.Run" />
@@ -373,18 +393,18 @@
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.Run" />
+        <item itemvalue="应用程序.TaskPaneContainerDemo" />
         <item itemvalue="应用程序.ToastMessage" />
         <item itemvalue="应用程序.MagnetToTorrent" />
         <item itemvalue="应用程序.GopeedClient" />
-        <item itemvalue="应用程序.FTPDownloader" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-63390994e64e-intellij.indexing.shared.core-IU-262.8665.337" />
-        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.8665.337" />
+        <option value="bundled-jdk-30f59d01ecdd-34e2839f716b-intellij.indexing.shared.core-IU-262.9437.185" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.9437.185" />
       </set>
     </attachedChunks>
   </component>
@@ -430,7 +450,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="将多个翻译文件统一为一个" />
     <MESSAGE value="补全繁体中文翻译，修复部分问题" />
     <MESSAGE value="支持跟随系统变更主题" />
     <MESSAGE value="支持跟随系统变更主题，下载任务名称显示优化" />
@@ -455,7 +474,8 @@
     <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器" />
     <MESSAGE value="在&quot;软件&quot;中增加检查更新&#10;增加向下兼容&#10;对部分代码进行优化" />
     <MESSAGE value="增加下载拓展后自动刷新&#10;修复一点小小问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加下载拓展后自动刷新&#10;修复一点小小问题" />
+    <MESSAGE value="推送" />
+    <option name="LAST_COMMIT_MESSAGE" value="推送" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -482,7 +502,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
-          <line>597</line>
+          <line>616</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
@@ -506,15 +526,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
-          <line>299</line>
-          <properties class="com.wmp.downloader.ui.Downloader" method="initInstallPluginParserComponents">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="34" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,5 +1,6 @@
 package com.wmp.downloader;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.WebSetter;
 import com.wmp.downloader.tools.ui.ThemeChanger;
@@ -14,7 +15,7 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.3.3.3";
+    public static String VERSION = "0.3.4";
 
     public static String PLUGIN_SUPPORT_VERSION = "1.0.0";
 
@@ -24,6 +25,9 @@ public class Run {
             var versionIndex = argList.indexOf("-set:version") + 1;
             VERSION = versionIndex == 0 ? VERSION : argList.get(versionIndex);
         }
+
+        FlatLightLaf.setup();
+
         var preloadDialog = new PreloadDialog();
         preloadDialog.setVisible(true);
 

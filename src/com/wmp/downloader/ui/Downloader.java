@@ -19,6 +19,7 @@ import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
+import org.jdesktop.swingx.JXBusyLabel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -121,6 +122,9 @@ public class Downloader extends JFrame implements WindowListener {
     private JPanel pluginParserControlPanel;
     private JScrollPane installPluginParserScrollPane;
     private JScrollPane PluginParserScrollPane;
+    private JTextField accentColorTextField;
+    private JButton accentColorChooseButton;
+    private JProgressBar waitProgressBar;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -226,8 +230,13 @@ public class Downloader extends JFrame implements WindowListener {
             };
             ref.l = e -> {
                 if (pluginParserControlPanel == mainTabbedPane.getSelectedComponent()) {
+                    waitProgressBar.setVisible(true);
+                    waitProgressBar.setIndeterminate(true);
+                    SwingUtilities.invokeLater(() -> {
+                        initPluginParserComponents();
+                        waitProgressBar.setVisible(false);
+                    });
 
-                    initPluginParserComponents();
                     mainTabbedPane.removeChangeListener(ref.l);
                 }
 
@@ -245,8 +254,13 @@ public class Downloader extends JFrame implements WindowListener {
             };
             ref.l = e -> {
                 if (settingsPanel == mainTabbedPane.getSelectedComponent()) {
+                    waitProgressBar.setVisible(true);
+                    waitProgressBar.setIndeterminate(true);
+                    SwingUtilities.invokeLater(() -> {
+                        initSettingsComponents();
+                        waitProgressBar.setVisible(false);
+                    });
 
-                    initSettingsComponents();
                     mainTabbedPane.removeChangeListener(ref.l);
                 }
 
@@ -261,8 +275,13 @@ public class Downloader extends JFrame implements WindowListener {
             };
             ref.l = e -> {
                 if (SpecialSettingsPanel == mainTabbedPane.getSelectedComponent()) {
+                    waitProgressBar.setVisible(true);
+                    waitProgressBar.setIndeterminate(true);
+                    SwingUtilities.invokeLater(() -> {
+                        initSpecialSettingsComponents();
+                        waitProgressBar.setVisible(false);
+                    });
 
-                    initSpecialSettingsComponents();
                     mainTabbedPane.removeChangeListener(ref.l);
                 }
 
@@ -1155,6 +1174,7 @@ public class Downloader extends JFrame implements WindowListener {
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
         alphaSlider.setValue((int) (DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue() * 100));
         isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
+        accentColorTextField.setText(DataControl.get("accent_color", "29a5e3"));
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -1210,7 +1230,8 @@ public class Downloader extends JFrame implements WindowListener {
         //添加图标
         IconControl.addInDynamicConverter(
                 () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize())),
-                () -> deleteTempFolderDataButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize()))
+                () -> deleteTempFolderDataButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
+                () -> accentColorChooseButton.setIcon(IconControl.getIcon("eyedropper", accentColorChooseButton.getFont().getSize()))
         );
         IconControl.addInDynamicConverter(
                 () -> refreshButton.setIcon(IconControl.getIcon("refresh", refreshButton.getFont().getSize())),
@@ -1223,7 +1244,7 @@ public class Downloader extends JFrame implements WindowListener {
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
             ThreadNumLabel.setSize(ThreadNumLabel.getPreferredSize());
         });
-
+        //动态保存
         BackgroundModeComboBox.addItemListener(e -> {
             DataControl.putAndSave("background_mode", e.getItem().toString());
             if (e.getItem().equals("Image")) {
@@ -1256,6 +1277,8 @@ public class Downloader extends JFrame implements WindowListener {
             fontSizeSpinner.setValue(DataControl.get("FontSize", 12));
             themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
 
+            accentColorTextField.setText(DataControl.get("accent_color", "29a5e3"));
+
             updateBackground();
             updateChildBounds(); // FIX 使用统一方法
 
@@ -1278,6 +1301,21 @@ public class Downloader extends JFrame implements WindowListener {
                 lauguage = matcher.group(1);
             }
             DataControl.putAndSave("laug", lauguage);
+        });
+
+        accentColorChooseButton.addActionListener(e -> {
+            Color color = null;
+            try {
+                color = Color.decode("#" + accentColorTextField.getText());
+            } catch (NumberFormatException ex) {
+                color = new Color(0x29a5e3);
+            }
+            var result = JColorChooser.showDialog(this, StringFormat.translate("settings.personalized.accent_color"), color);
+/*
+            int rgb = 0xFF0000; // 注意：如果 int 包含 Alpha，需先屏蔽高位
+            int rgbOnly = rgb & 0x00FFFFFF;
+            String hex = String.format("#%06X", rgbOnly); // 输出 "#FF0000"*/
+            accentColorTextField.setText(String.format("%06X", result.getRGB() & 0x00FFFFFF));
         });
 
         dataPathButton.addActionListener(e -> {
@@ -1303,6 +1341,7 @@ public class Downloader extends JFrame implements WindowListener {
             DataControl.put("is_use_heavy_weight.toast", isUseHeavyWeightToastCheckBox.isSelected());
             DataControl.put("is_use_heavy_weight.function_dialog", isUseHeavyWeightFunctionDialogCheckBox.isSelected());
             DataControl.put("is_start_check_update", isStartCheckUpdateCheckBox.isSelected());
+            DataControl.put("accent_color", accentColorTextField.getText());
 
             DataControl.save();
             DataControl.load();
@@ -1324,7 +1363,7 @@ public class Downloader extends JFrame implements WindowListener {
             try {
                 if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
                     String content = (String) clipboard.getData(DataFlavor.stringFlavor);
-                    if (!lastClipboardContent.strip().isEmpty() && content != null && !content.equals(lastClipboardContent)) {
+                    if (!lastClipboardContent.isBlank() && content != null && !content.equals(lastClipboardContent)) {
                         logger.info("剪切板更新");
                         lastClipboardContent = content;
                         String url = extractUrl(content);

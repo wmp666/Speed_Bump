@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/DouyinParser.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/DouyinParser.iml" />
       <module fileurl="file://$PROJECT_DIR$/DownLoader.iml" filepath="$PROJECT_DIR$/DownLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/DownLoader_plugin.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/DownLoader_plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/ED2KParser.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/ED2KParser.iml" />
     </modules>
   </component>
 </project>

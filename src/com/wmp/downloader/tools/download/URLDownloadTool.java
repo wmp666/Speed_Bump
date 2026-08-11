@@ -514,7 +514,7 @@ public class URLDownloadTool {
                                 }
                                 if (totalRead == rangeSize) {
                                     logger.debug(Thread.currentThread().getName() + " 段下载完成。");
-                                    progressBar.setVisible(false);
+                                    //progressBar.setVisible(false);
                                     return;
                                 } else {
                                     throw new IOException("下载数据不完整，期望 " + rangeSize + "，实际 " + totalRead);

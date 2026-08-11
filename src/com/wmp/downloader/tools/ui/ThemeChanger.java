@@ -2,6 +2,7 @@ package com.wmp.downloader.tools.ui;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import com.formdev.flatlaf.swingx.FlatSwingXDefaultsAddon;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.wmp.downloader.tools.file.DataControl;
@@ -11,6 +12,7 @@ import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ThemeChanger {
@@ -60,8 +62,11 @@ public class ThemeChanger {
 
         FlatAnimatedLafChange.showSnapshot();
 
+        //颜色更新
+        FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#" + DataControl.get("accent_color", "05E666")));
 
-        ThemeRefresh(newTheme, false);
+        ThemeRefresh(newTheme, false, true);
+
 
         //字体更新
         UIManager.put("defaultFont", new Font(DataControl.get("Font", "Microsoft YaHei"), Font.PLAIN, DataControl.get("FontSize", 12)));
@@ -77,9 +82,14 @@ public class ThemeChanger {
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
-    private static void ThemeRefresh(Object newTheme, boolean isUseSnapshot) {
+
+    private static void ThemeRefresh(Object newTheme, boolean isUseSnapshot){
+        ThemeRefresh(newTheme, isUseSnapshot, false);
+    }
+
+    private static void ThemeRefresh(Object newTheme, boolean isUseSnapshot, boolean forcedRefresh) {
         //主题更新，如果前后主题相同就跳过
-        if (isSameTheme(newTheme)) return;
+        if (!forcedRefresh && isSameTheme(newTheme)) return;
 
         if (isUseSnapshot) FlatAnimatedLafChange.showSnapshot();
 
@@ -115,6 +125,7 @@ public class ThemeChanger {
         }
 
         //主体部分数据更新
+        UIManager.put("FlatLaf.addon.swingx", new FlatSwingXDefaultsAddon());
         UIManager.put("TabbedPane.tabsOpaque", false);
         UIManager.put("TabbedPane.contentOpaque", false);
         FlatLaf.setUseNativeWindowDecorations(true);

@@ -5,14 +5,11 @@
 ## 使用提示（单文件运行）
 1. 运行本软件时请确保已安装(有相关的环境变量——JAVA_HOME/JDK_HOME) **Java 25** 或更高版本，或者在程序同目录下放置JDK文件夹，并重命名为jdk
 
-> 作者正在尝试将gopeed，ED2K提取为拓展
-
 ## 支持的下载链接
 - HTTP/HTTPS
   - Github加速
 - BT（Torrent、Magnet）
 - Gopeed
-  - ED2K
 
 ### 官方提供的拓展支持格式
 - 哔哩哔哩（视频、视频合集）
