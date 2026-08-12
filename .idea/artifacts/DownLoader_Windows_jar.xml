@@ -27,12 +27,7 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf-extras/3.7.2/flatlaf-extras-3.7.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/weisj/jsvg/2.1.0/jsvg-2.1.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf-swingx/3.7.2/flatlaf-swingx-3.7.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/homebeaver/swingx-core/1.7.8/swingx-core-1.7.8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/homebeaver/swingx-autocomplete/1.7.8/swingx-autocomplete-1.7.8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/homebeaver/swingx-common/1.7.8/swingx-common-1.7.8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/homebeaver/swingx-action/1.7.8/swingx-action-1.7.8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/homebeaver/swingx-graphics/1.7.8/swingx-graphics-1.7.8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/homebeaver/swingx-painters/1.7.8/swingx-painters-1.7.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/swinglabs/swingx/swingx-all/1.6.5-1/swingx-all-1.6.5-1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

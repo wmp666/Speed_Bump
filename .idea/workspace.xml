@@ -10,23 +10,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复一点小问题">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Linux_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Linux_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/io_github_homebeaver_swingx_core.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DownLoader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DownLoader.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpeedBump.exe4j" beforeDir="false" afterPath="$PROJECT_DIR$/SpeedBump.exe4j" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/test/TaskPaneContainerDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/TaskPaneContainerDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/减速带.iss" beforeDir="false" afterPath="$PROJECT_DIR$/减速带.iss" afterDir="false" />
-    </list>
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加设置项“使用方角组件”&#10;使用了全新的组件，是设置项分类更加详细&#10;优化拓展加载方式&#10;优化更新窗口的逻辑" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -439,7 +423,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="支持跟随系统变更主题，下载任务名称显示优化" />
     <MESSAGE value="更新README" />
     <MESSAGE value="新增更新功能&#10;1.增加更新按钮...&#10;2.增加新的非模态通知类型&#10;3.新增更新功能（目前仅Windows）" />
     <MESSAGE value="去除了旧的更新日志，增加了更新内容整合" />
@@ -464,7 +447,8 @@
     <MESSAGE value="推送" />
     <MESSAGE value="将ED2K下载提取为拓展&#10;新增主题色设置&#10;更新预加载进度弹窗&#10;更新任务进度条样式" />
     <MESSAGE value="修复一点小问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复一点小问题" />
+    <MESSAGE value="增加设置项“使用方角组件”&#10;使用了全新的组件，是设置项分类更加详细&#10;优化拓展加载方式&#10;优化更新窗口的逻辑" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加设置项“使用方角组件”&#10;使用了全新的组件，是设置项分类更加详细&#10;优化拓展加载方式&#10;优化更新窗口的逻辑" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
