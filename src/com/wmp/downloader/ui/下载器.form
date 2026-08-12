@@ -9,7 +9,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <tabbedpane id="c729a" binding="mainTabbedPane">
+      <tabbedpane id="c729a" binding="mainTabbedPane" custom-create="true">
         <constraints border-constraint="Center"/>
         <properties>
           <opaque value="false"/>
@@ -170,7 +170,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <grid id="7c25a" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                      <grid id="7c25a" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                         <margin top="5" left="5" bottom="5" right="5"/>
                         <constraints/>
                         <properties>
@@ -179,125 +179,24 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <grid id="bc86c" binding="TextUIControlPanel" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                            <margin top="0" left="0" bottom="0" right="0"/>
-                            <constraints>
-                              <grid row="7" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <opaque value="false"/>
-                            </properties>
-                            <border type="none"/>
-                            <children>
-                              <component id="5c388" class="javax.swing.JLabel">
-                                <constraints>
-                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.font"/>
-                                </properties>
-                              </component>
-                              <component id="4d1d9" class="javax.swing.JComboBox" binding="FontListComboBox">
-                                <constraints>
-                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties/>
-                              </component>
-                              <component id="deb2e" class="javax.swing.JSpinner" binding="fontSizeSpinner" custom-create="true">
-                                <constraints>
-                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties/>
-                              </component>
-                              <component id="38c32" class="javax.swing.JLabel">
-                                <constraints>
-                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.font_size"/>
-                                </properties>
-                              </component>
-                              <grid id="7fcfb" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                                <margin top="0" left="0" bottom="0" right="0"/>
-                                <constraints>
-                                  <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <opaque value="false"/>
-                                </properties>
-                                <border type="none"/>
-                                <children>
-                                  <component id="d1b52" class="javax.swing.JLabel">
-                                    <constraints>
-                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.laug"/>
-                                    </properties>
-                                  </component>
-                                  <component id="380e9" class="javax.swing.JComboBox" binding="laugComboBox">
-                                    <constraints>
-                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <model/>
-                                      <opaque value="false"/>
-                                    </properties>
-                                  </component>
-                                  <component id="d7a7b" class="javax.swing.JLabel">
-                                    <constraints>
-                                      <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <foreground color="-846828"/>
-                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.laug.tip"/>
-                                    </properties>
-                                  </component>
-                                  <component id="85308" class="javax.swing.JCheckBox" binding="isStartCheckUpdateCheckBox">
-                                    <constraints>
-                                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <selected value="true"/>
-                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_start_check_update"/>
-                                    </properties>
-                                  </component>
-                                </children>
-                              </grid>
-                            </children>
-                          </grid>
                           <vspacer id="50fef">
                             <constraints>
-                              <grid row="8" column="0" row-span="1" col-span="4" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                              <grid row="3" column="0" row-span="1" col-span="4" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                             </constraints>
                           </vspacer>
-                          <component id="b22b0" class="org.jdesktop.swingx.JXTitledPanel">
+                          <grid id="e7bb9" class="org.jdesktop.swingx.JXTaskPane" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints>
                               <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <contentContainer value="51374"/>
+                              <opaque value="false"/>
+                              <special value="true"/>
                               <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.theme"/>
                             </properties>
-                          </component>
-                          <grid id="948ca" binding="BackgroudControlPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                            <margin top="0" left="0" bottom="0" right="0"/>
-                            <constraints>
-                              <grid row="5" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <opaque value="false"/>
-                            </properties>
-                            <border type="none">
-                              <color color="-3025959"/>
-                            </border>
+                            <border type="none"/>
                             <children>
-                              <nested-form id="68c8e" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="backgroundSelectionPanel" custom-create="true">
-                                <constraints>
-                                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                              </nested-form>
-                              <grid id="4ee8f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                              <grid id="51374" binding="ThemeControlPanel" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                                 <margin top="0" left="0" bottom="0" right="0"/>
                                 <constraints>
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -307,163 +206,276 @@
                                 </properties>
                                 <border type="none"/>
                                 <children>
-                                  <component id="13a2d" class="javax.swing.JLabel">
+                                  <component id="236a3" class="javax.swing.JLabel">
                                     <constraints>
                                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
-                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="mode"/>
+                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.theme"/>
                                     </properties>
                                   </component>
-                                  <component id="5fb36" class="javax.swing.JComboBox" binding="BackgroundModeComboBox">
+                                  <component id="a38ff" class="javax.swing.JComboBox" binding="themeComboBox" default-binding="true">
                                     <constraints>
-                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                      <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <opaque value="false"/>
                                     </properties>
                                   </component>
-                                </children>
-                              </grid>
-                              <grid id="62a95" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                                <margin top="0" left="0" bottom="0" right="0"/>
-                                <constraints>
-                                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <opaque value="false"/>
-                                </properties>
-                                <border type="none"/>
-                                <children>
-                                  <component id="5adc6" class="javax.swing.JLabel">
+                                  <component id="81460" class="javax.swing.JCheckBox" binding="isUseHeavyWeightToastCheckBox">
                                     <constraints>
-                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
-                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.background.alpha"/>
+                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_use_heavy_weght.toast"/>
                                     </properties>
                                   </component>
-                                  <component id="991e5" class="javax.swing.JSlider" binding="alphaSlider">
+                                  <component id="d4a15" class="javax.swing.JCheckBox" binding="isUseHeavyWeightFunctionDialogCheckBox">
                                     <constraints>
-                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                      <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
-                                      <maximum value="100"/>
+                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_use_heavy_weght.function_dialog"/>
+                                    </properties>
+                                  </component>
+                                  <grid id="51d55" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                    <margin top="0" left="0" bottom="0" right="0"/>
+                                    <constraints>
+                                      <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
                                       <opaque value="false"/>
-                                      <value value="30"/>
+                                    </properties>
+                                    <border type="none"/>
+                                    <children>
+                                      <component id="6f734" class="javax.swing.JLabel">
+                                        <constraints>
+                                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.accent_color"/>
+                                        </properties>
+                                      </component>
+                                      <component id="b784f" class="javax.swing.JTextField" binding="accentColorTextField">
+                                        <constraints>
+                                          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                            <preferred-size width="150" height="-1"/>
+                                          </grid>
+                                        </constraints>
+                                        <properties/>
+                                      </component>
+                                      <component id="d9ada" class="javax.swing.JButton" binding="accentColorChooseButton">
+                                        <constraints>
+                                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <text value=""/>
+                                        </properties>
+                                      </component>
+                                    </children>
+                                  </grid>
+                                  <component id="13aa8" class="javax.swing.JCheckBox" binding="IsUseSquareComponentCheckBox">
+                                    <constraints>
+                                      <grid row="3" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_use_square_component"/>
                                     </properties>
                                   </component>
                                 </children>
                               </grid>
                             </children>
                           </grid>
-                          <component id="2475d" class="org.jdesktop.swingx.JXTitledPanel">
-                            <constraints>
-                              <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <contentContainer value="948ca"/>
-                              <paintBorderInsets value="true"/>
-                              <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.background"/>
-                            </properties>
-                          </component>
-                          <grid id="51374" binding="ThemeControlPanel" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="1a69d" class="org.jdesktop.swingx.JXTaskPane" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints>
-                              <grid row="1" column="0" row-span="3" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                              <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <opaque value="false"/>
+                              <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.background"/>
                             </properties>
                             <border type="none"/>
                             <children>
-                              <component id="236a3" class="javax.swing.JLabel">
+                              <grid id="948ca" binding="BackgroudControlPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
                                 <constraints>
-                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.theme"/>
-                                </properties>
-                              </component>
-                              <component id="a38ff" class="javax.swing.JComboBox" binding="themeComboBox" default-binding="true">
-                                <constraints>
-                                  <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
                                   <opaque value="false"/>
                                 </properties>
-                              </component>
-                              <component id="81460" class="javax.swing.JCheckBox" binding="isUseHeavyWeightToastCheckBox">
-                                <constraints>
-                                  <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_use_heavy_weght.toast"/>
-                                </properties>
-                              </component>
-                              <component id="d4a15" class="javax.swing.JCheckBox" binding="isUseHeavyWeightFunctionDialogCheckBox">
-                                <constraints>
-                                  <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_use_heavy_weght.function_dialog"/>
-                                </properties>
-                              </component>
-                              <grid id="51d55" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <border type="none">
+                                  <color color="-3025959"/>
+                                </border>
+                                <children>
+                                  <nested-form id="68c8e" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="backgroundSelectionPanel" custom-create="true">
+                                    <constraints>
+                                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                  </nested-form>
+                                  <grid id="4ee8f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                    <margin top="0" left="0" bottom="0" right="0"/>
+                                    <constraints>
+                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <opaque value="false"/>
+                                    </properties>
+                                    <border type="none"/>
+                                    <children>
+                                      <component id="13a2d" class="javax.swing.JLabel">
+                                        <constraints>
+                                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <text resource-bundle="com/wmp/downloader/laug/laug" key="mode"/>
+                                        </properties>
+                                      </component>
+                                      <component id="5fb36" class="javax.swing.JComboBox" binding="BackgroundModeComboBox">
+                                        <constraints>
+                                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <opaque value="false"/>
+                                        </properties>
+                                      </component>
+                                    </children>
+                                  </grid>
+                                  <grid id="62a95" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                    <margin top="0" left="0" bottom="0" right="0"/>
+                                    <constraints>
+                                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <opaque value="false"/>
+                                    </properties>
+                                    <border type="none"/>
+                                    <children>
+                                      <component id="5adc6" class="javax.swing.JLabel">
+                                        <constraints>
+                                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.background.alpha"/>
+                                        </properties>
+                                      </component>
+                                      <component id="991e5" class="javax.swing.JSlider" binding="alphaSlider">
+                                        <constraints>
+                                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <maximum value="100"/>
+                                          <opaque value="false"/>
+                                          <value value="30"/>
+                                        </properties>
+                                      </component>
+                                    </children>
+                                  </grid>
+                                </children>
+                              </grid>
+                            </children>
+                          </grid>
+                          <grid id="1fda6" class="org.jdesktop.swingx.JXTaskPane" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <opaque value="false"/>
+                              <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.text_ui_control"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <grid id="f36f" binding="TextUIControlPanel" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                                 <margin top="0" left="0" bottom="0" right="0"/>
                                 <constraints>
-                                  <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
                                   <opaque value="false"/>
                                 </properties>
                                 <border type="none"/>
                                 <children>
-                                  <component id="6f734" class="javax.swing.JLabel">
+                                  <component id="ceeb0" class="javax.swing.JLabel">
                                     <constraints>
                                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
-                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.accent_color"/>
+                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.font"/>
                                     </properties>
                                   </component>
-                                  <component id="b784f" class="javax.swing.JTextField" binding="accentColorTextField">
+                                  <component id="eae6e" class="javax.swing.JComboBox" binding="FontListComboBox">
                                     <constraints>
-                                      <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                                        <preferred-size width="150" height="-1"/>
-                                      </grid>
+                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties/>
                                   </component>
-                                  <component id="d9ada" class="javax.swing.JButton" binding="accentColorChooseButton">
+                                  <component id="36ef6" class="javax.swing.JSpinner" binding="fontSizeSpinner" custom-create="true">
                                     <constraints>
-                                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="24b4d" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
-                                      <text value=""/>
+                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.font_size"/>
                                     </properties>
                                   </component>
+                                  <grid id="d6604" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                    <margin top="0" left="0" bottom="0" right="0"/>
+                                    <constraints>
+                                      <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <opaque value="false"/>
+                                    </properties>
+                                    <border type="none"/>
+                                    <children>
+                                      <component id="6dd20" class="javax.swing.JLabel">
+                                        <constraints>
+                                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.laug"/>
+                                        </properties>
+                                      </component>
+                                      <component id="262d2" class="javax.swing.JComboBox" binding="laugComboBox">
+                                        <constraints>
+                                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <model/>
+                                          <opaque value="false"/>
+                                        </properties>
+                                      </component>
+                                      <component id="8a377" class="javax.swing.JLabel">
+                                        <constraints>
+                                          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <foreground color="-846828"/>
+                                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.laug.tip"/>
+                                        </properties>
+                                      </component>
+                                      <component id="8b733" class="javax.swing.JCheckBox" binding="isStartCheckUpdateCheckBox">
+                                        <constraints>
+                                          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                        </constraints>
+                                        <properties>
+                                          <selected value="true"/>
+                                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_start_check_update"/>
+                                        </properties>
+                                      </component>
+                                    </children>
+                                  </grid>
                                 </children>
                               </grid>
-                              <component id="13aa8" class="javax.swing.JCheckBox" binding="IsUseSquareComponentCheckBox">
-                                <constraints>
-                                  <grid row="3" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_use_square_component"/>
-                                </properties>
-                              </component>
                             </children>
                           </grid>
-                          <component id="e4b52" class="org.jdesktop.swingx.JXTitledPanel">
-                            <constraints>
-                              <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <contentContainer value="bc86c"/>
-                              <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.text_ui_control"/>
-                            </properties>
-                          </component>
                         </children>
                       </grid>
                     </children>
@@ -478,7 +490,7 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <grid id="85220" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                      <grid id="85220" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                         <margin top="0" left="0" bottom="0" right="0"/>
                         <constraints/>
                         <properties>
@@ -486,86 +498,118 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="348ac" class="javax.swing.JCheckBox" binding="isUseSSLCheckBox" default-binding="true">
+                          <vspacer id="6a04d">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </vspacer>
+                          <grid id="4bb7f" class="org.jdesktop.swingx.JXTaskPane" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints>
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <opaque value="false"/>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseSsl"/>
-                            </properties>
-                          </component>
-                          <grid id="7d82e" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                            <margin top="0" left="0" bottom="0" right="0"/>
-                            <constraints>
-                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <opaque value="false"/>
+                              <special value="true"/>
+                              <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.download_settings"/>
                             </properties>
                             <border type="none"/>
                             <children>
-                              <component id="ac6b3" class="javax.swing.JLabel">
+                              <grid id="7d82e" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
                                 <constraints>
-                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.thread_num"/>
+                                  <opaque value="false"/>
+                                </properties>
+                                <border type="none"/>
+                                <children>
+                                  <component id="ac6b3" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.thread_num"/>
+                                    </properties>
+                                  </component>
+                                  <component id="f7478" class="javax.swing.JTextField" binding="ThreadNumLabel">
+                                    <constraints>
+                                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <editable value="false"/>
+                                      <opaque value="false"/>
+                                      <text value="Label"/>
+                                    </properties>
+                                  </component>
+                                  <hspacer id="c28da">
+                                    <constraints>
+                                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                  </hspacer>
+                                  <component id="2a621" class="javax.swing.JSlider" binding="ThreadNumSlider">
+                                    <constraints>
+                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <maximum value="512"/>
+                                      <minimum value="1"/>
+                                      <opaque value="false"/>
+                                      <value value="64"/>
+                                      <valueIsAdjusting value="false"/>
+                                    </properties>
+                                  </component>
+                                </children>
+                              </grid>
+                              <nested-form id="aa722" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="pathSelectionPanel" custom-create="true">
+                                <constraints>
+                                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </nested-form>
+                              <nested-form id="69fa5" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="tempPathSelectionPanel" custom-create="true">
+                                <constraints>
+                                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </nested-form>
+                            </children>
+                          </grid>
+                          <grid id="c3782" class="org.jdesktop.swingx.JXTaskPane" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <opaque value="false"/>
+                              <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.web_settings"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="348ac" class="javax.swing.JCheckBox" binding="isUseSSLCheckBox" default-binding="true">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <opaque value="false"/>
+                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseSsl"/>
                                 </properties>
                               </component>
-                              <component id="f7478" class="javax.swing.JTextField" binding="ThreadNumLabel">
+                              <vspacer id="65ff4">
                                 <constraints>
-                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </vspacer>
+                              <component id="86fbb" class="javax.swing.JCheckBox" binding="isUseClipBoardListenerCheckBox">
+                                <constraints>
+                                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <editable value="false"/>
                                   <opaque value="false"/>
-                                  <text value="Label"/>
-                                </properties>
-                              </component>
-                              <hspacer id="c28da">
-                                <constraints>
-                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                              </hspacer>
-                              <component id="2a621" class="javax.swing.JSlider" binding="ThreadNumSlider">
-                                <constraints>
-                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <maximum value="512"/>
-                                  <minimum value="1"/>
-                                  <opaque value="false"/>
-                                  <value value="64"/>
-                                  <valueIsAdjusting value="false"/>
+                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseClipBoardListener"/>
                                 </properties>
                               </component>
                             </children>
                           </grid>
-                          <nested-form id="aa722" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="pathSelectionPanel" custom-create="true">
-                            <constraints>
-                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                          </nested-form>
-                          <nested-form id="69fa5" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="tempPathSelectionPanel" custom-create="true">
-                            <constraints>
-                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                          </nested-form>
-                          <component id="86fbb" class="javax.swing.JCheckBox" binding="isUseClipBoardListenerCheckBox">
-                            <constraints>
-                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <opaque value="false"/>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseClipBoardListener"/>
-                            </properties>
-                          </component>
-                          <vspacer id="6a04d">
-                            <constraints>
-                              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                          </vspacer>
                         </children>
                       </grid>
                     </children>
@@ -595,7 +639,8 @@
                               <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.data_control.delete_temp_folder"/>
                             </properties>
                           </component>
-                          <grid id="7802" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                          <grid id="7802" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints>
                               <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -605,12 +650,19 @@
                             <border type="none"/>
                             <children>
                               <component id="5dc1f" class="javax.swing.JButton" binding="dataPathButton" default-binding="true">
-                                <constraints/>
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
                                 <properties>
                                   <opaque value="false"/>
                                   <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.data_control.data_path"/>
                                 </properties>
                               </component>
+                              <vspacer id="d962d">
+                                <constraints>
+                                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </vspacer>
                             </children>
                           </grid>
                         </children>

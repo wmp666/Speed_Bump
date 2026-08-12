@@ -15,6 +15,7 @@ import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
+import com.wmp.downloader.ui.common.LazyTabbedPane;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
@@ -38,7 +39,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Downloader extends JFrame implements WindowListener {
+public class Downloader extends JFrame implements WindowListener{
 
     private static final Logger logger = Logger.getLogger(Downloader.class);
     public static Downloader mainFrame;
@@ -125,10 +126,10 @@ public class Downloader extends JFrame implements WindowListener {
     private JTextField accentColorTextField;
     private JButton accentColorChooseButton;
     private JProgressBar waitProgressBar;
-    private JPanel TextUIControlPanel;
     private JPanel BackgroudControlPanel;
     private JPanel ThemeControlPanel;
     private JCheckBox IsUseSquareComponentCheckBox;
+    private JPanel TextUIControlPanel;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -180,7 +181,7 @@ public class Downloader extends JFrame implements WindowListener {
         taskListener.start();
 
 
-        this.getRootPane().putClientProperty("JRootPane.fullWindowContent", true);
+        //this.getRootPane().putClientProperty("JRootPane.fullWindowContent", true);
         //this.getRootPane().setBackground( new Color( 0, 0, 0, 0 ) );
 
         this.setTitle(StringFormat.translate("common", "app_name"));
@@ -925,7 +926,7 @@ public class Downloader extends JFrame implements WindowListener {
     }
 
     private void createUIComponents() {
-
+        mainTabbedPane = new LazyTabbedPane();
 
         TasksPanel = new JPanel(new GridBagLayout());
         TasksPanel.setOpaque(false);

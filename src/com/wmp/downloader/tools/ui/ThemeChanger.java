@@ -133,12 +133,12 @@ public class ThemeChanger {
         UIManager.put("TabbedPane.contentOpaque", false);
         FlatLaf.setUseNativeWindowDecorations(true);
 
-        if (DataControl.get("is_use_square_component", false)) {
-            UIManager.put("Button.arc", 0);
-            UIManager.put("Component.arc", 0);   // 影响 ComboBox, Spinner 等
-            UIManager.put("CheckBox.arc", 0);
-            UIManager.put("ProgressBar.arc", 0);
-        }
+        int arc = DataControl.get("is_use_square_component", true)?0:10;
+        UIManager.put("Button.arc", arc);
+        UIManager.put("Component.arc", arc);   // 影响 ComboBox, Spinner 等
+        UIManager.put("CheckBox.arc", arc);
+        UIManager.put("ProgressBar.arc", arc);
+        UIManager.put("TextComponent.arc", arc);
 
 
         //组件更新

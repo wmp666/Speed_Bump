@@ -2,6 +2,7 @@ package com.wmp.downloader.newArchitecture.abstractTask;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.ColorFunctions;
+import com.wmp.downloader.test.DraggablePanel;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.*;
@@ -9,9 +10,21 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragSource;
+import java.awt.dnd.DragSourceAdapter;
+import java.awt.dnd.DragSourceDropEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractTask extends JPanel {
     private static final Logger logger = Logger.getLogger(AbstractTask.class);
@@ -175,9 +188,99 @@ public abstract class AbstractTask extends JPanel {
             }
         });
 
+
+        //添加拖拽操作
+        DragSource dragSource = DragSource.getDefaultDragSource();
+
+        dragSource.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_COPY,
+                dge -> {
+                    if (!isFinally) {
+                        return;
+                    }
+                    try {
+                        //构建文件列表
+                        List<File> fileList = new ArrayList<>();
+                        fileList.add(new File(savePath, fileName));
+
+                        // 3. 创建 Transferable
+                        Transferable transferable = new Transferable() {
+                            @Override
+                            public DataFlavor[] getTransferDataFlavors() {
+                                return new DataFlavor[]{DataFlavor.javaFileListFlavor};
+                            }
+
+                            @Override
+                            public boolean isDataFlavorSupported(DataFlavor flavor) {
+                                return DataFlavor.javaFileListFlavor.equals(flavor);
+                            }
+
+                            @Override
+                            public Object getTransferData(DataFlavor flavor)
+                                    throws UnsupportedFlavorException, IOException {
+                                if (isDataFlavorSupported(flavor)) {
+                                    return fileList;
+                                }
+                                throw new UnsupportedFlavorException(flavor);
+                            }
+                        };
+
+                        // 4. 抓取面板快照作为拖拽图像
+                        BufferedImage snapshot = captureComponent(AbstractTask.this);
+                        // 计算偏移量：鼠标相对于面板左上角的位置
+                        Point mouseLoc = dge.getDragOrigin();
+                        Point panelLoc = getLocationOnScreen();
+                        Point offset = new Point(mouseLoc.x - panelLoc.x, mouseLoc.y - panelLoc.y);
+                        // 限制偏移量在图像范围内
+                        offset.x = Math.clamp(offset.x, 0, snapshot.getWidth());
+                        offset.y = Math.clamp(offset.y, 0, snapshot.getHeight());
+
+                        // 5. 开始拖拽，使用自定义图像
+                        dge.startDrag(
+                                DragSource.DefaultCopyDrop,
+                                snapshot,
+                                offset,
+                                transferable,
+                                new DragSourceAdapter() {
+                                    @Override
+                                    public void dragDropEnd(DragSourceDropEvent dsde) {
+                                        var isSuccess = dsde.getDropSuccess();
+                                        logger.info("拖拽情况：" + isSuccess);
+                                    }
+                                }
+                        );
+                    } catch (Exception ex) {
+                        logger.error("拖拽文件操作失败", ex);
+                    }
+                });
+
         // 并且为了确保初始显示正确，在窗口完全展示后再调用一次
         SwingUtilities.invokeLater(this::updateNameLabel);
 
+    }
+
+    /**
+     * 捕获组件的图像
+     */
+    private BufferedImage captureComponent(Component component) {
+        if (!DragSource.isDragImageSupported()) return null;
+        // 确保组件尺寸有效
+        int w = component.getWidth();
+        int h = component.getHeight();
+        if (w == 0 || h == 0) {
+            w = component.getPreferredSize().width;
+            h = component.getPreferredSize().height;
+            component.setSize(w, h);
+            component.doLayout();
+        }
+        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = image.createGraphics();
+        if (component.isOpaque()) {
+            g2d.setColor(component.getBackground());
+            g2d.fillRect(0, 0, w, h);
+        }
+        component.paint(g2d);
+        g2d.dispose();
+        return image;
     }
 
     /**
