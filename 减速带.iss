@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "Speed Bump"
-#define MyAppVersion "0.3.3.3"
+#define MyAppVersion "0.3.4"
 #define MyAppPublisher "wmp"
 #define MyAppURL "https://github.com/wmp666/Speed_Bump"
 #define MyAppExeName "SpeedBump.exe"

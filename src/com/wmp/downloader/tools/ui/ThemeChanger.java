@@ -8,6 +8,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import org.apache.log4j.Logger;
+import org.jdesktop.swingx.JXColorSelectionButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,8 @@ public class ThemeChanger {
 
     static {
         timer.start();
+
+        //执行仅需执行一次的UI相关操作
     }
 
     /**
@@ -129,6 +132,13 @@ public class ThemeChanger {
         UIManager.put("TabbedPane.tabsOpaque", false);
         UIManager.put("TabbedPane.contentOpaque", false);
         FlatLaf.setUseNativeWindowDecorations(true);
+
+        if (DataControl.get("is_use_square_component", false)) {
+            UIManager.put("Button.arc", 0);
+            UIManager.put("Component.arc", 0);   // 影响 ComboBox, Spinner 等
+            UIManager.put("CheckBox.arc", 0);
+            UIManager.put("ProgressBar.arc", 0);
+        }
 
 
         //组件更新

@@ -3,7 +3,7 @@
   <directoryPresets config="C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/out/artifacts" />
   <application name="SpeedBump" distributionSourceDir="E:/Users/21348/Desktop" />
   <executable name="SpeedBump" iconSet="true" iconFile="C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/icon.ico" executableDir="." redirectStderr="false" executableMode="gui" checkConsoleParameter="true" wrapperType="embed">
-    <versionInfo include="true" fileVersion="0.3" companyName="无名牌" productVersion="0.3.3.3" />
+    <versionInfo include="true" fileVersion="0.3" companyName="无名牌" productVersion="0.3.4" />
     <messageSet>
       <message id="MessageBoxTitle" text="错误" />
       <message id="ErrorDialogCaption" text="错误" />

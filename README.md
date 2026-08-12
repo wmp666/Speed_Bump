@@ -25,6 +25,7 @@
 ## 鸣谢
 ### 第三方库
 - [JFormDesigner:FlatLaf](https://www.formdev.com/flatlaf)
+- [SwingX](https://github.com/arotenberg/swingx)
 - [alibaba:fastjson](https://github.com/alibaba/fastjson)
 - [google:core+javase](https://developer.android.google.cn/guide/playcore?hl=zh-cn)
 - [org.jsoup:jsoup](https://jsoup.org/)

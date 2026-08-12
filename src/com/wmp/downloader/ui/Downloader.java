@@ -19,7 +19,7 @@ import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
-import org.jdesktop.swingx.JXBusyLabel;
+import org.jdesktop.swingx.color.EyeDropperColorChooserPanel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -125,13 +125,17 @@ public class Downloader extends JFrame implements WindowListener {
     private JTextField accentColorTextField;
     private JButton accentColorChooseButton;
     private JProgressBar waitProgressBar;
+    private JPanel TextUIControlPanel;
+    private JPanel BackgroudControlPanel;
+    private JPanel ThemeControlPanel;
+    private JCheckBox IsUseSquareComponentCheckBox;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
 
     private CreateTaskPanel createTaskPanel = null;
 
-    private ActionListener actionListener = e -> {
+    private final ActionListener actionListener = e -> {
         this.setVisible(true);
         this.setState(JFrame.NORMAL);
     };
@@ -308,9 +312,10 @@ public class Downloader extends JFrame implements WindowListener {
 
         initToolBar();
 
+        initInstalledPluginParserComponents();
+
         initInstallPluginParserComponents();
 
-        initInstalledPluginParserComponents();
 
 
     }
@@ -446,8 +451,9 @@ public class Downloader extends JFrame implements WindowListener {
 
             var info = new PluginParserGithubDownloadTask(() -> {
                 ParserTaskInfo.loadParsers();
-                updateInstallPluginParserList();
                 updateInstalledPluginParserList();
+                updateInstallPluginParserList();
+
             })
                     .getParserInfo(installPluginParserList.getSelectedValue().url());
             var jsonInfo = info.getLinkedInfoPanel().getJsonInfo();
@@ -494,8 +500,9 @@ public class Downloader extends JFrame implements WindowListener {
                         refreshButton.getFont().getSize())));
         refreshButton.addActionListener(e -> {
             ParserTaskInfo.loadParsers();
-            updateInstallPluginParserList();
             updateInstalledPluginParserList();
+            updateInstallPluginParserList();
+
         });
         PluginControlToolBar.add(refreshButton);
     }
@@ -832,18 +839,20 @@ public class Downloader extends JFrame implements WindowListener {
         });
         windowMenu.add(refreshMenuItem);
 
-        var updateFrameMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.update_frame"));
+        var updateFrameMenuItem = new JMenuItem(StringFormat.translate("frame.update_frame"));
         updateFrameMenuItem.addActionListener(e -> {
             try {
-                if (JOptionPane.showConfirmDialog(this, StringFormat.translate("download_menu_bar", "frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+                if (JOptionPane.showConfirmDialog(this, StringFormat.translate("frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
                     if (clipboardTimer != null) {
                         clipboardTimer.stop();
                     }
                     this.dispose();
                     DataControl.load();
-                    ThemeChanger.easyChanger();
+                    SwingUtilities.invokeLater(()->{
+                        ThemeChanger.easyChanger();
 
-                    new Downloader().setVisible(true);
+                        new Downloader().setVisible(true);
+                    });
                 }
             } catch (HeadlessException ex) {
                 ToastMessage.show(this, StringFormat.translate("refresh_failed"), ToastMessage.ERROR);
@@ -1174,6 +1183,7 @@ public class Downloader extends JFrame implements WindowListener {
         alphaSlider.setValue((int) (DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue() * 100));
         isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
         accentColorTextField.setText(DataControl.get("accent_color", "29a5e3"));
+        IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", false));
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -1267,6 +1277,7 @@ public class Downloader extends JFrame implements WindowListener {
             isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
             isUseHeavyWeightFunctionDialogCheckBox.setSelected(DataControl.get("is_use_heavy_weight.function_dialog", false));
             isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
+            IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", false));
 
             ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
@@ -1309,12 +1320,24 @@ public class Downloader extends JFrame implements WindowListener {
             } catch (NumberFormatException ex) {
                 color = new Color(0x29a5e3);
             }
-            var result = JColorChooser.showDialog(this, StringFormat.translate("settings.personalized.accent_color"), color);
-/*
-            int rgb = 0xFF0000; // 注意：如果 int 包含 Alpha，需先屏蔽高位
-            int rgbOnly = rgb & 0x00FFFFFF;
-            String hex = String.format("#%06X", rgbOnly); // 输出 "#FF0000"*/
-            accentColorTextField.setText(String.format("%06X", result.getRGB() & 0x00FFFFFF));
+            var colorChooser = new JColorChooser();
+            colorChooser.addChooserPanel(new EyeDropperColorChooserPanel());
+
+
+            var dialog = JColorChooser.createDialog(this, StringFormat.translate("settings.personalized.accent_color"), true, colorChooser,
+                    e2 -> {
+                        var result = colorChooser.getColor();
+
+                        /*
+                        int rgb = 0xFF0000; // 注意：如果 int 包含 Alpha，需先屏蔽高位
+                        int rgbOnly = rgb & 0x00FFFFFF;
+                        String hex = String.format("#%06X", rgbOnly); // 输出 "#FF0000"*/
+                        accentColorTextField.setText(String.format("%06X", result.getRGB() & 0x00FFFFFF));
+                    },
+                    e2 ->{}
+            );
+            dialog.setVisible(true);
+
         });
 
         dataPathButton.addActionListener(e -> {
@@ -1341,6 +1364,7 @@ public class Downloader extends JFrame implements WindowListener {
             DataControl.put("is_use_heavy_weight.function_dialog", isUseHeavyWeightFunctionDialogCheckBox.isSelected());
             DataControl.put("is_start_check_update", isStartCheckUpdateCheckBox.isSelected());
             DataControl.put("accent_color", accentColorTextField.getText());
+            DataControl.put("is_use_square_component", IsUseSquareComponentCheckBox.isSelected());
 
             DataControl.save();
             DataControl.load();

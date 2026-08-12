@@ -3,6 +3,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.swingx.FlatSwingXDefaultsAddon;
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
+import org.jdesktop.swingx.JXTitledPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,8 @@ import java.awt.*;
  */
 public class TaskPaneContainerDemo {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
+        //System.out.println(Class.forName("org.jdesktop.swingx.painter.Painter"));
         // 1. 设置 FlatLaf 主题
         FlatLightLaf.setup();  // 也可以换成 FlatDarkLaf.setup()
 
@@ -30,6 +32,7 @@ public class TaskPaneContainerDemo {
 
             // 创建任务面板容器
             JXTaskPaneContainer container = new JXTaskPaneContainer();
+            container.setBackground(Color.GREEN);
 
             // ----- 任务面板 1：文件操作 -----
             JXTaskPane pane1 = new JXTaskPane();
@@ -39,6 +42,8 @@ public class TaskPaneContainerDemo {
             pane1.add(new JButton("打开文件"));
             pane1.add(new JButton("保存文件"));
             pane1.add(new JCheckBox("自动保存"));
+            pane1.setOpaque(false);
+            ((JPanel)pane1.getContentPane()).setOpaque(false);
 
             // ----- 任务面板 2：视图设置 -----
             JXTaskPane pane2 = new JXTaskPane();
@@ -63,7 +68,8 @@ public class TaskPaneContainerDemo {
             // 将所有任务面板添加到容器
             container.add(pane1);
             container.add(pane2);
-            container.add(pane3);
+            var comp = new JXTitledPanel("111", pane3);
+            container.add(comp);
 
             // 将容器放入滚动窗格（内容过多时可滚动）
             JScrollPane scrollPane = new JScrollPane(container);
