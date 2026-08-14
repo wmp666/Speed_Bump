@@ -10,16 +10,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/LazyTabbedPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能&#10;对网络/下载设置页进行了进一步分类&#10;修复设置&quot;方角组件&quot;时的部分问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DownLoader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DownLoader.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Linux Package.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Linux Package.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SpeedBump.exe4j" beforeDir="false" afterPath="$PROJECT_DIR$/SpeedBump.exe4j" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/减速带.iss" beforeDir="false" afterPath="$PROJECT_DIR$/减速带.iss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,10 +124,10 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src/Main.java",
-    "project.structure.last.edited": "工件",
+    "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "editor.preferences.appearance",
+    "settings.editor.selected.configurable": "preferences.externalTools",
     "应用程序.BTTest.executor": "Run",
     "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
@@ -422,7 +419,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="界面更新&#10;修复主题可能不刷新&#10;调整通用设置的位置&#10;统一进度条UI" />
     <MESSAGE value="修复重启下载的问题" />
     <MESSAGE value="修复主题刷新问题" />
     <MESSAGE value="增加更多文件" />
@@ -447,7 +443,8 @@
     <MESSAGE value="修复打包问题" />
     <MESSAGE value="新增任务拖拽功能" />
     <MESSAGE value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能" />
+    <MESSAGE value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能&#10;对网络/下载设置页进行了进一步分类&#10;修复设置&quot;方角组件&quot;时的部分问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能&#10;对网络/下载设置页进行了进一步分类&#10;修复设置&quot;方角组件&quot;时的部分问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

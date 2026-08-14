@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "Speed Bump"
-#define MyAppVersion "0.3.5"
+#define MyAppVersion "0.3.6"
 #define MyAppPublisher "wmp"
 #define MyAppURL "https://github.com/wmp666/Speed_Bump"
 #define MyAppExeName "SpeedBump.exe"
@@ -11,9 +11,9 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{D2534130-7E2F-4A26-8B3D-E022FA0EFD2F}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+AppId={{D2534130-7E2F-4A26-8B3D-E022FA0EFD2F}
 ;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}

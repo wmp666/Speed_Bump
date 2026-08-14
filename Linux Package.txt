@@ -1,1 +1,3 @@
-jpackage --input /home/wmp/SpeedBump --main-jar DownLoader_Linux.jar --main-class com.wmp.downloader.Run --icon /home/wmp/SpeedBump/speedbump.ico --name SpeedBump --type deb --dest /home/wmp/JarDebs
+jpackage --input /home/wmp/SpeedBump --main-jar DownLoader_Linux.jar --main-class com.wmp.downloader.Run --icon /home/wmp/SpeedBump/icon.png --name SpeedBump --type deb --dest /home/wmp/JarDebs
+
+dpkg-deb --build --root-owner-group /tmp/package /home/wmp/JarDebs/Speed_Bump_Setup_0.3.6.deb

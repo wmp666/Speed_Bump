@@ -1183,8 +1183,8 @@ public class Downloader extends JFrame implements WindowListener{
         ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
         alphaSlider.setValue((int) (DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue() * 100));
         isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
-        accentColorTextField.setText(DataControl.get("accent_color", "29a5e3"));
-        IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", false));
+        accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
+        IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -1278,7 +1278,7 @@ public class Downloader extends JFrame implements WindowListener{
             isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
             isUseHeavyWeightFunctionDialogCheckBox.setSelected(DataControl.get("is_use_heavy_weight.function_dialog", false));
             isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
-            IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", false));
+            IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
 
             ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
@@ -1288,7 +1288,7 @@ public class Downloader extends JFrame implements WindowListener{
             fontSizeSpinner.setValue(DataControl.get("FontSize", 12));
             themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
 
-            accentColorTextField.setText(DataControl.get("accent_color", "29a5e3"));
+            accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
 
             updateBackground();
             updateChildBounds(); // FIX 使用统一方法
