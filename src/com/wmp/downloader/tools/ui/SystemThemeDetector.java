@@ -1,5 +1,7 @@
 package com.wmp.downloader.tools.ui;
 
+import com.wmp.downloader.tools.platform.GetPlatform;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
@@ -12,13 +14,12 @@ public class SystemThemeDetector {
      * @return true=深色，false=浅色（或无法检测时默认浅色）
      */
     public static boolean isDarkMode() {
-        String os = System.getProperty("os.name").toLowerCase();
         try {
-            if (os.contains("win")) {
+            if (GetPlatform.isWindows()) {
                 return detectWindows();
-            } else if (os.contains("mac")) {
+            } else if (GetPlatform.isMac()) {
                 return detectMac();
-            } else if (os.contains("linux") || os.contains("nix")) {
+            } else if (GetPlatform.isLinux()) {
                 return detectLinux();
             }
         } catch (Exception e) {

@@ -16,6 +16,7 @@ import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.tools.web.TCPControl;
+import com.wmp.downloader.ui.common.FileAssociationPanel;
 import com.wmp.downloader.ui.common.LazyTabbedPane;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
@@ -131,6 +132,10 @@ public class Downloader extends JFrame implements WindowListener{
     private JPanel ThemeControlPanel;
     private JCheckBox IsUseSquareComponentCheckBox;
     private JPanel TextUIControlPanel;
+    private JLabel licenseLabel;
+    private JButton issueButton;
+    private JButton downloadFilesPathButton;
+    private FileAssociationPanel torrentFileAssociationPanel;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -230,72 +235,19 @@ public class Downloader extends JFrame implements WindowListener{
         initBackgroundSettings();
 
         //拓展管理
-        {
-            var ref = new Object() {
-                ChangeListener l = null;
-            };
-            ref.l = e -> {
-                if (pluginParserControlPanel == mainTabbedPane.getSelectedComponent()) {
-                    waitProgressBar.setVisible(true);
-                    waitProgressBar.setIndeterminate(true);
-                    SwingUtilities.invokeLater(() -> {
-                        initPluginParserComponents();
-                        waitProgressBar.setVisible(false);
-                        mainTabbedPane.removeChangeListener(ref.l);
-                    });
-
-
-                }
-
-            };
-            mainTabbedPane.addChangeListener(ref.l);
-        }
+        createLazyLoadPanelInMainFrame(pluginParserControlPanel, this::initPluginParserComponents);
 
         //任务
         initTaskComponents();
 
         //设置
-        {
-            var ref = new Object() {
-                ChangeListener l = null;
-            };
-            ref.l = e -> {
-                if (settingsPanel == mainTabbedPane.getSelectedComponent()) {
-                    waitProgressBar.setVisible(true);
-                    waitProgressBar.setIndeterminate(true);
-                    SwingUtilities.invokeLater(() -> {
-                        initSettingsComponents();
-                        waitProgressBar.setVisible(false);
-                        mainTabbedPane.removeChangeListener(ref.l);
-                    });
-                }
-
-            };
-            mainTabbedPane.addChangeListener(ref.l);
-        }
+        createLazyLoadPanelInMainFrame(settingsPanel, this::initSettingsComponents);
 
         //专项设置
-        {
-            var ref = new Object() {
-                ChangeListener l = null;
-            };
-            ref.l = e -> {
-                if (SpecialSettingsPanel == mainTabbedPane.getSelectedComponent()) {
-                    waitProgressBar.setVisible(true);
-                    waitProgressBar.setIndeterminate(true);
-                    SwingUtilities.invokeLater(() -> {
-                        initSpecialSettingsComponents();
-                        waitProgressBar.setVisible(false);
-                        mainTabbedPane.removeChangeListener(ref.l);
-                    });
-                }
-
-            };
-            mainTabbedPane.addChangeListener(ref.l);
-        }
+        createLazyLoadPanelInMainFrame(SpecialSettingsPanel, this::initSpecialSettingsComponents);
 
         //关于
-        initAboutComponents();
+        createLazyLoadPanelInMainFrame(aboutPanel, this::initAboutComponents);
         startClipboardListener();
 
         pack();
@@ -305,6 +257,34 @@ public class Downloader extends JFrame implements WindowListener{
         SwingUtilities.invokeLater(this::updateChildBounds);
 
         backgroundupdateTimer.start();
+
+        try {
+            TCPControl.startServer();
+        } catch (Exception ex) {
+            logger.error("服务端启动失败!");
+            JOptionPane.showMessageDialog(null, "服务端启动失败");
+        }
+
+    }
+
+    private void createLazyLoadPanelInMainFrame(JPanel panel, Runnable run){
+        var ref = new Object() {
+            ChangeListener l = null;
+        };
+        ref.l = e -> {
+            if (panel == mainTabbedPane.getSelectedComponent()) {
+                waitProgressBar.setVisible(true);
+                waitProgressBar.setIndeterminate(true);
+                SwingUtilities.invokeLater(() -> {
+                    logger.info("正在加载：" + run);
+                    run.run();
+                    waitProgressBar.setVisible(false);
+                    mainTabbedPane.removeChangeListener(ref.l);
+                });
+            }
+
+        };
+        mainTabbedPane.addChangeListener(ref.l);
     }
 
     private void initPluginParserComponents() {
@@ -945,17 +925,24 @@ public class Downloader extends JFrame implements WindowListener{
         tempPathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "temp_path"), new File(DataControl.get("TempFilePath", DataControl.getDefaultTempPath().getAbsolutePath())));
 
         fontSizeSpinner = new JSpinner(new SpinnerNumberModel(DataControl.get("FontSize", 12).intValue(), 1, Integer.MAX_VALUE, 1));
+
+        torrentFileAssociationPanel = new FileAssociationPanel("torrent", StringFormat.translate("file_association.torrent"), "/icon/speedbump_file");
+
     }
 
     private void initAboutComponents() {
         nameLabel.setText(StringFormat.translate("common", "app_name") + " V" + DataControl.get("version", "0.0.0"));
         nameLabel.putClientProperty("FlatLaf.style", "font: bold $h0.font");
+        issueButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
+        licenseLabel.putClientProperty("FlatLaf.style", "font: bold $h2.font");
         checkUpdateButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
         ProjectLinkButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
         IconControl.addInDynamicConverter(
                 () -> nameLabel.setIcon(IconControl.getIcon("icon", nameLabel.getFont().getSize())),
+                () -> licenseLabel.setIcon(IconControl.getIcon("license", licenseLabel.getFont().getSize())),
                 () -> checkUpdateButton.setIcon(IconControl.getIcon("update", checkUpdateButton.getFont().getSize())),
-                () -> ProjectLinkButton.setIcon(IconControl.getIcon("link", ProjectLinkButton.getFont().getSize()))
+                () -> ProjectLinkButton.setIcon(IconControl.getIcon("link", ProjectLinkButton.getFont().getSize())),
+                () -> issueButton.setIcon(IconControl.getIcon("issue", issueButton.getFont().getSize()))
         );
 
         authorCheckBox.addActionListener(_ -> {
@@ -980,6 +967,14 @@ public class Downloader extends JFrame implements WindowListener{
         ProjectLinkButton.addActionListener(_ -> {
             try {
                 Desktop.getDesktop().browse(URI.create("https://github.com/wmp666/Speed_Bump"));
+            } catch (Exception ex) {
+                ToastMessage.show(StringFormat.translate("open_link.error"), ToastMessage.ERROR);
+                logger.error("网站打开失败", ex);
+            }
+        });
+        issueButton.addActionListener(_ -> {
+            try {
+                Desktop.getDesktop().browse(URI.create("https://github.com/wmp666/Speed_Bump/issues"));
             } catch (Exception ex) {
                 ToastMessage.show(StringFormat.translate("open_link.error"), ToastMessage.ERROR);
                 logger.error("网站打开失败", ex);
@@ -1350,6 +1345,14 @@ public class Downloader extends JFrame implements WindowListener{
             }
         });
 
+        downloadFilesPathButton.addActionListener(e -> {
+            try {
+                Desktop.getDesktop().open(DataControl.getDownloadFilePath());
+            } catch (IOException ex) {
+                logger.error("文件打开失败", ex);
+            }
+        });
+
         deleteTempFolderDataButton.addActionListener(e -> {
             var tempPath = DataControl.getTempPath();
             DataControl.deleteFolder(tempPath);
@@ -1513,12 +1516,6 @@ public class Downloader extends JFrame implements WindowListener{
 
     @Override
     public void windowOpened(WindowEvent e) {
-        try {
-            TCPControl.startServer();
-        } catch (Exception ex) {
-            logger.error("服务端启动失败!");
-            JOptionPane.showMessageDialog(null, "服务端启动失败");
-        }
         if (DataControl.get("is_start_check_update", true)) {
             checkUpdate();
         }

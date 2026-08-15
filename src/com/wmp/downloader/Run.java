@@ -18,7 +18,7 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.3.7";
+    public static String VERSION = "0.3.8";
 
     public static String PLUGIN_SUPPORT_VERSION = "1.0.0";
 
@@ -31,20 +31,26 @@ public class Run {
                 var versionIndex = argList.indexOf("-set:version") + 1;
                 VERSION = versionIndex == 0 ? VERSION : argList.get(versionIndex);
 
-                linkPath = argList.getFirst();
-                try {
-                    var code = TCPControl.sendToServer("createTask:" + linkPath);
-                    if (code == 1) {
-                        throw new Exception("消息发送失败: " + linkPath);
-                    }else if (code == 0){
-                        System.exit(0);
-                    }else if (code == -1){
-                        logger.warn("没有服务端,将以自己作为服务端");
+                {
+                    var first = argList.getFirst();
+
+                    if (!first.startsWith("-")){
+                        linkPath = first;
+                        try {
+                            var code = TCPControl.sendToServer("createTask:" + linkPath);
+                            if (code == 1) {
+                                throw new Exception("消息发送失败: " + linkPath);
+                            } else if (code == 0) {
+                                System.exit(0);
+                            } else if (code == -1) {
+                                logger.warn("没有服务端,将以自己作为服务端");
+                            }
+                        } catch (Exception e) {
+                            logger.error("消息发送失败", e);
+                            JOptionPane.showMessageDialog(null, "无法将消息传递至下载器!", StringFormat.translate("error"), JOptionPane.ERROR_MESSAGE);
+                            System.exit(-1);
+                        }
                     }
-                } catch (Exception e) {
-                    logger.error("消息发送失败", e);
-                    JOptionPane.showMessageDialog(null, "无法将消息传递至下载器!", StringFormat.translate("error"), JOptionPane.ERROR_MESSAGE);
-                    System.exit(-1);
                 }
             }
             else {
@@ -82,7 +88,9 @@ public class Run {
 
         }
 
-        downloader.setVisible(true);
+        if (!argList.contains("-background")){
+            downloader.setVisible(true);
+        }
 
         if (linkPath != null) downloader.showLinkDetectedDialog(linkPath);
 

@@ -270,4 +270,9 @@ public class DataControl {
         return new File(DATA_DIR.toFile(), "ParsersATools");
     }
 
+    public static File getAppPath(){
+        var property = System.getProperty("jpackage.app-path");
+        if (property == null) return null;
+        return new File(property);
+    }
 }

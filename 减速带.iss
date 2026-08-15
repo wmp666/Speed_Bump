@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "Speed Bump"
-#define MyAppVersion "0.3.6"
+#define MyAppVersion "0.3.8"
 #define MyAppPublisher "wmp"
 #define MyAppURL "https://github.com/wmp666/Speed_Bump"
 #define MyAppExeName "SpeedBump.exe"
@@ -48,8 +48,7 @@ Name: "ctchinese"; MessagesFile: "compiler:Languages\CTChinese.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "E:\Users\21348\Desktop\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\21348\Desktop\吴鹤轩\安装包\exe\减速带\jdk-25\*"; DestDir: "{app}\jdk-25"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\21348\Desktop\吴鹤轩\安装包\exe\SpeedBump\SpeedBump\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

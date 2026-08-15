@@ -42,6 +42,7 @@ public class UITools {
     }
 
     public static JScrollPane setScrollPaneUnOpaque(JScrollPane scrollPane) {
+        scrollPane.getVerticalScrollBar().setUnitIncrement(15);
         scrollPane.setBorder(null);
         scrollPane.getViewport().setBorder(null);
         scrollPane.setOpaque(false);

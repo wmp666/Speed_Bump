@@ -1,5 +1,7 @@
 package com.wmp.downloader.tools;
 
+import com.wmp.downloader.tools.platform.GetPlatform;
+
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -34,9 +36,8 @@ public class StringFormat {
             return name;
         }
 
-        String os = System.getProperty("os.name").toLowerCase();
         String regex;
-        if (os.contains("win")) {
+        if (GetPlatform.isWindows()) {
             regex = "[\\\\/:*?\"<>|]";
         } else {
             // Unix/Linux/macOS：只禁止 '/' 和 NUL 字符

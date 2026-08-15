@@ -10,18 +10,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加TCP网络通信避免打开多个程序&#10;支持通过程序打开种子文件">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/_15_8_2026_10_35____.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_15日_8月_2026年_10_35_取消提交了更改_[更改]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inno-setup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inno-setup.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/PluginParserGithubDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/PluginParserGithubDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新关于界面&#10;增加种子文件关联功能（测试后Windows平台功能正常）">
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/ResourceLocalizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/ResourceLocalizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,14 +103,14 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "342",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/ED2KParser/src",
+    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/src/icon",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
@@ -132,7 +122,7 @@
     "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "org.pcsoft.intellij.plugin.inno_setup.settings.build",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "应用程序.BTTest.executor": "Run",
     "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
@@ -154,11 +144,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\icon" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ED2KParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src\com\wmp\parser" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\tools\web" />
@@ -173,7 +163,7 @@
       <recent name="com.wmp.downloader.ui.task.createTask" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.TCPControl">
+  <component name="RunManager" selected="应用程序.Run">
     <configuration name="DraggablePanel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.DraggablePanel" />
       <module name="DownLoader" />
@@ -187,25 +177,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GopeedClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.download.GopeedClient" />
+    <configuration name="FileAssociation" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.platform.FileAssociation" />
       <module name="DownLoader" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.download.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MagnetToTorrent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.MagnetToTorrent" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.*" />
+          <option name="PATTERN" value="com.wmp.downloader.tools.platform.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -317,33 +294,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ToastMessage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.ui.ToastMessage" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.ui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
+      <item itemvalue="应用程序.MagnetToTorrent" />
+      <item itemvalue="应用程序.ToastMessage" />
+      <item itemvalue="应用程序.FileAssociation" />
       <item itemvalue="应用程序.TCPControl" />
       <item itemvalue="应用程序.DraggablePanel" />
       <item itemvalue="应用程序.TaskPaneContainerDemo" />
       <item itemvalue="应用程序.Run" />
-      <item itemvalue="应用程序.ToastMessage" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="应用程序.TCPControl" />
         <item itemvalue="应用程序.Run" />
+        <item itemvalue="应用程序.FileAssociation" />
+        <item itemvalue="应用程序.TCPControl" />
         <item itemvalue="应用程序.DraggablePanel" />
         <item itemvalue="应用程序.TaskPaneContainerDemo" />
-        <item itemvalue="应用程序.ToastMessage" />
       </list>
     </recent_temporary>
   </component>
@@ -397,7 +363,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加更多文件" />
     <MESSAGE value="再次修复主题刷新导致的问题" />
     <MESSAGE value="引入新的任务架构，用于通用性与前后台分离" />
     <MESSAGE value="引入新的任务架构，用于中心化管理，转移了史山位置:(" />
@@ -422,7 +387,8 @@
     <MESSAGE value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能&#10;对网络/下载设置页进行了进一步分类&#10;修复设置&quot;方角组件&quot;时的部分问题" />
     <MESSAGE value="统一部分数据的默认值" />
     <MESSAGE value="增加TCP网络通信避免打开多个程序&#10;支持通过程序打开种子文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加TCP网络通信避免打开多个程序&#10;支持通过程序打开种子文件" />
+    <MESSAGE value="更新关于界面&#10;增加种子文件关联功能（测试后Windows平台功能正常）" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新关于界面&#10;增加种子文件关联功能（测试后Windows平台功能正常）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -449,18 +415,14 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
-          <line>624</line>
+          <line>604</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
-          <line>1516</line>
-          <option name="timeStamp" value="31" />
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/common/FileAssociationPanel.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
-          <option name="timeStamp" value="10" />
-        </breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>
           <line>165</line>

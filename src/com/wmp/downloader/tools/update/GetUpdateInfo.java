@@ -3,6 +3,7 @@ package com.wmp.downloader.tools.update;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.Run;
+import com.wmp.downloader.tools.platform.GetPlatform;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
@@ -59,17 +60,16 @@ public class GetUpdateInfo {
                     json.getJSONArray("assets").forEach(obj -> {
                         if (obj instanceof JSONObject jsonObject) {
                             //获取系统名称
-                            var osName = System.getProperty("os.name");
                             var name = jsonObject.getString("name");
-                            if (osName.contains("Win")) {
+                            if (GetPlatform.isWindows()) {
                                 if (name.startsWith("Speed_Bump_Setup") && name.endsWith(".exe")) {
                                     targetUrl.set(jsonObject.getString("browser_download_url"));
                                 }
-                            } else if (osName.contains("Mac")) {
+                            } else if (GetPlatform.isMac()) {
                                 if (name.startsWith("Speed_Bump_Setup") && name.endsWith(".dmg")) {
                                     targetUrl.set(jsonObject.getString("browser_download_url"));
                                 }
-                            } else if (osName.contains("Linux")) {
+                            } else if (GetPlatform.isLinux()) {
                                 if (name.startsWith("Speed_Bump_Setup") && name.endsWith(".deb")) {
                                     targetUrl.set(jsonObject.getString("browser_download_url"));
                                 }

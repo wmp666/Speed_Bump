@@ -9,6 +9,7 @@ import com.wmp.downloader.newArchitecture.ui.task.bt.BTParser;
 import com.wmp.downloader.newArchitecture.ui.task.github.GithubParser;
 import com.wmp.downloader.newArchitecture.ui.task.gopeed.GopeedParser;
 import com.wmp.downloader.newArchitecture.ui.task.http.HTTPParser;
+import com.wmp.downloader.tools.platform.GetPlatform;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
@@ -150,9 +151,9 @@ public class ParserTaskInfo {
                     };
                 }
                 if (supportPlatform != 0) {
-                    if (!((System.getProperty("os.name").startsWith("win") && supportPlatform == 1) ||
-                            (System.getProperty("os.name").startsWith("linux") && supportPlatform == 2) ||
-                            (System.getProperty("os.name").startsWith("mac") && supportPlatform == 3))) {
+                    if (!((GetPlatform.isWindows() && supportPlatform == 1) ||
+                            (GetPlatform.isLinux() && supportPlatform == 2) ||
+                            (GetPlatform.isMac() && supportPlatform == 3))) {
                         var i = JOptionPane.showConfirmDialog(
                                 null,
                                 String.format(
