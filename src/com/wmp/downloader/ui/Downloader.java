@@ -15,6 +15,7 @@ import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
+import com.wmp.downloader.tools.web.TCPControl;
 import com.wmp.downloader.ui.common.LazyTabbedPane;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
@@ -172,7 +173,7 @@ public class Downloader extends JFrame implements WindowListener{
                 }
         });
     });
-    // FIX 删除了无用的 backgroundTimer 字段
+
 
     public Downloader() {
 
@@ -1417,7 +1418,7 @@ public class Downloader extends JFrame implements WindowListener{
         return null;
     }
 
-    private void showLinkDetectedDialog(String url) {
+    public void showLinkDetectedDialog(String url) {
         this.setVisible(true);
         mainTabbedPane.setSelectedIndex(0);
         this.toFront();
@@ -1512,6 +1513,12 @@ public class Downloader extends JFrame implements WindowListener{
 
     @Override
     public void windowOpened(WindowEvent e) {
+        try {
+            TCPControl.startServer();
+        } catch (Exception ex) {
+            logger.error("服务端启动失败!");
+            JOptionPane.showMessageDialog(null, "服务端启动失败");
+        }
         if (DataControl.get("is_start_check_update", true)) {
             checkUpdate();
         }
@@ -1520,7 +1527,7 @@ public class Downloader extends JFrame implements WindowListener{
     @Override
     public void windowClosing(WindowEvent e) {
         // FIX 移除了 backgroundTimer 的停止（已删除该字段）
-        trayIcon.displayMessage("WDownLoader", "已最小化到系统托盘", TrayIcon.MessageType.INFO);
+        trayIcon.displayMessage("SpeedBump", "已最小化到系统托盘", TrayIcon.MessageType.INFO);
     }
 
     @Override

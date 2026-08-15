@@ -8,10 +8,10 @@ import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
 
 public class PluginParserGithubDownloadTask extends GithubParser {
-    private Runnable run;
+    private final Runnable run;
 
-    public PluginParserGithubDownloadTask(Runnable run) {
-        this.run = run;
+    public PluginParserGithubDownloadTask(Runnable doWhenFinaly) {
+        this.run = doWhenFinaly;
     }
 
     @Override
