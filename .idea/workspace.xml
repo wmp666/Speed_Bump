@@ -10,14 +10,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修改种子文件的图标&#10;修复多次打开程序时，不会自动显示出来&#10;增加翻译">
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加修改网络通信端口的功能&#10;修改部分错误的设置项位置">
+      <change afterPath="$PROJECT_DIR$/install.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/icon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,12 +116,12 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "false",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "342",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader/src/icon",
+    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
@@ -128,7 +133,7 @@
     "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "org.pcsoft.intellij.plugin.inno_setup.settings.build",
+    "settings.editor.selected.configurable": "project.propGUI",
     "应用程序.BTTest.executor": "Run",
     "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
@@ -150,18 +155,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\icon" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ED2KParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src\com\wmp\parser" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\out" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\tools\web" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.wmp.downloader.ui.task.douyin" />
@@ -369,7 +374,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="引入新的任务架构，用于中心化管理，转移了史山位置:(" />
     <MESSAGE value="引入新的任务架构，用于中心化管理，转移了史山位置:(&#10;把半透明任务背景添加回来" />
     <MESSAGE value="合并" />
     <MESSAGE value="修复设置项“启动本地化功能性弹窗样式”无法正常加载启用状态的问题" />
@@ -394,7 +398,8 @@
     <MESSAGE value="更新关于界面&#10;增加种子文件关联功能（测试后Windows平台功能正常）" />
     <MESSAGE value="修改种子文件的图标&#10;修复多次打开程序时，不会自动显示出来" />
     <MESSAGE value="修改种子文件的图标&#10;修复多次打开程序时，不会自动显示出来&#10;增加翻译" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改种子文件的图标&#10;修复多次打开程序时，不会自动显示出来&#10;增加翻译" />
+    <MESSAGE value="增加修改网络通信端口的功能&#10;修改部分错误的设置项位置" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加修改网络通信端口的功能&#10;修改部分错误的设置项位置" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
