@@ -34,8 +34,14 @@ public class TCPControl {
             try {
                 TCPServer.create("127.0.0.1", port,
                         (message) ->{
-                            if (message.strip().startsWith("createTask:")) {
-                                var TaskInfo = message.strip().substring(11);
+                            var strip = message.strip();
+                            if (strip.equalsIgnoreCase("show")){
+                                if (Downloader.mainFrame != null) {
+                                    Downloader.mainFrame.setVisible(true);
+                                }
+                            }
+                            else if (strip.startsWith("createTask:")) {
+                                var TaskInfo = strip.substring(11);
                                 if (Downloader.mainFrame != null) {
                                     Downloader.mainFrame.showLinkDetectedDialog(TaskInfo);
                                 }else{

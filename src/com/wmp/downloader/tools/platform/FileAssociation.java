@@ -1,5 +1,7 @@
 package com.wmp.downloader.tools.platform;
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -8,6 +10,8 @@ import java.util.*;
  * 跨平台文件关联注册工具
  */
 public class FileAssociation {
+    
+    private static final Logger logger = Logger.getLogger(FileAssociation.class);
 
     /**
      * 注册文件关联（自动检测操作系统）
@@ -36,28 +40,28 @@ public class FileAssociation {
     // ------------------- Windows 实现 -------------------
     private static void registerWindows(String ext, String desc, String icon, String app) throws IOException, InterruptedException {
         String fileType = ext + "file";
-        String quotedApp = "\"" + app + "\"";
-        String command = quotedApp + " \"%1\"";
 
-        // 关键修改：将所有注册表路径从 HKCR 改为 HKCU\Software\Classes
-        List<String> commands = Arrays.asList(
-                "reg add HKCU\\Software\\Classes\\." + ext + " /ve /t REG_SZ /d \"" + fileType + "\" /f",
-                "reg add HKCU\\Software\\Classes\\" + fileType + " /ve /t REG_SZ /d \"" + desc + "\" /f",
-                "reg add HKCU\\Software\\Classes\\" + fileType + "\\DefaultIcon /ve /t REG_SZ /d \"" + icon + "\" /f",
-                "reg add HKCU\\Software\\Classes\\" + fileType + "\\shell\\open\\command /ve /t REG_SZ /d \"" + command + "\" /f"
-        );
+        // 使用数组形式，每个参数独立，Runtime 会自动处理引号
+        String[] cmd1 = {"reg", "add", "HKCU\\Software\\Classes\\." + ext, "/ve", "/t", "REG_SZ", "/d", fileType, "/f"};
+        String[] cmd2 = {"reg", "add", "HKCU\\Software\\Classes\\" + fileType, "/ve", "/t", "REG_SZ", "/d", desc, "/f"};
+        String[] cmd3 = {"reg", "add", "HKCU\\Software\\Classes\\" + fileType + "\\DefaultIcon", "/ve", "/t", "REG_SZ", "/d", icon, "/f"};
+        String[] cmd4 = {"reg", "add", "HKCU\\Software\\Classes\\" + fileType + "\\shell\\open\\command", "/ve", "/t", "REG_SZ", "/d", "\\\"" + app + "\\\" \\\"%1\\\"", "/f"};
 
-        for (String cmd : commands) {
-            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", cmd);
-            pb.inheritIO();
-            Process p = pb.start();
-            int exit = p.waitFor();
-            if (exit != 0) {
-                throw new IOException("执行命令失败: " + cmd + "，退出码: " + exit);
-            }
-        }
-        System.out.println("当前用户的文件关联注册成功。");
+        execCommand(cmd1);
+        execCommand(cmd2);
+        execCommand(cmd3);
+        execCommand(cmd4);
     }
+
+    private static void execCommand(String[] cmd) throws IOException, InterruptedException {
+        logger.info("执行: " + String.join(" ", cmd));
+        Process process = Runtime.getRuntime().exec(cmd);
+        int exit = process.waitFor();
+        if (exit != 0) {
+            throw new IOException("命令执行失败，退出码: " + exit);
+        }
+    }
+
     // ------------------- macOS 实现 -------------------
     private static void registerMac(String ext, String desc, String icon, String app) throws IOException, InterruptedException {
         // macOS 需要应用是 .app bundle，且 Info.plist 已包含文档类型声明
@@ -77,7 +81,7 @@ public class FileAssociation {
         if (exit != 0) {
             throw new IOException("lsregister 执行失败，退出码: " + exit);
         }
-        System.out.println("macOS 文件关联已刷新（需确保 .app 的 Info.plist 已声明 " + ext + " 类型）。");
+        logger.info("macOS 文件关联已刷新（需确保 .app 的 Info.plist 已声明 " + ext + " 类型）。");
     }
 
     // ------------------- Linux 实现 -------------------
@@ -146,7 +150,7 @@ public class FileAssociation {
         }
         Files.write(mimeApps, lines);
 
-        System.out.println("Linux 文件关联注册成功。");
+        logger.info("Linux 文件关联注册成功。");
     }
 
 
@@ -189,7 +193,7 @@ public class FileAssociation {
                 throw new IOException("执行命令失败: " + cmd + "，退出码: " + exit);
             }
         }
-        System.out.println("Windows 文件关联已删除。");
+        logger.info("Windows 文件关联已删除。");
     }
 
     // ------------------- macOS 删除实现 -------------------
@@ -207,7 +211,7 @@ public class FileAssociation {
         if (exit != 0) {
             throw new IOException("lsregister -u 执行失败，退出码: " + exit);
         }
-        System.out.println("macOS 文件关联已删除（需确保 .app 的 Info.plist 已移除 " + appPath + " 的声明）。");
+        logger.info("macOS 文件关联已删除（需确保 .app 的 Info.plist 已移除 " + appPath + " 的声明）。");
     }
 
     // ------------------- Linux 删除实现 -------------------
@@ -260,7 +264,7 @@ public class FileAssociation {
             throw new IOException("update-mime-database 失败");
         }
 
-        System.out.println("Linux 文件关联删除成功。");
+        logger.info("Linux 文件关联删除成功。");
     }
 
 }

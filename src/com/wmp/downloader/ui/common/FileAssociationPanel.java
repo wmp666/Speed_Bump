@@ -1,11 +1,13 @@
 package com.wmp.downloader.ui.common;
 
+import com.formdev.flatlaf.FlatLaf;
 import com.sun.nio.sctp.Association;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.file.ResourceLocalizer;
 import com.wmp.downloader.tools.platform.FileAssociation;
 import com.wmp.downloader.tools.platform.GetPlatform;
+import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
 
@@ -45,7 +47,12 @@ public class FileAssociationPanel extends JPanel{
         else if (GetPlatform.isMac()) iconAssociation = ".icns";
         else iconAssociation = ".png";
 
+        suffixLabel.putClientProperty("FlatLaf.style", "font: $h1.font");
         suffixLabel.setText(description);
+        suffixLabel.setIcon(
+                new ImageIcon(
+                        new ImageIcon(FileAssociationPanel.class.getResource(iconPath + ".png")).getImage()
+                        .getScaledInstance(suffixLabel.getFont().getSize(), suffixLabel.getFont().getSize(), Image.SCALE_SMOOTH)));
 
         localIconPath = new File(DataControl.getDataPath(), "/file_icon/" + suffix + iconAssociation).getAbsolutePath();
 

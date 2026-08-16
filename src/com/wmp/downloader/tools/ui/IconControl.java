@@ -16,17 +16,18 @@ public class IconControl {
 
     private static final List<DynamicConverterTask> dynamicConverterTasks = new ArrayList<>();
 
+    private static final Properties iconProperties = new Properties();
 
-    public static ImageIcon getIcon(String key) {
-
-
-        Properties iconProperties = new Properties();
+    static{
         try {
             iconProperties.load(IconControl.class.getResourceAsStream("/com/wmp/downloader/tools/ui/icons.properties"));
         } catch (IOException e) {
             logger.error("加载失败： icons.properties", e);
         }
+    }
 
+
+    public static ImageIcon getIcon(String key) {
 
         var iconPath = iconProperties.getProperty(key, "/icon/%theme_type%/12-misc/circle.png");
         iconPath = iconPath.replace("%theme_type%", DataControl.get("theme_type", "light"));

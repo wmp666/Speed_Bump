@@ -18,7 +18,7 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.3.8";
+    public static String VERSION = "0.3.9";
 
     public static String PLUGIN_SUPPORT_VERSION = "1.0.0";
 
@@ -55,7 +55,10 @@ public class Run {
             }
             else {
                 try {
-                    if (TCPControl.isHasServer()) System.exit(0);
+                    if (TCPControl.isHasServer()) {
+                        TCPControl.sendToServer("show");
+                        System.exit(0);
+                    }
                 } catch (Exception e) {
                     System.exit(-1);
                 }

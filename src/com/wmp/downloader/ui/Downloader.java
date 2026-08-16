@@ -926,7 +926,7 @@ public class Downloader extends JFrame implements WindowListener{
 
         fontSizeSpinner = new JSpinner(new SpinnerNumberModel(DataControl.get("FontSize", 12).intValue(), 1, Integer.MAX_VALUE, 1));
 
-        torrentFileAssociationPanel = new FileAssociationPanel("torrent", StringFormat.translate("file_association.torrent"), "/icon/speedbump_file");
+        torrentFileAssociationPanel = new FileAssociationPanel("torrent", StringFormat.translate("file_association.torrent"), "/icon/file_assoication/torrent_file");
 
     }
 
