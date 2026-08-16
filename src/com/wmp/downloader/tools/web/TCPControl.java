@@ -13,7 +13,9 @@ public class TCPControl {
 
     private static final Logger logger = Logger.getLogger(TCPControl.class);
 
-    private static int port = DataControl.get("port", 5465);
+    private static int port = Integer.parseInt(DataControl.get("port", "5465"));
+
+    private static Thread serverThread;
 
     public static boolean isHasServer() throws Exception{
         try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -25,12 +27,12 @@ public class TCPControl {
         }
     }
 
-    public static Thread startServer() throws Exception{
+    public static void startServer() throws Exception{
         if (isHasServer()) {
             logger.warn("已存在服务端");
-            return null;
+            return;
         }
-        return Thread.ofVirtual().name("TCP Listener Thread").start(()-> {
+        serverThread = Thread.ofVirtual().name("TCP Listener Thread").start(()-> {
             try {
                 TCPServer.create("127.0.0.1", port,
                         (message) ->{

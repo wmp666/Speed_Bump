@@ -136,6 +136,8 @@ public class Downloader extends JFrame implements WindowListener{
     private JButton issueButton;
     private JButton downloadFilesPathButton;
     private FileAssociationPanel torrentFileAssociationPanel;
+    private JTextField portTextField;
+    private JButton portSaveButton;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -1181,6 +1183,7 @@ public class Downloader extends JFrame implements WindowListener{
         isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
         accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
         IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
+        portTextField.setText(String.valueOf(DataControl.get("port", 5465)));
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -1236,6 +1239,7 @@ public class Downloader extends JFrame implements WindowListener{
         //添加图标
         IconControl.addInDynamicConverter(
                 () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize())),
+                () -> downloadFilesPathButton.setIcon(IconControl.getIcon("folder", downloadFilesPathButton.getFont().getSize())),
                 () -> deleteTempFolderDataButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
                 () -> accentColorChooseButton.setIcon(IconControl.getIcon("eyedropper", accentColorChooseButton.getFont().getSize()))
         );
@@ -1264,6 +1268,19 @@ public class Downloader extends JFrame implements WindowListener{
         });
         alphaSlider.addChangeListener(e -> {
             DataControl.putAndSave("background_alpha", (float) alphaSlider.getValue() / 100.0f);
+        });
+        portSaveButton.addActionListener(_ -> {
+            //先判断是不是int
+            try {
+                Integer.parseInt(portTextField.getText());
+            } catch (NumberFormatException e) {
+                logger.error("错误的数字类型", e);
+                ToastMessage.show(StringFormat.translate("settings.web.port_settings.num_err"), ToastMessage.ERROR);
+                return;
+            }
+            DataControl.putAndSave("port", portTextField.getText());
+            ToastMessage.show(StringFormat.translate("settings.web.port_settings.update_tip"), ToastMessage.INFO);
+
         });
 
 
