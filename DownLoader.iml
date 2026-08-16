@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/resource" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/out" />
-      <excludeFolder url="file://$MODULE_DIR$/减速带.iss" />
+      <excludeFolder url="file://$MODULE_DIR$/out/减速带.iss" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
