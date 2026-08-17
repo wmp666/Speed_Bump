@@ -22,6 +22,15 @@ public class StringFormat {
         }
     }
 
+    public static String translate(String baseName, String key, int i) {
+        ResourceBundle bundle = ResourceBundle.getBundle(baseName, Locale.getDefault());
+        try {
+            return bundle.getString(key);
+        } catch (Exception e) {
+            return String.format("%s: %s", "laug", key);
+        }
+    }
+
     /**
      * 根据当前操作系统净化文件名或目录名，将非法字符替换为 '_'
      * <p>

@@ -46,7 +46,7 @@ public abstract class AbstractTask extends JPanel {
     protected boolean isCanExit = false;
     protected int startCount = 0;
     private String originalFileName;
-    private JSONObject jsonObject;
+    protected JSONObject jsonObject;
     private DynamicConverterTask[] IconDynamicConverterTasks;
     private DynamicConverterTask[] ThemeDynamicConverterTasks;
 

@@ -4,25 +4,40 @@
     <artifacts-to-build>
       <artifact name="DownLoader_Linux:jar" />
       <artifact name="DownLoader_Windows:jar" />
+      <artifact name="ImageFormat_Processing:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加修改网络通信端口的功能&#10;修改部分错误的设置项位置">
-      <change afterPath="$PROJECT_DIR$/install.ico" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新创建任务的UI和文字">
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/ImageFormat_Processing_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageConverterTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageLinkFileEditPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageLinkFileEditPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/Processing.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/StringFormat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/info.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/introduction.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/laug.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/laug_en_US.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/laug_ja_JP.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/laug_ru_RU.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/laug_zh_HK.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/laug_zh_TW.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/icon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/StringFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/StringFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +136,7 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader",
+    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/ImageFormat_Processing/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
@@ -130,10 +145,10 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src/Main.java",
-    "project.structure.last.edited": "项目",
+    "project.structure.last.edited": "工件",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "project.propGUI",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "应用程序.BTTest.executor": "Run",
     "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
@@ -155,20 +170,21 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\src\main\resources" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\icon" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ED2KParser\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\src\main\resources" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\target\classes" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\src\main\resources\imageFormat" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\out" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\tools\web" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser\src" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\DouyinParser" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.wmp.processing.imageFormat" />
       <recent name="com.wmp.downloader.ui.task.douyin" />
       <recent name="com.wmp.downloader.ui.task.bilibili" />
       <recent name="com.wmp.downloader.ui.task.createTask" />
@@ -374,7 +390,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="引入新的任务架构，用于中心化管理，转移了史山位置:(&#10;把半透明任务背景添加回来" />
     <MESSAGE value="合并" />
     <MESSAGE value="修复设置项“启动本地化功能性弹窗样式”无法正常加载启用状态的问题" />
     <MESSAGE value="制作了一个比较简易的拓展解析器展示页&#10;修复抖音下载会解析任务失败" />
@@ -399,7 +414,8 @@
     <MESSAGE value="修改种子文件的图标&#10;修复多次打开程序时，不会自动显示出来" />
     <MESSAGE value="修改种子文件的图标&#10;修复多次打开程序时，不会自动显示出来&#10;增加翻译" />
     <MESSAGE value="增加修改网络通信端口的功能&#10;修改部分错误的设置项位置" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加修改网络通信端口的功能&#10;修改部分错误的设置项位置" />
+    <MESSAGE value="更新创建任务的UI和文字" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新创建任务的UI和文字" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -437,7 +453,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>
           <line>165</line>
-          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel" method="getJsonInfo">
+          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -446,7 +462,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/github/GithubParser.java</url>
           <line>25</line>
-          <properties class="com.wmp.downloader.newArchitecture.ui.task.github.GithubParser" method="updateLinkInfo">
+          <properties class="com.wmp.downloader.newArchitecture.ui.task.github.GithubParser">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

@@ -40,6 +40,7 @@ public class TCPControl {
                             if (strip.equalsIgnoreCase("show")){
                                 if (Downloader.mainFrame != null) {
                                     Downloader.mainFrame.setVisible(true);
+                                    Downloader.mainFrame.requestFocus();
                                 }
                             }
                             else if (strip.startsWith("createTask:")) {
