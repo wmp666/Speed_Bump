@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="imageio-need-3.13.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/common-lang-3.13.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/common-io-3.13.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/common-image-3.13.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/imageio-metadata-3.13.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/imageio-core-3.13.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
