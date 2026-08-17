@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="ImageFormat_Processing:jar" />
+      <artifact name="Image_Converter:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,15 +10,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加图片格式转换器">
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/test/java/GetSupportFormat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Image_Converter_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-batik-3.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-bmp-3.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-dds-3.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-hdr-3.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-icns-3.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-pcx-3.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-pict-3.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-tiff-3.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-xwd-3.13.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/ImageFormat_Processing_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/imageio_need_3_13_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageConverterTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageConverterTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageLinkFileEditPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/ImageLinkFileEditPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/Processing.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/Processing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/StringFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/java/com/wmp/processing/imageFormat/Translate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/ImageFormat_Processing/src/main/resources/info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/ImageLinkFileEditPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/ImageLinkFileEditPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/Processing.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/Processing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/introduction.md" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/introduction.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/laug.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +130,7 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/ImageFormat_Processing/src/main/resources",
+    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/Image_Converter/lib",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
@@ -126,7 +139,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src/Main.java",
-    "project.structure.last.edited": "模块",
+    "project.structure.last.edited": "工件",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
     "settings.editor.selected.configurable": "preferences.pluginManager",
@@ -152,18 +165,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\Image_Converter\lib" />
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\lib" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\src\main\resources" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\icon" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ED2KParser\src" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\BiliParser\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\Image_Converter\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\src\main\resources" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\target\classes" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\src\main\resources\imageFormat" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\out" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.wmp.processing.imageFormat" />
@@ -172,7 +185,7 @@
       <recent name="com.wmp.downloader.ui.task.createTask" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.Run">
+  <component name="RunManager" selected="应用程序.GetSupportFormat">
     <configuration name="DraggablePanel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.DraggablePanel" />
       <module name="DownLoader" />
@@ -200,8 +213,8 @@
       </method>
     </configuration>
     <configuration name="GetSupportFormat" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GetSupportFormat" />
-      <module name="ImageFormat_Processing" />
+      <option name="MAIN_CLASS_NAME" value="com.wmp.processing.imageFormat.test.GetSupportFormat" />
+      <module name="Image_Converter" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -272,6 +285,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="应用程序.ToastMessage" />
       <item itemvalue="应用程序.GetSupportFormat" />
       <item itemvalue="应用程序.FileAssociation" />
       <item itemvalue="应用程序.TCPControl" />
@@ -280,8 +294,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="应用程序.Run" />
         <item itemvalue="应用程序.GetSupportFormat" />
+        <item itemvalue="应用程序.Run" />
         <item itemvalue="应用程序.FileAssociation" />
         <item itemvalue="应用程序.TCPControl" />
         <item itemvalue="应用程序.DraggablePanel" />
@@ -398,10 +412,15 @@
           <line>59</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/Processing.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>
           <line>165</line>
-          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel">
+          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel" method="getJsonInfo">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -410,7 +429,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/github/GithubParser.java</url>
           <line>25</line>
-          <properties class="com.wmp.downloader.newArchitecture.ui.task.github.GithubParser">
+          <properties class="com.wmp.downloader.newArchitecture.ui.task.github.GithubParser" method="updateLinkInfo">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

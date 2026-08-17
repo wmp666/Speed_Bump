@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/DownLoader.iml" filepath="$PROJECT_DIR$/DownLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/DownLoader_plugin.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/DownLoader_plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/ED2KParser.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/ED2KParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" />
     </modules>
   </component>
 </project>
