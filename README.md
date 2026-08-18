@@ -3,47 +3,19 @@
 2. 视频处理器: 支持合并**音频, 视频**;更改视频格式
 3. 下载器，但是不只是下载器;我们希望能兼容更多实用功能
 
-## 内置的支持功能
+## 功能
 
-### 支持的下载链接
+### 内置的支持功能
+
+#### 支持的下载链接
 - HTTP/HTTPS
   - Github加速
 - BT（Torrent、Magnet）
 - Gopeed
 
-### 支持的视频处理
+#### 支持的视频处理
 - 视频合并
 - 视频转码，转格式
-
-## 许可证
-[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
-
-## 鸣谢
-### 第三方库
-- [JFormDesigner:FlatLaf](https://www.formdev.com/flatlaf)
-- [SwingX](https://github.com/arotenberg/swingx)
-- [alibaba:fastjson](https://github.com/alibaba/fastjson)
-- [google:core+javase](https://developer.android.google.cn/guide/playcore?hl=zh-cn)
-- [org.jsoup:jsoup](https://jsoup.org/)
-- [log4j:log4j](https://logging.apache.org/log4j/2.x/index.html)
-- [io.github.dj.raven:modal-dialog](https://github.com/DJ-Raven/swing-modal-dialog)
-- [frostwire:frostwire-jlibtorrent](https://github.com/frostwire/frostwire-jlibtorrent)
-- [commons.net](https://commons.apache.org/proper/commons-net/)
-- [org.commonmark](https://github.com/commonmark/commonmark-java)
-
-
-### 贡献者
-1. 作者：开发者
-2. 工具：AI——减少了不必要的重复工作
-3. [Karagarasu](https://github.com/Karagarasu)：提供功能建议
-
-### 其他
-- [Ghost Downloader 3](https://github.com/XiaoYouChR/Ghost-Downloader-3/releases)：提供 **UI** + **功能** 启发
-- [遇见API](https://api.yujn.cn)：提供部分API支持
-- [Nieobie:game-icon-pack](https://github.com/Nieobie/game-icon-pack)：提供图标
-- [gopeed](https://gopeed.com/)
-
-## 功能
 
 ### 作者提供的拓展支持格式
 - 下载
@@ -74,6 +46,34 @@
 - [ ] gopeed增加使用教程
 - [ ] 将UI操作与后台操作完全分离
 - ...
+
+## 许可证
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
+
+## 鸣谢
+### 第三方库
+- [JFormDesigner:FlatLaf](https://www.formdev.com/flatlaf)
+- [SwingX](https://github.com/arotenberg/swingx)
+- [alibaba:fastjson](https://github.com/alibaba/fastjson)
+- [google:core+javase](https://developer.android.google.cn/guide/playcore?hl=zh-cn)
+- [org.jsoup:jsoup](https://jsoup.org/)
+- [log4j:log4j](https://logging.apache.org/log4j/2.x/index.html)
+- [io.github.dj.raven:modal-dialog](https://github.com/DJ-Raven/swing-modal-dialog)
+- [frostwire:frostwire-jlibtorrent](https://github.com/frostwire/frostwire-jlibtorrent)
+- [commons.net](https://commons.apache.org/proper/commons-net/)
+- [org.commonmark](https://github.com/commonmark/commonmark-java)
+
+
+### 贡献者
+1. 作者：开发者
+2. 工具：AI——减少了不必要的重复工作
+3. [Karagarasu](https://github.com/Karagarasu)：提供功能建议
+
+### 其他
+- [Ghost Downloader 3](https://github.com/XiaoYouChR/Ghost-Downloader-3/releases)：提供 **UI** + **功能** 启发
+- [遇见API](https://api.yujn.cn)：提供部分API支持
+- [Nieobie:game-icon-pack](https://github.com/Nieobie/game-icon-pack)：提供图标
+- [gopeed](https://gopeed.com/)
 
 # 声明
 
