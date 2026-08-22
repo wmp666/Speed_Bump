@@ -10,11 +10,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示&#10;更新关于页UI">
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/platform/AutoStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/platform/AutoStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,7 +320,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="拓展功能完善与问题修复&#10;修复初次启动会反复报错&#10;增加预加载进度条&#10;增加拓展介绍页&#10;实现了卸载拓展的功能&#10;增加了导入本地拓展的功能" />
     <MESSAGE value="新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取可下载列表拓展" />
     <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题" />
     <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器" />
@@ -347,7 +344,8 @@
     <MESSAGE value="更新一点东西" />
     <MESSAGE value="增加端口设置默认值按钮&#10;修复后台运行指令会导致打开多个实例&#10;在关于页增加新的介绍信息(该板块不翻译)" />
     <MESSAGE value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示" />
+    <MESSAGE value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示&#10;更新关于页UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示&#10;更新关于页UI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

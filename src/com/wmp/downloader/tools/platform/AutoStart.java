@@ -96,6 +96,22 @@ public class AutoStart {
         setAutoStart(false);
     }
 
+    /**
+     * 获取当前是否已开启开机自启动
+     *
+     * @return true 已开启；false 未开启或查询失败
+     */
+    public static boolean isAutoStart() {
+        if (GetPlatform.isWindows()) {
+            return isAutoStartWindows();
+        } else if (GetPlatform.isMac()) {
+            return isAutoStartMac();
+        } else if (GetPlatform.isLinux()) {
+            return isAutoStartLinux();
+        }
+        return false;
+    }
+
     // ------------------- Windows 实现 -------------------
 
     private static void enableWindows() throws IOException, InterruptedException {
@@ -120,6 +136,17 @@ public class AutoStart {
         // 值不存在时 reg 返回 1，同样视为已取消
         execCommand(cmd, 0, 1);
         logger.info("已取消开机自启动 (Windows)");
+    }
+
+    private static boolean isAutoStartWindows() {
+        try {
+            String[] cmd = {"reg", "query", RUN_KEY, "/v", VALUE_NAME};
+            Process process = Runtime.getRuntime().exec(cmd);
+            return process.waitFor() == 0;
+        } catch (Exception e) {
+            logger.warn("查询开机自启动状态失败 (Windows)", e);
+            return false;
+        }
     }
 
     // ------------------- macOS 实现 -------------------
@@ -162,6 +189,10 @@ public class AutoStart {
         logger.info("已取消开机自启动 (macOS)");
     }
 
+    private static boolean isAutoStartMac() {
+        return Files.exists(Paths.get(System.getProperty("user.home"), "Library", "LaunchAgents", MAC_LABEL + ".plist"));
+    }
+
     /** 获取 macOS .app 包内真正的可执行文件 */
     private static File getMacExecutable(File appPath) {
         if (appPath.isDirectory() && appPath.getName().endsWith(".app")) {
@@ -200,6 +231,10 @@ public class AutoStart {
         Path desktopFile = Paths.get(System.getProperty("user.home"), ".config", "autostart", LINUX_DESKTOP_FILE);
         Files.deleteIfExists(desktopFile);
         logger.info("已取消开机自启动 (Linux)");
+    }
+
+    private static boolean isAutoStartLinux() {
+        return Files.exists(Paths.get(System.getProperty("user.home"), ".config", "autostart", LINUX_DESKTOP_FILE));
     }
 
     // ------------------- 公共辅助 -------------------

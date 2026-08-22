@@ -1194,6 +1194,7 @@ public class Downloader extends JFrame implements WindowListener{
         accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
         IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
         portTextField.setText(String.valueOf(DataControl.get("port", 5465)));
+        isAutoStartCheckBox.setSelected(AutoStart.isAutoStart());
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -1371,6 +1372,8 @@ public class Downloader extends JFrame implements WindowListener{
             themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
 
             accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
+
+            isAutoStartCheckBox.setSelected(AutoStart.isAutoStart());
 
             updateBackground();
             updateChildBounds(); // FIX 使用统一方法
