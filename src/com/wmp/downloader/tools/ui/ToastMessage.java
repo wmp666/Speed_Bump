@@ -2,6 +2,7 @@ package com.wmp.downloader.tools.ui;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.downloader.ui.FunctionDialog;
@@ -171,5 +172,18 @@ public class ToastMessage {
 
     public interface ToastFunction {
         void run(int AllClickCount, int clickCount, int result);
+    }
+
+    /**
+     * 用于便捷生成重复的通知
+     */
+    public static class Utils{
+        public static void createSaveAndApplyMsg(){
+            show(StringFormat.translate("settings.save_and_apply"), SUCCESS);
+        }
+
+        public static void createSaveAndApplyNextMsg(){
+            ToastMessage.show(StringFormat.translate("settings.web.port_settings.update_tip"), INFO);
+        }
     }
 }

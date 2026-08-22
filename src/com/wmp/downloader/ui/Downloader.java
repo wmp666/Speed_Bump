@@ -10,18 +10,19 @@ import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.file.FileOperation;
+import com.wmp.downloader.tools.platform.AutoStart;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
-import com.wmp.downloader.tools.web.TCPControl;
 import com.wmp.downloader.ui.common.FileAssociationPanel;
 import com.wmp.downloader.ui.common.LazyTabbedPane;
 import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
+import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.color.EyeDropperColorChooserPanel;
 
 import javax.swing.*;
@@ -141,6 +142,11 @@ public class Downloader extends JFrame implements WindowListener{
     private JButton PortDefaultButton;
     private JLabel runVersionLabel;
     private JLabel PluginSupportVersionLabel;
+    private JCheckBox isAutoStartCheckBox;
+    private JScrollPane platformSetsScrollPane;
+    private JPanel platformSetsPanel;
+    private JPanel aboutInfoPanel;
+    private JScrollPane aboutInfoScrollPane;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -918,6 +924,7 @@ public class Downloader extends JFrame implements WindowListener{
 
         installPluginInfoScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(installPluginInfoPanel));
         PluginInfoScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(PluginInfoPanel));
+        platformSetsScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(platformSetsPanel));
 
         backgroundSelectionPanel = new PathSelectionPanel(StringFormat.translate("settings", "settings.personalized.background_path"), new File(DataControl.get("background", "")), SystemFileChooser.FILES_ONLY);
         pathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
@@ -985,6 +992,8 @@ public class Downloader extends JFrame implements WindowListener{
         });
 
         aboutScrollPane.getViewport().setOpaque(false);
+
+        UITools.setScrollPaneUnOpaque(aboutInfoScrollPane);
     }
 
     public void checkUpdate() {
@@ -1255,12 +1264,8 @@ public class Downloader extends JFrame implements WindowListener{
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
             ThreadNumLabel.setSize(ThreadNumLabel.getPreferredSize());
         });
-        PortDefaultButton.addActionListener(_ -> {
-            portTextField.setText("5465");
-            DataControl.putAndSave("port", portTextField.getText());
-            ToastMessage.show(StringFormat.translate("settings.web.port_settings.update_tip"), ToastMessage.INFO);
 
-        });
+
         //动态保存
         BackgroundModeComboBox.addItemListener(e -> {
             DataControl.putAndSave("background_mode", e.getItem().toString());
@@ -1269,12 +1274,61 @@ public class Downloader extends JFrame implements WindowListener{
             } else {
                 backgroundSelectionPanel.setVisible(false);
             }
+            ToastMessage.Utils.createSaveAndApplyMsg();
+
         });
         backgroundSelectionPanel.setPathChangeListener(path -> {
             DataControl.putAndSave("background", path);
+            ToastMessage.Utils.createSaveAndApplyMsg();
         });
         alphaSlider.addChangeListener(e -> {
+            JSlider source = (JSlider) e.getSource();
+
+            // 关键判断：如果正在调整中（鼠标按下拖拽），则忽略，直接返回
+            if (source.getValueIsAdjusting()) {
+                return;
+            }
             DataControl.putAndSave("background_alpha", (float) alphaSlider.getValue() / 100.0f);
+            ToastMessage.Utils.createSaveAndApplyMsg();
+        });
+        themeComboBox.addItemListener(e -> {
+            var themeStr = e.getItem().toString();
+            DataControl.putAndSave("theme", themeStr);
+            ThemeChanger.easyChanger();
+            ToastMessage.Utils.createSaveAndApplyMsg();
+        });
+        FontListComboBox.addActionListener(e -> {
+            var fontName = FontListComboBox.getSelectedItem().toString();
+            DataControl.putAndSave("Font", fontName);
+            ThemeChanger.easyChanger();
+            ToastMessage.Utils.createSaveAndApplyMsg();
+        });
+        isAutoStartCheckBox.addActionListener(_ -> {
+            var selected = isAutoStartCheckBox.isSelected();
+
+            if (DataControl.getAppPath() == null) {
+                isAutoStartCheckBox.setSelected(!selected);
+                ToastMessage.show(StringFormat.translate("error"), ToastMessage.ERROR);
+                return;
+            }
+
+            try {
+                AutoStart.setAutoStart(selected);
+            } catch (Exception e) {
+                logger.error("发生错误", e);
+                isAutoStartCheckBox.setSelected(!selected);
+                ToastMessage.show("Exception: " + e.getMessage(), ToastMessage.ERROR);
+                return;
+            }
+            ToastMessage.Utils.createSaveAndApplyMsg();
+        });
+
+        //下次生效
+        PortDefaultButton.addActionListener(_ -> {
+            portTextField.setText("5465");
+            DataControl.putAndSave("port", portTextField.getText());
+            ToastMessage.Utils.createSaveAndApplyNextMsg();
+
         });
         portSaveButton.addActionListener(_ -> {
             //先判断是不是int
@@ -1286,11 +1340,19 @@ public class Downloader extends JFrame implements WindowListener{
                 return;
             }
             DataControl.putAndSave("port", portTextField.getText());
-            ToastMessage.show(StringFormat.translate("settings.web.port_settings.update_tip"), ToastMessage.INFO);
-
+            ToastMessage.Utils.createSaveAndApplyNextMsg();
+        });
+        laugComboBox.addItemListener(e -> {
+            var lauguage = e.getItem().toString();
+            Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(lauguage);
+            if (matcher.find()) {
+                lauguage = matcher.group(1);
+            }
+            DataControl.putAndSave("laug", lauguage);
+            ToastMessage.Utils.createSaveAndApplyNextMsg();
         });
 
-
+        //强制刷新与保存
         refreshButton.addActionListener(e -> {
             DataControl.load();
             isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
@@ -1315,24 +1377,7 @@ public class Downloader extends JFrame implements WindowListener{
 
             ThemeChanger.easyChanger();
         });
-        themeComboBox.addItemListener(e -> {
-            var themeStr = e.getItem().toString();
-            DataControl.putAndSave("theme", themeStr);
-            ThemeChanger.easyChanger();
-        });
-        FontListComboBox.addActionListener(e -> {
-            var fontName = FontListComboBox.getSelectedItem().toString();
-            DataControl.putAndSave("Font", fontName);
-            ThemeChanger.easyChanger();
-        });
-        laugComboBox.addItemListener(e -> {
-            var lauguage = e.getItem().toString();
-            Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(lauguage);
-            if (matcher.find()) {
-                lauguage = matcher.group(1);
-            }
-            DataControl.putAndSave("laug", lauguage);
-        });
+
 
         accentColorChooseButton.addActionListener(e -> {
             Color color = null;

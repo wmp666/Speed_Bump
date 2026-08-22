@@ -2,29 +2,19 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Image_Converter:jar" />
+      <artifact name="DownLoader_Linux:jar" />
+      <artifact name="DownLoader_Windows:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新一点东西">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/apache_xmlgraphics_batik_all.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/imageio_plugins_3_13_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/CursorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Image_Converter_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Image_Converter_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/_15_8_2026_10_35____.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_15日_8月_2026年_10_35_取消提交了更改_[更改]/shelved.patch" beforeDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/platform/AutoStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/platform/AutoStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/introduction.md" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/introduction.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +206,6 @@
     <configuration name="Run" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
       <module name="DownLoader" />
-      <option name="PROGRAM_PARAMETERS" value="-background" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.wmp.downloader.*" />
@@ -333,8 +322,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="制作了一个比较简易的拓展解析器展示页&#10;修复抖音下载会解析任务失败" />
-    <MESSAGE value="增强更新信息整合的功能" />
     <MESSAGE value="拓展功能完善与问题修复&#10;修复初次启动会反复报错&#10;增加预加载进度条&#10;增加拓展介绍页&#10;实现了卸载拓展的功能&#10;增加了导入本地拓展的功能" />
     <MESSAGE value="新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取可下载列表拓展" />
     <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题" />
@@ -358,7 +345,9 @@
     <MESSAGE value="更新创建任务的UI和文字" />
     <MESSAGE value="增加图片格式转换器" />
     <MESSAGE value="更新一点东西" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新一点东西" />
+    <MESSAGE value="增加端口设置默认值按钮&#10;修复后台运行指令会导致打开多个实例&#10;在关于页增加新的介绍信息(该板块不翻译)" />
+    <MESSAGE value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -382,11 +371,6 @@
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/http/HTTPParser.java</url>
           <line>54</line>
           <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
-          <line>603</line>
-          <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/common/FileAssociationPanel.java</url>
