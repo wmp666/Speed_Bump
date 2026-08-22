@@ -9,29 +9,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加图片格式转换器">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Image_Converter_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-batik-3.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-bmp-3.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-dds-3.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-hdr-3.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-icns-3.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-pcx-3.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-pict-3.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-tiff-3.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-xwd-3.13.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/ImageFormat_Processing_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/imageio_need_3_13_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新一点东西">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/apache_xmlgraphics_batik_all.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/imageio_plugins_3_13_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/test/CursorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Image_Converter_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Image_Converter_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/_15_8_2026_10_35____.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_15日_8月_2026年_10_35_取消提交了更改_[更改]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/ImageLinkFileEditPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/ImageLinkFileEditPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/Processing.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/Processing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/introduction.md" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/introduction.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/laug.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +47,7 @@
         <entry key="$PROJECT_DIR$" value="new-architecture" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../DownLoader_plugin" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
@@ -123,12 +116,12 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "342",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/Image_Converter/lib",
     "node.js.detected.package.eslint": "true",
@@ -142,12 +135,13 @@
     "project.structure.last.edited": "工件",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "vcs.Git",
     "应用程序.BTTest.executor": "Run",
     "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
     "应用程序.BilibiliUserInfo.executor": "Run",
     "应用程序.ConvergenceTool.executor": "Run",
+    "应用程序.CursorTest.executor": "Run",
     "应用程序.DraggablePanel.executor": "Run",
     "应用程序.FTPDownloader.executor": "Run",
     "应用程序.FunctionDialog.executor": "Run",
@@ -185,9 +179,9 @@
       <recent name="com.wmp.downloader.ui.task.createTask" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.GetSupportFormat">
-    <configuration name="DraggablePanel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.DraggablePanel" />
+  <component name="RunManager" selected="应用程序.Run">
+    <configuration name="CursorTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.CursorTest" />
       <module name="DownLoader" />
       <extension name="coverage">
         <pattern>
@@ -219,9 +213,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Run" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
       <module name="DownLoader" />
+      <option name="PROGRAM_PARAMETERS" value="-background" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.wmp.downloader.*" />
@@ -271,34 +266,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ToastMessage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.ui.ToastMessage" />
-      <module name="DownLoader" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.ui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="应用程序.ToastMessage" />
+      <item itemvalue="应用程序.CursorTest" />
       <item itemvalue="应用程序.GetSupportFormat" />
       <item itemvalue="应用程序.FileAssociation" />
       <item itemvalue="应用程序.TCPControl" />
-      <item itemvalue="应用程序.DraggablePanel" />
       <item itemvalue="应用程序.Run" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="应用程序.GetSupportFormat" />
         <item itemvalue="应用程序.Run" />
+        <item itemvalue="应用程序.CursorTest" />
+        <item itemvalue="应用程序.GetSupportFormat" />
         <item itemvalue="应用程序.FileAssociation" />
         <item itemvalue="应用程序.TCPControl" />
-        <item itemvalue="应用程序.DraggablePanel" />
       </list>
     </recent_temporary>
   </component>
@@ -352,7 +333,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复设置项“启动本地化功能性弹窗样式”无法正常加载启用状态的问题" />
     <MESSAGE value="制作了一个比较简易的拓展解析器展示页&#10;修复抖音下载会解析任务失败" />
     <MESSAGE value="增强更新信息整合的功能" />
     <MESSAGE value="拓展功能完善与问题修复&#10;修复初次启动会反复报错&#10;增加预加载进度条&#10;增加拓展介绍页&#10;实现了卸载拓展的功能&#10;增加了导入本地拓展的功能" />
@@ -377,7 +357,8 @@
     <MESSAGE value="增加修改网络通信端口的功能&#10;修改部分错误的设置项位置" />
     <MESSAGE value="更新创建任务的UI和文字" />
     <MESSAGE value="增加图片格式转换器" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加图片格式转换器" />
+    <MESSAGE value="更新一点东西" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新一点东西" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -404,7 +385,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
-          <line>606</line>
+          <line>603</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

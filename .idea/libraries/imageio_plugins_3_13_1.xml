@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="imageio-plugins-3.13.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-bmp-3.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-dds-3.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-hdr-3.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-icns-3.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-pcx-3.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-pict-3.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-tiff-3.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-xwd-3.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/lib/imageio-batik-3.13.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -128,7 +128,7 @@ public class Downloader extends JFrame implements WindowListener{
     private JTextField accentColorTextField;
     private JButton accentColorChooseButton;
     private JProgressBar waitProgressBar;
-    private JPanel BackgroudControlPanel;
+    private JPanel BackgroundControlPanel;
     private JPanel ThemeControlPanel;
     private JCheckBox IsUseSquareComponentCheckBox;
     private JPanel TextUIControlPanel;
@@ -138,6 +138,9 @@ public class Downloader extends JFrame implements WindowListener{
     private FileAssociationPanel torrentFileAssociationPanel;
     private JTextField portTextField;
     private JButton portSaveButton;
+    private JButton PortDefaultButton;
+    private JLabel runVersionLabel;
+    private JLabel PluginSupportVersionLabel;
     private String lastClipboardContent = "";
 
     private Timer clipboardTimer;
@@ -147,6 +150,7 @@ public class Downloader extends JFrame implements WindowListener{
     private final ActionListener actionListener = e -> {
         this.setVisible(true);
         this.setState(JFrame.NORMAL);
+
     };
 
     private JLayeredPane layeredPane = new JLayeredPane();
@@ -259,13 +263,6 @@ public class Downloader extends JFrame implements WindowListener{
         SwingUtilities.invokeLater(this::updateChildBounds);
 
         backgroundupdateTimer.start();
-
-        try {
-            TCPControl.startServer();
-        } catch (Exception ex) {
-            logger.error("服务端启动失败!");
-            JOptionPane.showMessageDialog(null, "服务端启动失败");
-        }
 
     }
 
@@ -939,6 +936,10 @@ public class Downloader extends JFrame implements WindowListener{
         licenseLabel.putClientProperty("FlatLaf.style", "font: bold $h2.font");
         checkUpdateButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
         ProjectLinkButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
+
+        runVersionLabel.setText(Run.VERSION);
+        PluginSupportVersionLabel.setText(Run.PLUGIN_SUPPORT_VERSION);
+
         IconControl.addInDynamicConverter(
                 () -> nameLabel.setIcon(IconControl.getIcon("icon", nameLabel.getFont().getSize())),
                 () -> licenseLabel.setIcon(IconControl.getIcon("license", licenseLabel.getFont().getSize())),
@@ -1253,6 +1254,12 @@ public class Downloader extends JFrame implements WindowListener{
         ThreadNumSlider.addChangeListener(e -> {
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
             ThreadNumLabel.setSize(ThreadNumLabel.getPreferredSize());
+        });
+        PortDefaultButton.addActionListener(_ -> {
+            portTextField.setText("5465");
+            DataControl.putAndSave("port", portTextField.getText());
+            ToastMessage.show(StringFormat.translate("settings.web.port_settings.update_tip"), ToastMessage.INFO);
+
         });
         //动态保存
         BackgroundModeComboBox.addItemListener(e -> {

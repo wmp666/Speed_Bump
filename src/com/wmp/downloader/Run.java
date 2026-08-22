@@ -18,7 +18,7 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.4.1";
+    public static String VERSION = "0.4.2";
 
     public static String PLUGIN_SUPPORT_VERSION = "1.0.0";
 
@@ -26,6 +26,7 @@ public class Run {
         var argList = List.of(args);
         String linkPath = null;
         {
+
             if (!argList.isEmpty()) {
 
                 var versionIndex = argList.indexOf("-set:version") + 1;
@@ -53,15 +54,13 @@ public class Run {
                     }
                 }
             }
-            else {
-                try {
-                    if (TCPControl.isHasServer()) {
-                        TCPControl.sendToServer("show");
-                        System.exit(0);
-                    }
-                } catch (Exception e) {
-                    System.exit(-1);
+            try {
+                if (TCPControl.isHasServer()) {
+                    TCPControl.sendToServer("show");
+                    System.exit(0);
                 }
+            } catch (Exception e) {
+                System.exit(-1);
             }
         }
 
@@ -83,6 +82,13 @@ public class Run {
             downloader = new Downloader();
 
             ThemeChanger.easyChanger();
+
+            try {
+                TCPControl.startServer();
+            } catch (Exception ex) {
+                logger.error("服务端启动失败!");
+                JOptionPane.showMessageDialog(null, "服务端启动失败");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "启动发生错误\n"+e);
             logger.error("启动发生错误", e);

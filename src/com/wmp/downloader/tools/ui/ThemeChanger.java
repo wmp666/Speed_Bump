@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXColorSelectionButton;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -130,6 +131,7 @@ public class ThemeChanger {
         //主体部分数据更新
         UIManager.put("FlatLaf.addon.swingx", new FlatSwingXDefaultsAddon());
         UIManager.put("TabbedPane.tabsOpaque", false);
+        //UIManager.put("TabbedPane.background", new Color(0, 0, 0, 100));
         UIManager.put("TabbedPane.contentOpaque", false);
         FlatLaf.setUseNativeWindowDecorations(true);
 
