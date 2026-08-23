@@ -10,22 +10,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复无法打开下载好的文件">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/downloadTask/StatusTipPanel.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复拓展版本判断问题&#10;修改任务界面,要求拓展更新">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Linux Package.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Linux Package.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/CreateMergeTaskFuncPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/CreateMergeTaskFuncPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFileDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFolderDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/gopeed/GopeedDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/gopeed/GopeedDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/http/HTTPDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/http/HTTPDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/BiliParser/src/com/wmp/parser/bili/file/BiliFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/BiliParser/src/com/wmp/parser/bili/file/BiliFileDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/BiliParser/src/com/wmp/parser/bili/folder/BiliFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/BiliParser/src/com/wmp/parser/bili/folder/BiliFolderDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/BiliParser/src/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/BiliParser/src/info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/src/com/wmp/parser/douyin/DouyinImageDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/src/com/wmp/parser/douyin/DouyinImageDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/src/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/src/info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/ImageConverterTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/ImageConverterTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/info.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -333,7 +327,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题" />
     <MESSAGE value="改为启动后加载其他页面，加快启动速度&#10;新增删除任务文件的功能&#10;修复多文件下载任务无法创建&#10;支持获取Github上的减速带解析器拓展&#10;修复github解析器解析逻辑问题&#10;删除了内置的哔哩哔哩,抖音解析器" />
     <MESSAGE value="在&quot;软件&quot;中增加检查更新&#10;增加向下兼容&#10;对部分代码进行优化" />
     <MESSAGE value="增加下载拓展后自动刷新&#10;修复一点小小问题" />
@@ -358,7 +351,8 @@
     <MESSAGE value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示" />
     <MESSAGE value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示&#10;更新关于页UI" />
     <MESSAGE value="给开机启动设置项添加值绑定" />
-    <option name="LAST_COMMIT_MESSAGE" value="给开机启动设置项添加值绑定" />
+    <MESSAGE value="修复拓展版本判断问题&#10;修改任务界面,要求拓展更新" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复拓展版本判断问题&#10;修改任务界面,要求拓展更新" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
