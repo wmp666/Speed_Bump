@@ -2,6 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.createTask.videohandle;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
+import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.ConvergenceTool;
@@ -54,6 +55,7 @@ public class CreateMergeTaskFuncPanel extends JPanel {
     public static class MergeTaskDownloadTask extends AbstractTask {
 
         private File[] paths;
+        private final StatusTipPanel MERGE_TIP_PANEL = StatusTipPanel.FILE_MERGE_CREATOR.create();
 
         public MergeTaskDownloadTask(String fileName, File[] paths) {
             var jsonObject = new JSONObject();
@@ -74,7 +76,9 @@ public class CreateMergeTaskFuncPanel extends JPanel {
         public void doWhenStart() throws Exception {
             var jProgressBar = new JProgressBar(0, 100);
             jProgressBar.setStringPainted(false);
-            infoLabel.setText(StringFormat.translate("video_handle", "video_handle.create_merge_task.run_tip"));
+            removeAllStatusTip();
+            addStatusTip(MERGE_TIP_PANEL);
+            MERGE_TIP_PANEL.setText(StringFormat.translate("video_handle", "video_handle.create_merge_task.run_tip"));
             ProgressBarsPanel.add(UITools.createProgressBarPanel(jProgressBar));
             exitButton.setEnabled(false);
             downloadControlButton.setEnabled(false);

@@ -9,6 +9,7 @@ import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.frostwire.jlibtorrent.swig.error_code;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FolderDownloadTask;
+import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
@@ -27,6 +28,12 @@ public class BTFolderDownloadTask extends FolderDownloadTask {
     private TorrentHandle handle;
     private SessionManager manager;
 
+    private final StatusTipPanel DOWNLOAD_SIZE_PANEL = StatusTipPanel.DOWNLOAD_SIZE_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_SPEED_PANEL = StatusTipPanel.DOWNLOAD_SPEED_CREATOR.create();
+    private final StatusTipPanel SHARE_SIZE_PANEL = StatusTipPanel.SHARE_SIZE_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_FAILED_PANEL = StatusTipPanel.DOWNLOAD_FAILED_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_SUCCESS_PANEL = StatusTipPanel.DOWNLOAD_SUCCESS_CREATOR.create();
+
     public BTFolderDownloadTask(JSONObject jsonObject) {
         super(jsonObject);
         JSONArray statusArray = jsonObject.getJSONArray("selectedStatus");
@@ -37,6 +44,8 @@ public class BTFolderDownloadTask extends FolderDownloadTask {
         this.chooseFiles = chooseFiles;
         this.torrentFilePath = jsonObject.getString("url");
         this.chooseSize = jsonObject.getLongValue("size", 0);
+
+        addStatusTips(DOWNLOAD_SIZE_PANEL, DOWNLOAD_SPEED_PANEL, SHARE_SIZE_PANEL);
     }
 
     @Override
@@ -51,6 +60,8 @@ public class BTFolderDownloadTask extends FolderDownloadTask {
     @Override
     public void doWhenStart() throws Exception {
 
+        removeAllStatusTip();
+        addStatusTips(DOWNLOAD_SIZE_PANEL, DOWNLOAD_SPEED_PANEL, SHARE_SIZE_PANEL);
 
         // 1. 创建并启动会话
         manager = new SessionManager();
@@ -133,13 +144,9 @@ public class BTFolderDownloadTask extends FolderDownloadTask {
                     // 在 UI 线程中更新组件
                     SwingUtilities.invokeLater(() -> {
                         progressBar.setValue(progress);
-                        infoLabel.setText(String.format(
-                                StringFormat.translate("task", "task.download_task.bt.downloading"),
-                                URLDownloadTool.DownloadProgress.formatSize(status.allTimeDownload()),
-                                URLDownloadTool.DownloadProgress.formatSize(BTFolderDownloadTask.this.chooseSize),
-                                URLDownloadTool.DownloadProgress.formatSize(status.allTimeUpload()),
-                                URLDownloadTool.DownloadProgress.formatSize(status.downloadRate())
-                        ));
+                        DOWNLOAD_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.allTimeDownload()));
+                        DOWNLOAD_SPEED_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.downloadRate()) + "/s");
+                        SHARE_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.allTimeUpload()));
                     });
                 } else if (alert instanceof com.frostwire.jlibtorrent.alerts.TorrentErrorAlert) {
                     // 捕获错误并提示
@@ -160,15 +167,14 @@ public class BTFolderDownloadTask extends FolderDownloadTask {
                 isFinally = true;
                 ProgressBarsPanel.removeAll();
                 SwingUtilities.invokeLater(() -> {
-                    infoLabel.setText(String.format(
-                            StringFormat.translate("task", "task.download_task.download_complete"),
-                            URLDownloadTool.DownloadProgress.formatSize(ti.totalSize())
-                    ));
+                    removeAllStatusTip();
+                    addStatusTip(DOWNLOAD_SUCCESS_PANEL);
                 });
             } catch (Exception e) {
                 e.printStackTrace();
                 SwingUtilities.invokeLater(() -> {
-                    infoLabel.setText(StringFormat.translate("task", "task.download_task.download_exception"));
+                    removeAllStatusTip();
+                    addStatusTip(DOWNLOAD_FAILED_PANEL);
                 });
             }
         });

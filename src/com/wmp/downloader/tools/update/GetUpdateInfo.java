@@ -105,6 +105,7 @@ public class GetUpdateInfo {
 
     /**
      * 比较两个版本号的大小（格式：数字段用点分隔，如 "1.2.3"）
+     *  +号表示当前数字无限大(int最大值)
      *
      * @param v1 版本1，不能为 null
      * @param v2 版本2，不能为 null
@@ -119,8 +120,8 @@ public class GetUpdateInfo {
         String[] parts2 = v2.split("\\.");
         int maxLen = Math.max(parts1.length, parts2.length);
         for (int i = 0; i < maxLen; i++) {
-            int num1 = i < parts1.length ? Integer.parseInt(parts1[i]) : 0;
-            int num2 = i < parts2.length ? Integer.parseInt(parts2[i]) : 0;
+            int num1 = i < parts1.length ? (parts1[i].equals("+")? Integer.MAX_VALUE : Integer.parseInt(parts1[i])) : 0;
+            int num2 = i < parts2.length ? (parts2[i].equals("+")? Integer.MAX_VALUE : Integer.parseInt(parts2[i])) : 0;
             if (num1 != num2) {
                 return Integer.compare(num1, num2); // 或者 (num1 > num2 ? 1 : -1)
             }

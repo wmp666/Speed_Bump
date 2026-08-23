@@ -2,6 +2,7 @@ package com.wmp.downloader.newArchitecture.abstractTask;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.ColorFunctions;
+import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.test.DraggablePanel;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
@@ -23,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +38,10 @@ public abstract class AbstractTask extends JPanel {
     protected JButton downloadControlButton;
     protected JButton openInFolderButton;
     protected JPanel infoPanel;
-    protected JLabel infoLabel;
+    //protected JLabel infoLabel;
     protected JScrollPane ProgressBarsScrollPane;
     protected JPanel ProgressBarsPanel;
+    private JScrollPane infoScrollPane;
     protected String fileName;
     protected File savePath;
     protected boolean isStart = false;
@@ -49,6 +52,8 @@ public abstract class AbstractTask extends JPanel {
     protected JSONObject jsonObject;
     private DynamicConverterTask[] IconDynamicConverterTasks;
     private DynamicConverterTask[] ThemeDynamicConverterTasks;
+
+    private final ArrayList<StatusTipPanel> statusTipPanelArrayList = new ArrayList<>();
 
     /**
      * 删除的文件是否正确这取决于你设置的savePath/filename
@@ -76,6 +81,8 @@ public abstract class AbstractTask extends JPanel {
 
         JLabel iconSize = new JLabel();
         iconSize.putClientProperty("FlatLaf.style", "font: $h1.font");
+
+        UITools.setScrollPaneUnOpaque(infoScrollPane);
 
         ThemeDynamicConverterTasks = ThemeChanger.addInDynamicConverter(
                 () -> {
@@ -119,7 +126,7 @@ public abstract class AbstractTask extends JPanel {
         });
         openButton.addActionListener(e -> {
             try {
-                Desktop.getDesktop().open(StringFormat.sanitizeFile(new File(savePath, this.fileName)));
+                Desktop.getDesktop().open(new File(savePath, this.fileName));
             } catch (Exception ex) {
                 ToastMessage.show(this, StringFormat.translate("task", "task.download_task.open_file_failed") + "\n" + new File(savePath, this.fileName), ToastMessage.ERROR);
                 logger.error("文件打开失败", ex);
@@ -127,7 +134,7 @@ public abstract class AbstractTask extends JPanel {
         });
         openInFolderButton.addActionListener(e -> {
             try {
-                Desktop.getDesktop().open(StringFormat.sanitizeFile(savePath));
+                Desktop.getDesktop().open(savePath);
             } catch (Exception ex) {
                 ToastMessage.show(this, StringFormat.translate("task", "task.download_task.open_folder_failed"), ToastMessage.ERROR);
                 logger.error("文件夹打开失败", ex);
@@ -151,7 +158,7 @@ public abstract class AbstractTask extends JPanel {
             if (i == JOptionPane.YES_OPTION) {
                 //暂停成功
                 if (stop()) {
-
+                    removeAllStatusTip();
                     try {
                         doWhenExit();
                     } catch (Exception ex) {
@@ -388,6 +395,36 @@ public abstract class AbstractTask extends JPanel {
             dynamicConverterTask.task();
         }
         return true;
+    }
+
+    protected final void removeAllStatusTip(){
+        statusTipPanelArrayList.forEach(StatusTipPanel::clear);
+        statusTipPanelArrayList.clear();
+        infoPanel.removeAll();
+    }
+
+    protected final void removeStatusTip(StatusTipPanel statusTipPanel){
+        statusTipPanel.clear();
+        statusTipPanelArrayList.remove(statusTipPanel);
+        infoPanel.remove(statusTipPanel);
+    }
+
+    protected final StatusTipPanel[] addStatusTips(StatusTipPanel... statusTipPanels){
+        for (var statusTipPanel : statusTipPanels) {
+            addStatusTip(statusTipPanel);
+        }
+        return statusTipPanels;
+    }
+
+    protected final StatusTipPanel addStatusTip(ImageIcon icon, String defaultTip, boolean isCanReset){
+        var statusTipPanel = new StatusTipPanel(icon, defaultTip, isCanReset);
+        return addStatusTip(statusTipPanel);
+    }
+
+    protected final StatusTipPanel addStatusTip(StatusTipPanel statusTipPanel){
+        statusTipPanelArrayList.add(statusTipPanel);
+        infoPanel.add(statusTipPanel);
+        return statusTipPanel;
     }
 
     /**

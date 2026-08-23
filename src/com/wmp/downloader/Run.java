@@ -20,7 +20,7 @@ public class Run {
 
     public static String VERSION = "0.4.2";
 
-    public static String PLUGIN_SUPPORT_VERSION = "1.0.0";
+    public static String PLUGIN_SUPPORT_VERSION = "1.1.1";
 
     static void main(String[] args) {
         var argList = List.of(args);

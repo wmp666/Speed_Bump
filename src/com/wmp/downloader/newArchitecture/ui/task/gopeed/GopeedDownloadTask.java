@@ -2,6 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.task.gopeed;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
+import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.newArchitecture.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
@@ -27,6 +28,11 @@ public class GopeedDownloadTask extends AbstractTask {
     private final String content;
     private String taskID = "";
     private long fileSize;
+
+    private final StatusTipPanel DOWNLOAD_SIZE_PANEL = StatusTipPanel.DOWNLOAD_SIZE_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_SPEED_PANEL = StatusTipPanel.DOWNLOAD_SPEED_CREATOR.create();
+    private final StatusTipPanel SHARE_SIZE_PANEL = StatusTipPanel.SHARE_SIZE_CREATOR.create();
+    private final StatusTipPanel SHARE_SPEED_PANEL = StatusTipPanel.SHARE_SPEED_CREATOR.create();
 
     private final Timer infoUpdateTimer = new Timer(500, _ -> {
         var body = getBody("/tasks/" + taskID, null, Connection.Method.GET);
@@ -62,12 +68,10 @@ public class GopeedDownloadTask extends AbstractTask {
                 progressBar.setValue((int) extractProgress);
             }
 
-            infoLabel.setText(String.format(
-                    StringFormat.translate("task", "task.gopeed_task.progress"),
-                    URLDownloadTool.DownloadProgress.formatSize(downloaded), URLDownloadTool.DownloadProgress.formatSize(fileSize),
-                    URLDownloadTool.DownloadProgress.formatSize(speed),
-                    URLDownloadTool.DownloadProgress.formatSize(uploaded), URLDownloadTool.DownloadProgress.formatSize(uploadSpeed)
-            ));
+            DOWNLOAD_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(downloaded));
+            DOWNLOAD_SPEED_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(speed) + "/s");
+            SHARE_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(uploaded));
+            SHARE_SPEED_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(uploadSpeed) + "/s");
 
 
         } catch (Exception e) {
@@ -86,6 +90,8 @@ public class GopeedDownloadTask extends AbstractTask {
 
         //检测gopeed是否启动，判断能否连接
         ensureGopeedRunning(baseUrl, DataControl.get("gopeed_path", ""));
+
+        addStatusTips(DOWNLOAD_SIZE_PANEL, DOWNLOAD_SPEED_PANEL, SHARE_SIZE_PANEL, SHARE_SPEED_PANEL);
     }
 
     public static boolean ensureGopeedRunning(String baseUrl, String gopeedExecutablePath) {
@@ -183,6 +189,9 @@ public class GopeedDownloadTask extends AbstractTask {
 
     @Override
     public void doWhenStart() throws Exception {
+
+        removeAllStatusTip();
+        addStatusTips(DOWNLOAD_SIZE_PANEL, DOWNLOAD_SPEED_PANEL, SHARE_SIZE_PANEL, SHARE_SPEED_PANEL);
 
         //检测gopeed是否启动，判断能否连接
         if (!ensureGopeedRunning(baseUrl, DataControl.get("gopeed_path", ""))) {
@@ -298,7 +307,6 @@ public class GopeedDownloadTask extends AbstractTask {
             throw new DownloadException("任务暂停失败，json数据解析异常");
         }
         infoUpdateTimer.stop();
-        infoLabel.setText(StringFormat.translate("task", "task.download_task.paused"));
 
     }
 

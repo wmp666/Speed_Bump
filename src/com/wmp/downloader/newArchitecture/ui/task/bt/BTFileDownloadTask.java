@@ -7,6 +7,7 @@ import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FileDownloadTask;
+import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.newArchitecture.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
@@ -30,10 +31,18 @@ public class BTFileDownloadTask extends FileDownloadTask {
     private TorrentHandle handle;
     private SessionManager manager;
 
+    private final StatusTipPanel DOWNLOAD_SIZE_PANEL = StatusTipPanel.DOWNLOAD_SIZE_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_SPEED_PANEL = StatusTipPanel.DOWNLOAD_SPEED_CREATOR.create();
+    private final StatusTipPanel SHARE_SIZE_PANEL = StatusTipPanel.SHARE_SIZE_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_FAILED_PANEL = StatusTipPanel.DOWNLOAD_FAILED_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_SUCCESS_PANEL = StatusTipPanel.DOWNLOAD_SUCCESS_CREATOR.create();
+
     public BTFileDownloadTask(JSONObject jsonObject) {
         super(jsonObject);
         this.link = jsonObject.getString("url");
         this.linkMode = BTParser.getLinkMode(link);
+
+        addStatusTips(DOWNLOAD_SIZE_PANEL, DOWNLOAD_SPEED_PANEL, SHARE_SIZE_PANEL);
     }
 
     @Override
@@ -46,6 +55,8 @@ public class BTFileDownloadTask extends FileDownloadTask {
     @Override
     public void doWhenStart() throws Exception {
 
+        removeAllStatusTip();
+        addStatusTips(DOWNLOAD_SIZE_PANEL, DOWNLOAD_SPEED_PANEL, SHARE_SIZE_PANEL);
 
         // 1. 创建 SessionManager（替代了旧的 Session）
         manager = new SessionManager();
@@ -112,13 +123,9 @@ public class BTFileDownloadTask extends FileDownloadTask {
                     TorrentStatus status = handle.status();
                     int progress = (int) (status.progress() * 100);
                     progressBar.setValue(progress);
-                    infoLabel.setText(String.format(
-                            StringFormat.translate("task", "task.download_task.bt.downloading"),
-                            URLDownloadTool.DownloadProgress.formatSize(status.allTimeDownload()),
-                            URLDownloadTool.DownloadProgress.formatSize(ti.totalSize()),
-                            URLDownloadTool.DownloadProgress.formatSize(status.allTimeUpload()),
-                            URLDownloadTool.DownloadProgress.formatSize(status.downloadRate())
-                    ));
+                    DOWNLOAD_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.allTimeDownload()));
+                    DOWNLOAD_SPEED_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.downloadRate()) + "/s");
+                    SHARE_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.allTimeUpload()));
                     //System.out.println("下载进度: " + progress + "%");
                 }
             }
@@ -132,12 +139,11 @@ public class BTFileDownloadTask extends FileDownloadTask {
 
                 isFinally = true;
                 ProgressBarsPanel.removeAll();
-                infoLabel.setText(String.format(
-                        StringFormat.translate("task", "task.download_task.download_complete"),
-                        URLDownloadTool.DownloadProgress.formatSize(ti.totalSize())
-                ));
+                removeAllStatusTip();
+                addStatusTip(DOWNLOAD_SUCCESS_PANEL);
             } catch (Exception e) {
-                infoLabel.setText(StringFormat.translate("task", "task.download_task.download_exception"));
+                removeAllStatusTip();
+                addStatusTip(DOWNLOAD_FAILED_PANEL);
             }
         });
     }

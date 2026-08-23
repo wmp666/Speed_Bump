@@ -2,8 +2,10 @@ package com.wmp.downloader.newArchitecture.ui.task.http;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FileDownloadTask;
+import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;
+import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import org.apache.log4j.Logger;
@@ -25,6 +27,14 @@ public class HTTPDownloadTask extends FileDownloadTask {
     private final URLDownloadTool.DownloadProgress downloadProgress = new URLDownloadTool.DownloadProgress();
     private Timer progressTimer;
 
+    private final StatusTipPanel DOWNLOAD_SIZE_PANEL = StatusTipPanel.DOWNLOAD_SIZE_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_SPEED_PANEL = StatusTipPanel.DOWNLOAD_SPEED_CREATOR.create();
+    private final StatusTipPanel SHARE_SIZE_PANEL = StatusTipPanel.SHARE_SIZE_CREATOR.create();
+    private final StatusTipPanel SHARE_SPEED_PANEL = StatusTipPanel.SHARE_SPEED_CREATOR.create();
+    private final StatusTipPanel FILE_MERGE_PANEL = StatusTipPanel.FILE_MERGE_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_FAILED_PANEL = StatusTipPanel.DOWNLOAD_FAILED_CREATOR.create();
+    private final StatusTipPanel DOWNLOAD_SUCCESS_PANEL = StatusTipPanel.DOWNLOAD_SUCCESS_CREATOR.create();
+
 
     public HTTPDownloadTask(JSONObject jsonObject) {
         super(jsonObject);
@@ -35,9 +45,15 @@ public class HTTPDownloadTask extends FileDownloadTask {
         this.threadNum = jsonObject.getIntValue("threadNum", 0);
         this.mode = jsonObject.getIntValue("threadMode", 0);
 
+        this.addStatusTips(DOWNLOAD_SIZE_PANEL, DOWNLOAD_SPEED_PANEL, FILE_MERGE_PANEL);
+
     }
 
     public void doWhenStart() throws Exception {
+
+        this.removeAllStatusTip();
+        this.addStatusTips(DOWNLOAD_SIZE_PANEL, DOWNLOAD_SPEED_PANEL, FILE_MERGE_PANEL);
+
 
         pauseController.resume();
         downloadProgress.resetSpeed();
@@ -70,10 +86,15 @@ public class HTTPDownloadTask extends FileDownloadTask {
                     progressTimer = new Timer(1000, e -> {
                         if (isStart) {
                             downloadProgress.updateSpeed();
-                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.progress_multi"),
-                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
-                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getSpeed()),
-                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getMergedBytes())));
+                            DOWNLOAD_SIZE_PANEL.setText(
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getDownloadedBytes())
+                            );
+                            DOWNLOAD_SPEED_PANEL.setText(
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getSpeed()) + "/s"
+                            );
+                            FILE_MERGE_PANEL.setText(
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getMergedBytes())
+                            );
                         }
                     });
                     progressTimer.start();
@@ -93,7 +114,8 @@ public class HTTPDownloadTask extends FileDownloadTask {
                     if (hasError) {
                         logger.error("部分分段下载失败，请检查日志后重试。");
                         downloadControlButton.setEnabled(false);
-                        infoLabel.setText(StringFormat.translate("task", "task.download_task.multi_thread_error"));
+                        removeAllStatusTip();
+                        addStatusTip(DOWNLOAD_FAILED_PANEL);
                         ToastMessage.show(this, StringFormat.translate("task", "task.download_task.multi_thread_error"), ToastMessage.ERROR);
                         stop();
 
@@ -111,7 +133,6 @@ public class HTTPDownloadTask extends FileDownloadTask {
                             downloadControlButton.setEnabled(false);
 
                             downloadProgress.resetMergedBytes();
-                            SwingUtilities.invokeLater(() -> infoLabel.setText(StringFormat.translate("task", "task.download_task.merging_file")));
                             JProgressBar margePartProgressBar = new JProgressBar(0, 100);
                             margePartProgressBar.setStringPainted(false);
                             ProgressBarsPanel.add(UITools.createProgressBarPanel(margePartProgressBar));
@@ -119,7 +140,7 @@ public class HTTPDownloadTask extends FileDownloadTask {
                             URLDownloadTool.mergeParts(savePath, fileName, threadNum, fileSize, margePartProgressBar, pauseController, downloadProgress);
 
                             progressTimer.stop();
-                            SwingUtilities.invokeLater(() -> infoLabel.setText(""));
+                            SwingUtilities.invokeLater(() -> FILE_MERGE_PANEL.setText(StringFormat.formatSize(fileSize)));
                             //清除已有的进度条
                             ProgressBarsPanel.removeAll();
                             threadProgressBarList.clear();
@@ -129,7 +150,8 @@ public class HTTPDownloadTask extends FileDownloadTask {
 
                             isFinally = true;
 
-                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.download_complete"), URLDownloadTool.DownloadProgress.formatSize(fileSize)));
+                            removeAllStatusTip();
+                            addStatusTip(DOWNLOAD_SUCCESS_PANEL);
 
                             this.revalidate();
                             this.repaint();
@@ -139,7 +161,8 @@ public class HTTPDownloadTask extends FileDownloadTask {
                             logger.error("合并文件发生异常", e);
                             exitButton.setEnabled(true);
                             downloadControlButton.setEnabled(true);
-                            infoLabel.setText(StringFormat.translate("task", "task.download_task.merge_error"));
+                            removeAllStatusTip();
+                            addStatusTip(DOWNLOAD_FAILED_PANEL);
                             ToastMessage.show(this, StringFormat.translate("task", "task.download_task.merge_error"), ToastMessage.ERROR);
                         }
                     }
@@ -167,9 +190,15 @@ public class HTTPDownloadTask extends FileDownloadTask {
                     progressTimer = new Timer(1000, e -> {
                         if (isStart) {
                             downloadProgress.updateSpeed();
-                            infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.progress_single"),
-                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getDownloadedBytes()),
-                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getSpeed())));
+                            DOWNLOAD_SIZE_PANEL.setText(
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getDownloadedBytes())
+                            );
+                            DOWNLOAD_SPEED_PANEL.setText(
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getSpeed()) + "/s"
+                            );
+                            FILE_MERGE_PANEL.setText(
+                                    URLDownloadTool.DownloadProgress.formatSize(downloadProgress.getMergedBytes())
+                            );
                         }
                     });
                     progressTimer.start();
@@ -181,12 +210,14 @@ public class HTTPDownloadTask extends FileDownloadTask {
                     progressTimer.stop();
                     if (!isSuccess) {
                         downloadControlButton.setEnabled(false);
-                        infoLabel.setText(StringFormat.translate("task", "task.download_task.download_failed_single"));
+                        removeAllStatusTip();
+                        addStatusTip(DOWNLOAD_FAILED_PANEL);
                         ToastMessage.show(this, StringFormat.translate("task", "task.download_task.download_failed_single"), ToastMessage.ERROR);
                         stop();
                     } else {
                         isFinally = true;
-                        infoLabel.setText(String.format(StringFormat.translate("task", "task.download_task.download_complete"), URLDownloadTool.DownloadProgress.formatSize(fileSize)));
+                        removeAllStatusTip();
+                        addStatusTip(DOWNLOAD_SUCCESS_PANEL);
                     }
                     downloadControlButton.setEnabled(false);
                     //清除已有的进度条
@@ -218,7 +249,6 @@ public class HTTPDownloadTask extends FileDownloadTask {
     public void doWhenStop() {
         pauseController.pause();
         progressTimer.stop();
-        infoLabel.setText(StringFormat.translate("task", "task.download_task.paused"));
 
         if (progressTimer != null) progressTimer.stop();
 
