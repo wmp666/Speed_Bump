@@ -22,8 +22,10 @@ public class Run {
 
     public static String PLUGIN_SUPPORT_VERSION = "1.1.1";
 
+    public static List<String> argList;
+
     static void main(String[] args) {
-        var argList = List.of(args);
+        argList = List.of(args);
         String linkPath = null;
         {
 

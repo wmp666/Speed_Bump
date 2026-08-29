@@ -140,12 +140,13 @@ public class DataControl {
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
         tempDataMap.put("version", Run.VERSION);
+        // 处理主题数据
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {
                 tempDataMap.put("theme_type", "light");
                 return;
             }
-            // 处理主题数据
+
             switch (value.toString()) {
                 case "Mac Dark", "Dark", "Darcula" -> {
                     tempDataMap.put("theme_type", "dark");
@@ -158,13 +159,33 @@ public class DataControl {
                 }
                 default -> tempDataMap.put("theme_type", "light");
             }
-        } else if (key.equals("laug")) {
+        }
+        //语言数据
+        else if (key.equals("laug")) {
             // 1. 修改全局默认区域
             var strings = value.toString().split("_");
             if (strings.length == 1)
                 Locale.setDefault(Locale.of(strings[0]));
             else if (strings.length == 2)
                 Locale.setDefault(Locale.of(strings[0], strings[1]));
+        }
+        //功能弹窗数据
+        else if (key.equals("function_dialog.style")) {
+            switch (Integer.parseInt(value.toString())) {
+                case 0 -> {
+                    tempDataMap.put("function_dialog.style.is_use_dialog", false);
+                    tempDataMap.put("is_use_heavy_weight.function_dialog", false);
+                }
+                case 1 -> {
+                    tempDataMap.put("function_dialog.style.is_use_dialog", false);
+                    tempDataMap.put("is_use_heavy_weight.function_dialog", true);
+                }
+                case 2 -> {
+                    tempDataMap.put("function_dialog.style.is_use_dialog", true);
+                    tempDataMap.put("is_use_heavy_weight.function_dialog", false);
+                }
+            }
+
         }
     }
 

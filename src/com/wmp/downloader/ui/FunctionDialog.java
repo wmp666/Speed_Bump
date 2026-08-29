@@ -125,7 +125,7 @@ public class FunctionDialog extends JDialog {
 
         //使用Dialog
 
-        if (c == null) {
+        if (c == null || DataControl.get("function_dialog.style.is_use_dialog", false)) {
 
             if (c instanceof JFrame frame) {
                 this.setAlwaysOnTop(isAlwaysTop || frame.isAlwaysOnTop());

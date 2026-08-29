@@ -34,17 +34,14 @@ public class GetUpdateInfo {
 
     public static UpdateInfo getUpdateInfo(boolean useGithubAccelerate) {
         var apiUrl = DataControl.APP_GITHUB_API_HEAD + "/releases/latest";
-
         if (useGithubAccelerate) {
             apiUrl = "https://" + DataControl.get("github_accelerate_link", "gh-proxy.org") + "/" + apiUrl;
         }
-
-
         try {
             Connection.Response response = Jsoup.connect(apiUrl)
                     .userAgent("Mozilla/5.0")
-                    .ignoreContentType(true)   // 返回 JSON，非 HTML
-                    .followRedirects(false)    // 禁用重定向（可选）
+                    .ignoreContentType(true)
+                    .followRedirects(false)
                     .method(Connection.Method.GET)
                     .execute();
 
@@ -52,55 +49,111 @@ public class GetUpdateInfo {
             var status = json.getIntValue("status", 200);
             if (status == 200) {
                 var urlVersion = json.getString("tag_name");
-                //最原始的更新内容
                 var body = json.getString("body");
-                if (compareVersions(Run.VERSION, urlVersion) < 0) {
-                    //有新版
-                    AtomicReference<String> targetUrl = new AtomicReference<>("");
-                    json.getJSONArray("assets").forEach(obj -> {
-                        if (obj instanceof JSONObject jsonObject) {
-                            //获取系统名称
-                            var name = jsonObject.getString("name");
-                            if (GetPlatform.isWindows()) {
-                                if (name.startsWith("Speed_Bump_Setup") && name.endsWith(".exe")) {
-                                    targetUrl.set(jsonObject.getString("browser_download_url"));
-                                }
-                            } else if (GetPlatform.isMac()) {
-                                if (name.startsWith("Speed_Bump_Setup") && name.endsWith(".dmg")) {
-                                    targetUrl.set(jsonObject.getString("browser_download_url"));
-                                }
-                            } else if (GetPlatform.isLinux()) {
-                                if (name.startsWith("Speed_Bump_Setup") && name.endsWith(".deb")) {
-                                    targetUrl.set(jsonObject.getString("browser_download_url"));
+                AtomicReference<String> targetUrl = new AtomicReference<>("");
+                json.getJSONArray("assets").forEach(obj -> {
+                    if (obj instanceof JSONObject jsonObject) {
+                        var name = jsonObject.getString("name");
+                        if (GetPlatform.isWindows() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".exe")) {
+                            targetUrl.set(jsonObject.getString("browser_download_url"));
+                        } else if (GetPlatform.isMac() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".dmg")) {
+                            targetUrl.set(jsonObject.getString("browser_download_url"));
+                        } else if (GetPlatform.isLinux() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".deb")) {
+                            targetUrl.set(jsonObject.getString("browser_download_url"));
+                        }
+                    }
+                });
+                if (!targetUrl.get().isEmpty() && compareVersions(Run.VERSION, urlVersion) < 0) {
+                    var infoWithinInterval = getAllUpdateInfoWithinInterval(useGithubAccelerate, Run.VERSION, urlVersion);
+                    body = infoWithinInterval == null ? body : infoWithinInterval;
+                    return new UpdateInfo(urlVersion, body, targetUrl.get());
+                } else if (targetUrl.get().isEmpty()) {
+                    //自动在后面的版本寻找
+                    String allReleasesUrl = DataControl.APP_GITHUB_API_HEAD + "/releases";
+                    if (useGithubAccelerate) {
+                        allReleasesUrl = "https://" + DataControl.get("github_accelerate_link", "gh-proxy.org") + "/" + allReleasesUrl;
+                    }
+                    try {
+                        Connection.Response allResponse = Jsoup.connect(allReleasesUrl)
+                                .userAgent("Mozilla/5.0")
+                                .ignoreContentType(true)
+                                .followRedirects(false)
+                                .method(Connection.Method.GET)
+                                .execute();
+                        String allBody = allResponse.body();
+                        if (allBody.startsWith("[")) {
+                            JSONArray releases = JSONArray.parseArray(allBody);
+                            String foundVersion = null;
+                            String foundUrl = null;
+                            for (Object obj : releases) {
+                                if (obj instanceof JSONObject releaseObj) {
+                                    String tag = releaseObj.getString("tag_name");
+                                    JSONArray assets = releaseObj.getJSONArray("assets");
+                                    String downloadUrl = null;
+                                    for (Object assetObj : assets) {
+                                        if (assetObj instanceof JSONObject asset) {
+                                            String name = asset.getString("name");
+                                            if (GetPlatform.isWindows() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".exe")) {
+                                                downloadUrl = asset.getString("browser_download_url");
+                                                break;
+                                            } else if (GetPlatform.isMac() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".dmg")) {
+                                                downloadUrl = asset.getString("browser_download_url");
+                                                break;
+                                            } else if (GetPlatform.isLinux() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".deb")) {
+                                                downloadUrl = asset.getString("browser_download_url");
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (downloadUrl != null) {
+                                        if (compareVersions(Run.VERSION, tag) < 0) {
+                                            foundVersion = tag;
+                                            foundUrl = downloadUrl;
+                                            break;
+                                        } else {
+                                            // 降序排列，若当前版本已大于等于此版本，后续更旧，无需继续
+                                            break;
+                                        }
+                                    }
                                 }
                             }
+                            if (foundVersion != null) {
+                                var infoWithinInterval = getAllUpdateInfoWithinInterval(useGithubAccelerate, Run.VERSION, foundVersion);
+                                body = infoWithinInterval == null ? body : infoWithinInterval;
+                                return new UpdateInfo(foundVersion, body, foundUrl);
+                            } else {
+                                return null;
+                            }
+                        } else {
+                            // 错误响应（如403）
+                            JSONObject errorJson = JSONObject.parseObject(allBody);
+                            int errStatus = errorJson.getIntValue("status", 403);
+                            if (useGithubAccelerate && errStatus == 403) {
+                                return getUpdateInfo(false);
+                            } else {
+                                ToastMessage.show("获取所有release失败 status=" + errStatus, ToastMessage.ERROR);
+                                logger.error("获取所有release失败 status=" + errStatus);
+                                return null;
+                            }
                         }
-                    });
-                    //获取更多
-                    var infoWithinInterval = getAllUpdateInfoWithinInterval(useGithubAccelerate,
-                            Run.VERSION, urlVersion);
-                    body = infoWithinInterval == null ? body : infoWithinInterval;
-
-                    return new UpdateInfo(urlVersion, body, targetUrl.get());
+                    } catch (Exception e) {
+                        logger.error("获取所有release失败", e);
+                        return null;
+                    }
                 } else {
-                    //无新版
                     return null;
                 }
             } else if (useGithubAccelerate && status == 403) {
                 return getUpdateInfo(false);
             } else {
-                ToastMessage.show(String.format(
-                        "Status = %s message = %s",
-                        status,
-                        json.getString("message")
-                ), ToastMessage.ERROR);
+                ToastMessage.show(String.format("Status = %s message = %s", status, json.getString("message")), ToastMessage.ERROR);
                 logger.error("Json数据存在问题 status=" + status);
+                return null;
             }
         } catch (Exception e) {
             logger.error("网络数据获取失败", e);
+            return null;
         }
-
-        return null;
     }
 
     /**

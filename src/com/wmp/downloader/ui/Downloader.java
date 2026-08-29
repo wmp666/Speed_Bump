@@ -22,7 +22,6 @@ import com.wmp.downloader.ui.common.PathSelectionPanel;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
-import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.color.EyeDropperColorChooserPanel;
 
 import javax.swing.*;
@@ -89,7 +88,6 @@ public class Downloader extends JFrame implements WindowListener{
     public JCheckBox log4jLog4jCheckBox;
     public JScrollPane aboutScrollPane;
     public JCheckBox isUseHeavyWeightToastCheckBox;
-    public JCheckBox isUseHeavyWeightFunctionDialogCheckBox;
     public JScrollPane TasksScrollPane;
     public JTabbedPane tabbedPane2;
     public JButton checkUpdateButton;
@@ -147,6 +145,7 @@ public class Downloader extends JFrame implements WindowListener{
     public JPanel platformSetsPanel;
     public JPanel aboutInfoPanel;
     public JScrollPane aboutInfoScrollPane;
+    private JComboBox FunctionDialogStyleComboBox;
     public String lastClipboardContent = "";
 
     public Timer clipboardTimer;
@@ -1207,6 +1206,7 @@ public class Downloader extends JFrame implements WindowListener{
             backgroundSelectionPanel.setVisible(true);
         } else backgroundSelectionPanel.setVisible(false);
 
+        //初始化语言设置项
         {
             String[] laugs = new String[]{
                     "简体中文(zh_cn)", "English(en_us)", "日本語(ja_JP)", "Русский язык(ru_RU)",
@@ -1226,27 +1226,35 @@ public class Downloader extends JFrame implements WindowListener{
             laugComboBox.setSelectedItem(lauguage);
         }
 
-        themeComboBox.addItem("System Theme Style");
-        themeComboBox.addItem("Mac Dark");
-        themeComboBox.addItem("Mac Light");
-        themeComboBox.addItem("Dark");
-        themeComboBox.addItem("Light");
-        themeComboBox.addItem("Darcula");
-        themeComboBox.addItem("IntelliJ");
-        themeComboBox.addItem("System");
-        themeComboBox.addItem("Windows Classic");
-        themeComboBox.addItem("Metal");
+        //初始化主题设置项
+        {
+            themeComboBox.addItem("System Theme Style");
+            themeComboBox.addItem("Mac Dark");
+            themeComboBox.addItem("Mac Light");
+            themeComboBox.addItem("Dark");
+            themeComboBox.addItem("Light");
+            themeComboBox.addItem("Darcula");
+            themeComboBox.addItem("IntelliJ");
+            themeComboBox.addItem("System");
+            themeComboBox.addItem("Windows Classic");
+            themeComboBox.addItem("Metal");
 
-        themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
-
-        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        for (String font : fonts) {
-            FontListComboBox.addItem(font);
+            themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
         }
+
+        //初始化字体设置项
+        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        for (String font : fonts) FontListComboBox.addItem(font);
         FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
 
         isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
-        isUseHeavyWeightFunctionDialogCheckBox.setSelected(DataControl.get("is_use_heavy_weight.function_dialog", false));
+
+        //初始化功能性窗口的样式数据
+        FunctionDialogStyleComboBox.removeAllItems();
+        FunctionDialogStyleComboBox.addItem(StringFormat.translate("settings.personalized.function_dialog_style.use_embed_dialog"));
+        FunctionDialogStyleComboBox.addItem(StringFormat.translate("settings.personalized.function_dialog_style.use_local_embed_dialog"));
+        FunctionDialogStyleComboBox.addItem(StringFormat.translate("settings.personalized.function_dialog_style.use_dialog"));
+        FunctionDialogStyleComboBox.setSelectedIndex(DataControl.get("function_dialog.style", 0));
 
         //添加图标
         IconControl.addInDynamicConverter(
@@ -1270,13 +1278,15 @@ public class Downloader extends JFrame implements WindowListener{
 
         //动态保存
         BackgroundModeComboBox.addItemListener(e -> {
-            DataControl.putAndSave("background_mode", e.getItem().toString());
-            if (e.getItem().equals("Image")) {
-                backgroundSelectionPanel.setVisible(true);
-            } else {
-                backgroundSelectionPanel.setVisible(false);
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                DataControl.putAndSave("background_mode", e.getItem().toString());
+                if (e.getItem().equals("Image")) {
+                    backgroundSelectionPanel.setVisible(true);
+                } else {
+                    backgroundSelectionPanel.setVisible(false);
+                }
+                ToastMessage.Utils.createSaveAndApplyMsg();
             }
-            ToastMessage.Utils.createSaveAndApplyMsg();
 
         });
         backgroundSelectionPanel.setPathChangeListener(path -> {
@@ -1294,10 +1304,12 @@ public class Downloader extends JFrame implements WindowListener{
             ToastMessage.Utils.createSaveAndApplyMsg();
         });
         themeComboBox.addItemListener(e -> {
-            var themeStr = e.getItem().toString();
-            DataControl.putAndSave("theme", themeStr);
-            ThemeChanger.easyChanger();
-            ToastMessage.Utils.createSaveAndApplyMsg();
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                var themeStr = e.getItem().toString();
+                DataControl.putAndSave("theme", themeStr);
+                ThemeChanger.easyChanger();
+                ToastMessage.Utils.createSaveAndApplyMsg();
+            }
         });
         FontListComboBox.addActionListener(e -> {
             var fontName = FontListComboBox.getSelectedItem().toString();
@@ -1324,6 +1336,12 @@ public class Downloader extends JFrame implements WindowListener{
             }
             ToastMessage.Utils.createSaveAndApplyMsg();
         });
+        FunctionDialogStyleComboBox.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                DataControl.putAndSave("function_dialog.style", FunctionDialogStyleComboBox.getSelectedIndex());
+                ToastMessage.Utils.createSaveAndApplyMsg();
+            }
+        });
 
         //下次生效
         PortDefaultButton.addActionListener(_ -> {
@@ -1345,13 +1363,15 @@ public class Downloader extends JFrame implements WindowListener{
             ToastMessage.Utils.createSaveAndApplyNextMsg();
         });
         laugComboBox.addItemListener(e -> {
-            var lauguage = e.getItem().toString();
-            Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(lauguage);
-            if (matcher.find()) {
-                lauguage = matcher.group(1);
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                var lauguage = e.getItem().toString();
+                Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(lauguage);
+                if (matcher.find()) {
+                    lauguage = matcher.group(1);
+                }
+                DataControl.putAndSave("laug", lauguage);
+                ToastMessage.Utils.createSaveAndApplyNextMsg();
             }
-            DataControl.putAndSave("laug", lauguage);
-            ToastMessage.Utils.createSaveAndApplyNextMsg();
         });
 
         //强制刷新与保存
@@ -1360,7 +1380,7 @@ public class Downloader extends JFrame implements WindowListener{
             isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
             isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
             isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
-            isUseHeavyWeightFunctionDialogCheckBox.setSelected(DataControl.get("is_use_heavy_weight.function_dialog", false));
+            FunctionDialogStyleComboBox.setSelectedIndex(DataControl.get("function_dialog.style", 0));
             isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
             IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
 
@@ -1439,7 +1459,6 @@ public class Downloader extends JFrame implements WindowListener{
             DataControl.put("TempFilePath", tempPathSelectionPanel.getPath());
             DataControl.put("FontSize", fontSizeSpinner.getValue());
             DataControl.put("is_use_heavy_weight.toast", isUseHeavyWeightToastCheckBox.isSelected());
-            DataControl.put("is_use_heavy_weight.function_dialog", isUseHeavyWeightFunctionDialogCheckBox.isSelected());
             DataControl.put("is_start_check_update", isStartCheckUpdateCheckBox.isSelected());
             DataControl.put("accent_color", accentColorTextField.getText());
             DataControl.put("is_use_square_component", IsUseSquareComponentCheckBox.isSelected());
