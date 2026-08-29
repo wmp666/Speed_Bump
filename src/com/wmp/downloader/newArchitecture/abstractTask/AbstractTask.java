@@ -55,10 +55,7 @@ public abstract class AbstractTask extends JPanel {
 
     private final ArrayList<StatusTipPanel> statusTipPanelArrayList = new ArrayList<>();
 
-    /**
-     * 删除的文件是否正确这取决于你设置的savePath/filename
-     */
-    private boolean isSupportDeleteWhenExit = true;
+
 
     public AbstractTask(JSONObject jsonObject) {
         jsonObject.put("ProgressBarsPanel", ProgressBarsPanel);
@@ -145,9 +142,10 @@ public abstract class AbstractTask extends JPanel {
 
             JPanel panel = new JPanel(new BorderLayout(5, 5));
             panel.add(new JLabel(StringFormat.translate("task.download_task.close.confirm")), BorderLayout.CENTER);
+
             var isDeleteCheckBox = new JCheckBox(StringFormat.translate("task.download_task.close.is_delete"));
             isDeleteCheckBox.setSelected(DataControl.get("isDeleteWhenCloseTask", false));
-            panel.add(isDeleteCheckBox, BorderLayout.SOUTH);
+            if (isSupportDeleteWhenExit()) panel.add(isDeleteCheckBox, BorderLayout.SOUTH);
 
             var i = JOptionPane.showConfirmDialog(
                             this,
@@ -168,10 +166,12 @@ public abstract class AbstractTask extends JPanel {
                     }
 
                     //删除文件
-                    if (isDeleteCheckBox.isSelected()) {
-                        DataControl.delete(new File(savePath, fileName), true);
+                    if (isSupportDeleteWhenExit()) {
+                        if (isDeleteCheckBox.isSelected()) {
+                            DataControl.delete(new File(savePath, fileName), true);
+                        }
+                        DataControl.putAndSave("isDeleteWhenCloseTask", isDeleteCheckBox.isSelected());
                     }
-                    DataControl.putAndSave("isDeleteWhenCloseTask", isDeleteCheckBox.isSelected());
 
                     this.setVisible(false);
                     isCanExit = true;
@@ -481,12 +481,11 @@ public abstract class AbstractTask extends JPanel {
         return IconControl.getIcon("file", size);
     }
 
+    /**
+     * 删除的文件是否正确这取决于你设置的savePath/filename
+     */
     public boolean isSupportDeleteWhenExit() {
-        return isSupportDeleteWhenExit;
-    }
-
-    public void setSupportDeleteWhenExit(boolean supportDeleteWhenExit) {
-        isSupportDeleteWhenExit = supportDeleteWhenExit;
+        return true;
     }
 
     public void runWhenFinally(){}

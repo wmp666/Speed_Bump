@@ -459,6 +459,21 @@ public class ParserTaskInfo {
         removeParserFromList(id);
     }
 
+    public static AbstractParser getParser(String link) {
+        for (PluginParserInfo parserInfo : ENABLE_PLUGIN_PARSER_LIST) {
+            var parser = parserInfo.parser();
+            if (parser.isMeetRequirements(link)) {
+                return parser;
+            }
+        }
+        for (AbstractParser parser : BASIC_PARSER_LIST) {
+            if (parser.isMeetRequirements(link)) {
+                return parser;
+            }
+        }
+        return null;
+    }
+
     public static AbstractParser.Info getInfo(String link) {
         for (PluginParserInfo parserInfo : ENABLE_PLUGIN_PARSER_LIST) {
             var parser = parserInfo.parser();

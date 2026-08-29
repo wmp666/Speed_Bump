@@ -132,7 +132,7 @@ public class HTTPDownloadTask extends FileDownloadTask {
                             exitButton.setEnabled(false);
                             downloadControlButton.setEnabled(false);
 
-                            downloadProgress.resetMergedBytes();
+                            downloadProgress.resetMergedBytes(0);
                             JProgressBar margePartProgressBar = new JProgressBar(0, 100);
                             margePartProgressBar.setStringPainted(false);
                             ProgressBarsPanel.add(UITools.createProgressBarPanel(margePartProgressBar));

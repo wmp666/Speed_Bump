@@ -21,10 +21,17 @@ public class PluginParserGithubDownloadTask extends GithubParser {
             public void runWhenFinally() {
                 run.run();
             }
+
+            @Override
+            public boolean isSupportDeleteWhenExit() {
+                return false;
+            }
         };
         ToastMessage.show(String.format(
                 StringFormat.translate("plugins.install.create_success"),
                 infoJson.getString("rootName")), ToastMessage.SUCCESS);
         return httpDownloadTask;
     }
+
+
 }

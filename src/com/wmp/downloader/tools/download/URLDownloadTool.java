@@ -1,7 +1,9 @@
 package com.wmp.downloader.tools.download;
 
+import com.wmp.downloader.newArchitecture.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -278,9 +280,11 @@ public class URLDownloadTool {
 
         File destFile = StringFormat.sanitizeFile(new File(destPath, fileName));
         if (destFile.exists()) {
-            destFile.delete();
+            if (!destFile.delete()) {
+                ToastMessage.show(StringFormat.translate("delete_failed"));
+                throw new DownloadException("文件合并失败");
+            }
         } else {
-
             destPath.mkdirs();
             destFile.createNewFile();
         }
@@ -302,10 +306,14 @@ public class URLDownloadTool {
                         if (pauseController != null) pauseController.checkPause();
                         downloadedSize += len;
                         fos.write(buffer, 0, len);
-                        if (progress != null) progress.addMergedBytes(len);
+                        if (progress != null) {
+                            progress.resetMergedBytes(downloadedSize);
+                        }
+                        //if (progress != null) progress.addMergedBytes(len);
                         int finalDownloadedSize = downloadedSize;
                         SwingUtilities.invokeLater(() -> {
                             if (fileSize > 0) {
+
                                 progressBar.setValue((int) ((double) finalDownloadedSize / fileSize * 100));
                             }
                         });
@@ -598,8 +606,8 @@ public class URLDownloadTool {
             return mergedBytes.get();
         }
 
-        public void resetMergedBytes() {
-            mergedBytes.set(0);
+        public void resetMergedBytes(long bytes) {
+            mergedBytes.set(bytes);
         }
 
         public void updateSpeed() {

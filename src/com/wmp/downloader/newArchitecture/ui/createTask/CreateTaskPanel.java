@@ -2,6 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.createTask;
 
 import com.wmp.downloader.exception.LinkParserException;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
+import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInfoPanel;
@@ -212,8 +213,8 @@ public class CreateTaskPanel {
                         }
                     } catch (Exception e) {
                         SwingUtilities.invokeLater(() -> {
-                            tipLabel.setText(StringFormat.translate("task", "task.create_task.error_link"));
-                            ToastMessage.show(null, StringFormat.translate("task", "task.create_task.error_link") + ": " + link, ToastMessage.ERROR);
+                            tipLabel.setText(StringFormat.translate("task.create_task.error_link"));
+                            ToastMessage.show(null, StringFormat.translate("task.create_task.error_link") + ": " + link, ToastMessage.ERROR);
                         });
                         logger.error("Error parsing link: " + link, e);
                     } finally {
@@ -232,7 +233,7 @@ public class CreateTaskPanel {
 
         // 如果有新链接启动，显示解析进度
         if (hasNew) {
-            tipLabel.setText(StringFormat.translate("task", "task.create_task.parsing_link"));
+            tipLabel.setText(StringFormat.translate("task.create_task.parsing_link"));
             tipProgressBar.setVisible(true);
             tipProgressBar.setIndeterminate(true);
         }
@@ -240,11 +241,19 @@ public class CreateTaskPanel {
 
     // ========== 实际解析逻辑（只返回面板，不操作UI） ==========
     private AbstractLinkInfoPanel parseLinkInternal(String link) throws Exception {
-        var info = ParserTaskInfo.getInfo(link);
+        tipLabel.setText(StringFormat.translate("task.create_task.tip.finding_suitable_parser"));
+        var parser = ParserTaskInfo.getParser(link);
+        tipLabel.setText(StringFormat.translate("task.create_task.tip.parsering"));
+
+        AbstractParser.Info info = null;
+        if (parser != null) {
+            info = parser.getParserInfo(link);
+        }
         logger.debug(info);
         if (info == null) {
             return null;
         }
+        tipLabel.setText(StringFormat.translate("task.create_task.tip.creating_parser_panel"));
         AbstractLinkInfoPanel panel = info.getLinkedInfoPanel();
         if (panel == null) {
             throw new LayerInstantiationException("链接解析出错");
