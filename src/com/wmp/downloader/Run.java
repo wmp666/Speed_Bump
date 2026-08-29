@@ -66,11 +66,12 @@ public class Run {
             }
         }
 
-        FlatLightLaf.setup();
+        //FlatLightLaf.setup();
 
         var preloadDialog = new PreloadDialog();
         preloadDialog.setVisible(true);
 
+        logger.info("开始加载");
         Downloader downloader = null;
         try {
             DataControl.load();
@@ -85,12 +86,14 @@ public class Run {
 
             ThemeChanger.easyChanger();
 
-            try {
-                TCPControl.startServer();
-            } catch (Exception ex) {
-                logger.error("服务端启动失败!");
-                JOptionPane.showMessageDialog(null, "服务端启动失败");
-            }
+            Thread.ofVirtual().start(() -> {
+                try {
+                    TCPControl.startServer();
+                } catch (Exception ex) {
+                    logger.error("服务端启动失败!");
+                    JOptionPane.showMessageDialog(null, "服务端启动失败");
+                }
+            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "启动发生错误\n"+e);
             logger.error("启动发生错误", e);

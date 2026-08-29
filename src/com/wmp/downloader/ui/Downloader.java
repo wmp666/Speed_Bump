@@ -1,28 +1,22 @@
 package com.wmp.downloader.ui;
 
-import com.formdev.flatlaf.util.ColorFunctions;
-import com.formdev.flatlaf.util.SystemFileChooser;
-import com.wmp.downloader.Run;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
-import com.wmp.downloader.newArchitecture.ui.task.PluginParserGithubDownloadTask;
-import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.EasterEggData;
+import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
+import com.wmp.downloader.newArchitecture.ui.mainPanels.AboutPanel;
+import com.wmp.downloader.newArchitecture.ui.mainPanels.PluginParserPanel;
+import com.wmp.downloader.newArchitecture.ui.mainPanels.SettingsPanel;
+import com.wmp.downloader.newArchitecture.ui.mainPanels.SpecialSettingsPanel;
 import com.wmp.downloader.tools.StringFormat;
-import com.wmp.downloader.tools.file.FileOperation;
-import com.wmp.downloader.tools.platform.AutoStart;
+import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
-import com.wmp.downloader.ui.common.FileAssociationPanel;
 import com.wmp.downloader.ui.common.LazyTabbedPane;
-import com.wmp.downloader.ui.common.PathSelectionPanel;
-import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
-import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
 import org.apache.log4j.Logger;
-import org.jdesktop.swingx.color.EyeDropperColorChooserPanel;
+import org.jdesktop.swingx.JXBusyLabel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -30,16 +24,12 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.*;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Downloader extends JFrame implements WindowListener{
 
@@ -53,99 +43,22 @@ public class Downloader extends JFrame implements WindowListener{
     public JPanel UIPanel;
     public JPanel settingsPanel;
     public JTabbedPane mainTabbedPane;
-    public JCheckBox isUseSSLCheckBox;
-    public JButton saveButton;
-    public JButton refreshButton;
-    public JComboBox<String> themeComboBox;
-    public JButton dataPathButton;
-    public JSlider ThreadNumSlider;
-    public JTextField ThreadNumLabel;
     public JPanel downloaderPanel;
-    public JPanel aboutPanel;
     public JButton createTaskButton;
-    public JCheckBox FlatLafCheckBox;
-    public JCheckBox IconPackCheckBox;
     public JPanel TaskButtonPanel;
-    public PathSelectionPanel pathSelectionPanel;
-    public JComboBox<String> FontListComboBox;
-    public JSpinner fontSizeSpinner;
-    public JLabel nameLabel;
-    public JCheckBox authorCheckBox;
     public JPanel TasksPanel;
     public JButton allStartButton;
     public JButton allPauseButton;
-    public PathSelectionPanel tempPathSelectionPanel;
-    public JTabbedPane SpecialSettingsTabbedPane;
-    public JPanel SpecialSettingsPanel;
-    public JButton deleteTempFolderDataButton;
-    public JCheckBox isUseClipBoardListenerCheckBox;
-    public JComboBox<String> laugComboBox;
-    public PathSelectionPanel backgroundSelectionPanel;
-    public JComboBox<String> BackgroundModeComboBox;
-    public JScrollPane downloadSetsScrollPane;
-    public JSlider alphaSlider;
-    public JCheckBox alibabaFastjsonCheckBox;
-    public JCheckBox log4jLog4jCheckBox;
-    public JScrollPane aboutScrollPane;
-    public JCheckBox isUseHeavyWeightToastCheckBox;
     public JScrollPane TasksScrollPane;
-    public JTabbedPane tabbedPane2;
-    public JButton checkUpdateButton;
-    public JButton ProjectLinkButton;
-    public JScrollPane personalizedSetsScrollPane;
-    public JScrollPane DataControlSetsScrollPane;
-    public JCheckBox isStartCheckUpdateCheckBox;
-    public JList<PluginParserInfo> PluginParserList;
-    public JPanel PluginInfoPanel;
-    public JLabel pluginParserIDLabel;
-    public JLabel pluginParserAuthorLabel;
-    public JLabel pluginParserVersionLabel;
-    public JLabel pluginParserStartVersionLabel;
-    public JLabel pluginParserLastVersionLabel;
-    public JButton pluginParserStatusControlButton;
-    public JButton PluginParserUninstallButton;
-    public JScrollPane PluginInfoScrollPane;
-    public JPanel PluginInfoIntroductionPanel;
-    public JScrollPane installPluginInfoScrollPane;
-    public JPanel installPluginInfoPanel;
-    public JToolBar PluginControlToolBar;
-    public JTabbedPane tabbedPane1;
-    public JPanel installPluginsPanel;
-    public JList<InstallPluginParserInfo> installPluginParserList;
-    public JLabel installPluginParserIDLabel;
-    public JLabel installPluginParserAuthorLabel;
-    public JLabel installPluginParserVersionLabel;
-    public JLabel installPluginParserStartVersionLabel;
-    public JLabel installPluginParserLastVersionLabel;
-    public JPanel installPluginInfoIntroductionPanel;
-    public JButton PluginParserInstallButton;
-    public JPanel installedPluginsPanel;
-    public JButton installPluginParserListRefreshButton;
+    public JPanel SpecialSettingsPanel;
     public JPanel pluginParserControlPanel;
-    public JScrollPane installPluginParserScrollPane;
-    public JScrollPane PluginParserScrollPane;
-    public JTextField accentColorTextField;
-    public JButton accentColorChooseButton;
-    public JProgressBar waitProgressBar;
-    public JPanel BackgroundControlPanel;
-    public JPanel ThemeControlPanel;
-    public JCheckBox IsUseSquareComponentCheckBox;
-    public JPanel TextUIControlPanel;
-    public JLabel licenseLabel;
-    public JButton issueButton;
-    public JButton downloadFilesPathButton;
-    public FileAssociationPanel torrentFileAssociationPanel;
-    public JTextField portTextField;
-    public JButton portSaveButton;
-    public JButton PortDefaultButton;
-    public JLabel runVersionLabel;
-    public JLabel PluginSupportVersionLabel;
-    public JCheckBox isAutoStartCheckBox;
-    public JScrollPane platformSetsScrollPane;
-    public JPanel platformSetsPanel;
-    public JPanel aboutInfoPanel;
-    public JScrollPane aboutInfoScrollPane;
-    private JComboBox FunctionDialogStyleComboBox;
+    public JPanel aboutPanel;
+
+    public SettingsPanel settingsPanelInstance;
+    public SpecialSettingsPanel specialSettingsPanelInstance;
+    public PluginParserPanel pluginParserPanelInstance;
+    public AboutPanel aboutPanelInstance;
+
     public String lastClipboardContent = "";
 
     public Timer clipboardTimer;
@@ -235,10 +148,6 @@ public class Downloader extends JFrame implements WindowListener{
                 }
         );
 
-        UITools.setScrollPaneUnOpaque(downloadSetsScrollPane);
-        UITools.setScrollPaneUnOpaque(personalizedSetsScrollPane);
-        UITools.setScrollPaneUnOpaque(DataControlSetsScrollPane);
-
         // 使用JLayeredPane包装主界面
         initLayeredPane();
 
@@ -246,19 +155,19 @@ public class Downloader extends JFrame implements WindowListener{
         initBackgroundSettings();
 
         //拓展管理
-        createLazyLoadPanelInMainFrame(pluginParserControlPanel, this::initPluginParserComponents);
+        createLazyLoadPanelInMainFrame(pluginParserControlPanel, () -> initPluginParserComponents());
 
         //任务
         initTaskComponents();
 
         //设置
-        createLazyLoadPanelInMainFrame(settingsPanel, this::initSettingsComponents);
+        createLazyLoadPanelInMainFrame(settingsPanel, () -> initSettingsComponents());
 
         //专项设置
-        createLazyLoadPanelInMainFrame(SpecialSettingsPanel, this::initSpecialSettingsComponents);
+        createLazyLoadPanelInMainFrame(SpecialSettingsPanel, () -> initSpecialSettingsComponents());
 
         //关于
-        createLazyLoadPanelInMainFrame(aboutPanel, this::initAboutComponents);
+        createLazyLoadPanelInMainFrame(aboutPanel, () -> initAboutComponents());
         startClipboardListener();
 
         pack();
@@ -277,12 +186,43 @@ public class Downloader extends JFrame implements WindowListener{
         };
         ref.l = e -> {
             if (panel == mainTabbedPane.getSelectedComponent()) {
-                waitProgressBar.setVisible(true);
-                waitProgressBar.setIndeterminate(true);
+                //在空白页面的正中央显示 JXBusyLabel 并启动等待动画
+                final JXBusyLabel busyLabel = new JXBusyLabel();
+                busyLabel.setPreferredSize(new Dimension(64, 64));
+                busyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                // 确保 BusyPainter 被初始化（内部 Timer 依赖它）
+                final org.jdesktop.swingx.painter.BusyPainter busyPainter = busyLabel.getBusyPainter();
+                if (busyPainter != null) {
+                    busyPainter.setPaintCentered(true);
+                }
+                // 使用容器将 busyLabel 严格居中于空白页面中央（不拉伸铺满）
+                final JPanel busyHost = new JPanel(new GridBagLayout());
+                busyHost.setOpaque(false);
+                busyHost.add(busyLabel);
+                panel.setLayout(new BorderLayout());
+                panel.removeAll();
+                panel.add(busyHost, BorderLayout.CENTER);
+                panel.revalidate();
+                panel.repaint();
+                // JXBusyLabel 自身的动画 Timer 在 FlatLaf 下可能不会可靠地推进重绘，
+                // 因此这里用一个独立的 Swing Timer 手动推进 frame 并强制 repaint，
+                // 确保转圈动画一定可见。
+                final Timer animTimer = new Timer(80, ev -> {
+                    if (busyPainter != null && busyPainter.getPoints() > 0) {
+                        busyPainter.setFrame((busyPainter.getFrame() + 1) % busyPainter.getPoints());
+                    }
+                    busyLabel.repaint();
+                });
+                animTimer.setRepeats(true);
+                animTimer.start();
                 SwingUtilities.invokeLater(() -> {
                     logger.info("正在加载：" + run);
                     run.run();
-                    waitProgressBar.setVisible(false);
+                    animTimer.stop();
+                    busyLabel.setBusy(false);
+                    panel.remove(busyHost);
+                    panel.revalidate();
+                    panel.repaint();
                     mainTabbedPane.removeChangeListener(ref.l);
                 });
             }
@@ -292,350 +232,39 @@ public class Downloader extends JFrame implements WindowListener{
     }
 
     private void initPluginParserComponents() {
-
-        UITools.setScrollPaneUnOpaque(installPluginParserScrollPane);
-        UITools.setScrollPaneUnOpaque(PluginParserScrollPane);
-
-        initToolBar();
-
-        initInstalledPluginParserComponents();
-
-        initInstallPluginParserComponents();
-
-
-
+        pluginParserPanelInstance = new PluginParserPanel(this);
+        pluginParserPanelInstance.initPluginParserComponents();
+        pluginParserControlPanel.removeAll();
+        pluginParserControlPanel.add(pluginParserPanelInstance.pluginParserControlPanel, BorderLayout.CENTER);
+        pluginParserControlPanel.revalidate();
+        pluginParserControlPanel.repaint();
     }
 
-    private void initInstallPluginParserComponents() {
-        installPluginInfoPanel.setVisible(false);
-
-        installPluginParserIDLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
-        installPluginParserAuthorLabel.putClientProperty("FlatLaf.style", "font: $h4.font");
-        installPluginParserVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
-        installPluginParserStartVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
-        installPluginParserLastVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
-
-        installPluginParserList.putClientProperty("FlatLaf.style", "font: $h3.font");
-
-        updateInstallPluginParserList();
-
-        ThemeChanger.addInDynamicConverter(() -> installPluginParserList.repaint());
-
-        installPluginParserList.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
-
-            final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    //super.paintComponent(g);
-                    // 根据成员变量绘制背景
-                    if (isSelected) {
-                        Graphics2D g2 = (Graphics2D) g.create();
-                        g2.setColor(UIManager.getColor("Component.accentColor"));
-                        g2.fillRect(0, 0, getWidth(), getHeight());
-                        g2.dispose();
-                    } else {
-                        Graphics2D g2 = (Graphics2D) g.create();
-                        Color base = UIManager.getColor("Panel.background");
-
-                        Color adjusted = DataControl.get("theme_type", "light").equals("dark")
-                                ? ColorFunctions.lighten(base, 0.1f)
-                                : ColorFunctions.darken(base, 0.1f);
-                        Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
-
-
-                        g2.setColor(translucent);
-                        g2.fillRect(0, 0, getWidth(), getHeight());
-                        g2.dispose();
-                    }
-
-                    // 子组件由 paintChildren 绘制
-                }
-            };
-
-            final JLabel nameLabel = new JLabel();
-            final JLabel otherInfoLabel = new JLabel();
-
-            {
-                panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-                //panel.setOpaque(false);
-                nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
-                panel.add(nameLabel, BorderLayout.CENTER);
-                panel.add(otherInfoLabel, BorderLayout.SOUTH);
-            }
-
-            // 更新数据
-            nameLabel.setText(value.pluginParserInfo().parser().getID());
-            otherInfoLabel.setText(value.pluginParserInfo().version() + " " + value.pluginParserInfo().author());
-
-            //nameLabel.setForeground(UIManager.getColor("Label.foreground"));
-            //otherInfoLabel.setForeground(UIManager.getColor("Label.foreground"));
-
-            // 强制重绘面板（因为选中状态变化，需要刷新背景）
-            panel.repaint();
-            installPluginInfoPanel.repaint();
-
-            return panel;
-        });
-        installPluginParserList.addListSelectionListener(e -> {
-            var installPluginParserInfo = installPluginParserList.getSelectedValue();
-            if (installPluginParserInfo == null) return;
-            try {
-                PluginParserInstallButton.setEnabled(true);
-                PluginParserInstallButton.setText(
-                        StringFormat.translate("install")
-                );
-
-                installPluginInfoPanel.setVisible(true);
-                var id = installPluginParserInfo.pluginParserInfo().parser().getID();
-                installPluginParserIDLabel.setText(id);
-                installPluginParserAuthorLabel.setText(installPluginParserInfo.pluginParserInfo().author());
-                installPluginParserVersionLabel.setText(installPluginParserInfo.pluginParserInfo().version());
-
-                //设置开发版本
-                var lastVersion = installPluginParserInfo.pluginParserInfo().lastVersion();
-                var startVersion = installPluginParserInfo.pluginParserInfo().startVersion();
-                installPluginParserStartVersionLabel.setText(startVersion);
-                installPluginParserLastVersionLabel.setText(lastVersion);
-                //判断是否适合当前程序
-                if (!GetUpdateInfo.isVersionInRange(Run.PLUGIN_SUPPORT_VERSION,
-                        startVersion, lastVersion)) {
-                    installPluginParserStartVersionLabel.setForeground(Color.RED);
-                    installPluginParserLastVersionLabel.setForeground(Color.RED);
-                }else {
-                    installPluginParserStartVersionLabel.setForeground(null);
-                    installPluginParserLastVersionLabel.setForeground(null);
-                }
-
-                installPluginInfoIntroductionPanel.removeAll();
-                installPluginInfoIntroductionPanel.add(UITools.createMarkdownPane(installPluginParserInfo.pluginParserInfo().introduction()), BorderLayout.CENTER);
-
-
-                var pluginParserList = ParserTaskInfo.getAllPluginParserList();
-                var idList = pluginParserList.stream().map(pluginParserInfo -> pluginParserInfo.parser().getID()).toList();
-                if (idList.contains(id)) {
-                    if (GetUpdateInfo.versionGreaterThan(installPluginParserInfo.pluginParserInfo().version(), pluginParserList.get(idList.indexOf(id)).version())) {
-                        PluginParserInstallButton.setText(
-                                StringFormat.translate("update")
-                        );
-                    }else{
-                        PluginParserInstallButton.setText(
-                                StringFormat.translate("installed")
-                        );
-                        PluginParserInstallButton.setEnabled(false);
-                    }
-                }
-            } catch (Exception ex) {
-                logger.error("安装信息加载过程抛出错误", ex);
-            }
-
-        });
-        installPluginParserListRefreshButton.addActionListener(e -> updateInstallPluginParserList());
-        PluginParserInstallButton.addActionListener(e -> {
-            logger.info(installPluginParserList.getSelectedValue().url());
-            //创建下载任务
-
-
-            var info = new PluginParserGithubDownloadTask(() -> {
-                ParserTaskInfo.loadParsers();
-                updateInstalledPluginParserList();
-                updateInstallPluginParserList();
-
-            })
-                    .getParserInfo(installPluginParserList.getSelectedValue().url());
-            var jsonInfo = info.getLinkedInfoPanel().getJsonInfo();
-            jsonInfo.put("savePath", DataControl.getPATPath().getAbsolutePath());
-            jsonInfo.put("threadMode", 0);
-            jsonInfo.put("threadNum", DataControl.get("ThreadNum", 64));
-            jsonInfo.put("linkStyle", 0);
-            var task = info.getTask(jsonInfo);
-            addDownloadTask(task);
-        });
+    private void initSettingsComponents() {
+        settingsPanelInstance = new SettingsPanel(this);
+        settingsPanelInstance.initSettingsComponents();
+        settingsPanel.removeAll();
+        settingsPanel.add(settingsPanelInstance.settingsPanel, BorderLayout.CENTER);
+        settingsPanel.revalidate();
+        settingsPanel.repaint();
     }
 
-    private void initToolBar() {
-
-        PluginControlToolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
-
-        JButton importLocalButton = new JButton();
-        importLocalButton.setToolTipText(
-                StringFormat.translate("plugins.control_tool_bar.import_local")
-        );
-        IconControl.addInDynamicConverter(() ->
-                importLocalButton.setIcon(IconControl.getIcon("import",
-                        importLocalButton.getFont().getSize())));
-        importLocalButton.addActionListener(e -> {
-            var path = DataControl.getPath(Downloader.this, SystemFileChooser.OPEN_DIALOG, SystemFileChooser.FILES_ONLY);
-            if (path == null) return;
-            if (!path.getName().endsWith(".jar")) {
-                ToastMessage.show(StringFormat.translate("plugins.control_tool_bar.import_local.is_not_jar"), ToastMessage.WARNING);
-            }else{
-                if (FileOperation.copy(path, DataControl.getPATPath())){
-                    ParserTaskInfo.loadParsers();
-                    updateInstalledPluginParserList();
-                    updateInstallPluginParserList();
-                }
-            }
-
-        });
-        PluginControlToolBar.add(importLocalButton);
-
-        JButton refreshButton = new JButton();
-        refreshButton.setToolTipText(StringFormat.translate("refresh"));
-        IconControl.addInDynamicConverter(() ->
-                refreshButton.setIcon(IconControl.getIcon("refresh",
-                        refreshButton.getFont().getSize())));
-        refreshButton.addActionListener(e -> {
-            ParserTaskInfo.loadParsers();
-            updateInstalledPluginParserList();
-            updateInstallPluginParserList();
-
-        });
-        PluginControlToolBar.add(refreshButton);
+    private void initSpecialSettingsComponents() {
+        specialSettingsPanelInstance = new SpecialSettingsPanel(this);
+        specialSettingsPanelInstance.initSpecialSettingsComponents();
+        SpecialSettingsPanel.removeAll();
+        SpecialSettingsPanel.add(specialSettingsPanelInstance.specialSettingsPanel, BorderLayout.CENTER);
+        SpecialSettingsPanel.revalidate();
+        SpecialSettingsPanel.repaint();
     }
 
-    private void initInstalledPluginParserComponents() {
-        IconControl.addInDynamicConverter(
-                () -> installPluginParserListRefreshButton.setIcon(IconControl.getIcon("refresh", installPluginParserListRefreshButton.getFont().getSize()))
-        );
-
-        PluginInfoPanel.setVisible(false);
-
-        pluginParserIDLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
-        pluginParserAuthorLabel.putClientProperty("FlatLaf.style", "font: $h4.font");
-        pluginParserVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
-        pluginParserStartVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
-        pluginParserLastVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
-
-        PluginParserList.putClientProperty("FlatLaf.style", "font: $h3.font");
-
-        updateInstalledPluginParserList();
-
-        ThemeChanger.addInDynamicConverter(() -> PluginParserList.repaint());
-
-        PluginParserList.setCellRenderer(new ListCellRenderer<>() {
-
-
-            @Override
-            public Component getListCellRendererComponent(JList<? extends PluginParserInfo> list,
-                                                          PluginParserInfo value, int index,
-                                                          boolean isSelected, boolean cellHasFocus) {
-
-                final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        //super.paintComponent(g);
-                        // 根据成员变量绘制背景
-                        if (isSelected) {
-                            Graphics2D g2 = (Graphics2D) g.create();
-                            g2.setColor(UIManager.getColor("Component.accentColor"));
-                            g2.fillRect(0, 0, getWidth(), getHeight());
-                            g2.dispose();
-                        } else {
-                            Graphics2D g2 = (Graphics2D) g.create();
-                            Color base = UIManager.getColor("Panel.background");
-
-                            Color adjusted = DataControl.get("theme_type", "light").equals("dark")
-                                    ? ColorFunctions.lighten(base, 0.1f)
-                                    : ColorFunctions.darken(base, 0.1f);
-                            Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
-
-
-                            g2.setColor(translucent);
-                            g2.fillRect(0, 0, getWidth(), getHeight());
-                            g2.dispose();
-                        }
-
-                        // 子组件由 paintChildren 绘制
-                    }
-                };
-
-                final JLabel nameLabel = new JLabel();
-                final JLabel otherInfoLabel = new JLabel();
-
-                {
-                    panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-                    //panel.setOpaque(false);
-                    nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
-                    panel.add(nameLabel, BorderLayout.CENTER);
-                    panel.add(otherInfoLabel, BorderLayout.SOUTH);
-                }
-
-                // 更新数据
-                nameLabel.setText(value.parser().getID());
-                otherInfoLabel.setText(value.version() + " " + value.author());
-
-                //nameLabel.setForeground(UIManager.getColor("Label.foreground"));
-                //otherInfoLabel.setForeground(UIManager.getColor("Label.foreground"));
-
-                // 强制重绘面板（因为选中状态变化，需要刷新背景）
-                panel.repaint();
-                PluginInfoPanel.repaint();
-
-                return panel;
-            }
-        });
-        PluginParserList.addListSelectionListener(e -> {
-            try {
-                var pluginParserInfo = PluginParserList.getSelectedValue();
-                PluginInfoPanel.setVisible(true);
-                var id = pluginParserInfo.parser().getID();
-                pluginParserIDLabel.setText(id);
-                pluginParserAuthorLabel.setText(pluginParserInfo.author());
-                pluginParserVersionLabel.setText(pluginParserInfo.version());
-                pluginParserStartVersionLabel.setText(pluginParserInfo.startVersion());
-                pluginParserLastVersionLabel.setText(pluginParserInfo.lastVersion());
-                PluginInfoIntroductionPanel.removeAll();
-                PluginInfoIntroductionPanel.add(UITools.createMarkdownPane(pluginParserInfo.introduction()), BorderLayout.CENTER);
-
-                if (pluginParserInfo.isAppPlugin()) {
-                    pluginParserStatusControlButton.setEnabled(false);
-                    PluginParserUninstallButton.setEnabled(false);
-                }else{
-                    pluginParserStatusControlButton.setEnabled(true);
-                    PluginParserUninstallButton.setEnabled(true);
-                    //处理管理按钮
-                    pluginParserStatusControlButton.setText(
-                            StringFormat.translate(ParserTaskInfo.isEnable(id)?"disable":"enable")
-                    );
-                }
-
-
-            } catch (Exception ex) {
-                logger.error("已安装的解析器加载失败", ex);
-            }
-        });
-        PluginParserUninstallButton.addActionListener(e -> {
-            var oldIndex = PluginParserList.getSelectedIndex();
-            var id = pluginParserIDLabel.getText();
-            ParserTaskInfo.setDeleteParser(id);
-
-            ToastMessage.show(StringFormat.translate("plugins.delete_plugin.tip"), ToastMessage.INFO);
-
-            ParserTaskInfo.loadParsers();
-            updateInstalledPluginParserList();
-
-            PluginParserList.setSelectedIndex(oldIndex != 0?oldIndex - 1:0);
-        });
-        pluginParserStatusControlButton.addActionListener(e -> {
-            var id = pluginParserIDLabel.getText();
-            if (ParserTaskInfo.isEnable(id)) ParserTaskInfo.setDisableParser(id);
-            else ParserTaskInfo.removeDisableParser(id);
-            pluginParserStatusControlButton.setText(StringFormat.translate(ParserTaskInfo.isEnable(id)?"disable":"enable"));
-        });
-    }
-
-    private void updateInstalledPluginParserList() {
-        var pluginParserArrayList = ParserTaskInfo.getAllPluginParserList();
-        PluginParserList.setListData(pluginParserArrayList.toArray(PluginParserInfo[]::new));
-    }
-
-    private void updateInstallPluginParserList() {
-        var installPluginParserArrayList = getInstallPluginParserInfoList();
-        installPluginParserList.setListData(installPluginParserArrayList.toArray(InstallPluginParserInfo[]::new));
-    }
-
-    private List<InstallPluginParserInfo> getInstallPluginParserInfoList(){
-        return ParserTaskInfo.getInstallPluginParserInfoList();
+    private void initAboutComponents() {
+        aboutPanelInstance = new AboutPanel(this);
+        aboutPanelInstance.initAboutComponents();
+        aboutPanel.removeAll();
+        aboutPanel.add(aboutPanelInstance.aboutPanel, BorderLayout.CENTER);
+        aboutPanel.revalidate();
+        aboutPanel.repaint();
     }
 
     private void initLayeredPane() {
@@ -652,7 +281,7 @@ public class Downloader extends JFrame implements WindowListener{
     }
 
     // FIX 新增方法：更新UIPanel和背景面板的边界
-    private void updateChildBounds() {
+    public void updateChildBounds() {
         int w = layeredPane.getWidth();
         int h = layeredPane.getHeight();
         if (w > 0 && h > 0) {
@@ -687,9 +316,7 @@ public class Downloader extends JFrame implements WindowListener{
         }
     }
 
-    // FIX 删除原来的 updateBackgroundBounds，合并到 updateChildBounds 中
-
-    private void updateBackground() {
+    public void updateBackground() {
         String backgroundPath = DataControl.get("background", null);
         String mode = DataControl.get("background_mode", "None");
 
@@ -724,41 +351,6 @@ public class Downloader extends JFrame implements WindowListener{
             backgroundPanel.setVisible(false);
             // FIX 刷新界面
             layeredPane.repaint();
-        }
-    }
-
-    private void initSpecialSettingsComponents() {
-        /*AbstractSpecialSettingsPage[] basicSpecialSettingsr = new AbstractSpecialSettingsPage[]{
-                new BiliSettings(), new FFmpegSettings(), new GithubAccelerateSettings(), new GopeedSettings()
-        };*/
-
-        var parserList = ParserTaskInfo.getEnablePluginParserList();
-        ArrayList<AbstractSpecialSettingsPage> basicSpecialSettings =
-                null;
-        try {
-            var list = parserList.stream()
-                    .map(parser -> {
-                        try {
-                            return parser.getSettingsPage();
-                        } catch (Exception e) {
-                            ToastMessage.show(e.getMessage(), ToastMessage.ERROR);
-                        }
-                        return null;
-                    })
-                    .filter(Objects::nonNull)
-                    .toList();
-            basicSpecialSettings = new ArrayList<>(list);
-        } catch (Exception e) {
-            logger.error("发生错误", e);
-            ToastMessage.show(e.getMessage(), ToastMessage.ERROR);
-        }
-        if (basicSpecialSettings != null) {
-            basicSpecialSettings.add(new FFmpegSettings());
-        }
-        for (var specialSettings : basicSpecialSettings) {
-            var jScrollPane1 = new JScrollPane(specialSettings);
-            UITools.setScrollPaneUnOpaque(jScrollPane1);
-            SpecialSettingsTabbedPane.addTab(specialSettings.getSettingsName(), jScrollPane1);
         }
     }
 
@@ -882,9 +474,9 @@ public class Downloader extends JFrame implements WindowListener{
                        - 传播违法信息、低俗内容或侵犯他人肖像权、隐私权；
                        - 其他违反国家法律法规、平台服务协议及公序良俗的行为。
                     4.  责任承担  \s
-                       用户因违反上述条款而产生的 全部法律责任（包括但不限于民事赔偿、行政处罚、平台追责等）均由用户自行承担 ，与本软件开发者、运营者及贡献者无关。本软件不提供任何内容上的担保，亦不对下载后内容的完整性、合法性做任何明示或默示的保证。
+                      用户因违反上述条款而产生的 全部法律责任（包括但不限于民事赔偿、行政处罚、平台追责等）均由用户自行承担 ，与本软件开发者、运营者及贡献者无关。本软件不提供任何内容上的担保，亦不对下载后内容的完整性、合法性做任何明示或默示的保证。
                     5.  终止与删除  \s
-                       若本软件收到相关权利人的有效侵权通知，开发者有权随时终止服务或屏蔽特定功能。用户下载的内容应在 学习完成后24小时内删除 ，不得长期留存。
+                      若本软件收到相关权利人的有效侵权通知，开发者有权随时终止服务或屏蔽特定功能。用户下载的内容应在 学习完成后24小时内删除 ，不得长期留存。
                     特别提醒：请尊重每一位创作者的劳动成果。若您希望长期欣赏或使用某作品，请前往官方平台进行正版观看或购买授权。
                     >使用本软件即视为您已阅读、理解并同意本免责声明全文。若不同意，请立即停止使用并卸载本软件。
                     （本声明最终解释权归本软件开发者所有，并保留根据法律法规变化适时修订的权利。）
@@ -920,79 +512,6 @@ public class Downloader extends JFrame implements WindowListener{
         TasksScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // 关闭水平滚动
         TasksScrollPane.getViewport().setLayout(new ViewportLayout()); // 默认布局，会拉伸组件
         UITools.setScrollPaneUnOpaque(TasksScrollPane);
-
-        installPluginInfoScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(installPluginInfoPanel));
-        PluginInfoScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(PluginInfoPanel));
-        platformSetsScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(platformSetsPanel));
-
-        backgroundSelectionPanel = new PathSelectionPanel(StringFormat.translate("settings", "settings.personalized.background_path"), new File(DataControl.get("background", "")), SystemFileChooser.FILES_ONLY);
-        pathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "save_path"), DataControl.getDownloadFilePath());
-        tempPathSelectionPanel = new PathSelectionPanel(StringFormat.translate("common", "temp_path"), new File(DataControl.get("TempFilePath", DataControl.getDefaultTempPath().getAbsolutePath())));
-
-        fontSizeSpinner = new JSpinner(new SpinnerNumberModel(DataControl.get("FontSize", 12).intValue(), 1, Integer.MAX_VALUE, 1));
-
-        torrentFileAssociationPanel = new FileAssociationPanel("torrent", StringFormat.translate("file_association.torrent"), "/icon/file_assoication/torrent_file");
-
-    }
-
-    private void initAboutComponents() {
-        nameLabel.setText(StringFormat.translate("common", "app_name") + " V" + DataControl.get("version", "0.0.0"));
-        nameLabel.putClientProperty("FlatLaf.style", "font: bold $h0.font");
-        issueButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
-        licenseLabel.putClientProperty("FlatLaf.style", "font: bold $h2.font");
-        checkUpdateButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
-        ProjectLinkButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
-
-        runVersionLabel.setText(Run.VERSION);
-        PluginSupportVersionLabel.setText(Run.PLUGIN_SUPPORT_VERSION);
-
-        IconControl.addInDynamicConverter(
-                () -> nameLabel.setIcon(IconControl.getIcon("icon", nameLabel.getFont().getSize())),
-                () -> licenseLabel.setIcon(IconControl.getIcon("license", licenseLabel.getFont().getSize())),
-                () -> checkUpdateButton.setIcon(IconControl.getIcon("update", checkUpdateButton.getFont().getSize())),
-                () -> ProjectLinkButton.setIcon(IconControl.getIcon("link", ProjectLinkButton.getFont().getSize())),
-                () -> issueButton.setIcon(IconControl.getIcon("issue", issueButton.getFont().getSize()))
-        );
-
-        authorCheckBox.addActionListener(_ -> {
-            if (!authorCheckBox.isSelected()) {
-                var panel = new JPanel(new BorderLayout());
-                var textArea = new JTextArea("你真的要这么做吗!\n这样做真的很危险!\n不要继续呀!");
-                panel.add(textArea);
-
-            }
-        });
-        FlatLafCheckBox.addActionListener(_ -> {
-            EasterEggData.canUseFlatLaf = FlatLafCheckBox.isSelected();
-            ThemeChanger.easyChanger();
-        });
-        IconPackCheckBox.addActionListener(_ -> {
-            EasterEggData.canUseIcon = IconPackCheckBox.isSelected();
-            IconControl.runDynamicConverters();
-        });
-
-        checkUpdateButton.addActionListener(_ -> checkUpdate());
-
-        ProjectLinkButton.addActionListener(_ -> {
-            try {
-                Desktop.getDesktop().browse(URI.create("https://github.com/wmp666/Speed_Bump"));
-            } catch (Exception ex) {
-                ToastMessage.show(StringFormat.translate("open_link.error"), ToastMessage.ERROR);
-                logger.error("网站打开失败", ex);
-            }
-        });
-        issueButton.addActionListener(_ -> {
-            try {
-                Desktop.getDesktop().browse(URI.create("https://github.com/wmp666/Speed_Bump/issues"));
-            } catch (Exception ex) {
-                ToastMessage.show(StringFormat.translate("open_link.error"), ToastMessage.ERROR);
-                logger.error("网站打开失败", ex);
-            }
-        });
-
-        aboutScrollPane.getViewport().setOpaque(false);
-
-        UITools.setScrollPaneUnOpaque(aboutInfoScrollPane);
     }
 
     public void checkUpdate() {
@@ -1143,7 +662,7 @@ public class Downloader extends JFrame implements WindowListener{
                 new JButton[]{learnMoreButton, SupportButton}, FunctionDialog.NORTH_DIRECTION_RIGHT);
     }
 
-    private void addDownloadTask(AbstractTask... tasks) {
+    public void addDownloadTask(AbstractTask... tasks) {
         if (tasks == null) {
             return;
         }
@@ -1162,7 +681,7 @@ public class Downloader extends JFrame implements WindowListener{
         });
     }
 
-    private void addDownloadTask(CreateTaskPanel createTaskPanel) {
+    public void addDownloadTask(CreateTaskPanel createTaskPanel) {
         Thread.ofVirtual().start(()->{
             createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
                 taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -1175,302 +694,6 @@ public class Downloader extends JFrame implements WindowListener{
 
                 taskPanel.start();
             });
-        });
-    }
-
-    private void initSettingsComponents() {
-        ThemeChanger.addInDynamicConverter(
-                this::updateDefaultButton
-        );
-
-        downloadSetsScrollPane.getVerticalScrollBar().setUnitIncrement(10);
-
-        isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
-        isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
-        ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
-        ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
-        alphaSlider.setValue((int) (DataControl.get("background_alpha", new BigDecimal("0.3")).floatValue() * 100));
-        isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
-        accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
-        IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
-        portTextField.setText(String.valueOf(DataControl.get("port", 5465)));
-        isAutoStartCheckBox.setSelected(AutoStart.isAutoStart());
-
-        BackgroundModeComboBox.addItem("None");
-        BackgroundModeComboBox.addItem("Image");
-
-        BackgroundModeComboBox.setSelectedItem(DataControl.get("background_mode", "None"));
-
-        backgroundSelectionPanel.setPath(DataControl.get("background", ""));
-        if (Objects.equals(BackgroundModeComboBox.getSelectedItem(), "Image")) {
-            backgroundSelectionPanel.setVisible(true);
-        } else backgroundSelectionPanel.setVisible(false);
-
-        //初始化语言设置项
-        {
-            String[] laugs = new String[]{
-                    "简体中文(zh_cn)", "English(en_us)", "日本語(ja_JP)", "Русский язык(ru_RU)",
-                    "繁體中文|臺灣(zh_TW)", "繁體中文|香港地區(zh_HK)"
-            };
-
-            var lauguage = DataControl.get("laug", "zh_cn");
-            for (String laug : laugs) {
-                laugComboBox.addItem(laug);
-
-                Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(laug);
-                if (matcher.find() && lauguage.equals(matcher.group(1))) {
-                    lauguage = laug;
-                }
-            }
-
-            laugComboBox.setSelectedItem(lauguage);
-        }
-
-        //初始化主题设置项
-        {
-            themeComboBox.addItem("System Theme Style");
-            themeComboBox.addItem("Mac Dark");
-            themeComboBox.addItem("Mac Light");
-            themeComboBox.addItem("Dark");
-            themeComboBox.addItem("Light");
-            themeComboBox.addItem("Darcula");
-            themeComboBox.addItem("IntelliJ");
-            themeComboBox.addItem("System");
-            themeComboBox.addItem("Windows Classic");
-            themeComboBox.addItem("Metal");
-
-            themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
-        }
-
-        //初始化字体设置项
-        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        for (String font : fonts) FontListComboBox.addItem(font);
-        FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
-
-        isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
-
-        //初始化功能性窗口的样式数据
-        FunctionDialogStyleComboBox.removeAllItems();
-        FunctionDialogStyleComboBox.addItem(StringFormat.translate("settings.personalized.function_dialog_style.use_embed_dialog"));
-        FunctionDialogStyleComboBox.addItem(StringFormat.translate("settings.personalized.function_dialog_style.use_local_embed_dialog"));
-        FunctionDialogStyleComboBox.addItem(StringFormat.translate("settings.personalized.function_dialog_style.use_dialog"));
-        FunctionDialogStyleComboBox.setSelectedIndex(DataControl.get("function_dialog.style", 0));
-
-        //添加图标
-        IconControl.addInDynamicConverter(
-                () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize())),
-                () -> downloadFilesPathButton.setIcon(IconControl.getIcon("folder", downloadFilesPathButton.getFont().getSize())),
-                () -> deleteTempFolderDataButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
-                () -> accentColorChooseButton.setIcon(IconControl.getIcon("eyedropper", accentColorChooseButton.getFont().getSize()))
-        );
-        IconControl.addInDynamicConverter(
-                () -> refreshButton.setIcon(IconControl.getIcon("refresh", refreshButton.getFont().getSize())),
-                () -> saveButton.setIcon(IconControl.getIcon("save", saveButton.getFont().getSize()))
-        );
-
-        //添加监听
-        mainTabbedPane.addChangeListener(e -> updateDefaultButton());
-        ThreadNumSlider.addChangeListener(e -> {
-            ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
-            ThreadNumLabel.setSize(ThreadNumLabel.getPreferredSize());
-        });
-
-
-        //动态保存
-        BackgroundModeComboBox.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                DataControl.putAndSave("background_mode", e.getItem().toString());
-                if (e.getItem().equals("Image")) {
-                    backgroundSelectionPanel.setVisible(true);
-                } else {
-                    backgroundSelectionPanel.setVisible(false);
-                }
-                ToastMessage.Utils.createSaveAndApplyMsg();
-            }
-
-        });
-        backgroundSelectionPanel.setPathChangeListener(path -> {
-            DataControl.putAndSave("background", path);
-            ToastMessage.Utils.createSaveAndApplyMsg();
-        });
-        alphaSlider.addChangeListener(e -> {
-            JSlider source = (JSlider) e.getSource();
-
-            // 关键判断：如果正在调整中（鼠标按下拖拽），则忽略，直接返回
-            if (source.getValueIsAdjusting()) {
-                return;
-            }
-            DataControl.putAndSave("background_alpha", (float) alphaSlider.getValue() / 100.0f);
-            ToastMessage.Utils.createSaveAndApplyMsg();
-        });
-        themeComboBox.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                var themeStr = e.getItem().toString();
-                DataControl.putAndSave("theme", themeStr);
-                ThemeChanger.easyChanger();
-                ToastMessage.Utils.createSaveAndApplyMsg();
-            }
-        });
-        FontListComboBox.addActionListener(e -> {
-            var fontName = FontListComboBox.getSelectedItem().toString();
-            DataControl.putAndSave("Font", fontName);
-            ThemeChanger.easyChanger();
-            ToastMessage.Utils.createSaveAndApplyMsg();
-        });
-        isAutoStartCheckBox.addActionListener(_ -> {
-            var selected = isAutoStartCheckBox.isSelected();
-
-            if (DataControl.getAppPath() == null) {
-                isAutoStartCheckBox.setSelected(!selected);
-                ToastMessage.show(StringFormat.translate("error"), ToastMessage.ERROR);
-                return;
-            }
-
-            try {
-                AutoStart.setAutoStart(selected);
-            } catch (Exception e) {
-                logger.error("发生错误", e);
-                isAutoStartCheckBox.setSelected(!selected);
-                ToastMessage.show("Exception: " + e.getMessage(), ToastMessage.ERROR);
-                return;
-            }
-            ToastMessage.Utils.createSaveAndApplyMsg();
-        });
-        FunctionDialogStyleComboBox.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                DataControl.putAndSave("function_dialog.style", FunctionDialogStyleComboBox.getSelectedIndex());
-                ToastMessage.Utils.createSaveAndApplyMsg();
-            }
-        });
-
-        //下次生效
-        PortDefaultButton.addActionListener(_ -> {
-            portTextField.setText("5465");
-            DataControl.putAndSave("port", portTextField.getText());
-            ToastMessage.Utils.createSaveAndApplyNextMsg();
-
-        });
-        portSaveButton.addActionListener(_ -> {
-            //先判断是不是int
-            try {
-                Integer.parseInt(portTextField.getText());
-            } catch (NumberFormatException e) {
-                logger.error("错误的数字类型", e);
-                ToastMessage.show(StringFormat.translate("settings.web.port_settings.num_err"), ToastMessage.ERROR);
-                return;
-            }
-            DataControl.putAndSave("port", portTextField.getText());
-            ToastMessage.Utils.createSaveAndApplyNextMsg();
-        });
-        laugComboBox.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                var lauguage = e.getItem().toString();
-                Matcher matcher = Pattern.compile("\\((.+_.+)\\)").matcher(lauguage);
-                if (matcher.find()) {
-                    lauguage = matcher.group(1);
-                }
-                DataControl.putAndSave("laug", lauguage);
-                ToastMessage.Utils.createSaveAndApplyNextMsg();
-            }
-        });
-
-        //强制刷新与保存
-        refreshButton.addActionListener(e -> {
-            DataControl.load();
-            isUseSSLCheckBox.setSelected(DataControl.get("isUseSSL", false));
-            isUseClipBoardListenerCheckBox.setSelected(DataControl.get("isUseClipBoardListener", false));
-            isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
-            FunctionDialogStyleComboBox.setSelectedIndex(DataControl.get("function_dialog.style", 0));
-            isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
-            IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
-
-            ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
-            ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
-            pathSelectionPanel.setPath(DataControl.getDownloadFilePath().getAbsolutePath());
-            tempPathSelectionPanel.setPath(DataControl.get("TempFilePath", DataControl.getDataPath().getAbsolutePath()));
-            FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
-            fontSizeSpinner.setValue(DataControl.get("FontSize", 12));
-            themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
-
-            accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
-
-            isAutoStartCheckBox.setSelected(AutoStart.isAutoStart());
-
-            updateBackground();
-            updateChildBounds(); // FIX 使用统一方法
-
-            ThemeChanger.easyChanger();
-        });
-
-
-        accentColorChooseButton.addActionListener(e -> {
-            Color color = null;
-            try {
-                color = Color.decode("#" + accentColorTextField.getText());
-            } catch (NumberFormatException ex) {
-                color = new Color(0x29a5e3);
-            }
-            var colorChooser = new JColorChooser();
-            colorChooser.addChooserPanel(new EyeDropperColorChooserPanel());
-
-
-            var dialog = JColorChooser.createDialog(this, StringFormat.translate("settings.personalized.accent_color"), true, colorChooser,
-                    e2 -> {
-                        var result = colorChooser.getColor();
-
-                        /*
-                        int rgb = 0xFF0000; // 注意：如果 int 包含 Alpha，需先屏蔽高位
-                        int rgbOnly = rgb & 0x00FFFFFF;
-                        String hex = String.format("#%06X", rgbOnly); // 输出 "#FF0000"*/
-                        accentColorTextField.setText(String.format("%06X", result.getRGB() & 0x00FFFFFF));
-                    },
-                    e2 ->{}
-            );
-            dialog.setVisible(true);
-
-        });
-
-        dataPathButton.addActionListener(e -> {
-            try {
-                Desktop.getDesktop().open(DataControl.getDataPath());
-            } catch (IOException ex) {
-                logger.error("文件打开失败", ex);
-            }
-        });
-
-        downloadFilesPathButton.addActionListener(e -> {
-            try {
-                Desktop.getDesktop().open(DataControl.getDownloadFilePath());
-            } catch (IOException ex) {
-                logger.error("文件打开失败", ex);
-            }
-        });
-
-        deleteTempFolderDataButton.addActionListener(e -> {
-            var tempPath = DataControl.getTempPath();
-            DataControl.deleteFolder(tempPath);
-        });
-
-        saveButton.addActionListener(e -> {
-            DataControl.put("isUseSSL", isUseSSLCheckBox.isSelected());
-            DataControl.put("isUseClipBoardListener", isUseClipBoardListenerCheckBox.isSelected());
-            DataControl.put("ThreadNum", ThreadNumSlider.getValue());
-            DataControl.put("DownloadFilePath", pathSelectionPanel.getPath());
-            DataControl.put("TempFilePath", tempPathSelectionPanel.getPath());
-            DataControl.put("FontSize", fontSizeSpinner.getValue());
-            DataControl.put("is_use_heavy_weight.toast", isUseHeavyWeightToastCheckBox.isSelected());
-            DataControl.put("is_start_check_update", isStartCheckUpdateCheckBox.isSelected());
-            DataControl.put("accent_color", accentColorTextField.getText());
-            DataControl.put("is_use_square_component", IsUseSquareComponentCheckBox.isSelected());
-
-            DataControl.save();
-            DataControl.load();
-
-            updateBackground();
-            updateChildBounds(); // FIX 使用统一方法
-
-            ToastMessage.show(this, StringFormat.translate("settings", "settings.save.tip"), ToastMessage.SUCCESS);
-            ThemeChanger.easyChanger();
         });
     }
 
@@ -1591,23 +814,24 @@ public class Downloader extends JFrame implements WindowListener{
         }
     }
 
-    private void updateDefaultButton() {
+    public void updateDefaultButton() {
         int selectedIndex = mainTabbedPane.getSelectedIndex();
         if (selectedIndex == mainTabbedPane.indexOfComponent(downloaderPanel)) {
             getRootPane().setDefaultButton(createTaskButton);
         } else if (selectedIndex == mainTabbedPane.indexOfComponent(settingsPanel)) {
-            getRootPane().setDefaultButton(saveButton);
+            getRootPane().setDefaultButton(settingsPanelInstance == null ? null : settingsPanelInstance.getSaveButton());
         } else if (selectedIndex == mainTabbedPane.indexOfComponent(SpecialSettingsPanel)) {
-            if (SpecialSettingsTabbedPane.getSelectedComponent() instanceof AbstractSpecialSettingsPage specialSettingsPanel) {
+            if (specialSettingsPanelInstance != null && specialSettingsPanelInstance.getSpecialSettingsTabbedPane().getSelectedComponent() instanceof AbstractSpecialSettingsPage specialSettingsPanel) {
                 specialSettingsPanel.setDefaultButton();
             }
         } else if (selectedIndex == mainTabbedPane.indexOfComponent(aboutPanel)) {
-            getRootPane().setDefaultButton(checkUpdateButton);
+            getRootPane().setDefaultButton(aboutPanelInstance == null ? null : aboutPanelInstance.getCheckUpdateButton());
         } else getRootPane().setDefaultButton(null);
     }
 
     @Override
     public void windowOpened(WindowEvent e) {
+        logger.info("窗口已显示");
         if (DataControl.get("is_start_check_update", true)) {
             checkUpdate();
         }

@@ -12,14 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复问题，优化体验，增加新功能&#10;修复：&#10;1.修复拓展下载后可以在任务界面删除&#10;2.修复合并文件时，删除失败仍能合并&#10;优化：&#10;1.优化“支持任务”的显示&#10;2.增加更详细的任务创建提示&#10;开发：&#10;1.开放主界面中的大部分私有变量">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复问题，优化体验，增加新功能&#10;修复：&#10;&#10;优化：&#10;1.增加更多的功能窗口的样式选择&#10;2.优化动态保存的方式&#10;3.优化更新数据获取&#10;开发：&#10;1.将启动参数作为开放的数据">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +108,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "306",
@@ -328,7 +324,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加下载拓展后自动刷新&#10;修复一点小小问题" />
     <MESSAGE value="推送" />
     <MESSAGE value="将ED2K下载提取为拓展&#10;新增主题色设置&#10;更新预加载进度弹窗&#10;更新任务进度条样式" />
     <MESSAGE value="修复一点小问题" />
@@ -353,7 +348,8 @@
     <MESSAGE value="修复拓展版本判断问题&#10;修改任务界面,要求拓展更新" />
     <MESSAGE value="同步更新" />
     <MESSAGE value="修复问题，优化体验，增加新功能&#10;修复：&#10;1.修复拓展下载后可以在任务界面删除&#10;2.修复合并文件时，删除失败仍能合并&#10;优化：&#10;1.优化“支持任务”的显示&#10;2.增加更详细的任务创建提示&#10;开发：&#10;1.开放主界面中的大部分私有变量" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复问题，优化体验，增加新功能&#10;修复：&#10;1.修复拓展下载后可以在任务界面删除&#10;2.修复合并文件时，删除失败仍能合并&#10;优化：&#10;1.优化“支持任务”的显示&#10;2.增加更详细的任务创建提示&#10;开发：&#10;1.开放主界面中的大部分私有变量" />
+    <MESSAGE value="修复问题，优化体验，增加新功能&#10;修复：&#10;&#10;优化：&#10;1.增加更多的功能窗口的样式选择&#10;2.优化动态保存的方式&#10;3.优化更新数据获取&#10;开发：&#10;1.将启动参数作为开放的数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复问题，优化体验，增加新功能&#10;修复：&#10;&#10;优化：&#10;1.增加更多的功能窗口的样式选择&#10;2.优化动态保存的方式&#10;3.优化更新数据获取&#10;开发：&#10;1.将启动参数作为开放的数据" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -387,6 +383,11 @@
           <url>file://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/src/com/wmp/processing/imageFormat/Processing.java</url>
           <line>85</line>
           <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>
