@@ -3,7 +3,7 @@ package com.wmp.downloader.ui;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
-import com.wmp.downloader.newArchitecture.ui.mainFrame.StatusPanel;
+import com.wmp.downloader.newArchitecture.ui.mainFrame.statusPanel.StatusPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.AboutPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.PluginParserPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SettingsPanel;
@@ -53,7 +53,7 @@ public class Downloader extends JFrame implements WindowListener{
     public JPanel SpecialSettingsPanel;
     public JPanel pluginParserControlPanel;
     public JPanel aboutPanel;
-    public StatusPanel StatusPanel = new StatusPanel();
+    public StatusPanel StatusPanel = new StatusPanel(this);
 
     public SettingsPanel settingsPanelInstance;
     public SpecialSettingsPanel specialSettingsPanelInstance;
@@ -399,7 +399,7 @@ public class Downloader extends JFrame implements WindowListener{
     }
 
     private void initMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
+        JPopupMenu popupMenu = new JPopupMenu();
 
         //窗口
         var windowMenu = new JMenu(StringFormat.translate("download_menu_bar", "frame"));
@@ -449,7 +449,7 @@ public class Downloader extends JFrame implements WindowListener{
         exitMenuItem.addActionListener(e -> System.exit(0));
         windowMenu.add(exitMenuItem);
 
-        menuBar.add(windowMenu);
+        popupMenu.add(windowMenu);
 
         //软件
         var AppMenu = new JMenu(StringFormat.translate("download_menu_bar", "app"));
@@ -501,9 +501,10 @@ public class Downloader extends JFrame implements WindowListener{
         aboutMenuItem.addActionListener(e -> mainTabbedPane.setSelectedIndex(mainTabbedPane.getTabCount() - 1));
         AppMenu.add(aboutMenuItem);
 
-        menuBar.add(AppMenu);
+        popupMenu.add(AppMenu);
 
-        this.setJMenuBar(menuBar);
+        StatusPanel.setPopupMenu(popupMenu);
+        //this.setJMenuBar(menuBar);
     }
 
     private void createUIComponents() {

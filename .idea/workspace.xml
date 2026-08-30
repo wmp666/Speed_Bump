@@ -13,24 +13,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”">
-      <change afterPath="$PROJECT_DIR$/.wdesktop_tmp/count_lines.ps1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/StatusPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/StatusPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/_22_8_2026_18_45____.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_22日_8月_2026年_18_45_取消提交了更改_[更改]/shelved.patch" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/AboutPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/AboutPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/AboutPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/AboutPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/PluginParserPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/PluginParserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/SettingsPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/SpecialSettingsPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SpecialSettingsPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/SpecialSettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SpecialSettingsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/StatusPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/StatusPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,11 +168,11 @@
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\icon" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader\src\com\wmp\downloader\newArchitecture\ui\mainFrame\statusPanel" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\Image_Converter\src" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\src\main\resources" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\target\classes" />
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\ImageFormat_Processing\src\main\resources\imageFormat" />
-      <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.wmp.processing.imageFormat" />
@@ -400,7 +396,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java</url>
-          <line>37</line>
+          <line>52</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">

@@ -133,6 +133,9 @@
       <item class="com.wmp.downloader.newArchitecture.ui.mainFrame.StatusPanel" icon="/com/intellij/uiDesigner/icons/panel.svg" removable="true" auto-create-binding="false" can-attach-label="false">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
+      <item class="com.wmp.downloader.newArchitecture.ui.mainFrame.statusPanel.StatusButton" icon="/com/intellij/uiDesigner/icons/button.svg" removable="true" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
     </group>
     <group name="SwingX">
       <item class="org.jdesktop.swingx.JXTaskPane" icon="/com/intellij/uiDesigner/icons/panel.svg" removable="true" auto-create-binding="false" can-attach-label="false" is-container="true">
@@ -148,5 +151,8 @@
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
     </group>
+  </component>
+  <component name="uidesigner-configuration">
+    <option name="DEFAULT_LAYOUT_MANAGER" value="FlowLayout" />
   </component>
 </project>

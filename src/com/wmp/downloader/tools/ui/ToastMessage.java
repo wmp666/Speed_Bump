@@ -1,5 +1,7 @@
 package com.wmp.downloader.tools.ui;
 
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.wmp.downloader.tools.StringFormat;
@@ -15,6 +17,7 @@ import raven.modal.toast.option.ToastStyle;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -35,6 +38,18 @@ public class ToastMessage {
                 .setLayoutOption(new ToastLayoutOption())
                 .setHtmlEnabled(true);
         Toast.show(c, type, message, ToastLocation.BOTTOM_TRAILING, toastOption);
+        var msgInfo = DataControl.getMsgInfo();
+        var jsonObject = new JSONObject();
+        jsonObject.put("date", new Date().getTime());
+        jsonObject.put("msg", message);
+        jsonObject.put("style", switch (type) {
+            case INFO, SUCCESS -> 0;
+            case WARNING -> 1;
+            case ERROR -> 2;
+            default -> -1;
+        });
+        msgInfo.add(jsonObject);
+        DataControl.saveMsgInfo(msgInfo);
         var b = !Downloader.mainFrame.isActive();
         System.err.println(b);
         if (SystemTray.isSupported() && b && DataControl.get("is_use_system_msg", false)) {

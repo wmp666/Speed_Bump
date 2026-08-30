@@ -83,7 +83,11 @@ public class ThemeChanger {
             }
         }
 
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
+        try {
+            FlatAnimatedLafChange.hideSnapshotWithAnimation();
+        } catch (Exception _) {
+
+        }
     }
 
 

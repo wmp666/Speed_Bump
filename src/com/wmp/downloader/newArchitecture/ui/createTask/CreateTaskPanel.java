@@ -88,17 +88,13 @@ public class CreateTaskPanel {
         });
 
         // 右键粘贴菜单
-        DownloaderURLTextArea.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                if (e.getButton() == java.awt.event.MouseEvent.BUTTON3) {
-                    JPopupMenu popupMenu = new JPopupMenu();
-                    JMenuItem pasteItem = new JMenuItem(StringFormat.translate("task", "task.create_task.download_url.paste"));
-                    pasteItem.addActionListener(_ -> DownloaderURLTextArea.paste());
-                    popupMenu.add(pasteItem);
-                    popupMenu.show(DownloaderURLTextArea, e.getX(), e.getY());
-                }
-            }
-        });
+        {
+            JPopupMenu popupMenu = new JPopupMenu();
+            JMenuItem pasteItem = new JMenuItem(StringFormat.translate("task", "task.create_task.download_url.paste"));
+            pasteItem.addActionListener(_ -> DownloaderURLTextArea.paste());
+            popupMenu.add(pasteItem);
+            DownloaderURLTextArea.setComponentPopupMenu(popupMenu);
+        }
 
         ThreadNumSlider.addChangeListener(e -> {
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
