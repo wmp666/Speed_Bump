@@ -18,9 +18,9 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.4.4";
+    public static String VERSION = "0.4.4.1";
 
-    public static String PLUGIN_SUPPORT_VERSION = "1.1.1";
+    public static String PLUGIN_SUPPORT_VERSION = "1.1.2";
 
     public static List<String> argList;
 

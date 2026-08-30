@@ -2,32 +2,23 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="BiliParser:jar" />
-      <artifact name="DouyinParser:jar" />
-      <artifact name="ED2KParser:jar" />
-      <artifact name="Image_Converter:jar" />
+      <artifact name="DownLoader_Linux:jar" />
+      <artifact name="DownLoader_Windows:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”">
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusButton.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”&#10;2.增加状态栏，将菜单栏移至状态栏的“工具”&#10;3.增加通知管理页(雏形)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/StatusPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/StatusPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,6 +209,7 @@
     <configuration name="Run" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
       <module name="DownLoader" />
+      <option name="PROGRAM_PARAMETERS" value="-noUseTCPServer" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.wmp.downloader.*" />
@@ -334,7 +326,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复一点小问题" />
     <MESSAGE value="增加设置项“使用方角组件”&#10;使用了全新的组件，是设置项分类更加详细&#10;优化拓展加载方式&#10;优化更新窗口的逻辑" />
     <MESSAGE value="修复打包问题" />
     <MESSAGE value="新增任务拖拽功能" />
@@ -359,7 +350,8 @@
     <MESSAGE value="修复问题，优化体验，增加新功能&#10;修复：&#10;&#10;优化：&#10;1.增加更多的功能窗口的样式选择&#10;2.优化动态保存的方式&#10;3.优化更新数据获取&#10;开发：&#10;1.将启动参数作为开放的数据" />
     <MESSAGE value="修复问题，优化体验，增加新功能&#10;修复：&#10;1.&#10;优化：&#10;1.分离主窗口界面，提升启动速度&#10;开发：&#10;1." />
     <MESSAGE value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”" />
+    <MESSAGE value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”&#10;2.增加状态栏，将菜单栏移至状态栏的“工具”&#10;3.增加通知管理页(雏形)" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”&#10;2.增加状态栏，将菜单栏移至状态栏的“工具”&#10;3.增加通知管理页(雏形)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

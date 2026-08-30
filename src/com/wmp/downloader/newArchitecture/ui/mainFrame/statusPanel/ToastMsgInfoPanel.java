@@ -21,7 +21,7 @@ public class ToastMsgInfoPanel {
     private JLabel dateTimeLabel;
 
     private final long dateMs;
-    private DynamicConverterTask[] dynamicConverterTask;
+    private final DynamicConverterTask[] dynamicConverterTask;
 
     public ToastMsgInfoPanel(Date date, String msg, String iconKey) {
         dateMs = date.getTime();
@@ -46,6 +46,7 @@ public class ToastMsgInfoPanel {
         msgTextArea.setText(msg);
         msgTextArea.setLineWrap(true);
         msgTextArea.setRows(5);
+        msgTextArea.setColumns(20);
 
         closeButton.addActionListener(e -> {
             close();

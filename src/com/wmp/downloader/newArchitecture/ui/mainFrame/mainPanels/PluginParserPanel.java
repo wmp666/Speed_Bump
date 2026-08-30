@@ -283,64 +283,57 @@ public class PluginParserPanel {
 
         ThemeChanger.addInDynamicConverter(() -> PluginParserList.repaint());
 
-        PluginParserList.setCellRenderer(new ListCellRenderer<>() {
+        PluginParserList.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
+
+            final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    //super.paintComponent(g);
+                    // 根据成员变量绘制背景
+                    if (isSelected) {
+                        Graphics2D g2 = (Graphics2D) g.create();
+                        g2.setColor(UIManager.getColor("Component.accentColor"));
+                        g2.fillRect(0, 0, getWidth(), getHeight());
+                        g2.dispose();
+                    } else {
+                        Graphics2D g2 = (Graphics2D) g.create();
+                        Color base = UIManager.getColor("Panel.background");
+
+                        Color adjusted = DataControl.get("theme_type", "light").equals("dark")
+                                ? ColorFunctions.lighten(base, 0.1f)
+                                : ColorFunctions.darken(base, 0.1f);
+                        Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
 
 
-            @Override
-            public Component getListCellRendererComponent(JList<? extends PluginParserInfo> list,
-                                                          PluginParserInfo value, int index,
-                                                          boolean isSelected, boolean cellHasFocus) {
-
-                final JPanel panel = new JPanel(new BorderLayout(5, 5)) {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        //super.paintComponent(g);
-                        // 根据成员变量绘制背景
-                        if (isSelected) {
-                            Graphics2D g2 = (Graphics2D) g.create();
-                            g2.setColor(UIManager.getColor("Component.accentColor"));
-                            g2.fillRect(0, 0, getWidth(), getHeight());
-                            g2.dispose();
-                        } else {
-                            Graphics2D g2 = (Graphics2D) g.create();
-                            Color base = UIManager.getColor("Panel.background");
-
-                            Color adjusted = DataControl.get("theme_type", "light").equals("dark")
-                                    ? ColorFunctions.lighten(base, 0.1f)
-                                    : ColorFunctions.darken(base, 0.1f);
-                            Color translucent = new Color(adjusted.getRed(), adjusted.getGreen(), adjusted.getBlue(), 150);
-
-
-                            g2.setColor(translucent);
-                            g2.fillRect(0, 0, getWidth(), getHeight());
-                            g2.dispose();
-                        }
-
-                        // 子组件由 paintChildren 绘制
+                        g2.setColor(translucent);
+                        g2.fillRect(0, 0, getWidth(), getHeight());
+                        g2.dispose();
                     }
-                };
 
-                final JLabel nameLabel = new JLabel();
-                final JLabel otherInfoLabel = new JLabel();
-
-                {
-                    panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-                    //panel.setOpaque(false);
-                    nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
-                    panel.add(nameLabel, BorderLayout.CENTER);
-                    panel.add(otherInfoLabel, BorderLayout.SOUTH);
+                    // 子组件由 paintChildren 绘制
                 }
+            };
 
-                // 更新数据
-                nameLabel.setText(value.parser().getID());
-                otherInfoLabel.setText(value.version() + " " + value.author());
+            final JLabel nameLabel = new JLabel();
+            final JLabel otherInfoLabel = new JLabel();
 
-                // 强制重绘面板（因为选中状态变化，需要刷新背景）
-                panel.repaint();
-                PluginInfoPanel.repaint();
-
-                return panel;
+            {
+                panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                //panel.setOpaque(false);
+                nameLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
+                panel.add(nameLabel, BorderLayout.CENTER);
+                panel.add(otherInfoLabel, BorderLayout.SOUTH);
             }
+
+            // 更新数据
+            nameLabel.setText(value.parser().getID());
+            otherInfoLabel.setText(value.version() + " " + value.author());
+
+            // 强制重绘面板（因为选中状态变化，需要刷新背景）
+            panel.repaint();
+            PluginInfoPanel.repaint();
+
+            return panel;
         });
         PluginParserList.addListSelectionListener(e -> {
             try {

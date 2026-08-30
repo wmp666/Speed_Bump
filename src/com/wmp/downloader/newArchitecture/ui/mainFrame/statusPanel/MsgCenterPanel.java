@@ -16,6 +16,7 @@ public class MsgCenterPanel extends JPanel {
     }
 
     public void loadMsg(){
+        this.removeAll();
         for (var o : DataControl.getMsgInfo()) {
             if (o instanceof JSONObject jsonObject){
                 var date = new Date(jsonObject.getLongValue("date"));
@@ -33,9 +34,10 @@ public class MsgCenterPanel extends JPanel {
                 panel.setAlignmentX(Component.LEFT_ALIGNMENT);
                 //垂直上设置最小高度和最大高度
                 panel.setMinimumSize(new Dimension(0, (int) panel.getPreferredSize().getHeight()));
+                panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, (int) panel.getPreferredSize().getHeight()));
 
                 this.add(panel);
-                this.add(Box.createRigidArea(new Dimension(0, 5)));
+                //this.add(Box.createRigidArea(new Dimension(0, 5)));
             }
         }
     }
