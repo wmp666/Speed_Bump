@@ -35,7 +35,17 @@ public class ToastMessage {
                 .setLayoutOption(new ToastLayoutOption())
                 .setHtmlEnabled(true);
         Toast.show(c, type, message, ToastLocation.BOTTOM_TRAILING, toastOption);
-
+        var b = !Downloader.mainFrame.isActive();
+        System.err.println(b);
+        if (SystemTray.isSupported() && b && DataControl.get("is_use_system_msg", false)) {
+            TrayIcon.MessageType messageType = switch (type) {
+                case INFO, SUCCESS -> TrayIcon.MessageType.INFO;
+                case WARNING -> TrayIcon.MessageType.WARNING;
+                case ERROR -> TrayIcon.MessageType.ERROR;
+                default -> TrayIcon.MessageType.NONE;
+            };
+            Downloader.trayIcon.displayMessage("", message, messageType);
+        }
     }
 
     public static void show(Component c, String message, Toast.Type type) {

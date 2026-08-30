@@ -1,4 +1,4 @@
-package com.wmp.downloader.newArchitecture.ui.mainPanels;
+package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.tools.StringFormat;
@@ -66,6 +66,7 @@ public class SettingsPanel {
     private JCheckBox isAutoStartCheckBox;
     private PathSelectionPanel pathSelectionPanel;
     private PathSelectionPanel tempPathSelectionPanel;
+    private JCheckBox isUseSystemMsgCheckBox;
 
     private final Downloader downloader;
 
@@ -106,6 +107,7 @@ public class SettingsPanel {
         IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
         portTextField.setText(String.valueOf(DataControl.get("port", 5465)));
         isAutoStartCheckBox.setSelected(AutoStart.isAutoStart());
+        isUseSystemMsgCheckBox.setSelected(DataControl.get("is_use_system_msg", false));
 
         BackgroundModeComboBox.addItem("None");
         BackgroundModeComboBox.addItem("Image");
@@ -253,6 +255,11 @@ public class SettingsPanel {
                 ToastMessage.Utils.createSaveAndApplyMsg();
             }
         });
+        isUseSystemMsgCheckBox.addActionListener(e -> {
+            var selected = isUseSystemMsgCheckBox.isSelected();
+            DataControl.putAndSave("is_use_system_msg", selected);
+            ToastMessage.Utils.createSaveAndApplyMsg();
+        });
 
         //下次生效
         PortDefaultButton.addActionListener(_ -> {
@@ -294,6 +301,7 @@ public class SettingsPanel {
             FunctionDialogStyleComboBox.setSelectedIndex(DataControl.get("function_dialog.style", 0));
             isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
             IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
+            isUseSystemMsgCheckBox.setSelected(DataControl.get("is_use_system_msg", false));
 
             ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));

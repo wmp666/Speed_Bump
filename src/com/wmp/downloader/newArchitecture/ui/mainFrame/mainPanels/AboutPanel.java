@@ -1,4 +1,4 @@
-package com.wmp.downloader.newArchitecture.ui.mainPanels;
+package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.wmp.downloader.Run;
 import com.wmp.downloader.tools.EasterEggData;

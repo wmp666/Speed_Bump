@@ -12,11 +12,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="修复问题，优化体验，增加新功能&#10;修复：&#10;&#10;优化：&#10;1.增加更多的功能窗口的样式选择&#10;2.优化动态保存的方式&#10;3.优化更新数据获取&#10;开发：&#10;1.将启动参数作为开放的数据">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”">
+      <change afterPath="$PROJECT_DIR$/.wdesktop_tmp/count_lines.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/StatusPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/StatusPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/_22_8_2026_18_45____.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_22日_8月_2026年_18_45_取消提交了更改_[更改]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/AboutPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/AboutPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/AboutPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/AboutPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/PluginParserPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/PluginParserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/SettingsPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/SpecialSettingsPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SpecialSettingsPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainPanels/SpecialSettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SpecialSettingsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +105,6 @@
   <component name="ProjectId" id="3GdnVjhWbgsY6hnknjOE1D1U8OT" />
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
-    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
     <option name="showScratchesAndConsoles" value="false" />
@@ -108,7 +122,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "306",
@@ -324,8 +338,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="推送" />
-    <MESSAGE value="将ED2K下载提取为拓展&#10;新增主题色设置&#10;更新预加载进度弹窗&#10;更新任务进度条样式" />
     <MESSAGE value="修复一点小问题" />
     <MESSAGE value="增加设置项“使用方角组件”&#10;使用了全新的组件，是设置项分类更加详细&#10;优化拓展加载方式&#10;优化更新窗口的逻辑" />
     <MESSAGE value="修复打包问题" />
@@ -349,7 +361,9 @@
     <MESSAGE value="同步更新" />
     <MESSAGE value="修复问题，优化体验，增加新功能&#10;修复：&#10;1.修复拓展下载后可以在任务界面删除&#10;2.修复合并文件时，删除失败仍能合并&#10;优化：&#10;1.优化“支持任务”的显示&#10;2.增加更详细的任务创建提示&#10;开发：&#10;1.开放主界面中的大部分私有变量" />
     <MESSAGE value="修复问题，优化体验，增加新功能&#10;修复：&#10;&#10;优化：&#10;1.增加更多的功能窗口的样式选择&#10;2.优化动态保存的方式&#10;3.优化更新数据获取&#10;开发：&#10;1.将启动参数作为开放的数据" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复问题，优化体验，增加新功能&#10;修复：&#10;&#10;优化：&#10;1.增加更多的功能窗口的样式选择&#10;2.优化动态保存的方式&#10;3.优化更新数据获取&#10;开发：&#10;1.将启动参数作为开放的数据" />
+    <MESSAGE value="修复问题，优化体验，增加新功能&#10;修复：&#10;1.&#10;优化：&#10;1.分离主窗口界面，提升启动速度&#10;开发：&#10;1." />
+    <MESSAGE value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -385,9 +399,9 @@
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="35" />
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>
@@ -397,15 +411,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/github/GithubParser.java</url>
-          <line>25</line>
-          <properties class="com.wmp.downloader.newArchitecture.ui.task.github.GithubParser" method="updateLinkInfo">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

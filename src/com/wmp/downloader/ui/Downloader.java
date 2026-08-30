@@ -3,10 +3,11 @@ package com.wmp.downloader.ui;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
-import com.wmp.downloader.newArchitecture.ui.mainPanels.AboutPanel;
-import com.wmp.downloader.newArchitecture.ui.mainPanels.PluginParserPanel;
-import com.wmp.downloader.newArchitecture.ui.mainPanels.SettingsPanel;
-import com.wmp.downloader.newArchitecture.ui.mainPanels.SpecialSettingsPanel;
+import com.wmp.downloader.newArchitecture.ui.mainFrame.StatusPanel;
+import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.AboutPanel;
+import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.PluginParserPanel;
+import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SettingsPanel;
+import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SpecialSettingsPanel;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
@@ -24,7 +25,6 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.*;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -53,6 +53,7 @@ public class Downloader extends JFrame implements WindowListener{
     public JPanel SpecialSettingsPanel;
     public JPanel pluginParserControlPanel;
     public JPanel aboutPanel;
+    public StatusPanel StatusPanel = new StatusPanel();
 
     public SettingsPanel settingsPanelInstance;
     public SpecialSettingsPanel specialSettingsPanelInstance;
@@ -94,12 +95,12 @@ public class Downloader extends JFrame implements WindowListener{
                 ToastMessage.show(this,
                     String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
                     ToastMessage.SUCCESS);
-                if (SystemTray.isSupported()) {
+                /*if (SystemTray.isSupported()) {
                     trayIcon.displayMessage(null,
                                 String.format(StringFormat.translate("task", "task.download_task.success.confirm"), urlDownloadTask.getFileName()),
                                 TrayIcon.MessageType.INFO);
-                    }
-                }
+                    }*/
+            }
         });
     });
 
@@ -168,6 +169,9 @@ public class Downloader extends JFrame implements WindowListener{
 
         //关于
         createLazyLoadPanelInMainFrame(aboutPanel, () -> initAboutComponents());
+
+        UIPanel.add(StatusPanel, BorderLayout.SOUTH);
+
         startClipboardListener();
 
         pack();
