@@ -68,14 +68,14 @@ public class StatusPanel extends JPanel {
         JPanel temp = new JPanel(new BorderLayout()){
             @Override
             protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
+                /*Graphics2D g2 = (Graphics2D) g.create();
 
                 Color translucent = new Color(128, 128, 128, 200);
 
 
                 g2.setColor(translucent);
                 g2.fillRect(0, 0, getWidth(), getHeight());
-                g2.dispose();
+                g2.dispose();*/
             }
         };
         temp.setOpaque(false);
@@ -85,6 +85,7 @@ public class StatusPanel extends JPanel {
         var scrollPane = new JScrollPane(msgCenterPanel);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getVerticalScrollBar().setUnitIncrement(15);
+        scrollPane.getVerticalScrollBar().setValue(0);
         temp.add(scrollPane, BorderLayout.EAST);
 
         downloader.getLayeredPane().add(temp, JLayeredPane.MODAL_LAYER);

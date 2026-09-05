@@ -578,7 +578,7 @@ public class URLDownloadTool {
 
     public static class DownloadProgress {
         private final AtomicLong downloadedBytes = new AtomicLong(0);
-        private final AtomicLong mergedBytes = new AtomicLong(0);
+        private volatile long mergedBytes = 0;
         private long lastSampleBytes = 0;
         private long lastSampleTime = System.nanoTime();
         private volatile long speed = 0;
@@ -598,16 +598,12 @@ public class URLDownloadTool {
             return downloadedBytes.get();
         }
 
-        public void addMergedBytes(long delta) {
-            mergedBytes.addAndGet(delta);
-        }
-
         public long getMergedBytes() {
-            return mergedBytes.get();
+            return mergedBytes;
         }
 
         public void resetMergedBytes(long bytes) {
-            mergedBytes.set(bytes);
+            mergedBytes = bytes;
         }
 
         public void updateSpeed() {

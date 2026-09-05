@@ -19,6 +19,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -38,7 +39,7 @@ public class ToastMessage {
                 .setLayoutOption(new ToastLayoutOption())
                 .setHtmlEnabled(true);
         Toast.show(c, type, message, ToastLocation.BOTTOM_TRAILING, toastOption);
-        var msgInfo = DataControl.getMsgInfo();
+        var msgInfo = new LinkedList<>(DataControl.getMsgInfo().toJavaList(JSONObject.class));
         var jsonObject = new JSONObject();
         jsonObject.put("date", new Date().getTime());
         jsonObject.put("msg", message);
@@ -48,8 +49,8 @@ public class ToastMessage {
             case ERROR -> 2;
             default -> -1;
         });
-        msgInfo.add(jsonObject);
-        DataControl.saveMsgInfo(msgInfo);
+        msgInfo.addFirst(jsonObject);
+        DataControl.saveMsgInfo(new JSONArray(msgInfo));
         var b = !Downloader.mainFrame.isActive();
         System.err.println(b);
         if (SystemTray.isSupported() && b && DataControl.get("is_use_system_msg", false)) {

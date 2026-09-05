@@ -10,15 +10,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”&#10;2.增加状态栏，将菜单栏移至状态栏的“工具”&#10;3.增加通知管理页(雏形)">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能&#10;增加更新翻译按钮（还未实现）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/testFrame/TestControlDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/testFrame/TestControlDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/TestFunctionControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/TestFunctionControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,8 +25,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="module-info" />
-        <option value="Exception" />
         <option value="Record" />
+        <option value="Exception" />
         <option value="Class" />
       </list>
     </option>
@@ -128,7 +124,7 @@
     "project.structure.last.edited": "工件",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "com.xiaolvpuzi.smartinputpro.base",
     "应用程序.BTTest.executor": "Run",
     "应用程序.BiliVideoInfo.executor": "Run",
     "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
@@ -145,6 +141,7 @@
     "应用程序.Run.executor": "Run",
     "应用程序.TCPControl.executor": "Run",
     "应用程序.TaskPaneContainerDemo.executor": "Run",
+    "应用程序.TestControlDialog.executor": "Run",
     "应用程序.TikTokDownloader.executor": "Run",
     "应用程序.ToastMessage.executor": "Run",
     "应用程序.VideoInfoReader.executor": "Run"
@@ -209,7 +206,7 @@
     <configuration name="Run" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
       <module name="DownLoader" />
-      <option name="PROGRAM_PARAMETERS" value="-noUseTCPServer" />
+      <option name="PROGRAM_PARAMETERS" value="-noUseTCPServer -set:version 0.0.1" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.wmp.downloader.*" />
@@ -259,7 +256,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestControlDialog" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.TestControlDialog" />
+      <module name="DownLoader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="应用程序.TestControlDialog" />
       <item itemvalue="应用程序.CursorTest" />
       <item itemvalue="应用程序.GetSupportFormat" />
       <item itemvalue="应用程序.FileAssociation" />
@@ -269,10 +280,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.Run" />
+        <item itemvalue="应用程序.TestControlDialog" />
         <item itemvalue="应用程序.CursorTest" />
         <item itemvalue="应用程序.GetSupportFormat" />
         <item itemvalue="应用程序.FileAssociation" />
-        <item itemvalue="应用程序.TCPControl" />
       </list>
     </recent_temporary>
   </component>
@@ -326,9 +337,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加设置项“使用方角组件”&#10;使用了全新的组件，是设置项分类更加详细&#10;优化拓展加载方式&#10;优化更新窗口的逻辑" />
-    <MESSAGE value="修复打包问题" />
-    <MESSAGE value="新增任务拖拽功能" />
     <MESSAGE value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能" />
     <MESSAGE value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能&#10;对网络/下载设置页进行了进一步分类&#10;修复设置&quot;方角组件&quot;时的部分问题" />
     <MESSAGE value="统一部分数据的默认值" />
@@ -351,7 +359,10 @@
     <MESSAGE value="修复问题，优化体验，增加新功能&#10;修复：&#10;1.&#10;优化：&#10;1.分离主窗口界面，提升启动速度&#10;开发：&#10;1." />
     <MESSAGE value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”" />
     <MESSAGE value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”&#10;2.增加状态栏，将菜单栏移至状态栏的“工具”&#10;3.增加通知管理页(雏形)" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增大量功能&#10;1.新增设置项“在失去焦点时使用系统通知”&#10;2.增加状态栏，将菜单栏移至状态栏的“工具”&#10;3.增加通知管理页(雏形)" />
+    <MESSAGE value="完善通知管理页" />
+    <MESSAGE value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能" />
+    <MESSAGE value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能&#10;增加更新翻译按钮（还未实现）" />
+    <option name="LAST_COMMIT_MESSAGE" value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能&#10;增加更新翻译按钮（还未实现）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -387,9 +398,9 @@
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="32" />
+          <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java</url>
+          <line>390</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>

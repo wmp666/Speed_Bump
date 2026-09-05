@@ -5,6 +5,7 @@ import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.swingx.FlatSwingXDefaultsAddon;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import org.apache.log4j.Logger;
@@ -74,6 +75,7 @@ public class ThemeChanger {
 
         //字体更新
         UIManager.put("defaultFont", new Font(DataControl.get("Font", "Microsoft YaHei"), Font.PLAIN, DataControl.get("FontSize", 12)));
+        StringFormat.refreshLocal();
 
         for (var window : JWindow.getOwnerlessWindows()) {
             try {
@@ -152,6 +154,13 @@ public class ThemeChanger {
 
         //图标更新
         IconControl.runDynamicConverters();
+        //部分内置图标刷新
+        var icon = UIManager.getIcon("OptionPane.informationIcon");
+
+        UIManager.put("OptionPane.errorIcon", IconControl.getIcon("error", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.informationIcon", IconControl.getIcon("info", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.warningIcon", IconControl.getIcon("warn", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.questionIcon", IconControl.getIcon("question", icon.getIconWidth(), icon.getIconHeight()));
 
         if (isUseSnapshot) {
             for (var window : JWindow.getOwnerlessWindows()) {

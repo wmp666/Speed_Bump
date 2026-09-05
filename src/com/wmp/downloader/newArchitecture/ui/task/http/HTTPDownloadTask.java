@@ -83,7 +83,7 @@ public class HTTPDownloadTask extends FileDownloadTask {
 
             Thread.ofVirtual().start(() -> {
                 try {
-                    progressTimer = new Timer(1000, e -> {
+                    progressTimer = new Timer(100, e -> {
                         if (isStart) {
                             downloadProgress.updateSpeed();
                             DOWNLOAD_SIZE_PANEL.setText(
@@ -187,7 +187,7 @@ public class HTTPDownloadTask extends FileDownloadTask {
         } else {
             Thread.ofVirtual().start(() -> {
                 try {
-                    progressTimer = new Timer(1000, e -> {
+                    progressTimer = new Timer(100, e -> {
                         if (isStart) {
                             downloadProgress.updateSpeed();
                             DOWNLOAD_SIZE_PANEL.setText(

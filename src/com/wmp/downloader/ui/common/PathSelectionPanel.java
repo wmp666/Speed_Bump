@@ -7,6 +7,7 @@ import com.wmp.downloader.tools.ui.IconControl;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.io.File;
 
 public class PathSelectionPanel extends JPanel {
@@ -60,6 +61,7 @@ public class PathSelectionPanel extends JPanel {
         if (defaultFile != null)
             FileTextField.setText(defaultFile.getAbsolutePath());
 
+        this.setLayout(new BorderLayout());
         this.add(PathSelectionPanel);
     }
 
@@ -84,5 +86,11 @@ public class PathSelectionPanel extends JPanel {
 
     public interface PathChangeListener {
         void pathChanged(String path);
+    }
+
+    @Override
+    public void setVisible(boolean aFlag) {
+        PathSelectionPanel.setVisible(aFlag);
+        super.setVisible(aFlag);
     }
 }

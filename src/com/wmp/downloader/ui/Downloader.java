@@ -8,7 +8,9 @@ import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.AboutPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.PluginParserPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SettingsPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SpecialSettingsPanel;
+import com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.TestControlDialog;
 import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
@@ -363,11 +365,11 @@ public class Downloader extends JFrame implements WindowListener{
             SystemTray.getSystemTray().remove(trayIcon);
         } else return;
 
-        trayIcon = new TrayIcon(IconControl.getImage("download", 256), StringFormat.translate("common", "app_name"));
+        trayIcon = new TrayIcon(IconControl.getImage("download"), StringFormat.translate("common", "app_name"));
 
         trayIcon.setImageAutoSize(true);
         IconControl.addInDynamicConverter(
-                () -> trayIcon.setImage(IconControl.getImage("icon", 256))
+                () -> trayIcon.setImage(IconControl.getImage("icon"))
         );
 
         var trayIconMenu = new PopupMenu();
@@ -421,27 +423,30 @@ public class Downloader extends JFrame implements WindowListener{
         });
         windowMenu.add(refreshMenuItem);
 
-        var updateFrameMenuItem = new JMenuItem(StringFormat.translate("frame.update_frame"));
-        updateFrameMenuItem.addActionListener(e -> {
-            try {
-                if (JOptionPane.showConfirmDialog(this, StringFormat.translate("frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-                    if (clipboardTimer != null) {
-                        clipboardTimer.stop();
-                    }
-                    this.dispose();
-                    DataControl.load();
-                    SwingUtilities.invokeLater(()->{
-                        ThemeChanger.easyChanger();
+        TestFunctionControl.run(1000, 1,
+                () -> {
+                    var updateFrameMenuItem = new JMenuItem(StringFormat.translate("frame.update_frame"));
+                    updateFrameMenuItem.addActionListener(e -> {
+                        try {
+                            if (JOptionPane.showConfirmDialog(this, StringFormat.translate("frame.update_frame.tip"), StringFormat.translate("common", "warn"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+                                if (clipboardTimer != null) {
+                                    clipboardTimer.stop();
+                                }
+                                this.dispose();
+                                DataControl.load();
+                                SwingUtilities.invokeLater(()->{
+                                    ThemeChanger.easyChanger();
 
-                        new Downloader().setVisible(true);
+                                    new Downloader().setVisible(true);
+                                });
+                            }
+                        } catch (HeadlessException ex) {
+                            ToastMessage.show(this, StringFormat.translate("refresh_failed"), ToastMessage.ERROR);
+                            logger.error("刷新失败！", ex);
+                        }
                     });
-                }
-            } catch (HeadlessException ex) {
-                ToastMessage.show(this, StringFormat.translate("refresh_failed"), ToastMessage.ERROR);
-                logger.error("刷新失败！", ex);
-            }
-        });
-        windowMenu.add(updateFrameMenuItem);
+                    windowMenu.add(updateFrameMenuItem);
+                }, ()->{});
 
         windowMenu.addSeparator();
 
@@ -457,6 +462,23 @@ public class Downloader extends JFrame implements WindowListener{
         var checkUpdateMenuItem = new JMenuItem(StringFormat.translate("check_update"));
         checkUpdateMenuItem.addActionListener(e -> checkUpdate());
         AppMenu.add(checkUpdateMenuItem);
+
+        var testDialogShowMenuItem = new JMenuItem(StringFormat.translate("test"));
+        testDialogShowMenuItem.addActionListener(e -> {
+            var panel = TestControlDialog.getPanel();
+            panel.load();
+            FunctionDialog.showDialog(this, StringFormat.translate("test_function_control"), panel.contentPane,
+                    result -> {
+                        if (result == FunctionDialog.RESULT_SAVE) {
+                            panel.onOK();
+                            ToastMessage.Utils.createSaveAndApplyNextMsg();
+                        }
+                    },
+                    FunctionDialog.SAVE_CANCEL_BUTTONS, 0,
+                    null, FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
+
+        });
+        AppMenu.add(testDialogShowMenuItem);
 
         AppMenu.addSeparator();
 
@@ -539,11 +561,18 @@ public class Downloader extends JFrame implements WindowListener{
 
                                 panel.add(UITools.createMarkdownPane(update.body()));
 
+                                ArrayList<JButton> buttonList = new ArrayList<>();
+                                TestFunctionControl.run(1001, 1, ()->{
+                                    var translateButton = new JButton(StringFormat.translate("translate"));
+
+                                    buttonList.add(translateButton);
+                                }, () -> {});
+
                                 FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                                         _ -> {
                                         },
                                         FunctionDialog.DEFAULT_BUTTONS, 0,
-                                        null, FunctionDialog.NORTH_DIRECTION_RIGHT);
+                                        buttonList.toArray(JButton[]::new), FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
                             } else if (count == 1 && result == 200) {
                                 //创建更新任务
 

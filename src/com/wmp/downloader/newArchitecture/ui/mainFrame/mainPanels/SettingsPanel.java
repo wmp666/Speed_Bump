@@ -115,6 +115,7 @@ public class SettingsPanel {
         BackgroundModeComboBox.setSelectedItem(DataControl.get("background_mode", "None"));
 
         backgroundSelectionPanel.setPath(DataControl.get("background", ""));
+        //backgroundSelectionPanel.setVisible(false);
         if (Objects.equals(BackgroundModeComboBox.getSelectedItem(), "Image")) {
             backgroundSelectionPanel.setVisible(true);
         } else backgroundSelectionPanel.setVisible(false);
@@ -148,9 +149,6 @@ public class SettingsPanel {
             themeComboBox.addItem("Light");
             themeComboBox.addItem("Darcula");
             themeComboBox.addItem("IntelliJ");
-            themeComboBox.addItem("System");
-            themeComboBox.addItem("Windows Classic");
-            themeComboBox.addItem("Metal");
 
             themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
         }

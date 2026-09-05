@@ -35,6 +35,8 @@ public class AboutPanel {
     private JButton issueButton;
     private JLabel runVersionLabel;
     private JLabel PluginSupportVersionLabel;
+    private JLabel JavaVersionLabel;
+    private JLabel JavaRuntimeLabel;
 
     private final Downloader downloader;
 
@@ -52,6 +54,8 @@ public class AboutPanel {
 
         runVersionLabel.setText(Run.VERSION);
         PluginSupportVersionLabel.setText(Run.PLUGIN_SUPPORT_VERSION);
+        JavaVersionLabel.setText(System.getProperty("java.version"));
+        JavaRuntimeLabel.setText(System.getProperty("java.runtime.name"));
 
         IconControl.addInDynamicConverter(
                 () -> nameLabel.setIcon(IconControl.getIcon("icon", nameLabel.getFont().getSize())),

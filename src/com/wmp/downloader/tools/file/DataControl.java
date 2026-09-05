@@ -8,6 +8,7 @@ import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.Run;
 import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.TestFunctionControl;
 import com.wmp.downloader.tools.ui.SystemThemeDetector;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.Downloader;
@@ -24,10 +25,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
 
 public class DataControl {
 
@@ -36,9 +35,11 @@ public class DataControl {
 
     public static final ArrayList<String> themeList = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(DataControl.class);
-    private static final Path DATA_DIR = Paths.get(
-            System.getProperty("user.home"), ".w-downloader"
+    private static final Path BASE_DIR = Paths.get(
+            System.getProperty("user.home"), ".speed-bump"
     );
+    private static final Path DATA_DIR = BASE_DIR.resolve("Data");
+    private static final Path LOG_DIR = BASE_DIR.resolve("Log");
     private static final Path DATA_FILE = DATA_DIR.resolve("data.json");
     //真正被保存的数据
     private static final HashMap<String, Object> saveData = new HashMap<>();
@@ -69,7 +70,13 @@ public class DataControl {
     public static void load() {
 
         try {
-            configureLogPath(getDataPath().getAbsolutePath());
+            Files.createDirectories(BASE_DIR);
+        } catch (IOException e) {
+            logger.error("创建基础目录失败", e);
+        }
+
+        try {
+            configureLogPath(LOG_DIR.toFile().getAbsolutePath());
         } catch (IOException e) {
             ToastMessage.show(Downloader.mainFrame, "日志路径配置失败\n因此出现问题后无法查看日志", ToastMessage.ERROR);
         }
@@ -99,6 +106,8 @@ public class DataControl {
         } catch (Exception e) {
             logger.error("加载数据失败", e);
         }
+
+        TestFunctionControl.load();
     }
 
     /**
@@ -216,6 +225,8 @@ public class DataControl {
         return file;
     }
 
+    //--------------通知数据--------------
+
     public static JSONArray getMsgInfo(){
         var file = new File(DATA_DIR.toFile(), "msgsInfo.json");
         if (file.exists()){
@@ -232,7 +243,7 @@ public class DataControl {
     public static void saveMsgInfo(JSONArray jsonArray){
         //限制被保存的通知数量（最多20条），超出时移除最早的通知
         while (jsonArray.size() > 20) {
-            jsonArray.remove(0);
+            jsonArray.removeFirst();
         }
         var file = new File(DATA_DIR.toFile(), "msgsInfo.json");
         if (!file.exists()){
@@ -245,7 +256,7 @@ public class DataControl {
             }
         }
         try {
-            Files.writeString(file.toPath(), jsonArray.toString(), StandardCharsets.UTF_8);
+            Files.writeString(file.toPath(), JSON.toJSONString(jsonArray, SerializerFeature.PrettyFormat), StandardCharsets.UTF_8);
         } catch (Exception e) {
             logger.error("数据获取错误", e);
         }
@@ -265,6 +276,8 @@ public class DataControl {
         }
         saveMsgInfo(result);
     }
+
+    //--------------删除相关--------------
 
     public static void delete(File file, boolean isShowMessage) {
         if (file.exists()) {
@@ -347,5 +360,37 @@ public class DataControl {
         var property = System.getProperty("jpackage.app-path");
         if (property == null) return null;
         return new File(property);
+    }
+
+
+    public static Set<Integer> getTestEnableSet(){
+        var file = new File(DATA_DIR.toFile(), "testEnableList.json");
+        if (file.exists()){
+            try {
+                var string = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+                return new HashSet<>(JSONArray.parse(string).toList(Integer.class));
+            } catch (Exception e) {
+                logger.error("数据获取错误", e);
+            }
+        }
+        return new HashSet<>();
+    }
+
+    public static void saveEnableTestFunctionList(List<Integer> idList){
+        var file = new File(DATA_DIR.toFile(), "testEnableList.json");
+        if (!file.exists()){
+            try {
+                if (!file.createNewFile()) {
+                    return;
+                }
+            } catch (Exception _) {
+                return;
+            }
+        }
+        try {
+            Files.writeString(file.toPath(), JSON.toJSONString(new JSONArray(idList), SerializerFeature.PrettyFormat), StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            logger.error("数据获取错误", e);
+        }
     }
 }

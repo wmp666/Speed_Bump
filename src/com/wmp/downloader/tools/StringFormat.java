@@ -9,12 +9,17 @@ import java.util.ResourceBundle;
 public class StringFormat {
     private static final String BUNDLE_PREFIX = "com.wmp.downloader.laug.";
 
+    private static ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_PREFIX + "laug", Locale.getDefault());
+
+    public static void refreshLocal(){
+        bundle = ResourceBundle.getBundle(BUNDLE_PREFIX + "laug", Locale.getDefault());
+    }
+
     public static String translate(String key) {
         return translate(null, key);
     }
 
     public static String translate(String rootLocal, String key) {
-        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_PREFIX + "laug", Locale.getDefault());
         try {
             return bundle.getString(key);
         } catch (Exception e) {
