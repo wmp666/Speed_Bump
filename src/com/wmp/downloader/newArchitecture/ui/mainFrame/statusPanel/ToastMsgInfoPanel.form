@@ -26,6 +26,10 @@
           <component id="66e7b" class="javax.swing.JLabel" binding="dateTimeLabel">
             <constraints border-constraint="Center"/>
             <properties>
+              <alignmentX value="0.0"/>
+              <autoscrolls value="true"/>
+              <focusable value="false"/>
+              <horizontalAlignment value="2"/>
               <text value="Date_Time"/>
             </properties>
           </component>
@@ -41,12 +45,15 @@
           <component id="62a7c" class="javax.swing.JTextArea" binding="msgTextArea">
             <constraints border-constraint="Center"/>
             <properties>
+              <editable value="false"/>
+              <focusable value="false"/>
               <opaque value="false"/>
             </properties>
           </component>
           <component id="6120" class="javax.swing.JLabel" binding="iconLabel">
             <constraints border-constraint="West"/>
             <properties>
+              <focusable value="false"/>
               <text value="Label"/>
             </properties>
           </component>

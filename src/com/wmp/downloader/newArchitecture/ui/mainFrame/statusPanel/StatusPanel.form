@@ -36,7 +36,9 @@
             <properties>
               <opaque value="false"/>
             </properties>
-            <border type="bevel-lowered"/>
+            <border type="empty">
+              <size top="5" left="5" bottom="5" right="5"/>
+            </border>
             <children>
               <component id="3f96" class="javax.swing.JLabel">
                 <constraints>

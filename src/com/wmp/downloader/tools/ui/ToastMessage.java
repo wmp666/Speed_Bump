@@ -52,7 +52,6 @@ public class ToastMessage {
         msgInfo.addFirst(jsonObject);
         DataControl.saveMsgInfo(new JSONArray(msgInfo));
         var b = !Downloader.mainFrame.isActive();
-        System.err.println(b);
         if (SystemTray.isSupported() && b && DataControl.get("is_use_system_msg", false)) {
             TrayIcon.MessageType messageType = switch (type) {
                 case INFO, SUCCESS -> TrayIcon.MessageType.INFO;

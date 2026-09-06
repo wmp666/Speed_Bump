@@ -2,6 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.platform.AutoStart;
 import com.wmp.downloader.tools.ui.IconControl;
@@ -166,6 +167,13 @@ public class SettingsPanel {
         FunctionDialogStyleComboBox.addItem(StringFormat.translate("settings.personalized.function_dialog_style.use_local_embed_dialog"));
         FunctionDialogStyleComboBox.addItem(StringFormat.translate("settings.personalized.function_dialog_style.use_dialog"));
         FunctionDialogStyleComboBox.setSelectedIndex(DataControl.get("function_dialog.style", 0));
+
+        TestFunctionControl.run(1003, 1, ()->{
+            isUseClipBoardListenerCheckBox.setVisible(true);
+        }, () -> {
+            isUseClipBoardListenerCheckBox.setSelected(false);
+            isUseClipBoardListenerCheckBox.setVisible(false);
+        });
 
         //添加图标
         IconControl.addInDynamicConverter(

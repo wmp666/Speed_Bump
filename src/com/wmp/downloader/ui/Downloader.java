@@ -400,18 +400,27 @@ public class Downloader extends JFrame implements WindowListener{
         }
     }
 
+    private static void setMenuItemIcon(JMenuItem item, String iconKey) {
+        IconControl.addInDynamicConverter(
+                () -> item.setIcon(IconControl.getIcon(iconKey, 16)));
+    }
+
     private void initMenuBar() {
         JPopupMenu popupMenu = new JPopupMenu();
 
         //窗口
         var windowMenu = new JMenu(StringFormat.translate("download_menu_bar", "frame"));
 
-        var alwaysOnTopCheckBox = new JCheckBoxMenuItem(StringFormat.translate("download_menu_bar", "frame.is_always_top"));
-        alwaysOnTopCheckBox.addActionListener(e -> this.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected()));
+        TestFunctionControl.run(1002, 1,
+                () -> {
+                    var alwaysOnTopCheckBox = new JCheckBoxMenuItem(StringFormat.translate("download_menu_bar", "frame.is_always_top"));
+                    alwaysOnTopCheckBox.addActionListener(e -> this.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected()));
+                    windowMenu.add(alwaysOnTopCheckBox);
 
-        windowMenu.add(alwaysOnTopCheckBox);
+                    windowMenu.addSeparator();
+                }, ()->{});
 
-        windowMenu.addSeparator();
+
 
         var refreshMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "refresh"));
         refreshMenuItem.setToolTipText(StringFormat.translate("download_menu_bar", "frame.refresh.tooltip"));
@@ -421,6 +430,7 @@ public class Downloader extends JFrame implements WindowListener{
             updateChildBounds(); // FIX 使用统一方法
             ThemeChanger.easyChanger();
         });
+        setMenuItemIcon(refreshMenuItem, "refresh");
         windowMenu.add(refreshMenuItem);
 
         TestFunctionControl.run(1000, 1,
@@ -445,6 +455,7 @@ public class Downloader extends JFrame implements WindowListener{
                             logger.error("刷新失败！", ex);
                         }
                     });
+                    setMenuItemIcon(updateFrameMenuItem, "update");
                     windowMenu.add(updateFrameMenuItem);
                 }, ()->{});
 
@@ -452,6 +463,7 @@ public class Downloader extends JFrame implements WindowListener{
 
         var exitMenuItem = new JMenuItem(StringFormat.translate("download_menu_bar", "frame.exit"));
         exitMenuItem.addActionListener(e -> System.exit(0));
+        setMenuItemIcon(exitMenuItem, "power_switch");
         windowMenu.add(exitMenuItem);
 
         popupMenu.add(windowMenu);
@@ -461,6 +473,7 @@ public class Downloader extends JFrame implements WindowListener{
 
         var checkUpdateMenuItem = new JMenuItem(StringFormat.translate("check_update"));
         checkUpdateMenuItem.addActionListener(e -> checkUpdate());
+        setMenuItemIcon(checkUpdateMenuItem, "update");
         AppMenu.add(checkUpdateMenuItem);
 
         var testDialogShowMenuItem = new JMenuItem(StringFormat.translate("test"));
@@ -517,10 +530,12 @@ public class Downloader extends JFrame implements WindowListener{
                     FunctionDialog.DEFAULT_BUTTONS, 0,
                     null, FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
         });
+        setMenuItemIcon(DisclaimerMenuItem, "question");
         AppMenu.add(DisclaimerMenuItem);
 
         var aboutMenuItem = new JMenuItem(StringFormat.translate("app.about"));
         aboutMenuItem.addActionListener(e -> mainTabbedPane.setSelectedIndex(mainTabbedPane.getTabCount() - 1));
+        setMenuItemIcon(aboutMenuItem, "about");
         AppMenu.add(aboutMenuItem);
 
         popupMenu.add(AppMenu);

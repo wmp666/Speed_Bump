@@ -473,6 +473,13 @@ public abstract class AbstractTask extends JPanel {
         return isFinally;
     }
 
+    /**
+     * 任务是否正在运行（已启动且未结束/未暂停）。
+     */
+    public boolean isRunning() {
+        return isStart && !isFinally;
+    }
+
     public boolean isCanExit() {
         return isCanExit;
     }

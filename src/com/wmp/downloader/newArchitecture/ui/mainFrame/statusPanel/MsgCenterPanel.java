@@ -78,6 +78,7 @@ public class MsgCenterPanel extends JPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 0.0;
         gbc.anchor = GridBagConstraints.NORTH;
+        //右侧留足空间，避免文字紧贴/压在垂直滚动条下面
         gbc.insets = new Insets(0, 10, 5, 10);
         gbc.gridx = 0;
         gbc.gridy = 0;

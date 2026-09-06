@@ -28,7 +28,8 @@ public class ToastMsgInfoPanel {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         dateTimeLabel.setText(dateFormat.format(date));
 
-        iconLabel.putClientProperty("FlatLaf.style", "font: bold $h1.font");
+        iconLabel.putClientProperty("FlatLaf.style", "font: $h00.font");
+        dateTimeLabel.putClientProperty("FlatLaf.style", "font: bold $h3.font");
         iconLabel.setText("");
 
         dynamicConverterTask = ThemeChanger.addInDynamicConverter(

@@ -81,9 +81,11 @@ public class TestFunctionControl {
     }
 
     static{
-        applies(1000, 1001);
-        register(1000, (short) 1, "使窗口重新加载");
-        register(1001, (short) 1, "更新详情翻译");
+        applies(1000, 1001, 1002, 1003);
+        register(1000, (short) 1, "显示使窗口重新加载的按钮");
+        register(1001, (short) 1, "更新详情翻译按钮");
+        register(1002, (short) 1, "设置主窗口置顶，这会导致许多界面异常！");
+        register(1003, (short) 1, "显示剪切板监听设置");
     }
 
     public static HashMap<Integer, HashMap<Short, String>> getAllTip(){
