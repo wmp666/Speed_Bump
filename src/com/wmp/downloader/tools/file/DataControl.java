@@ -243,7 +243,7 @@ public class DataControl {
     public static void saveMsgInfo(JSONArray jsonArray){
         //限制被保存的通知数量（最多20条），超出时移除最早的通知
         while (jsonArray.size() > 20) {
-            jsonArray.removeFirst();
+            jsonArray.removeLast();
         }
         var file = new File(DATA_DIR.toFile(), "msgsInfo.json");
         if (!file.exists()){

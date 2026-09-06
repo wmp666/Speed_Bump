@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="进行大量更新&#10;新增：&#10;-&#10;优化：&#10;优化测试项显示不全&#10;优化状态栏UI&#10;修复：&#10;修复通知的滚动条默认滚动到底部&#10;测试：&#10;将&quot;置顶功能&quot;、&quot;剪切板监听&quot;改为测试功能(存在大量问题)">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="amazing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/DailyJuzi/src/com/wmp/juzi/JuziReminder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/DailyJuzi/src/com/wmp/juzi/JuziReminder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -335,7 +334,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能&#10;对网络/下载设置页进行了进一步分类&#10;修复设置&quot;方角组件&quot;时的部分问题" />
     <MESSAGE value="统一部分数据的默认值" />
     <MESSAGE value="增加TCP网络通信避免打开多个程序&#10;支持通过程序打开种子文件" />
     <MESSAGE value="更新关于界面&#10;增加种子文件关联功能（测试后Windows平台功能正常）" />
@@ -360,7 +358,8 @@
     <MESSAGE value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能" />
     <MESSAGE value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能&#10;增加更新翻译按钮（还未实现）" />
     <MESSAGE value="进行大量更新&#10;新增：&#10;-&#10;优化：&#10;优化测试项显示不全&#10;优化状态栏UI&#10;修复：&#10;修复通知的滚动条默认滚动到底部&#10;测试：&#10;将&quot;置顶功能&quot;、&quot;剪切板监听&quot;改为测试功能(存在大量问题)" />
-    <option name="LAST_COMMIT_MESSAGE" value="进行大量更新&#10;新增：&#10;-&#10;优化：&#10;优化测试项显示不全&#10;优化状态栏UI&#10;修复：&#10;修复通知的滚动条默认滚动到底部&#10;测试：&#10;将&quot;置顶功能&quot;、&quot;剪切板监听&quot;改为测试功能(存在大量问题)" />
+    <MESSAGE value="amazing" />
+    <option name="LAST_COMMIT_MESSAGE" value="amazing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
