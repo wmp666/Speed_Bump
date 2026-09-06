@@ -2,35 +2,17 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="DownLoader_Linux:jar" />
-      <artifact name="DownLoader_Windows:jar" />
+      <artifact name="DailyJuzi:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能&#10;增加更新翻译按钮（还未实现）">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="进行大量更新&#10;新增：&#10;-&#10;优化：&#10;优化测试项显示不全&#10;优化状态栏UI&#10;修复：&#10;修复通知的滚动条默认滚动到底部&#10;测试：&#10;将&quot;置顶功能&quot;、&quot;剪切板监听&quot;改为测试功能(存在大量问题)">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_en_US.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ja_JP.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_ru_RU.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_HK.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/laug/laug_zh_TW.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/testFrame/TestControlDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/testFrame/TestControlDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/TestFunctionControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/TestFunctionControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/icons.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/.idea/modules.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +35,7 @@
         <entry key="$PROJECT_DIR$" value="new-architecture" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../DownLoader_plugin" />
     <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
@@ -126,7 +108,7 @@
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "306",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/Image_Converter/lib",
     "node.js.detected.package.eslint": "true",
@@ -137,7 +119,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src/Main.java",
-    "project.structure.last.edited": "工件",
+    "project.structure.last.edited": "库",
     "project.structure.proportion": "0.15426998",
     "project.structure.side.proportion": "0.26498002",
     "settings.editor.selected.configurable": "com.xiaolvpuzi.smartinputpro.base",
@@ -353,7 +335,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能" />
     <MESSAGE value="新增任务拖拽功能&#10;更换设置页的部分组件，提升性能&#10;对网络/下载设置页进行了进一步分类&#10;修复设置&quot;方角组件&quot;时的部分问题" />
     <MESSAGE value="统一部分数据的默认值" />
     <MESSAGE value="增加TCP网络通信避免打开多个程序&#10;支持通过程序打开种子文件" />
@@ -378,7 +359,8 @@
     <MESSAGE value="完善通知管理页" />
     <MESSAGE value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能" />
     <MESSAGE value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能&#10;增加更新翻译按钮（还未实现）" />
-    <option name="LAST_COMMIT_MESSAGE" value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能&#10;增加更新翻译按钮（还未实现）" />
+    <MESSAGE value="进行大量更新&#10;新增：&#10;-&#10;优化：&#10;优化测试项显示不全&#10;优化状态栏UI&#10;修复：&#10;修复通知的滚动条默认滚动到底部&#10;测试：&#10;将&quot;置顶功能&quot;、&quot;剪切板监听&quot;改为测试功能(存在大量问题)" />
+    <option name="LAST_COMMIT_MESSAGE" value="进行大量更新&#10;新增：&#10;-&#10;优化：&#10;优化测试项显示不全&#10;优化状态栏UI&#10;修复：&#10;修复通知的滚动条默认滚动到底部&#10;测试：&#10;将&quot;置顶功能&quot;、&quot;剪切板监听&quot;改为测试功能(存在大量问题)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
