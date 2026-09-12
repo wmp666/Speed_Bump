@@ -1,5 +1,6 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.statusPanel;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.tools.StringFormat;
@@ -474,9 +475,55 @@ public class StatusPanel extends JPanel {
         if (toolsVisible && toolsTopPanel != null) fitOverlay(toolsTopPanel);
     }
 
+    /**
+     * 让覆盖层对齐 mainTabbedPane 的区域，而不是整个窗口。
+     *
+     * <p>主窗口在显示背景图时会让内容延伸到标题栏（FlatLaf fullWindowContent），
+     * 此时 contentPane 覆盖整个窗口；若覆盖层仍铺满 contentPane，
+     * 就会把标题栏一并盖住。所以这里以 mainTabbedPane 的位置与大小为准。</p>
+     */
     private void fitOverlay(JComponent top) {
-        Rectangle bounds = downloader.getContentPane().getBounds();
-        top.setBounds(0, 0, bounds.width, bounds.height);
+        Rectangle bounds = tabbedPaneBounds();
+        if (bounds == null) {
+            // 拿不到 mainTabbedPane 时退回原行为
+            Rectangle content = downloader.getContentPane().getBounds();
+            top.setBounds(0, 0, content.width, content.height);
+            return;
+        }
+        // 背景图延伸到标题栏后，contentPane 含标题栏区域，mainTabbedPane 的顶部也落在其中；
+        // 这里把上边界压到标题栏下方，避免盖住窗口按钮和拖拽区。
+        int titleBarHeight = titleBarHeight();
+        if (titleBarHeight > 0 && bounds.y < titleBarHeight) {
+            int delta = titleBarHeight - bounds.y;
+            bounds.y = titleBarHeight;
+            bounds.height = Math.max(bounds.height - delta, 0);
+        }
+        top.setBounds(bounds);
+    }
+
+    /** mainTabbedPane 在 rootPane 的 layeredPane 坐标系中的区域；不可用时返回 null */
+    private Rectangle tabbedPaneBounds() {
+        JTabbedPane tabbedPane = downloader.mainTabbedPane;
+        if (tabbedPane == null || tabbedPane.getParent() == null
+                || tabbedPane.getWidth() <= 0 || tabbedPane.getHeight() <= 0) {
+            return null;
+        }
+        return SwingUtilities.convertRectangle(
+                tabbedPane.getParent(), tabbedPane.getBounds(), downloader.getLayeredPane());
+    }
+
+    /**
+     * 标题栏高度：仅在窗口启用「内容延伸到标题栏」（FlatLaf fullWindowContent）时非 0。
+     * 该值取自 FlatLaf 自动写入 root pane 的窗口按钮区域，未启用时为 {@code null}。
+     */
+    private int titleBarHeight() {
+        JRootPane rootPane = downloader.getRootPane();
+        if (rootPane == null) {
+            return 0;
+        }
+        Object bounds = rootPane.getClientProperty(
+                FlatClientProperties.FULL_WINDOW_CONTENT_BUTTONS_BOUNDS);
+        return (bounds instanceof Rectangle r) ? r.height : 0;
     }
 
     // =====================================================================

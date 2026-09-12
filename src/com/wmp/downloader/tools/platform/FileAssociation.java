@@ -39,7 +39,7 @@ public class FileAssociation {
 
     // ------------------- Windows 实现 -------------------
     private static void registerWindows(String ext, String desc, String icon, String app) throws IOException, InterruptedException {
-        String fileType = ext + "file";
+        String fileType = "Speed_Bump."+ ext + "_file";
 
         // 使用数组形式，每个参数独立，Runtime 会自动处理引号
         String[] cmd1 = {"reg", "add", "HKCU\\Software\\Classes\\." + ext, "/ve", "/t", "REG_SZ", "/d", fileType, "/f"};

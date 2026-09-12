@@ -4,7 +4,9 @@
     <constraints>
       <xy x="20" y="20" width="652" height="458"/>
     </constraints>
-    <properties/>
+    <properties>
+      <opaque value="false"/>
+    </properties>
     <border type="none"/>
     <children>
       <tabbedpane id="2f93b" binding="tabbedPane1" default-binding="true">
@@ -19,7 +21,9 @@
             <constraints>
               <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="common"/>
             </constraints>
-            <properties/>
+            <properties>
+              <opaque value="false"/>
+            </properties>
             <border type="none"/>
             <children>
               <grid id="7959b" class="org.jdesktop.swingx.JXTaskPane" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -39,7 +43,9 @@
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <opaque value="false"/>
+                    </properties>
                     <border type="none"/>
                     <children>
                       <grid id="884ab" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -47,7 +53,9 @@
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <opaque value="false"/>
+                        </properties>
                         <border type="none"/>
                         <children>
                           <component id="15b9e" class="javax.swing.JLabel">
@@ -73,7 +81,9 @@
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <opaque value="false"/>
+                        </properties>
                         <border type="none"/>
                         <children>
                           <component id="c854c" class="javax.swing.JLabel">
@@ -119,7 +129,9 @@
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <opaque value="false"/>
+                </properties>
                 <border type="none" title-resource-bundle="com/wmp/downloader/laug/laug" title-key="task.create_task.download_url.text_area"/>
                 <children>
                   <component id="95b0d" class="javax.swing.JLabel">
@@ -151,6 +163,7 @@
                 </constraints>
                 <properties>
                   <horizontalScrollBarPolicy value="30"/>
+                  <opaque value="false"/>
                   <verticalScrollBarPolicy value="20"/>
                   <visible value="true"/>
                 </properties>
@@ -210,7 +223,9 @@
             <constraints>
               <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="video_handle"/>
             </constraints>
-            <properties/>
+            <properties>
+              <opaque value="false"/>
+            </properties>
             <border type="none"/>
             <children>
               <nested-form id="dfc72" form-file="com/wmp/downloader/newArchitecture/ui/createTask/CreateVideoHandleTaskPanel.form" binding="CreateVideoHandleTaskPanel">

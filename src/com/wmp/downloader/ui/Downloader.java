@@ -1,5 +1,6 @@
 package com.wmp.downloader.ui;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
 import com.wmp.downloader.newArchitecture.ui.createTask.CreateTaskPanel;
@@ -342,6 +343,8 @@ public class Downloader extends JFrame implements WindowListener{
                 backgroundPanel.setVisible(true);
                 layeredPane.setLayer(UIPanel, JLayeredPane.DEFAULT_LAYER);
                 layeredPane.setLayer(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
+                // 背景图铺满整个窗口，包括标题栏区域
+                setFullWindowContent(true);
                 // FIX 更新边界并强制重绘
                 updateChildBounds();
                 backgroundPanel.repaint();
@@ -357,9 +360,40 @@ public class Downloader extends JFrame implements WindowListener{
     private void resetBackground() {
         if (backgroundPanel != null) {
             backgroundPanel.setVisible(false);
-            // FIX 刷新界面
-            layeredPane.repaint();
         }
+        // 没有背景图时恢复正常标题栏
+        setFullWindowContent(false);
+        // FIX 刷新界面
+        layeredPane.repaint();
+    }
+
+    /**
+     * 切换「内容延伸到标题栏」模式（FlatLaf 的 fullWindowContent）。
+     *
+     * <p>开启后 {@code contentPane} 会占据整个窗口（含标题栏区域），背景图因此能铺到标题栏；
+     * 标题栏的最小化/最大化/关闭按钮会浮在右上角，窗口顶部仍可作为拖拽区。</p>
+     *
+     * <p>实测（Windows 10 + FlatLaf 3.7.2）：该模式与「原生窗口装饰」
+     * （{@code FlatLaf.setUseNativeWindowDecorations(true)}）可以共存，不需要改动全局装饰设置。</p>
+     *
+     * @return 是否发生了状态变化
+     */
+    private boolean setFullWindowContent(boolean full) {
+        JRootPane rootPane = getRootPane();
+        if (rootPane == null) {
+            return false;
+        }
+        Object current = rootPane.getClientProperty(FlatClientProperties.FULL_WINDOW_CONTENT);
+        if (Boolean.valueOf(full).equals(current)) {
+            return false;
+        }
+        rootPane.putClientProperty(FlatClientProperties.FULL_WINDOW_CONTENT, full);
+        // 内容区域高度会变化（多出/少掉标题栏高度），需要重新布局并同步子组件边界
+        rootPane.revalidate();
+        revalidate();
+        repaint();
+        SwingUtilities.invokeLater(this::updateChildBounds);
+        return true;
     }
 
     private void initTrayIcon() {

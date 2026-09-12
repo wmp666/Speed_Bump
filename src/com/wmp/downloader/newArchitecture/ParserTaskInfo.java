@@ -43,9 +43,6 @@ public class ParserTaskInfo {
 
     private static Map<String, URLClassLoader> pluginLoaders = new ConcurrentHashMap<>();
 
-    static {loadParsers();}
-
-
 
     public static void loadParsers() {
 

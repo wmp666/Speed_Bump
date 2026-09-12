@@ -1,6 +1,8 @@
 package com.wmp.downloader;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.wmp.downloader.newArchitecture.ParserTaskInfo;
+import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.WebSetter;
@@ -18,7 +20,7 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.4.5.2";
+    public static String VERSION = "0.4.5.3";
 
     public static String PLUGIN_SUPPORT_VERSION = "1.1.2";
 
@@ -75,6 +77,8 @@ public class Run {
         Downloader downloader = null;
         try {
             DataControl.load();
+
+            ParserTaskInfo.loadParsers();
 
             WebSetter.SSLControl(DataControl.get("isUseSSL", false));
             WebSetter.proxies(true);

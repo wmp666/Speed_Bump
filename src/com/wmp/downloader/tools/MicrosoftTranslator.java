@@ -113,11 +113,11 @@ public class MicrosoftTranslator {
     public static String translate(String text, String to) throws Exception {
         if (text == null || text.isBlank()) return text;
 
-        String key = String.valueOf(DataControl.get(KEY_DATA, "")).trim();
+        String key = DataControl.get(KEY_DATA, "").trim();
         if (key.isEmpty()) {
             throw new IllegalStateException("尚未配置微软翻译(Azure Translator)密钥");
         }
-        String region = String.valueOf(DataControl.get(REGION_DATA, "")).trim();
+        String region = DataControl.get(REGION_DATA, "").trim();
 
         String url = TRANSLATE_URL + "?api-version=3.0&from=zh-Hans&to=" + to;
         String payload = JSON.toJSONString(List.of(Map.of("Text", text)));

@@ -10,6 +10,7 @@ import com.wmp.downloader.newArchitecture.ui.task.PluginParserGithubDownloadTask
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.file.FileOperation;
+import com.wmp.downloader.tools.ui.DropOverlayPanel;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
@@ -20,6 +21,15 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.io.File;
 import java.util.List;
 
 public class PluginParserPanel {
@@ -58,6 +68,15 @@ public class PluginParserPanel {
     private JPanel installPluginListPanel;
     private JProgressBar installPluginParserListProgressBar;
 
+    /**
+     * 叠层容器，把页面内容与拖拽遮罩叠放在一起
+     */
+    private JPanel pluginStackPanel;
+    /**
+     * 拖入文件时显示的半透明遮罩
+     */
+    private DropOverlayPanel dragOverlayPanel;
+
     private final Downloader downloader;
 
     public PluginParserPanel(Downloader downloader) {
@@ -75,9 +94,207 @@ public class PluginParserPanel {
 
         initToolBar();
 
+        //重组面板结构，使其支持拖入拓展并显示遮罩（需在工具栏初始化之后）
+        initDragAndDropComponents();
+
         initInstalledPluginParserComponents();
 
         initInstallPluginParserComponents();
+    }
+
+    /**
+     * 组装叠层结构并为整个拓展页注册拖放支持。
+     *
+     * <p>结构为：pluginParserControlPanel(BorderLayout) → pluginStackPanel(叠层) →
+     * [页面内容, 半透明遮罩]，遮罩的 z-order 为 0，绘制在内容之上。</p>
+     */
+    private void initDragAndDropComponents() {
+        dragOverlayPanel = new DropOverlayPanel(
+                StringFormat.translate("plugins.drag_drop.title"),
+                StringFormat.translate("plugins.drag_drop.tip"),
+                "import"
+        );
+        dragOverlayPanel.setVisible(false);
+
+        //页面内容：工具栏在上，标签页填满剩余区域
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setOpaque(false);
+        contentPanel.add(PluginControlToolBar, BorderLayout.NORTH);
+        contentPanel.add(tabbedPane1, BorderLayout.CENTER);
+
+        //所有子组件都铺满整个容器，从而形成叠层效果
+        pluginStackPanel = new JPanel() {
+            @Override
+            public void doLayout() {
+                for (Component component : getComponents()) {
+                    component.setBounds(0, 0, getWidth(), getHeight());
+                }
+            }
+
+            @Override
+            public Dimension getPreferredSize() {
+                //尺寸只由页面内容决定，遮罩不参与计算
+                return getComponentCount() > 0
+                        ? getComponent(0).getPreferredSize()
+                        : super.getPreferredSize();
+            }
+        };
+        pluginStackPanel.setOpaque(false);
+        pluginStackPanel.add(contentPanel);
+        pluginStackPanel.add(dragOverlayPanel);
+        //z-order 为 0 表示绘制在最上层
+        pluginStackPanel.setComponentZOrder(dragOverlayPanel, 0);
+
+        pluginParserControlPanel.removeAll();
+        pluginParserControlPanel.add(pluginStackPanel, BorderLayout.CENTER);
+
+        ThemeChanger.addInDynamicConverter(pluginStackPanel::repaint);
+
+        new DropTarget(pluginParserControlPanel, DnDConstants.ACTION_COPY, new DropTargetAdapter() {
+            @Override
+            public void dragEnter(DropTargetDragEvent dtde) {
+                updateDragState(dtde);
+            }
+
+            @Override
+            public void dragOver(DropTargetDragEvent dtde) {
+                updateDragState(dtde);
+            }
+
+            @Override
+            public void dropActionChanged(DropTargetDragEvent dtde) {
+                updateDragState(dtde);
+            }
+
+            @Override
+            public void dragExit(DropTargetEvent dte) {
+                hideDragOverlay();
+            }
+
+            @Override
+            public void drop(DropTargetDropEvent dtde) {
+                handleDrop(dtde);
+            }
+        }, true);
+    }
+
+    /**
+     * 根据当前拖入的内容刷新遮罩显示状态
+     */
+    private void updateDragState(DropTargetDragEvent dtde) {
+        if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+            dtde.rejectDrag();
+            hideDragOverlay();
+            return;
+        }
+
+        dtde.acceptDrag(DnDConstants.ACTION_COPY);
+
+        Boolean hasJar = containsJarFile(dtde.getTransferable());
+        if (hasJar != null && !hasJar) {
+            //拖入的都不是 jar，给出警示提示，但仍允许放下以便统一提示用户
+            dragOverlayPanel.setState(false,
+                    StringFormat.translate("plugins.drag_drop.title"),
+                    StringFormat.translate("plugins.control_tool_bar.import_local.is_not_jar"));
+        } else {
+            dragOverlayPanel.setState(true,
+                    StringFormat.translate("plugins.drag_drop.title"),
+                    StringFormat.translate("plugins.drag_drop.tip"));
+        }
+
+        showDragOverlay();
+    }
+
+    private void showDragOverlay() {
+        if (dragOverlayPanel == null || dragOverlayPanel.isVisible()) return;
+        dragOverlayPanel.setVisible(true);
+        pluginStackPanel.repaint();
+    }
+
+    private void hideDragOverlay() {
+        if (dragOverlayPanel == null || !dragOverlayPanel.isVisible()) return;
+        dragOverlayPanel.setVisible(false);
+        pluginStackPanel.repaint();
+    }
+
+    private void handleDrop(DropTargetDropEvent dtde) {
+        hideDragOverlay();
+
+        if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+            dtde.rejectDrop();
+            return;
+        }
+
+        dtde.acceptDrop(DnDConstants.ACTION_COPY);
+        try {
+            @SuppressWarnings("unchecked")
+            List<File> files = (List<File>) dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+            int installCount = importLocalParserFiles(files);
+            dtde.dropComplete(installCount > 0);
+
+            if (installCount > 0) {
+                ParserTaskInfo.loadParsers();
+                updateInstalledPluginParserList();
+                updateInstallPluginParserList();
+                ToastMessage.show(
+                        String.format(StringFormat.translate("plugins.drag_drop.install_success"), installCount),
+                        ToastMessage.SUCCESS
+                );
+            }
+        } catch (Exception ex) {
+            logger.error("拖入安装拓展失败", ex);
+            dtde.dropComplete(false);
+        }
+    }
+
+    /**
+     * 把拖入的 jar 复制到拓展目录
+     *
+     * @return 成功导入的数量
+     */
+    private int importLocalParserFiles(List<File> files) {
+        if (files == null || files.isEmpty()) return 0;
+
+        var parserPath = DataControl.getPATPath();
+        int installCount = 0;
+        boolean hasNotJar = false;
+
+        for (File file : files) {
+            if (file == null) continue;
+            if (!file.isFile() || !file.getName().toLowerCase().endsWith(".jar")) {
+                hasNotJar = true;
+                continue;
+            }
+            if (FileOperation.copy(file, parserPath)) installCount++;
+        }
+
+        if (hasNotJar) {
+            ToastMessage.show(StringFormat.translate("plugins.control_tool_bar.import_local.is_not_jar"), ToastMessage.WARNING);
+        }
+
+        return installCount;
+    }
+
+    /**
+     * 判断拖入的文件中是否包含 jar
+     *
+     * @return 无法读取拖入内容时返回 null
+     */
+    private Boolean containsJarFile(Transferable transferable) {
+        try {
+            Object data = transferable.getTransferData(DataFlavor.javaFileListFlavor);
+            if (data instanceof List<?> list) {
+                for (Object element : list) {
+                    if (element instanceof File file && file.getName().toLowerCase().endsWith(".jar")) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        } catch (Exception ex) {
+            logger.debug("读取拖入的文件列表失败", ex);
+        }
+        return null;
     }
 
     private void initInstallPluginParserComponents() {
