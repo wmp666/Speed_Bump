@@ -9,6 +9,8 @@ import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.PluginParserPa
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SettingsPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SpecialSettingsPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.TestControlDialog;
+import com.wmp.downloader.tools.MicrosoftTranslator;
+import com.wmp.downloader.tools.MicrosoftTranslator.Language;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
@@ -580,6 +582,10 @@ public class Downloader extends JFrame implements WindowListener{
                                 TestFunctionControl.run(1001, 1, ()->{
                                     var translateButton = new JButton(StringFormat.translate("translate"));
 
+                                    TestFunctionControl.run(1001, 2, ()->{
+                                        translateButton.addActionListener(_ -> translateUpdateBody(update.body()));
+                                    }, () -> {});
+
                                     buttonList.add(translateButton);
                                 }, () -> {});
 
@@ -601,6 +607,94 @@ public class Downloader extends JFrame implements WindowListener{
             ToastMessage.show(StringFormat.translate("check_update.failed"), ToastMessage.ERROR);
             logger.error("网络数据获取失败");
         }
+    }
+
+    /**
+     * 翻译更新日志正文（源语言为简体中文，微软翻译）。
+     * 先通过 JOptionPane 让用户选择目标语言（记住上次的选择，默认选中当前界面语言），
+     * 翻译完成后用 FunctionDialog 展示结果。
+     */
+    private void translateUpdateBody(String body) {
+        var languages = MicrosoftTranslator.languages();
+
+        // 默认语言：优先上次的选择，否则使用当前界面语言决定的默认目标语言
+        Language initial = null;
+        Object saved = DataControl.get("translate_target_laug", null);
+        if (saved != null) {
+            String code = saved.toString();
+            for (var l : languages) {
+                if (l.code().equalsIgnoreCase(code)) {
+                    initial = l;
+                    break;
+                }
+            }
+        }
+        if (initial == null) initial = MicrosoftTranslator.defaultLanguage();
+
+        Object selected = JOptionPane.showInputDialog(
+                this,
+                StringFormat.translate("translate.select_target"),
+                StringFormat.translate("translate"),
+                JOptionPane.QUESTION_MESSAGE, null,
+                languages.toArray(), initial);
+        if (!(selected instanceof Language target)) return;
+
+        // 记住本次选择
+        DataControl.putAndSave("translate_target_laug", target.code());
+
+        // 确保已配置 Azure 翻译密钥/区域（首次使用时填写一次并保存）
+        if (!MicrosoftTranslator.hasKey()) {
+            if (!configureAzureKey()) return;
+        }
+
+        String source = body == null ? "" : body;
+        Thread.ofVirtual().start(() -> {
+            try {
+                String translated = MicrosoftTranslator.translate(source, target.code());
+                SwingUtilities.invokeLater(() -> {
+                    var panel = new JPanel();
+                    panel.add(UITools.createMarkdownPane(translated));
+
+                    FunctionDialog.showDialog(this,
+                            StringFormat.translate("translate.result_title") + "（" + target.label() + "）",
+                            panel,
+                            _ -> {
+                            },
+                            FunctionDialog.DEFAULT_BUTTONS, 0,
+                            null, FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
+                });
+            } catch (Exception ex) {
+                logger.error("翻译失败", ex);
+                ToastMessage.show(this, StringFormat.translate("translate.failed"), ToastMessage.ERROR);
+            }
+        });
+    }
+
+    /**
+     * 引导用户填写并保存 Azure Translator 密钥与区域。
+     *
+     * @return 是否已成功完成配置
+     */
+    private boolean configureAzureKey() {
+        Object key = JOptionPane.showInputDialog(this,
+                "尚未配置微软翻译(Azure Translator)密钥。\n请填写你的 Translator 资源的 Subscription Key：",
+                StringFormat.translate("translate") + " - 配置",
+                JOptionPane.QUESTION_MESSAGE);
+        if (key == null) return false;
+        String k = key.toString().trim();
+        if (k.isEmpty()) {
+            ToastMessage.show(this, "密钥不能为空", ToastMessage.WARNING);
+            return false;
+        }
+        DataControl.putAndSave(MicrosoftTranslator.KEY_DATA, k);
+
+        Object region = JOptionPane.showInputDialog(this,
+                "请填写该密钥对应的区域（如 eastasia；global 资源可留空）：",
+                StringFormat.translate("translate") + " - 配置",
+                JOptionPane.QUESTION_MESSAGE, null, null, "eastasia");
+        if (region == null) return false;
+        DataControl.putAndSave(MicrosoftTranslator.REGION_DATA, region.toString().trim());
+        return true;
     }
 
     private void initTaskComponents() {

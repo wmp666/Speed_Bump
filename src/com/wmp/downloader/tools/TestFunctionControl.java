@@ -84,6 +84,7 @@ public class TestFunctionControl {
         applies(1000, 1001, 1002, 1003);
         register(1000, (short) 1, "显示使窗口重新加载的按钮");
         register(1001, (short) 1, "更新详情翻译按钮");
+        register(1001, (short) 2, "翻译");
         register(1002, (short) 1, "设置主窗口置顶，这会导致许多界面异常！");
         register(1003, (short) 1, "显示剪切板监听设置");
     }

@@ -116,6 +116,13 @@ public class TestControlDialog{
         //先让两侧表格按内容自适应，再调整 JSplitPane 的分割策略
         fitColumnWidths(idTable, false);
         tuneSplitPane();
+
+        // 放大弹窗：FunctionDialog 按 contentPane 的尺寸打包窗口，
+        // 这里只在本面板上放大期望/最小尺寸即可（不改动 FunctionDialog）。
+        final int dialogWidth = 860;
+        final int dialogHeight = 560;
+        contentPane.setPreferredSize(new Dimension(dialogWidth, dialogHeight));
+        contentPane.setMinimumSize(new Dimension(Math.min(dialogWidth, 720), Math.min(dialogHeight, 460)));
     }
 
     /**
