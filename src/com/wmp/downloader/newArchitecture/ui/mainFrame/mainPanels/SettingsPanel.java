@@ -151,7 +151,7 @@ public class SettingsPanel {
             themeComboBox.addItem("Darcula");
             themeComboBox.addItem("IntelliJ");
 
-            themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
+            themeComboBox.setSelectedItem(DataControl.get("theme", "Mac Light"));
         }
 
         //初始化字体设置项
@@ -315,7 +315,7 @@ public class SettingsPanel {
             tempPathSelectionPanel.setPath(DataControl.get("TempFilePath", DataControl.getDataPath().getAbsolutePath()));
             FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
             fontSizeSpinner.setValue(DataControl.get("FontSize", 12));
-            themeComboBox.setSelectedItem(DataControl.get("theme", "System Theme Style"));
+            themeComboBox.setSelectedItem(DataControl.get("theme", "Mac Light"));
 
             accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
 

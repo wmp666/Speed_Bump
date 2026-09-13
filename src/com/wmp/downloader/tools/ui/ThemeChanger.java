@@ -222,11 +222,11 @@ public class ThemeChanger {
      * 简单主题切换
      */
     public static void easyChanger() {
-        easyChanger(DataControl.get("theme", "System Theme Style"));
+        easyChanger(DataControl.get("theme", "Mac Light"));
     }
 
     public static void easyThemeRefresh() {
-        var newTheme = DataControl.get("theme", "System Theme Style");
+        var newTheme = DataControl.get("theme", "Mac Light");
         if (newTheme.equals("System Theme Style")) {
             newTheme = SystemThemeDetector.isDarkMode() ? "Mac Dark" : "Mac Light";
         }
