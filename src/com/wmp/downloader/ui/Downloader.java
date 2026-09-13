@@ -41,6 +41,7 @@ public class Downloader extends JFrame implements WindowListener{
     private static final Logger logger = Logger.getLogger(Downloader.class);
     public static Downloader mainFrame;
     public static TrayIcon trayIcon;
+    public static TrayMenu trayMenu;
     public final List<AbstractTask> taskList = new ArrayList<>();
     public final List<AbstractTask> taskFinalyTipList = new ArrayList<>();
     public final GridBagConstraints gbc = new GridBagConstraints();
@@ -397,9 +398,22 @@ public class Downloader extends JFrame implements WindowListener{
     }
 
     private void initTrayIcon() {
-        if (SystemTray.isSupported()) {
-            SystemTray.getSystemTray().remove(trayIcon);
-        } else return;
+        if (!SystemTray.isSupported()) {
+            logger.info("当前系统不支持系统托盘，跳过托盘图标初始化");
+            return;
+        }
+
+        SystemTray systemTray = SystemTray.getSystemTray();
+
+        // 支持重建窗口：先清理上一轮的托盘图标和菜单（菜单里有注册到全局的监听）
+        if (trayIcon != null) {
+            systemTray.remove(trayIcon);
+            trayIcon = null;
+        }
+        if (trayMenu != null) {
+            trayMenu.dispose();
+            trayMenu = null;
+        }
 
         trayIcon = new TrayIcon(IconControl.getImage("download"), StringFormat.translate("common", "app_name"));
 
@@ -408,31 +422,29 @@ public class Downloader extends JFrame implements WindowListener{
                 () -> trayIcon.setImage(IconControl.getImage("icon"))
         );
 
-        var trayIconMenu = new PopupMenu();
+        // TrayIcon#setPopupMenu 只接受 AWT 的 PopupMenu，无法跟随 FlatLaf 主题，
+        // 因此这里改用 Swing 的 JPopupMenu，在托盘鼠标事件里手动弹出。
+        trayMenu = new TrayMenu(this);
+        final TrayMenu menu = trayMenu;
+        trayIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                menu.showFor(e);
+            }
 
-        var showMenuItem = new MenuItem("show");
-        showMenuItem.addActionListener(e -> {
-            this.setVisible(true);
-            this.setState(JFrame.NORMAL);
-            this.requestFocus();
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                menu.showFor(e);
+            }
         });
-        showMenuItem.addActionListener(actionListener);
-        trayIconMenu.add(showMenuItem);
 
-        var exitMenuItem = new MenuItem("exit");
-        exitMenuItem.addActionListener(e -> System.exit(0));
-        trayIconMenu.add(exitMenuItem);
-
-        trayIcon.setPopupMenu(trayIconMenu);
-
+        // 单击/双击托盘图标：显示主窗口
         trayIcon.addActionListener(actionListener);
 
-        if (SystemTray.isSupported()) {
-            try {
-                SystemTray.getSystemTray().add(trayIcon);
-            } catch (AWTException e) {
-                logger.error("Tray icon added failed", e);
-            }
+        try {
+            systemTray.add(trayIcon);
+        } catch (AWTException e) {
+            logger.error("Tray icon added failed", e);
         }
     }
 
@@ -450,6 +462,7 @@ public class Downloader extends JFrame implements WindowListener{
         TestFunctionControl.run(1002, 1,
                 () -> {
                     var alwaysOnTopCheckBox = new JCheckBoxMenuItem(StringFormat.translate("download_menu_bar", "frame.is_always_top"));
+                    alwaysOnTopCheckBox.setSelected(this.isAlwaysOnTop());
                     alwaysOnTopCheckBox.addActionListener(e -> this.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected()));
                     windowMenu.add(alwaysOnTopCheckBox);
 
@@ -1017,7 +1030,11 @@ public class Downloader extends JFrame implements WindowListener{
     @Override
     public void windowClosing(WindowEvent e) {
         // FIX 移除了 backgroundTimer 的停止（已删除该字段）
-        trayIcon.displayMessage("SpeedBump", "已最小化到系统托盘", TrayIcon.MessageType.INFO);
+        if (trayIcon != null) {
+            trayIcon.displayMessage(StringFormat.translate("common", "app_name"),
+                    StringFormat.translate("tray.minimized_to_tray"),
+                    TrayIcon.MessageType.INFO);
+        }
     }
 
     @Override

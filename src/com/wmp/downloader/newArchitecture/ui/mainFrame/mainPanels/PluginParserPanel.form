@@ -186,10 +186,6 @@
                         <constraints/>
                         <properties>
                           <layoutOrientation value="0"/>
-                          <model>
-                            <item value="测试项目1"/>
-                            <item value="Test Project 2"/>
-                          </model>
                           <name value=""/>
                           <opaque value="false"/>
                           <selectedIndex value="-1"/>
@@ -388,10 +384,6 @@
                             <constraints/>
                             <properties>
                               <layoutOrientation value="0"/>
-                              <model>
-                                <item value="测试项目1"/>
-                                <item value="Test Project 2"/>
-                              </model>
                               <name value=""/>
                               <opaque value="false"/>
                               <selectedIndex value="-1"/>

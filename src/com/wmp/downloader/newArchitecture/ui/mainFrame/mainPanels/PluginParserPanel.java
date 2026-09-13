@@ -4,6 +4,7 @@ import com.formdev.flatlaf.util.ColorFunctions;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.Run;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
+import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.InstallPluginParserInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
 import com.wmp.downloader.newArchitecture.ui.task.PluginParserGithubDownloadTask;
@@ -31,6 +32,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PluginParserPanel {
 
@@ -78,6 +80,19 @@ public class PluginParserPanel {
     private DropOverlayPanel dragOverlayPanel;
 
     private final Downloader downloader;
+
+    /**
+     * 安装列表是否正在加载，避免重复发起网络请求
+     */
+    private final AtomicBoolean installPluginListLoading = new AtomicBoolean(false);
+    /**
+     * 安装列表是否已经成功加载过（懒加载依据）
+     */
+    private boolean installPluginListLoaded = false;
+    /**
+     * 上一次加载是否失败（没网 / 超时）。失败后不再自动重试，交给用户点「刷新列表」
+     */
+    private boolean installPluginListLoadFailed = false;
 
     public PluginParserPanel(Downloader downloader) {
         this.downloader = downloader;
@@ -300,6 +315,10 @@ public class PluginParserPanel {
     private void initInstallPluginParserComponents() {
         installPluginInfoPanel.setVisible(false);
 
+        //清空设计器留下的占位项：列表的渲染器只认 InstallPluginParserInfo，
+        //若还留着 String 占位项，渲染时会抛 ClassCastException
+        installPluginParserList.setListData(new InstallPluginParserInfo[0]);
+
         installPluginParserIDLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
         installPluginParserAuthorLabel.putClientProperty("FlatLaf.style", "font: $h4.font");
         installPluginParserVersionLabel.putClientProperty("FlatLaf.style", "font: $Large.font");
@@ -308,7 +327,14 @@ public class PluginParserPanel {
 
         installPluginParserList.putClientProperty("FlatLaf.style", "font: $h3.font");
 
-        updateInstallPluginParserList();
+        //进度条默认不显示；安装列表只在切到「安装」页时才联网拉取
+        installPluginParserListProgressBar.setIndeterminate(false);
+        installPluginParserListProgressBar.setVisible(false);
+        tabbedPane1.addChangeListener(e -> {
+            if (tabbedPane1.getSelectedComponent() == installPluginsPanel) {
+                ensureInstallPluginParserListLoaded();
+            }
+        });
 
         ThemeChanger.addInDynamicConverter(() -> installPluginParserList.repaint());
 
@@ -419,25 +445,42 @@ public class PluginParserPanel {
         });
         installPluginParserListRefreshButton.addActionListener(e -> updateInstallPluginParserList());
         PluginParserInstallButton.addActionListener(e -> {
-            logger.info(installPluginParserList.getSelectedValue().url());
-            //创建下载任务
+            var selectedInstallInfo = installPluginParserList.getSelectedValue();
+            if (selectedInstallInfo == null) return;
+            logger.info(selectedInstallInfo.url());
 
-
-            var info = new PluginParserGithubDownloadTask(() -> {
-                ParserTaskInfo.loadParsers();
-                updateInstalledPluginParserList();
-                updateInstallPluginParserList();
-
-            })
-                    .getParserInfo(installPluginParserList.getSelectedValue().url());
-            var jsonInfo = info.getLinkedInfoPanel().getJsonInfo();
-            jsonInfo.put("savePath", DataControl.getPATPath().getAbsolutePath());
-            jsonInfo.put("threadMode", 0);
-            jsonInfo.put("threadNum", DataControl.get("ThreadNum", 64));
-            jsonInfo.put("linkStyle", 0);
-            var task = info.getTask(jsonInfo);
-            downloader.addDownloadTask(task);
+            //创建下载任务：获取拓展信息同样要联网，放入虚拟线程，避免没网时把界面卡住
+            Thread.ofVirtual().start(() -> {
+                try {
+                    var task = createInstallTask(selectedInstallInfo.url());
+                    runOnEdt(() -> downloader.addDownloadTask(task));
+                } catch (Exception ex) {
+                    logger.error("创建拓展安装任务失败", ex);
+                    runOnEdt(() -> ToastMessage.show(
+                            StringFormat.translate("plugins.install.create_failed"),
+                            ToastMessage.ERROR
+                    ));
+                }
+            });
         });
+    }
+
+    /**
+     * 获取拓展信息并组装出下载任务（会联网，必须在后台线程调用）
+     */
+    private AbstractTask createInstallTask(String url) {
+        var info = new PluginParserGithubDownloadTask(() -> {
+            ParserTaskInfo.loadParsers();
+            updateInstalledPluginParserList();
+            updateInstallPluginParserList();
+
+        }).getParserInfo(url);
+        var jsonInfo = info.getLinkedInfoPanel().getJsonInfo();
+        jsonInfo.put("savePath", DataControl.getPATPath().getAbsolutePath());
+        jsonInfo.put("threadMode", 0);
+        jsonInfo.put("threadNum", DataControl.get("ThreadNum", 64));
+        jsonInfo.put("linkStyle", 0);
+        return info.getTask(jsonInfo);
     }
 
     private void initToolBar() {
@@ -487,6 +530,9 @@ public class PluginParserPanel {
         );
 
         PluginInfoPanel.setVisible(false);
+
+        //同上：先清掉占位项，避免渲染器拿到 String 时抛 ClassCastException
+        PluginParserList.setListData(new PluginParserInfo[0]);
 
         pluginParserIDLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
         pluginParserAuthorLabel.putClientProperty("FlatLaf.style", "font: $h4.font");
@@ -555,6 +601,8 @@ public class PluginParserPanel {
         PluginParserList.addListSelectionListener(e -> {
             try {
                 var pluginParserInfo = PluginParserList.getSelectedValue();
+                //列表刷新时会清空选择，此时没有选中项
+                if (pluginParserInfo == null) return;
                 PluginInfoPanel.setVisible(true);
                 var id = pluginParserInfo.parser().getID();
                 pluginParserIDLabel.setText(id);
@@ -604,25 +652,69 @@ public class PluginParserPanel {
 
     private void updateInstalledPluginParserList() {
         var pluginParserArrayList = ParserTaskInfo.getAllPluginParserList();
-        PluginParserList.setListData(pluginParserArrayList.toArray(PluginParserInfo[]::new));
+        runOnEdt(() -> PluginParserList.setListData(pluginParserArrayList.toArray(PluginParserInfo[]::new)));
+    }
+
+    /**
+     * 打开拓展页时不立刻联网：只有切到「安装」页、且还没成功加载过时才拉取列表。
+     * 这样没有网络时打开拓展页也能正常显示已安装的拓展。
+     */
+    private void ensureInstallPluginParserListLoaded() {
+        if (installPluginListLoaded || installPluginListLoadFailed) return;
+        updateInstallPluginParserList();
     }
 
     private void updateInstallPluginParserList() {
+        if (!installPluginListLoading.compareAndSet(false, true)) return;
+
+        runOnEdt(() -> {
+            installPluginParserListProgressBar.setIndeterminate(true);
+            installPluginParserListProgressBar.setVisible(true);
+        });
+
         //受网络影响，将加载安装列表数据的过程放入独立的虚拟线程
-        installPluginParserListProgressBar.setVisible(true);
-        installPluginParserListProgressBar.setIndeterminate(true);
         Thread.ofVirtual().start(() -> {
+            List<InstallPluginParserInfo> installPluginParserArrayList = null;
             try {
-                List<InstallPluginParserInfo> installPluginParserArrayList = getInstallPluginParserInfoList();
-                SwingUtilities.invokeLater(() -> {
-                    installPluginParserList.setListData(installPluginParserArrayList.toArray(InstallPluginParserInfo[]::new));
-                    installPluginParserListProgressBar.setVisible(false);
-                });
+                installPluginParserArrayList = getInstallPluginParserInfoList();
             } catch (Exception ex) {
                 logger.error("安装插件列表加载失败", ex);
-                SwingUtilities.invokeLater(() -> installPluginParserListProgressBar.setVisible(false));
             }
+
+            final List<InstallPluginParserInfo> result = installPluginParserArrayList;
+            runOnEdt(() -> {
+                //无论成功、失败还是超时，都要结束加载状态：
+                //否则没有网络时进度条会一直转，看上去就像卡死了
+                installPluginParserListProgressBar.setIndeterminate(false);
+                installPluginParserListProgressBar.setVisible(false);
+                installPluginListLoading.set(false);
+
+                if (result == null) {
+                    //没网或请求超时：清空列表并提示，不再自动重试
+                    installPluginListLoaded = false;
+                    installPluginListLoadFailed = true;
+                    installPluginParserList.setListData(new InstallPluginParserInfo[0]);
+                    installPluginInfoPanel.setVisible(false);
+                    ToastMessage.show(
+                            StringFormat.translate("plugins.install.list_refresh_failed"),
+                            ToastMessage.ERROR
+                    );
+                    return;
+                }
+
+                installPluginListLoaded = true;
+                installPluginListLoadFailed = false;
+                installPluginParserList.setListData(result.toArray(InstallPluginParserInfo[]::new));
+            });
         });
+    }
+
+    /**
+     * 在事件分发线程上执行（已经在 EDT 上时同步执行，保证调用顺序不变）
+     */
+    private static void runOnEdt(Runnable runnable) {
+        if (SwingUtilities.isEventDispatchThread()) runnable.run();
+        else SwingUtilities.invokeLater(runnable);
     }
 
     private List<InstallPluginParserInfo> getInstallPluginParserInfoList(){

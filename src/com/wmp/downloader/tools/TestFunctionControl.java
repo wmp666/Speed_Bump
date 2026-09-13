@@ -89,6 +89,7 @@ public class TestFunctionControl {
         register(1003, (short) 1, "显示剪切板监听设置");
         register(1004, (short) 1, "启动预加载窗使用 Mica/模糊背景材质（重启后生效）");
         register(1004, (short) 2, "启动独立的功能弹窗使用 Mica/模糊背景材质（重启后生效）");
+        register(1004, (short) 3, "启动托盘图标右键菜单使用 Mica/模糊背景材质（重启后生效）");
     }
 
     public static HashMap<Integer, HashMap<Short, String>> getAllTip(){

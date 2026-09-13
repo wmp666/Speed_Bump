@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="WindowMask:jar" />
+      <artifact name="DownLoader_Linux:jar" />
+      <artifact name="DownLoader_Windows:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="测试：增加了一个Mica材质（作用于FunctionDialog）">
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="重写TrayIcon右键菜单&#10;修复网络问题导致的拓展页打开问题">
+      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/src/com/wmp/parser/douyin/DouyinImageDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/src/com/wmp/parser/douyin/DouyinImageDownloadTask.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="BEProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4,
@@ -130,6 +130,7 @@
     &quot;应用程序.CursorTest.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.DraggablePanel.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.FTPDownloader.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.FileDialogTest.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.FunctionDialog.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.GetMagnet3.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.GetSupportFormat.executor&quot;: &quot;Run&quot;,
@@ -180,12 +181,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FileAssociation" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.tools.platform.FileAssociation" />
+    <configuration name="FileDialogTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.FileDialogTest" />
       <module name="DownLoader" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.wmp.downloader.tools.platform.*" />
+          <option name="PATTERN" value="com.wmp.downloader.test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -267,20 +268,20 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="应用程序.FileDialogTest" />
       <item itemvalue="应用程序.TestControlDialog" />
       <item itemvalue="应用程序.CursorTest" />
       <item itemvalue="应用程序.GetSupportFormat" />
-      <item itemvalue="应用程序.FileAssociation" />
       <item itemvalue="应用程序.TCPControl" />
       <item itemvalue="应用程序.Run" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.Run" />
+        <item itemvalue="应用程序.FileDialogTest" />
         <item itemvalue="应用程序.TestControlDialog" />
         <item itemvalue="应用程序.CursorTest" />
         <item itemvalue="应用程序.GetSupportFormat" />
-        <item itemvalue="应用程序.FileAssociation" />
       </list>
     </recent_temporary>
   </component>
@@ -334,9 +335,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="更新创建任务的UI和文字" />
-    <MESSAGE value="增加图片格式转换器" />
-    <MESSAGE value="更新一点东西" />
     <MESSAGE value="增加端口设置默认值按钮&#10;修复后台运行指令会导致打开多个实例&#10;在关于页增加新的介绍信息(该板块不翻译)" />
     <MESSAGE value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示" />
     <MESSAGE value="增加开机自启动设置项(仅支持jpackage打包的软件)&#10;增加更详细的设置提示&#10;更新关于页UI" />
@@ -359,7 +357,10 @@
     <MESSAGE value="增加拖入导入拓展&#10;将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="。。。" />
     <MESSAGE value="测试：增加了一个Mica材质（作用于FunctionDialog）" />
-    <option name="LAST_COMMIT_MESSAGE" value="测试：增加了一个Mica材质（作用于FunctionDialog）" />
+    <MESSAGE value="修复默认值问题" />
+    <MESSAGE value="重写TrayIcon右键菜单" />
+    <MESSAGE value="重写TrayIcon右键菜单&#10;修复网络问题导致的拓展页打开问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="重写TrayIcon右键菜单&#10;修复网络问题导致的拓展页打开问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -401,13 +402,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/Run.java</url>
-          <line>20</line>
+          <line>21</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>
           <line>165</line>
-          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel">
+          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel" method="getJsonInfo">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

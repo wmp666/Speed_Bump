@@ -41,7 +41,7 @@ import java.awt.event.MouseMotionAdapter;
  *
  * <h3>如何移除该功能</h3>
  * <ol>
- *   <li>把使用方（当前是 {@code PreloadDialog}）中标注为
+ *   <li>把使用方（{@code PreloadDialog}、{@code FunctionDialog}、{@code FlyoutMenu}）中标注为
  *       {@code [BACKDROP-START] ... [BACKDROP-END]} 的代码块整段删除；</li>
  *   <li>删掉 {@code TestFunctionControl} 静态块中 {@code 1004} 的
  *       {@code applies(...)} 参数与 {@code register(1004, ...)} 一行；</li>
@@ -50,9 +50,16 @@ import java.awt.event.MouseMotionAdapter;
  * </ol>
  *
  * <h3>启用方式</h3>
- * <p>默认关闭。在「测试功能」对话框里勾选 mainId {@value #TEST_FUNCTION_MAIN_ID} 后
- * <b>重启应用</b>生效（加载窗只在启动时创建一次）。</p>
+ * <p>默认关闭。在「测试功能」对话框里勾选 mainId {@value #TEST_FUNCTION_MAIN_ID} 后生效；
+ * 对话框类窗口（加载窗、功能弹窗）在创建时读取该开关，因此需要重启应用，
+ * 而自绘弹出菜单每次弹出都会重新读取。</p>
  * <p>代码里也可以用 {@link #setEnabled(Boolean)} 强制开关。</p>
+ *
+ * <h3>支持哪些窗口</h3>
+ * <p>主体 API 面向 {@link JDialog}（{@link #install} / {@link #installBorderless}），
+ * 另外提供两个通用入口给任意 {@link Window}：
+ * {@link #prepareBackdropWindow(Window)}（显示前透明化）与 {@link #activate(Window)}（显示后应用材质），
+ * 自绘弹出菜单 {@code FlyoutMenu} 就是通过它们接入的。</p>
  *
  * <h3>为什么必须去掉原生标题栏</h3>
  * <p>实测（JDK 25 / Windows 10）：带装饰的窗口设置透明背景会抛
@@ -85,8 +92,8 @@ public final class DialogBackdrop {
     /** {@link #installBorderless} 生成的半透明层圆角半径；0 表示直角 */
     public static int CORNER_ARC = 12;
 
-    /** 激活失败时的重试次数与间隔 */
-    private static final int ACTIVATE_MAX_ATTEMPTS = 6;
+    /** 激活失败时的重试次数与间隔。窗口刚显示时 HWND 可能还没被枚举到，需要多试几次 */
+    private static final int ACTIVATE_MAX_ATTEMPTS = 10;
     private static final int ACTIVATE_RETRY_DELAY_MS = 100;
 
     // ==================================================================
@@ -532,30 +539,60 @@ public final class DialogBackdrop {
     // ==================================================================
 
     /**
+     * 通用入口：把<b>任意窗口</b>（例如自绘弹出菜单使用的 {@link javax.swing.JWindow}）
+     * 改造成可以承载原生材质的透明窗口。
+     *
+     * <p>必须在 {@code setVisible(true)} 之前调用。测试项未启用时直接返回 {@code false}，
+     * 窗口保持原有外观。</p>
+     *
+     * @return 是否成功设置为 per-pixel 透明窗口
+     */
+    public static boolean prepareBackdropWindow(Window window) {
+        if (window == null || !isEnabled()) {
+            return false;
+        }
+        try {
+            return WindowBackdrop.prepareTransparent(window);
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
+    /**
      * 应用原生背景材质。窗口显示之后调用（需要真实的 HWND）。
      *
      * @return 是否有原生调用成功；平台不支持时返回 false，不影响窗口正常显示
      */
     public static boolean activate(JDialog dialog) {
-        if (dialog == null || !isEnabled()) {
+        return activate((Window) dialog);
+    }
+
+    /**
+     * 通用入口：给任意窗口应用原生背景材质（{@link #activate(JDialog)} 的通用版本）。
+     *
+     * @return 是否有原生调用成功；平台不支持时返回 false，不影响窗口正常显示
+     */
+    public static boolean activate(Window window) {
+        if (window == null || !isEnabled() || !WindowBackdrop.isSupported()) {
+            // 平台不支持时不做无谓的重试
             return false;
         }
-        return activateWithRetry(dialog, 0);
+        return activateWithRetry(window, 0);
     }
 
     /**
      * 应用材质并重试：刚显示时窗口可能还没被 {@code EnumWindows} 枚举到
      * （只有可见窗口才会被枚举），因此失败后延迟重试若干次。
      */
-    private static boolean activateWithRetry(JDialog dialog, int attempt) {
+    private static boolean activateWithRetry(Window window, int attempt) {
         boolean ok = false;
         try {
-            ok = WindowBackdrop.apply(dialog, WindowBackdrop.Material.MICA, TINT_ABGR);
+            ok = WindowBackdrop.apply(window, WindowBackdrop.Material.MICA, TINT_ABGR);
         } catch (Throwable t) {
             ok = false;
         }
         if (!ok && attempt < ACTIVATE_MAX_ATTEMPTS) {
-            Timer retry = new Timer(ACTIVATE_RETRY_DELAY_MS, e -> activateWithRetry(dialog, attempt + 1));
+            Timer retry = new Timer(ACTIVATE_RETRY_DELAY_MS, e -> activateWithRetry(window, attempt + 1));
             retry.setRepeats(false);
             retry.start();
         }

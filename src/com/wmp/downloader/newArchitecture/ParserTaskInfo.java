@@ -26,6 +26,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -40,6 +43,14 @@ public class ParserTaskInfo {
     private static final String DELETE_ID_KEY = "delete_id";
     private static final String INFO_JSON = "info.json";
     private static final String INTRODUCTION_MD = "introduction.md";
+    /**
+     * 单次网络请求的 connect/read 超时（毫秒）
+     */
+    private static final int PLUGIN_LIST_REQUEST_TIMEOUT_MS = 8000;
+    /**
+     * 获取拓展安装列表的整体硬超时（毫秒），用于兜底 DNS 解析等不受上面超时约束的阻塞
+     */
+    private static final long PLUGIN_LIST_TOTAL_TIMEOUT_MS = 12000;
 
     private static Map<String, URLClassLoader> pluginLoaders = new ConcurrentHashMap<>();
 
@@ -498,7 +509,23 @@ public class ParserTaskInfo {
     }
 
     public static List<InstallPluginParserInfo> getInstallPluginParserInfoList(){
-        return getInstallPluginParserInfoList(DataControl.get("use_github_accelerate", false));
+        boolean useGithubAccelerate = DataControl.get("use_github_accelerate", false);
+
+        //Jsoup 的超时管不住 DNS 解析，没有网络时请求可能长期挂起，
+        //因此这里再用一层硬超时兜底，保证调用方（拓展页）一定会得到结果
+        FutureTask<List<InstallPluginParserInfo>> task =
+                new FutureTask<>(() -> getInstallPluginParserInfoList(useGithubAccelerate));
+        Thread.ofVirtual().name("plugin-list-loader").start(task);
+
+        try {
+            return task.get(PLUGIN_LIST_TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException ex) {
+            task.cancel(true);
+            logger.error("获取拓展安装列表超时（" + PLUGIN_LIST_TOTAL_TIMEOUT_MS + "ms），可能没有网络");
+        } catch (Exception ex) {
+            logger.error("获取拓展安装列表失败", ex);
+        }
+        return null;
     }
 
     private static List<InstallPluginParserInfo> getInstallPluginParserInfoList(boolean useGithubAccelerate) {
@@ -513,6 +540,7 @@ public class ParserTaskInfo {
                     .userAgent("Mozilla/5.0")
                     .ignoreContentType(true)
                     .followRedirects(false)
+                    .timeout(PLUGIN_LIST_REQUEST_TIMEOUT_MS)
                     .method(Connection.Method.GET)
                     .execute();
 

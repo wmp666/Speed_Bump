@@ -15,12 +15,13 @@ import com.wmp.downloader.ui.PreloadDialog;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.4.5.3";
+    public static String VERSION = "0.4.5.4";
 
     public static String PLUGIN_SUPPORT_VERSION = "1.1.2";
 
@@ -30,7 +31,6 @@ public class Run {
         argList = List.of(args);
         String linkPath = null;
         {
-
             if (!argList.isEmpty()) {
 
                 var versionIndex = argList.indexOf("-set:version") + 1;
