@@ -3,12 +3,14 @@ package com.wmp.downloader.tools.ui;
 import com.wmp.downloader.tools.TestFunctionControl;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -24,6 +26,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Window;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -98,6 +102,9 @@ public final class DialogBackdrop {
     /** 手动覆盖开关：null 表示未启用（默认）。测试项会在窗口创建前调用 {@link #applyTestFunctionSwitch()} 设置它 */
     private static Boolean enabledOverride = null;
 
+    /** 测试项开关是否已读取过：进程内只读一次，避免每次弹窗都去读文件 */
+    private static boolean switchLoaded = false;
+
     /** 手动覆盖开关；传 null 恢复默认（关闭） */
     public static void setEnabled(Boolean enabled) {
         enabledOverride = enabled;
@@ -125,6 +132,10 @@ public final class DialogBackdrop {
      * 之后 {@code DataControl.load()} 再次调用它也不会产生副作用。</p>
      */
     public static void applyTestFunctionSwitch() {
+        if (switchLoaded) {
+            // 进程内只读一次：测试项的改动按设计需要重启才生效
+            return;
+        }
         try {
             TestFunctionControl.load();
             setEnabled(TestFunctionControl.enableIDList().contains(TEST_FUNCTION_MAIN_ID));
@@ -132,6 +143,7 @@ public final class DialogBackdrop {
             // 测试项列表不可用时保持关闭，绝不影响启动流程
             setEnabled(Boolean.FALSE);
         }
+        switchLoaded = true;
     }
 
     // ==================================================================
@@ -192,14 +204,47 @@ public final class DialogBackdrop {
         }
 
         // 把原有内容整体包进一层，上方放自绘标题栏
-        JPanel wrapper = new JPanel(new BorderLayout());
-        wrapper.setOpaque(false);
+        JPanel wrapper = new BackdropLayer();
         wrapper.add(createTitleBar(dialog, title, autoCenterTimer), BorderLayout.NORTH);
         if (oldContent != null) {
             wrapper.add(oldContent, BorderLayout.CENTER);
         }
         dialog.setContentPane(wrapper);
+
+        // 自绘标题栏会占掉窗口高度，补偿最小尺寸，保证内容区不小于调用方设定的值
+        Dimension min = dialog.getMinimumSize();
+        if (min != null && min.height > 0) {
+            dialog.setMinimumSize(new Dimension(min.width, min.height + TITLE_BAR_HEIGHT));
+        }
+
+        // 缩放后强制整窗重绘：透明缓冲里可能仍留着旧尺寸的画面
+        dialog.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                dialog.repaint();
+            }
+        });
         return true;
+    }
+
+    /**
+     * 透明窗口的内容层：自身不绘制任何背景，让材质直接透出。
+     *
+     * <p>这里刻意<b>不做</b>手工清屏：JDK 的 {@code RepaintManager} 对 per-pixel 透明窗口
+     * 本来就会用 {@code AlphaComposite} 清除脏区，手工再 Clear 一次属于重复操作，
+     * 反而可能干扰 Swing 的双缓冲，出现内容缺失或闪烁。</p>
+     */
+    private static final class BackdropLayer extends JPanel {
+
+        BackdropLayer() {
+            super(new BorderLayout());
+            setOpaque(false);
+        }
+
+        @Override
+        public boolean isOpaque() {
+            return false;
+        }
     }
 
     /**
@@ -344,6 +389,145 @@ public final class DialogBackdrop {
     }
 
     // ==================================================================
+    // 标签页尺寸跟随
+    // ==================================================================
+
+    /**
+     * 让窗口尺寸跟随 {@link JTabbedPane} 的「当前选中页」，而不是所有页的最大值。
+     *
+     * <p><b>为什么需要它：</b>{@code JTabbedPane.getPreferredSize()} 由
+     * {@code BasicTabbedPaneUI.calculateSize()} 计算，而它的逻辑是
+     * <i>“Determine minimum size required to display largest child in each dimension”</i>
+     * ——遍历<b>所有</b>标签页取最大尺寸。所以切换标签页时 {@code preferredSize} 恒定不变，
+     * 依赖它的 {@code pack()} 自然也不会调整窗口大小。这是 JDK 的既定行为，与本功能无关。</p>
+     *
+     * <p>这里通过给 tabbedPane 显式设置 {@code preferredSize}（= 当前页尺寸 + 标签栏高度）
+     * 来绕过该行为，使原本的 {@code pack()} 逻辑自动生效。</p>
+     *
+     * <p>必须在窗口已经显示、且 tabbedPane 完成过一次布局之后调用效果最好；
+     * 若首次调用时标签栏高度尚未测出，会在后续布局中自动补上。</p>
+     *
+     * @param dialog 承载该 tabbedPane 的窗口
+     * @param tabs   需要跟随的标签页面板
+     */
+    /** 窗口 -> 需要跟随尺寸的 tabbedPane 的绑定键 */
+    private static final String TAB_BINDING_KEY = "DialogBackdrop.tabbedPane";
+    /** tabbedPane -> 标签栏（tab 行 + insets）高度缓存键 */
+    private static final String TAB_CHROME_KEY = "DialogBackdrop.tabChromeHeight";
+
+    public static void bindTabbedPaneResize(JDialog dialog, JTabbedPane tabs) {
+        if (dialog == null || tabs == null || !isEnabled()) {
+            return;
+        }
+        // 记录绑定：refreshTabbedPaneSize() 需要通过窗口找回这个 tabbedPane
+        // （JDialog 不是 JComponent，client property 挂在 rootPane 上）
+        JRootPane rootPane = dialog.getRootPane();
+        if (rootPane == null) {
+            return;
+        }
+        rootPane.putClientProperty(TAB_BINDING_KEY, tabs);
+
+        ComponentAdapter tracker = new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                rememberChromeHeight(tabs);
+                refreshTabbedPaneSize(dialog);
+            }
+        };
+        tabs.addComponentListener(tracker);
+        dialog.addComponentListener(tracker);
+
+        tabs.addChangeListener(e -> SwingUtilities.invokeLater(() -> {
+            rememberChromeHeight(tabs);
+            refreshTabbedPaneSize(dialog);
+        }));
+        SwingUtilities.invokeLater(() -> {
+            rememberChromeHeight(tabs);
+            refreshTabbedPaneSize(dialog);
+        });
+    }
+
+    /**
+     * 让 tabbedPane 的 preferredSize 重新等于「当前选中页尺寸 + 标签栏高度」。
+     *
+     * <p><b>调用方应在每次 {@code pack()} 之前调用它。</b>只监听标签页切换是不够的——
+     * 当前页自身的内容尺寸发生变化时（异步加载、展开折叠、列表增删等）同样需要刷新，
+     * 否则 preferredSize 会停留在上一次的快照上，窗口大小就不再跟随。
+     * 这正是「与标签页切换无关的大小失效」的成因。</p>
+     */
+    public static void refreshTabbedPaneSize(JDialog dialog) {
+        if (dialog == null || !isEnabled()) {
+            return;
+        }
+        JRootPane rootPane = dialog.getRootPane();
+        Object binding = (rootPane != null) ? rootPane.getClientProperty(TAB_BINDING_KEY) : null;
+        if (!(binding instanceof JTabbedPane tabs)) {
+            return;
+        }
+        int chromeHeight = chromeHeightOf(tabs);
+        if (chromeHeight <= 0) {
+            return;
+        }
+        Component page = tabs.getSelectedComponent();
+        if (page == null) {
+            return;
+        }
+        Dimension pageSize = page.getPreferredSize();
+        Dimension target = new Dimension(pageSize.width, pageSize.height + chromeHeight);
+        if (!target.equals(tabs.getPreferredSize())) {
+            tabs.setPreferredSize(target);
+            tabs.revalidate();
+        }
+    }
+
+    /**
+     * 记录标签栏（tab 行 + insets）占用的高度：由「容器高度 − 当前页实际高度」反推。
+     *
+     * <p>只记录一次——之后窗口可能被最小/最大尺寸约束，那时反推出的值不再可靠。</p>
+     */
+    private static void rememberChromeHeight(JTabbedPane tabs) {
+        if (chromeHeightOf(tabs) > 0) {
+            return;
+        }
+        Component page = tabs.getSelectedComponent();
+        if (page == null) {
+            return;
+        }
+        int tabHeight = tabs.getHeight();
+        int pageHeight = page.getHeight();
+        if (tabHeight > 0 && pageHeight > 0 && tabHeight > pageHeight) {
+            tabs.putClientProperty(TAB_CHROME_KEY, tabHeight - pageHeight);
+        }
+    }
+
+    private static int chromeHeightOf(JTabbedPane tabs) {
+        Object value = tabs.getClientProperty(TAB_CHROME_KEY);
+        return (value instanceof Integer i) ? i : 0;
+    }
+
+    /**
+     * 在容器树里查找第一个 {@link JTabbedPane}（含递归）。
+     * 供调用方在只拿到外层面板引用时使用。
+     */
+    public static JTabbedPane findTabbedPane(Container container) {
+        if (container == null) {
+            return null;
+        }
+        for (Component child : container.getComponents()) {
+            if (child instanceof JTabbedPane tabs) {
+                return tabs;
+            }
+            if (child instanceof Container nested) {
+                JTabbedPane found = findTabbedPane(nested);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
+        return null;
+    }
+
+    // ==================================================================
     // 显示后：应用原生材质
     // ==================================================================
 
@@ -419,7 +603,7 @@ public final class DialogBackdrop {
     }
 
     private static JButton createCloseButton(JDialog dialog) {
-        JButton close = new JButton("✕");
+        JButton close = new JButton();
         close.setFocusable(false);
         close.setContentAreaFilled(false);
         close.setBorderPainted(false);
@@ -429,6 +613,18 @@ public final class DialogBackdrop {
         close.setToolTipText("关闭");
         close.setMargin(new java.awt.Insets(0, 0, 0, 0));
         close.setPreferredSize(new Dimension(30, TITLE_BAR_HEIGHT - 12));
+
+        // 优先用主题自带的窗口关闭图标；
+        // 取不到时退回 "×"（U+00D7 乘号）——不要用 "✕"（U+2715），
+        // 微软雅黑等中文字体里没有该字形，会渲染成空白，看起来就是「按钮没有文字」。
+        Icon closeIcon = UIManager.getIcon("InternalFrame.closeIcon");
+        if (closeIcon != null) {
+            close.setIcon(closeIcon);
+        } else {
+            close.setText("\u00d7");
+            close.setFont(close.getFont().deriveFont(Font.BOLD,
+                    close.getFont().getSize2D() + 4f));
+        }
         // 与原 DISPOSE_ON_CLOSE 行为一致：关闭后 result 保持 RESULT_EXIT
         close.addActionListener(e -> {
             Window w = SwingUtilities.getWindowAncestor(close);

@@ -87,7 +87,8 @@ public class TestFunctionControl {
         register(1001, (short) 2, "翻译");
         register(1002, (short) 1, "设置主窗口置顶，这会导致许多界面异常！");
         register(1003, (short) 1, "显示剪切板监听设置");
-        register(1004, (short) 1, "启动加载窗使用 Mica/模糊背景材质（重启后生效）");
+        register(1004, (short) 1, "启动预加载窗使用 Mica/模糊背景材质（重启后生效）");
+        register(1004, (short) 2, "启动独立的功能弹窗使用 Mica/模糊背景材质（重启后生效）");
     }
 
     public static HashMap<Integer, HashMap<Short, String>> getAllTip(){

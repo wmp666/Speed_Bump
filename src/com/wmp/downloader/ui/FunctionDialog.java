@@ -4,6 +4,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
+import com.wmp.downloader.tools.ui.DialogBackdrop;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import raven.modal.ModalDialog;
@@ -146,6 +147,23 @@ public class FunctionDialog extends JDialog {
             this.setModal(true);
             this.add(UIPanel);
 
+            // ===== [BACKDROP-START] 背景材质（Mica / 模糊）测试项 =====
+            // 整块删除即可彻底移除该功能，对话框恢复原生标题栏外观。
+            // 开关：在「测试功能」里启用 mainId 1004（重启生效）；也可用 DialogBackdrop.setEnabled(...)。
+            // 必须放在 pack() 之前：窗口一旦 displayable，就既不能再去掉装饰、也不能设为透明。
+            // 注意：带原生装饰的窗口无法透明（JDK 会抛 IllegalComponentStateException），
+            //      所以这里会去掉标题栏并由 DialogBackdrop 自绘一条。
+            DialogBackdrop.applyTestFunctionSwitch();
+            DialogBackdrop.install(this, title, packTimer);
+            DialogBackdrop.makeTranslucent(UIPanel);
+            DialogBackdrop.makeTranslucent(DialogBackdrop.BUTTONS_ALPHA, ButtonsPanel);
+            DialogBackdrop.makeTransparent(taskPanel, northButtonPanel);
+            // functionPanel 里若有标签页，让窗口大小跟随「当前选中页」：
+            // JTabbedPane 的 preferredSize 取的是所有页的最大值，切换页不会改变它，
+            // 不额外处理的话窗口大小就一直不动。
+            DialogBackdrop.bindTabbedPaneResize(this, DialogBackdrop.findTabbedPane(functionPanel));
+            // ===== [BACKDROP-END] =====
+
             for (var i = 0; i < buttons.length; i++) {
                 var button = buttons[i];
                 JButton jButton = new JButton(button.text());
@@ -167,6 +185,12 @@ public class FunctionDialog extends JDialog {
             this.setLocationRelativeTo(c);
 
             packTimer.start();
+
+            // ===== [BACKDROP-START] 应用原生背景材质 =====
+            // setVisible(true) 会阻塞在模态事件循环上，而 HWND 要等窗口可见后才能枚举到，
+            // 因此把激活动作排进 EDT 队列（activate 内部带重试），不改动原有显示流程。
+            SwingUtilities.invokeLater(() -> DialogBackdrop.activate(this));
+            // ===== [BACKDROP-END] =====
 
             this.requestFocus();
             this.setVisible(true);
@@ -293,6 +317,11 @@ public class FunctionDialog extends JDialog {
 
     @Override
     public void pack() {
+        // ===== [BACKDROP-START] 让标签页尺寸跟随「当前选中页」（含页面内容变化）=====
+        // 必须放在读取 getPreferredSize() 之前，否则算出的还是上一次的快照。
+        DialogBackdrop.refreshTabbedPaneSize(this);
+        // ===== [BACKDROP-END] =====
+
         //判断大小
         var preferredSize = this.getPreferredSize();
         var minimumSize = this.getMinimumSize();

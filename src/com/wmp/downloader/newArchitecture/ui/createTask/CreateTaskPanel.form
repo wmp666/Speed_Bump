@@ -22,6 +22,7 @@
               <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="common"/>
             </constraints>
             <properties>
+              <doubleBuffered value="false"/>
               <opaque value="false"/>
             </properties>
             <border type="none"/>
@@ -171,7 +172,10 @@
                 <children>
                   <grid id="f77d6" binding="linkInfoPanel" custom-create="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <doubleBuffered value="false"/>
+                      <opaque value="false"/>
+                    </properties>
                     <border type="empty">
                       <size top="5" left="5" bottom="5" right="5"/>
                     </border>

@@ -10,13 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="。。。">
+      <change beforePath="$PROJECT_DIR$/.build/proto/ProtocolProbe.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.build/proto/ProtocolProbe.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/MaskOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/MaskOverlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/MaskWatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/MaskWatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/ScreenScale.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/ScreenScale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/WinNative.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/WinNative.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/WindowMaskSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/com/wmp/windowmask/WindowMaskSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/introduction.md" beforeDir="false" afterPath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/src/introduction.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/CreateTaskPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/TestFunctionControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/TestFunctionControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/DialogBackdrop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/DialogBackdrop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -412,7 +413,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>
           <line>165</line>
-          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel" method="getJsonInfo">
+          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
