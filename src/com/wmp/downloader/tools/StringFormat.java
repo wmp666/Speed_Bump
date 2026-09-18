@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class StringFormat {
-    private static final String BUNDLE_PREFIX = "com.wmp.downloader.laug.";
+    private static final String BUNDLE_PREFIX = "com.wmp.speed_bump.common.background.resource.laug.";
 
     private static ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_PREFIX + "laug", Locale.getDefault());
 

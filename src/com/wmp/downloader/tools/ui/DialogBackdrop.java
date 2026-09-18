@@ -86,6 +86,33 @@ public final class DialogBackdrop {
     /** 传给 Win10 blur/acrylic 的着色（ABGR），仅部分模式使用 */
     public static final int TINT_ABGR = 0x66202020;
 
+    /**
+     * 实际使用的材质。<b>{@code null}（默认）表示按系统版本自动选择</b>：
+     * <ul>
+     *   <li>Windows 7 及更早 → {@code AERO}：{@code DwmEnableBlurBehindWindow}，
+     *       Aero Glass 在这些系统上是原生能力</li>
+     *   <li>Windows 8 及以后 → {@code BLUR}：{@code SetWindowCompositionAttribute}，
+     *       因为微软在 Win8 移除了 Aero Glass，该 API 之后返回成功但无效果</li>
+     * </ul>
+     *
+     * <p>需要手工指定时改这一个字段即可，可选值：{@code BLUR} / {@code AERO} /
+     * {@code MICA} / {@code ACRYLIC} / {@code TABBED} / {@code NONE}。</p>
+     */
+    public static WindowBackdrop.Material MATERIAL = null;
+
+    /**
+     * 是否允许通过自绘标题栏拖动窗口。
+     *
+     * <p><b>默认 {@code false}：应用背景材质后窗口不可拖动。</b></p>
+     *
+     * <p>无边框窗口只有标题栏能发起拖动，所以关闭后对话框会固定在使用方给定的位置
+     * （{@code FunctionDialog} 由 {@code packTimer} 持续居中）。</p>
+     *
+     * <p>另需注意：拖动支持原本还承担「用户拖动后停掉调用方的自动居中定时器」这一职责，
+     * 关闭拖动后该副作用一并消失，{@code install(...)} 的 {@code autoCenterTimer} 参数不再起作用。</p>
+     */
+    public static boolean enableDragToMove = false;
+
     /** 标题栏高度 */
     private static final int TITLE_BAR_HEIGHT = 34;
 
@@ -581,13 +608,31 @@ public final class DialogBackdrop {
     }
 
     /**
+     * 解析实际要用的材质：{@link #MATERIAL} 有值时优先，否则按系统版本自动选择。
+     *
+     * <p>Windows 7 及更早用 Aero Glass；Windows 8 起该能力被移除，
+     * 改用 {@code SetWindowCompositionAttribute} 模糊。</p>
+     */
+    private static WindowBackdrop.Material resolveMaterial() {
+        if (MATERIAL != null) {
+            return MATERIAL;
+        }
+        int build = WindowBackdrop.windowsBuild();
+        // Windows 7 = 7601、Vista = 6002、XP = 2600；Windows 8 = 9200
+        if (build > 0 && build < 8000) {
+            return WindowBackdrop.Material.AERO;
+        }
+        return WindowBackdrop.Material.BLUR;
+    }
+
+    /**
      * 应用材质并重试：刚显示时窗口可能还没被 {@code EnumWindows} 枚举到
      * （只有可见窗口才会被枚举），因此失败后延迟重试若干次。
      */
     private static boolean activateWithRetry(Window window, int attempt) {
         boolean ok = false;
         try {
-            ok = WindowBackdrop.apply(window, WindowBackdrop.Material.MICA, TINT_ABGR);
+            ok = WindowBackdrop.apply(window, resolveMaterial(), TINT_ABGR);
         } catch (Throwable t) {
             ok = false;
         }
@@ -635,7 +680,9 @@ public final class DialogBackdrop {
         east.add(close, BorderLayout.EAST);
         bar.add(east, BorderLayout.EAST);
 
-        installDragSupport(bar, dialog, autoCenterTimer);
+        if (enableDragToMove) {
+            installDragSupport(bar, dialog, autoCenterTimer);
+        }
         return bar;
     }
 

@@ -21,7 +21,7 @@
           <grid id="75eb2" binding="installedPluginsPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="plugins.install"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="plugins.install"/>
             </constraints>
             <properties>
               <opaque value="false"/>
@@ -131,7 +131,7 @@
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="plugins.plugin_support_version"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="plugins.plugin_support_version"/>
                                 </properties>
                               </component>
                               <hspacer id="158ac">
@@ -146,7 +146,7 @@
                               <grid row="2" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="uninstall"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="uninstall"/>
                             </properties>
                           </component>
                           <hspacer id="8de3e">
@@ -202,7 +202,7 @@
           <grid id="64911" binding="installPluginsPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="install"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="install"/>
             </constraints>
             <properties>
               <enabled value="false"/>
@@ -306,7 +306,7 @@
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="plugins.plugin_support_version"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="plugins.plugin_support_version"/>
                                 </properties>
                               </component>
                               <hspacer id="76e11">
@@ -338,7 +338,7 @@
                             </constraints>
                             <properties>
                               <rolloverEnabled value="true"/>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="install"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="install"/>
                             </properties>
                           </component>
                           <component id="8be1e" class="javax.swing.JSeparator">
@@ -363,7 +363,7 @@
                       <component id="d1ffa" class="javax.swing.JButton" binding="installPluginParserListRefreshButton">
                         <constraints border-constraint="South"/>
                         <properties>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="plugins.install.list_resfresh"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="plugins.install.list_resfresh"/>
                         </properties>
                       </component>
                       <component id="a3b1c" class="javax.swing.JProgressBar" binding="installPluginParserListProgressBar">

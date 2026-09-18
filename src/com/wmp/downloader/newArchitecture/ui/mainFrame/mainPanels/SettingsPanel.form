@@ -24,15 +24,15 @@
             <constraints/>
             <properties>
               <opaque value="false"/>
-              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.refresh"/>
-              <toolTipText resource-bundle="com/wmp/downloader/laug/laug" key="settings.refresh.tool_tip_text"/>
+              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.refresh"/>
+              <toolTipText resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.refresh.tool_tip_text"/>
             </properties>
           </component>
           <component id="c2a12" class="javax.swing.JButton" binding="saveButton">
             <constraints/>
             <properties>
               <opaque value="false"/>
-              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.save"/>
+              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.save"/>
             </properties>
           </component>
         </children>
@@ -46,7 +46,7 @@
         <children>
           <scrollpane id="5c253" binding="personalizedSetsScrollPane">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="settings.personalized"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="settings.personalized"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -73,7 +73,7 @@
                     <properties>
                       <opaque value="false"/>
                       <special value="true"/>
-                      <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.theme"/>
+                      <title resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.theme"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -92,7 +92,7 @@
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.theme"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.theme"/>
                             </properties>
                           </component>
                           <component id="a38ff" class="javax.swing.JComboBox" binding="themeComboBox" default-binding="true">
@@ -108,7 +108,7 @@
                               <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_use_heavy_weght.toast"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.is_use_heavy_weght.toast"/>
                             </properties>
                           </component>
                           <grid id="51d55" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -126,7 +126,7 @@
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.accent_color"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.accent_color"/>
                                 </properties>
                               </component>
                               <component id="b784f" class="javax.swing.JTextField" binding="accentColorTextField">
@@ -152,7 +152,7 @@
                               <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_use_square_component"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.is_use_square_component"/>
                             </properties>
                           </component>
                           <grid id="55575" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -174,7 +174,7 @@
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.function_dialog_style.tip"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.function_dialog_style.tip"/>
                                 </properties>
                               </component>
                             </children>
@@ -191,7 +191,7 @@
                     <properties>
                       <collapsed value="false"/>
                       <opaque value="false"/>
-                      <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.background"/>
+                      <title resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.background"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -227,7 +227,7 @@
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="mode"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="mode"/>
                                 </properties>
                               </component>
                               <component id="5fb36" class="javax.swing.JComboBox" binding="BackgroundModeComboBox">
@@ -255,7 +255,7 @@
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.background.alpha"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.background.alpha"/>
                                 </properties>
                               </component>
                               <component id="991e5" class="javax.swing.JSlider" binding="alphaSlider">
@@ -282,7 +282,7 @@
                     <properties>
                       <collapsed value="true"/>
                       <opaque value="false"/>
-                      <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.text_ui_control"/>
+                      <title resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.text_ui_control"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -301,7 +301,7 @@
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.font"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.font"/>
                             </properties>
                           </component>
                           <component id="eae6e" class="javax.swing.JComboBox" binding="FontListComboBox">
@@ -321,7 +321,7 @@
                               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.font_size"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.font_size"/>
                             </properties>
                           </component>
                           <grid id="d6604" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -339,7 +339,7 @@
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.laug"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.laug"/>
                                 </properties>
                               </component>
                               <component id="262d2" class="javax.swing.JComboBox" binding="laugComboBox">
@@ -357,7 +357,7 @@
                                 </constraints>
                                 <properties>
                                   <foreground color="-846828"/>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.laug.tip"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.laug.tip"/>
                                 </properties>
                               </component>
                               <component id="8b733" class="javax.swing.JCheckBox" binding="isStartCheckUpdateCheckBox">
@@ -366,7 +366,7 @@
                                 </constraints>
                                 <properties>
                                   <selected value="true"/>
-                                  <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.is_start_check_update"/>
+                                  <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.is_start_check_update"/>
                                 </properties>
                               </component>
                             </children>
@@ -381,7 +381,7 @@
           </scrollpane>
           <scrollpane id="bc5a7" binding="platformSetsScrollPane" custom-create="true">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="settings.platform"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="settings.platform"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -400,7 +400,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.file_association"/>
+                      <title resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.file_association"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -434,7 +434,7 @@
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.other_settings"/>
+                      <title resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.other_settings"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -443,7 +443,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.other_settings.is_start_up"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.other_settings.is_start_up"/>
                         </properties>
                       </component>
                       <vspacer id="e96c">
@@ -456,7 +456,7 @@
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.personalized.other_settings.is_use_system_msg"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.other_settings.is_use_system_msg"/>
                         </properties>
                       </component>
                     </children>
@@ -467,7 +467,7 @@
           </scrollpane>
           <scrollpane id="d773b" binding="downloadSetsScrollPane">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="settings.web"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="settings.web"/>
             </constraints>
             <properties>
               <enabled value="true"/>
@@ -496,7 +496,7 @@
                     <properties>
                       <opaque value="false"/>
                       <special value="true"/>
-                      <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.download_settings"/>
+                      <title resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.web.download_settings"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -515,7 +515,7 @@
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.thread_num"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.web.thread_num"/>
                             </properties>
                           </component>
                           <component id="f7478" class="javax.swing.JTextField" binding="ThreadNumLabel">
@@ -563,7 +563,7 @@
                         </constraints>
                         <properties>
                           <opaque value="false"/>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseClipBoardListener"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.web.isUseClipBoardListener"/>
                         </properties>
                       </component>
                     </children>
@@ -575,7 +575,7 @@
                     </constraints>
                     <properties>
                       <opaque value="false"/>
-                      <title resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.web_settings"/>
+                      <title resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.web.web_settings"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -585,7 +585,7 @@
                         </constraints>
                         <properties>
                           <opaque value="false"/>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.isUseSsl"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.web.isUseSsl"/>
                         </properties>
                       </component>
                       <grid id="bd0c1" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -603,7 +603,7 @@
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.web.port_settings"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.web.port_settings"/>
                             </properties>
                           </component>
                           <component id="c0f65" class="javax.swing.JTextField" binding="portTextField">
@@ -621,7 +621,7 @@
                               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="save"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="save"/>
                             </properties>
                           </component>
                           <component id="bf073" class="javax.swing.JButton" binding="PortDefaultButton">
@@ -629,7 +629,7 @@
                               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text resource-bundle="com/wmp/downloader/laug/laug" key="set_default"/>
+                              <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="set_default"/>
                             </properties>
                           </component>
                         </children>
@@ -642,7 +642,7 @@
           </scrollpane>
           <scrollpane id="f145d" binding="DataControlSetsScrollPane">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="settings.data_control"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="settings.data_control"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -662,7 +662,7 @@
                     <properties>
                       <foreground color="-846828"/>
                       <opaque value="false"/>
-                      <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.data_control.delete_temp_folder"/>
+                      <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.data_control.delete_temp_folder"/>
                     </properties>
                   </component>
                   <grid id="7802" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -681,7 +681,7 @@
                         </constraints>
                         <properties>
                           <opaque value="false"/>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.data_control.data_path"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.data_control.data_path"/>
                         </properties>
                       </component>
                       <vspacer id="d962d">
@@ -695,7 +695,7 @@
                         </constraints>
                         <properties>
                           <opaque value="false"/>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="settings.data_control.download_files_path"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.data_control.download_files_path"/>
                         </properties>
                       </component>
                     </children>

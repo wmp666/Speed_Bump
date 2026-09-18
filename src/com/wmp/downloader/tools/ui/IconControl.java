@@ -28,9 +28,11 @@ public class IconControl {
 
 
     public static ImageIcon getIcon(String key) {
-
-        var iconPath = iconProperties.getProperty(key, "/icon/%theme_type%/12-misc/circle.png");
+        logger.info("正在获取" + key + "的对应图标");
+        var iconPath = iconProperties.getProperty(key, "/com/wmp/speed_bump/common/background/resource/icon/%theme_type%/12-misc/circle.png");
         iconPath = iconPath.replace("%theme_type%", DataControl.get("theme_type", "light"));
+        logger.info(iconPath);
+
         return new ImageIcon(IconControl.class.getResource(iconPath));
     }
 

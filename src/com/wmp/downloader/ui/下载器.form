@@ -21,7 +21,7 @@
         <children>
           <grid id="f7541" binding="downloaderPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="task"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="task"/>
             </constraints>
             <properties>
               <opaque value="false"/>
@@ -56,8 +56,8 @@
                       <requestFocusEnabled value="true"/>
                       <rolloverEnabled value="true"/>
                       <selected value="false"/>
-                      <text resource-bundle="com/wmp/downloader/laug/laug" key="task.creat_task"/>
-                      <toolTipText resource-bundle="com/wmp/downloader/laug/laug" key="task.creat_task.tool_tip_text"/>
+                      <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="task.creat_task"/>
+                      <toolTipText resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="task.creat_task.tool_tip_text"/>
                     </properties>
                   </component>
                   <hspacer id="e642">
@@ -81,7 +81,7 @@
                         </constraints>
                         <properties>
                           <opaque value="false"/>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="task.taskControl.allStart"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="task.taskControl.allStart"/>
                         </properties>
                       </component>
                       <hspacer id="f92a0">
@@ -95,7 +95,7 @@
                         </constraints>
                         <properties>
                           <opaque value="false"/>
-                          <text resource-bundle="com/wmp/downloader/laug/laug" key="task.taskControl.allPause"/>
+                          <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="task.taskControl.allPause"/>
                         </properties>
                       </component>
                     </children>
@@ -122,7 +122,7 @@
           </grid>
           <grid id="3f2e6" binding="settingsPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="settings"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="settings"/>
             </constraints>
             <properties>
               <opaque value="false"/>
@@ -134,7 +134,7 @@
           </grid>
           <grid id="ab4a3" binding="SpecialSettingsPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="special_settings"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="special_settings"/>
             </constraints>
             <properties>
               <opaque value="false"/>
@@ -146,7 +146,7 @@
           </grid>
           <grid id="ae5b5" binding="pluginParserControlPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="plugins"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="plugins"/>
             </constraints>
             <properties>
               <opaque value="false"/>
@@ -156,7 +156,7 @@
           </grid>
           <grid id="f9c8d" binding="aboutPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
-              <tabbedpane title-resource-bundle="com/wmp/downloader/laug/laug" title-key="about"/>
+              <tabbedpane title-resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" title-key="about"/>
             </constraints>
             <properties>
               <opaque value="false"/>

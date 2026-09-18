@@ -49,10 +49,15 @@ public class FileAssociationPanel extends JPanel{
 
         suffixLabel.putClientProperty("FlatLaf.style", "font: $h1.font");
         suffixLabel.setText(description);
-        suffixLabel.setIcon(
-                new ImageIcon(
-                        new ImageIcon(FileAssociationPanel.class.getResource(iconPath + ".png")).getImage()
-                        .getScaledInstance(suffixLabel.getFont().getSize(), suffixLabel.getFont().getSize(), Image.SCALE_SMOOTH)));
+        try {
+            suffixLabel.setIcon(
+                    new ImageIcon(
+                            new ImageIcon(FileAssociationPanel.class.getResource("/com/wmp/speed_bump/common/background/resource/icon/file_assoication/" + iconPath + ".png")).getImage()
+                            .getScaledInstance(suffixLabel.getFont().getSize(), suffixLabel.getFont().getSize(), Image.SCALE_SMOOTH)));
+        } catch (Exception e) {
+            logger.error("", e);
+            suffixLabel.setIcon(IconControl.getIcon("null", suffixLabel.getFont().getSize()));
+        }
 
         localIconPath = new File(DataControl.getDataPath(), "/file_icon/" + suffix + iconAssociation).getAbsolutePath();
 

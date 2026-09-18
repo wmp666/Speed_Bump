@@ -48,7 +48,7 @@
             <properties>
               <opaque value="false"/>
               <text value=""/>
-              <toolTipText resource-bundle="com/wmp/downloader/laug/laug" key="close"/>
+              <toolTipText resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="close"/>
             </properties>
           </component>
           <component id="792bf" class="javax.swing.JButton" binding="openInFolderButton">
@@ -60,7 +60,7 @@
             <properties>
               <opaque value="false"/>
               <text value=""/>
-              <toolTipText resource-bundle="com/wmp/downloader/laug/laug" key="task.download_task.open_folder"/>
+              <toolTipText resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="task.download_task.open_folder"/>
             </properties>
           </component>
           <component id="6e51c" class="javax.swing.JButton" binding="openButton">
@@ -72,7 +72,7 @@
             <properties>
               <opaque value="false"/>
               <text value=""/>
-              <toolTipText resource-bundle="com/wmp/downloader/laug/laug" key="task.download_task.open_file"/>
+              <toolTipText resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="task.download_task.open_file"/>
             </properties>
           </component>
           <component id="de0e9" class="javax.swing.JButton" binding="downloadControlButton">

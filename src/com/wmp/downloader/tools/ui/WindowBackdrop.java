@@ -47,6 +47,12 @@ import java.util.WeakHashMap;
  * SetWindowCompositionAttribute(HOSTBACKDROP=5) -&gt; 无效果
  * </pre>
  *
+ * <h3>Windows 11 上的补充结论</h3>
+ * <p>{@code DwmSetWindowAttribute(SYSTEMBACKDROP_TYPE)} 在 Win11 上会<b>返回成功</b>，
+ * 但 Swing 的 per-pixel 透明窗口是 layered 窗口，DWM 并不会真的渲染 Mica：
+ * 既看不到效果，又因为返回值是成功而不会触发回退分支。
+ * 因此本类默认<b>强制走模糊路径</b>，见 {@link #forceBlurInsteadOfMica}。</p>
+ *
  * <h3>用法</h3>
  * <pre>{@code
  * JFrame frame = new JFrame("Demo");
@@ -67,7 +73,11 @@ public final class WindowBackdrop {
 
     /** 背景材质 */
     public enum Material {
-        /** Win11 22H2+：云母，对桌面壁纸取色并轻度模糊；Win10 上自动回退为 BLUR */
+        /**
+         * Win11 22H2+：云母，对桌面壁纸取色并轻度模糊。
+         * 注意：layered 窗口（Swing 的透明窗口）下 DWM 不会真正渲染它，
+         * 默认会被 {@link #forceBlurInsteadOfMica} 转成 {@link #BLUR}。
+         */
         MICA(2, -1),
         /** Win11 22H2+：亚克力，比云母更透明 */
         ACRYLIC(3, 4),
@@ -75,6 +85,13 @@ public final class WindowBackdrop {
         TABBED(4, -1),
         /** Win10 1803+：模糊窗口背后的一切内容（实测唯一真正产生模糊的 Win10 方案） */
         BLUR(-1, 3),
+        /**
+         * 传统 Aero 玻璃：{@code DwmEnableBlurBehindWindow} + 整窗扩展玻璃区。
+         *
+         * <p><b>只在 Windows Vista / 7 上有效。</b>Windows 8 移除了 Aero Glass，
+         * 该 API 从 Win8 起会返回成功但没有任何视觉效果，Win10/11 同样无效。</p>
+         */
+        AERO(-2, -2),
         /** 关闭材质 */
         NONE(1, 0);
 
@@ -92,6 +109,8 @@ public final class WindowBackdrop {
     private static final int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
     private static final int DWMWA_SYSTEMBACKDROP_TYPE = 38;
     private static final int DWMWA_MICA_EFFECT = 1029;
+    /** DWM_BLURBEHIND.dwFlags：启用模糊（Aero Glass） */
+    private static final int DWM_BB_ENABLE = 0x00000001;
     private static final int WCA_ACCENT_POLICY = 19;
     private static final int ACCENT_ENABLE_BLURBEHIND = 3;
     private static final int ACCENT_ENABLE_ACRYLICBLURBEHIND = 4;
@@ -129,6 +148,22 @@ public final class WindowBackdrop {
     }
 
     /**
+     * 是否跳过 DWM（Mica / Acrylic）而强制使用 {@code SetWindowCompositionAttribute} 模糊。
+     *
+     * <p><b>默认为 {@code true}</b>，原因是实测发现：Mica 要求窗口<b>不是 layered 窗口</b>，
+     * 而 Swing 的 per-pixel 透明窗口恰恰是 layered 的（内容由应用逐像素提供）。</p>
+     *
+     * <p>后果很隐蔽：在 Windows 11 上
+     * {@code DwmSetWindowAttribute(SYSTEMBACKDROP_TYPE)} 会<b>返回成功</b>，
+     * 但 DWM 并不会真的渲染 Mica —— 于是既看不到效果，又因为返回值是成功
+     * 而不会触发下面的回退分支，最终表现为「Mica 在 Win11 上没用」。</p>
+     *
+     * <p>所以这里直接走模糊路径（Win10 1803+ 与 Win11 都可用）。
+     * 若将来承载材质的窗口改为非 layered 窗口，可把它设为 {@code false} 以启用真正的 Mica。</p>
+     */
+    public static boolean forceBlurInsteadOfMica = true;
+
+    /**
      * 应用背景材质，自动按系统版本选择实现（Win11 走 DWM，Win10 回退 blur）。
      *
      * @param window 目标窗口，须为无边框透明窗口
@@ -162,15 +197,18 @@ public final class WindowBackdrop {
         }
 
         boolean ok = false;
-        if (material.dwmBackdropType >= 0) {
+        if (material == Material.AERO) {
+            // 传统 Aero 玻璃：只在 Vista/7 有效，Win8+ 返回成功但无效果
+            ok = setAeroBlur(hwnd);
+        } else if (!forceBlurInsteadOfMica && material.dwmBackdropType >= 0) {
             ok = setDwmInt(hwnd, DWMWA_SYSTEMBACKDROP_TYPE, material.dwmBackdropType);
             if (!ok && material == Material.MICA) {
                 // Windows 11 21H2（build 22000）使用未公开的 MICA_EFFECT 属性
                 ok = setDwmInt(hwnd, DWMWA_MICA_EFFECT, 1);
             }
         }
-        if (!ok && material != Material.NONE) {
-            // 系统不是 Win11 22H2+：回退到 Win10 就有的窗口背后内容模糊
+        if (!ok && material != Material.NONE && material != Material.AERO) {
+            // 窗口背后内容模糊：Win10 1803+ 与 Win11 都可用，也是 layered 窗口下唯一有效的方案
             int fallbackState = (material == Material.ACRYLIC)
                     ? ACCENT_ENABLE_ACRYLICBLURBEHIND
                     : ACCENT_ENABLE_BLURBEHIND;
@@ -374,6 +412,10 @@ public final class WindowBackdrop {
     }
 
     private static boolean setAccent(long hwnd, int accentState, int tintAbgr) {
+        if (Native.setWindowCompositionAttribute == null) {
+            // Win7 / Win8 等系统没有这个 API，按不可用降级
+            return false;
+        }
         try (Arena arena = Arena.ofConfined()) {
             // struct ACCENTPOLICY { int nAccentState; int nFlags; int nColor; int nAnimationId; }
             MemorySegment accent = arena.allocate(16);
@@ -398,6 +440,43 @@ public final class WindowBackdrop {
         apply(window, Material.NONE);
     }
 
+    /**
+     * 传统 Aero 玻璃模糊（Vista / 7）。
+     *
+     * <p>调用 {@code DwmEnableBlurBehindWindow}（fEnable=TRUE、hRgnBlur=NULL 表示整个窗口），
+     * 再配合 {@code DwmExtendFrameIntoClientArea(-1,-1,-1,-1)} 把整个客户区扩展为玻璃区
+     * —— 这是 Aero Glass 的标准用法。</p>
+     *
+     * <p><b>适用性很窄：</b>Windows 8 移除了 Aero Glass，此后该 API 会返回成功
+     * 但没有任何视觉效果。它只在 Windows Vista / 7 上产生真正的玻璃模糊。</p>
+     */
+    private static boolean setAeroBlur(long hwnd) {
+        try (Arena arena = Arena.ofConfined()) {
+            // struct DWM_BLURBEHIND {
+            //   DWORD dwFlags; BOOL fEnable; HRGN hRgnBlur; BOOL fTransitionOnMaximized;
+            // } —— 64 位下按 8 字节对齐，共 24 字节
+            MemorySegment blurBehind = arena.allocate(24);
+            blurBehind.set(ValueLayout.JAVA_INT, 0, DWM_BB_ENABLE);      // dwFlags
+            blurBehind.set(ValueLayout.JAVA_INT, 4, 1);                  // fEnable = TRUE
+            blurBehind.set(ValueLayout.ADDRESS, 8, MemorySegment.NULL);  // hRgnBlur = NULL（整窗）
+            blurBehind.set(ValueLayout.JAVA_INT, 16, 0);                 // fTransitionOnMaximized
+
+            int hr = (int) Native.dwmEnableBlurBehind.invoke(
+                    MemorySegment.ofAddress(hwnd), blurBehind);
+
+            // 把整个客户区扩展为玻璃区：MARGINS 四个 -1 表示"整个窗口"
+            MemorySegment margins = arena.allocate(16);
+            for (int i = 0; i < 4; i++) {
+                margins.set(ValueLayout.JAVA_INT, i * 4L, -1);
+            }
+            Native.dwmExtendFrameIntoClientArea.invoke(MemorySegment.ofAddress(hwnd), margins);
+
+            return hr == 0;
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
     /** 强制刷新缓存（窗口被重建后调用） */
     public static void invalidate(Window window) {
         synchronized (HWND_CACHE) {
@@ -417,6 +496,8 @@ public final class WindowBackdrop {
         static final MemorySegment ENUM_CALLBACK;
 
         static MethodHandle dwmSetWindowAttribute;
+        static MethodHandle dwmEnableBlurBehind;
+        static MethodHandle dwmExtendFrameIntoClientArea;
         static MethodHandle setWindowCompositionAttribute;
         static MethodHandle enumWindows;
         static MethodHandle getWindowThreadProcessId;
@@ -441,9 +522,18 @@ public final class WindowBackdrop {
                             dwmapi.find("DwmSetWindowAttribute").orElseThrow(),
                             FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS,
                                     ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
-                    setWindowCompositionAttribute = linker.downcallHandle(
-                            user32.find("SetWindowCompositionAttribute").orElseThrow(),
-                            FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS));
+                    dwmEnableBlurBehind = optionalHandle(linker, dwmapi, "DwmEnableBlurBehindWindow",
+                            FunctionDescriptor.of(ValueLayout.JAVA_INT,
+                                    ValueLayout.ADDRESS, ValueLayout.ADDRESS));
+                    dwmExtendFrameIntoClientArea = optionalHandle(linker, dwmapi, "DwmExtendFrameIntoClientArea",
+                            FunctionDescriptor.of(ValueLayout.JAVA_INT,
+                                    ValueLayout.ADDRESS, ValueLayout.ADDRESS));
+                    // SetWindowCompositionAttribute 是 Win10 1803+ 才有的未公开 API，Win7/8 上不存在。
+                    // 这里必须用可选加载：若用 orElseThrow，旧系统上会抛异常导致 available=false，
+                    // 整个功能（包括 Win7 可用的 Aero 路径）都会一起失效。
+                    setWindowCompositionAttribute = optionalHandle(linker, user32, "SetWindowCompositionAttribute",
+                            FunctionDescriptor.of(ValueLayout.JAVA_INT,
+                                    ValueLayout.ADDRESS, ValueLayout.ADDRESS));
                     enumWindows = linker.downcallHandle(
                             user32.find("EnumWindows").orElseThrow(),
                             FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS));
@@ -480,6 +570,21 @@ public final class WindowBackdrop {
             }
             available = ok;
             ENUM_CALLBACK = callback;
+        }
+
+        /**
+         * 可选加载一个导出函数：找不到（旧系统没有该 API）时返回 {@code null} 而不是抛异常，
+         * 让调用方按「该路径不可用」降级处理，不影响其他路径。
+         */
+        private static MethodHandle optionalHandle(Linker linker, SymbolLookup lookup,
+                                                   String name, FunctionDescriptor descriptor) {
+            return lookup.find(name).map(symbol -> {
+                try {
+                    return linker.downcallHandle(symbol, descriptor);
+                } catch (Throwable t) {
+                    return null;
+                }
+            }).orElse(null);
         }
 
         /** RtlGetVersion 取真实 build 号（System.getProperty("os.version") 在 Win10/11 上都是 10.0，不可用） */

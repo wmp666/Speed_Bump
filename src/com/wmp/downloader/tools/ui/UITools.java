@@ -1,7 +1,9 @@
 package com.wmp.downloader.tools.ui;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import raven.modal.utils.FlatLafStyleUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class UITools {
         int barHeight = 12; // 固定高度，可调整
 
         for (JProgressBar bar : progressBar) {
+            bar.putClientProperty(FlatClientProperties.STYLE, "arc: 0");
             // 设置高度固定，宽度填满（通过设置最大宽度为 Integer.MAX_VALUE）
             bar.setPreferredSize(new Dimension(0, barHeight));   // 宽度0表示由布局决定
             bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, barHeight));

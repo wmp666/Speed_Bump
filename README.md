@@ -196,7 +196,7 @@
 - `support_platform` 仅用于安装提示（`all` / `windows` / `linux` / `mac`，留空视为全平台）
 - 拓展通过拓展仓库的 **GitHub Release** 分发：Release 标题与 Tag 使用拓展名，Body 按 `### 信息`（name / author / version / plugin_support_version / support_platform）与 `### 介绍` 两节书写，并挂上插件 jar 作为 asset
 
-更完整的说明见 [`拓展解析器制作.md`](拓展解析器制作.md)、[`installPlugin.md`](installPlugin.md) 与 [`应用商店拓展实现方案.md`](应用商店拓展实现方案.md)（社区提交的「纯 jar 应用商店」设计方案，尚未并入主程序）。
+更完整的说明见 [`文档/拓展解析器制作.md`](文档/拓展解析器制作.md)、[`文档/installPlugin.md`](文档/installPlugin.md) 与 [`文档/应用商店拓展实现方案.md`](文档/应用商店拓展实现方案.md)（社区提交的「纯 jar 应用商店」设计方案，尚未并入主程序）。
 
 ---
 

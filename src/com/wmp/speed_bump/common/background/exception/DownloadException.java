@@ -1,4 +1,4 @@
-package com.wmp.downloader.newArchitecture.exception;
+package com.wmp.speed_bump.common.background.exception;
 
 public class DownloadException extends RuntimeException {
     public DownloadException(String message) {

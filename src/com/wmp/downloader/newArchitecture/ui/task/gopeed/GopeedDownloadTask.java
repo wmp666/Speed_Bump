@@ -3,7 +3,7 @@ package com.wmp.downloader.newArchitecture.ui.task.gopeed;
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
-import com.wmp.downloader.newArchitecture.exception.DownloadException;
+import com.wmp.speed_bump.common.background.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.download.URLDownloadTool;

@@ -1,6 +1,6 @@
 package com.wmp.downloader.newArchitecture.ui.createTask;
 
-import com.wmp.downloader.exception.LinkParserException;
+import com.wmp.speed_bump.common.background.exception.LinkParserException;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
@@ -24,7 +24,6 @@ import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.util.*;
 import java.util.List;
