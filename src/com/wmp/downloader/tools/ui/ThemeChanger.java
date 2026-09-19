@@ -99,6 +99,8 @@ public class ThemeChanger {
         //主题更新，如果前后主题相同就跳过
         if (!forcedRefresh && isSameTheme(newTheme)) return;
 
+        DataControl.refresh();
+
         if (isUseSnapshot) FlatAnimatedLafChange.showSnapshot();
 
         if (!EasterEggData.canUseFlatLaf) {
@@ -227,6 +229,7 @@ public class ThemeChanger {
         var newTheme = DataControl.get("theme", "Mac Light");
         if (newTheme.equals("System Theme Style")) {
             newTheme = SystemThemeDetector.isDarkMode() ? "Mac Dark" : "Mac Light";
+
         }
 
 
