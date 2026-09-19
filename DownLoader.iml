@@ -26,5 +26,6 @@
     <orderEntry type="library" name="jlibtorrent-linux-x86_64-2.0.12.9" level="project" />
     <orderEntry type="library" name="formdev.flatlaf.swingx" level="project" />
     <orderEntry type="library" name="swinglabs.swingx.all" level="project" />
+    <orderEntry type="library" name="icons" level="project" />
   </component>
 </module>

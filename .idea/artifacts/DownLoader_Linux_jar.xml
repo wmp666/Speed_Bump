@@ -20,6 +20,7 @@
       <element id="library" level="project" name="jsoup" />
       <element id="library" level="project" name="jlibtorrent-2.0.12.9" />
       <element id="library" level="project" name="io.github.dj.raven.modal.dialog" />
+      <element id="library" level="project" name="icons" />
     </root>
   </artifact>
 </component>

@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -19,8 +21,12 @@ public class IconControl {
     private static final Properties iconProperties = new Properties();
 
     static{
-        try {
-            iconProperties.load(IconControl.class.getResourceAsStream("/com/wmp/downloader/tools/ui/icons.properties"));
+        try (var is = IconControl.class.getResourceAsStream("/com/wmp/downloader/tools/ui/icons.properties")) {
+            if (is == null) {
+                logger.error("加载失败： icons.properties 未找到");
+            } else {
+                iconProperties.load(is);
+            }
         } catch (IOException e) {
             logger.error("加载失败： icons.properties", e);
         }
@@ -33,7 +39,12 @@ public class IconControl {
         iconPath = iconPath.replace("%theme_type%", DataControl.get("theme_type", "light"));
         logger.info(iconPath);
 
-        return new ImageIcon(IconControl.class.getResource(iconPath));
+        URL iconUrl = IconControl.class.getResource(iconPath);
+        if (iconUrl == null) {
+            logger.error("图标资源未找到：" + iconPath + "（已跳过，使用空白占位图）");
+            return new ImageIcon(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+        }
+        return new ImageIcon(iconUrl);
     }
 
     public static Image getImage(String key) {
