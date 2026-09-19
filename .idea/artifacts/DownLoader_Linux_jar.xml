@@ -3,6 +3,9 @@
     <output-path>$PROJECT_DIR$/out/artifacts/DownLoader_Linux_jar</output-path>
     <root id="root">
       <element id="archive" name="DownLoader_Linux.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/Linux/META-INF/MANIFEST.MF" />
+        </element>
         <element id="module-output" name="DownLoader" />
       </element>
       <element id="library" level="project" name="formdev.flatlaf.swingx" />
@@ -11,7 +14,9 @@
       <element id="library" level="project" name="google.zxing.javase" />
       <element id="library" level="project" name="log4j" />
       <element id="library" level="project" name="swinglabs.swingx.all" />
+      <element id="library" level="project" name="io.github.dj.raven.modal.dialog" />
       <element id="library" level="project" name="jlibtorrent-linux-arm64-2.0.12.9" />
+      <element id="library" level="project" name="icons" />
       <element id="library" level="project" name="google.zxing.core" />
       <element id="library" level="project" name="formdev.flatlaf" />
       <element id="library" level="project" name="formdev.flatlaf.extras" />
@@ -19,8 +24,6 @@
       <element id="library" level="project" name="jlibtorrent-linux-x86_64-2.0.12.9" />
       <element id="library" level="project" name="jsoup" />
       <element id="library" level="project" name="jlibtorrent-2.0.12.9" />
-      <element id="library" level="project" name="io.github.dj.raven.modal.dialog" />
-      <element id="library" level="project" name="icons" />
     </root>
   </artifact>
 </component>

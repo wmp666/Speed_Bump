@@ -18,7 +18,6 @@ import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -110,7 +109,8 @@ public class ParserTaskInfo {
             logger.error("删除失败");
         }
 
-        // 5. 重新扫描并加载剩余的解析器
+        // 5. 重新扫描剩余的解析器，先全部收集起来（兼容性警告要统一询问，不能边扫边弹窗）
+        List<JarParser> candidates = new ArrayList<>();
         jarFiles = parsersDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".jar"));
         if (jarFiles != null) {
             for (File jar : jarFiles) {
@@ -129,80 +129,128 @@ public class ParserTaskInfo {
                     logger.info("解析器 " + id + " 需要被删除，已跳过");
                     continue;
                 }
-                //判断版本是否符合条件
-                var startVersion = info[1];
-                var lastVersion = info[2];
-                if (!GetUpdateInfo.isVersionInRange(Run.PLUGIN_SUPPORT_VERSION,
-                        startVersion, lastVersion)) {
-                    var i = JOptionPane.showConfirmDialog(
-                            null,
-                            String.format(
-                                    StringFormat.translate("load_local_parser.version_error"),
-                                    jar, startVersion, lastVersion, Run.PLUGIN_SUPPORT_VERSION),
-                            StringFormat.translate("warn"),
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE
-                    );
-                    if (i != JOptionPane.YES_OPTION) {
+                candidates.add(new JarParser(jar, info));
+            }
+        }
+
+        // 6. 把「开发版本不匹配」「推荐平台不匹配」的拓展合并成一个勾选弹窗，
+        //    由用户一次决定哪些拓展本次继续加载，哪些跳过
+        Set<File> skippedJars = ParserCompatibilityDialog.confirmSkips(collectConflicts(candidates));
+
+        // 7. 加载用户确认保留的解析器
+        for (JarParser candidate : candidates) {
+            File jar = candidate.jar();
+            String[] info = candidate.info();
+            if (skippedJars.contains(jar)) {
+                logger.info("用户选择跳过兼容性存在问题的解析器 " + info[0]);
+                continue;
+            }
+            var id = info[0];
+            var startVersion = info[1];
+            var lastVersion = info[2];
+            try {
+                AbstractParser parser = loadParserFromJar(jar);
+                if (parser != null) {
+                    var parserInfo = new PluginParserInfo(parser, info[3],
+                            startVersion, lastVersion,
+                            info[4], false, info[5]);
+                    ALL_PARSER_LIST.add(parserInfo);
+                    if (disableSet.contains(id)) {
+                        logger.info("解析器 " + id + " 被禁用,已跳过");
                         continue;
                     }
-                }
 
-                //0-all 1-windows 2-linux 3-mac
-                var supportPlatform = 0;
-                if (info[6] != null) {
-                    supportPlatform = switch (info[6]){
-                        case "windows" -> 1;
-                        case "linux" -> 2;
-                        case "mac" -> 3;
-                        default -> 0;
-                    };
+                    ENABLE_PLUGIN_PARSER_LIST.add(parserInfo);
+                    logger.info("Loaded parser: " + id + " from " + jar.getName());
+                } else {
+                    logger.warn("Failed to load parser from " + jar.getName());
                 }
-                if (supportPlatform != 0) {
-                    if (!((GetPlatformName.isWindows() && supportPlatform == 1) ||
-                            (GetPlatformName.isLinux() && supportPlatform == 2) ||
-                            (GetPlatformName.isMac() && supportPlatform == 3))) {
-                        var i = JOptionPane.showConfirmDialog(
-                                null,
-                                String.format(
-                                        StringFormat.translate("load_local_parser.platform_error"),
-                                        jar, info[6],
-                                StringFormat.translate("warn"),
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE
-                        ));
-                        if (i != JOptionPane.YES_OPTION) {
-                            continue;
-                        }
-                    }
-                }
-
-                try {
-
-                        AbstractParser parser = loadParserFromJar(jar);
-                        if (parser != null) {
-                            var parserInfo = new PluginParserInfo(parser, info[3],
-                                    startVersion, lastVersion,
-                                    info[4], false, info[5]);
-                            ALL_PARSER_LIST.add(parserInfo);
-                            if (disableSet.contains(id)) {
-                                logger.info("解析器 " + id + " 被禁用,已跳过");
-                                continue;
-                            }
-
-                            ENABLE_PLUGIN_PARSER_LIST.add(parserInfo);
-                            logger.info("Loaded parser: " + id + " from " + jar.getName());
-                        } else {
-                            logger.warn("Failed to load parser from " + jar.getName());
-                        }
-                } catch (Exception e) {
-                    logger.error("类加载失败", e);
-                }
+            } catch (Exception e) {
+                logger.error("类加载失败", e);
             }
         }
 
 
         addAppPlugin();
+    }
+
+    /**
+     * 扫描阶段拿到的一个待加载解析器：jar 文件 + info.json 解析出的字段
+     *
+     * @param info 见 {@link #getParserInfoFromJar(File)} 的返回顺序
+     */
+    private record JarParser(File jar, String[] info) {
+    }
+
+    /**
+     * 收集与当前程序不兼容的拓展，交给 {@link ParserCompatibilityDialog} 一次性展示。
+     *
+     * <p>同一个拓展可能同时存在版本与平台两类问题，会合并进同一个勾选项。</p>
+     */
+    private static List<ParserCompatibilityDialog.Conflict> collectConflicts(List<JarParser> candidates) {
+        List<ParserCompatibilityDialog.Conflict> conflicts = new ArrayList<>();
+        for (JarParser candidate : candidates) {
+            File jar = candidate.jar();
+            String[] info = candidate.info();
+            String id = info[0];
+            String startVersion = info[1];
+            String lastVersion = info[2];
+
+            StringBuilder title = new StringBuilder();
+            StringBuilder tooltip = new StringBuilder();
+
+            //判断版本是否符合条件
+            if (!GetUpdateInfo.isVersionInRange(Run.PLUGIN_SUPPORT_VERSION,
+                    startVersion, lastVersion)) {
+                appendLine(title, String.format(
+                        StringFormat.translate("plugins.load_warning.item_version"),
+                        id, startVersion, lastVersion, Run.PLUGIN_SUPPORT_VERSION));
+                appendLine(tooltip, String.format(
+                        StringFormat.translate("load_local_parser.version_error"),
+                        jar, startVersion, lastVersion, Run.PLUGIN_SUPPORT_VERSION));
+            }
+
+            //0-all 1-windows 2-linux 3-mac
+            String supportPlatform = restrictedPlatform(info[6]);
+            if (supportPlatform != null && !matchesCurrentPlatform(supportPlatform)) {
+                appendLine(title, String.format(
+                        StringFormat.translate("plugins.load_warning.item_platform"),
+                        id, supportPlatform));
+                appendLine(tooltip, String.format(
+                        StringFormat.translate("load_local_parser.platform_error"),
+                        jar, supportPlatform));
+            }
+
+            if (title.length() > 0) {
+                conflicts.add(new ParserCompatibilityDialog.Conflict(jar, title.toString(), tooltip.toString()));
+            }
+        }
+        return conflicts;
+    }
+
+    /**
+     * @return 拓展限制的平台（windows / linux / mac）；没有限制或取值无法识别时返回 null
+     */
+    private static String restrictedPlatform(String supportPlatform) {
+        if (supportPlatform == null) return null;
+        return switch (supportPlatform) {
+            case "windows", "linux", "mac" -> supportPlatform;
+            default -> null;
+        };
+    }
+
+    private static boolean matchesCurrentPlatform(String platform) {
+        return switch (platform) {
+            case "windows" -> GetPlatformName.isWindows();
+            case "linux" -> GetPlatformName.isLinux();
+            case "mac" -> GetPlatformName.isMac();
+            default -> true;
+        };
+    }
+
+    private static void appendLine(StringBuilder builder, String line) {
+        if (builder.length() > 0) builder.append('\n');
+        builder.append(line);
     }
 
     private static void addAppPlugin() {

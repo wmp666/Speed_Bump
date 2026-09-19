@@ -39,9 +39,16 @@ public class FunctionDialog extends JDialog {
     private JPanel northButtonPanel;
 
     private final Timer packTimer = new Timer(50, e -> {
+        //只有内容尺寸真的变了才重新打包/重绘。
+        //原本这里每 50ms 无条件 repaint 整窗，鼠标划入按钮、复选框等组件时
+        //那些局部重绘会和整窗重绘叠加，看上去就是闪烁。
+        DialogBackdrop.refreshTabbedPaneSize(this);
+        Dimension packedSize = computePackedSize();
+        if (packedSize.width == getWidth() && packedSize.height == getHeight()) return;
+
         this.revalidate();
+        this.setSize(packedSize);
         this.repaint();
-        this.pack();
         if (parent != null)
             this.setLocationRelativeTo(parent);
     });
@@ -326,7 +333,13 @@ public class FunctionDialog extends JDialog {
         DialogBackdrop.refreshTabbedPaneSize(this);
         // ===== [BACKDROP-END] =====
 
-        //判断大小
+        this.setSize(computePackedSize());
+    }
+
+    /**
+     * 计算「按内容打包」后窗口应有的尺寸：内容的首选尺寸，并夹在最小 / 最大尺寸之间。
+     */
+    private Dimension computePackedSize() {
         var preferredSize = this.getPreferredSize();
         var minimumSize = this.getMinimumSize();
         var maximumSize = this.getMaximumSize();
@@ -344,7 +357,7 @@ public class FunctionDialog extends JDialog {
             size.height = maximumSize.height;
         }
 
-        this.setSize(size);
+        return size;
     }
 
     public interface ResultCallback {

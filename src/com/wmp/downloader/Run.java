@@ -23,6 +23,10 @@ public class Run {
     public static List<String> argList;
 
     static void main(String[] args) {
+        //加载窗口（以及启动阶段可能出现的弹窗）在此之前就要用上系统外观，
+        //否则它们会使用 Swing 默认的 Metal 外观，和主界面差别很大
+        applySystemLookAndFeel();
+
         argList = List.of(args);
         String linkPath = null;
         {
@@ -112,5 +116,21 @@ public class Run {
 
 
 
+    }
+
+    /**
+     * 先把外观切到系统默认（Windows / macOS 原生外观）。
+     *
+     * <p>用户配置的主题要等 {@link DataControl#load()} 之后才知道，所以启动窗口只能用系统外观；
+     * 这比 Swing 默认的 Metal 更接近最终界面，也避免了加载窗口与主界面观感割裂。
+     * 读取配置后 {@link ThemeChanger#easyChanger()} 会再换成 FlatLaf 主题。</p>
+     */
+    private static void applySystemLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            //拿不到系统外观不是什么大问题，继续用默认外观即可
+            logger.error("设置系统外观失败，将继续使用默认外观", e);
+        }
     }
 }
