@@ -26,6 +26,12 @@
 > [!TIP]
 > 下载协议的实现细节、全部设置项、拓展开发与构建打包说明，都已整理到 [**helpDocs 文档中心**][docs-url]。
 
+> [!TIP]
+> 由于作者实力有限，该文档主要由AI编写，参考了其他项目的README<br>
+有问题请反馈
+
+
+
 <!-- FEATURES -->
 ## 功能特性
 
@@ -88,10 +94,11 @@
 | [鸣谢与声明](helpDocs/鸣谢与声明.md) | 第三方库、贡献者、开源许可与免责声明全文 |
 
 <!-- CONTRIBUTING -->
-## 参与贡献
+## 提交你的想法
 
 欢迎提交 Issue 与 Pull Request：
 
+### 提交 Pull Request
 1. Fork 本仓库
 2. 新建分支（`git checkout -b feature/AmazingFeature`）
 3. 提交改动（`git commit -m 'Add some AmazingFeature'`）

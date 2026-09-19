@@ -3,7 +3,7 @@ package com.wmp.downloader.tools.update;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.Run;
-import com.wmp.downloader.tools.platform.GetPlatform;
+import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
@@ -54,11 +54,11 @@ public class GetUpdateInfo {
                 json.getJSONArray("assets").forEach(obj -> {
                     if (obj instanceof JSONObject jsonObject) {
                         var name = jsonObject.getString("name");
-                        if (GetPlatform.isWindows() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".exe")) {
+                        if (GetPlatformName.isWindows() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".exe")) {
                             targetUrl.set(jsonObject.getString("browser_download_url"));
-                        } else if (GetPlatform.isMac() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".dmg")) {
+                        } else if (GetPlatformName.isMac() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".dmg")) {
                             targetUrl.set(jsonObject.getString("browser_download_url"));
-                        } else if (GetPlatform.isLinux() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".deb")) {
+                        } else if (GetPlatformName.isLinux() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".deb")) {
                             targetUrl.set(jsonObject.getString("browser_download_url"));
                         }
                     }
@@ -93,13 +93,13 @@ public class GetUpdateInfo {
                                     for (Object assetObj : assets) {
                                         if (assetObj instanceof JSONObject asset) {
                                             String name = asset.getString("name");
-                                            if (GetPlatform.isWindows() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".exe")) {
+                                            if (GetPlatformName.isWindows() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".exe")) {
                                                 downloadUrl = asset.getString("browser_download_url");
                                                 break;
-                                            } else if (GetPlatform.isMac() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".dmg")) {
+                                            } else if (GetPlatformName.isMac() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".dmg")) {
                                                 downloadUrl = asset.getString("browser_download_url");
                                                 break;
-                                            } else if (GetPlatform.isLinux() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".deb")) {
+                                            } else if (GetPlatformName.isLinux() && name.startsWith("Speed_Bump_Setup") && name.endsWith(".deb")) {
                                                 downloadUrl = asset.getString("browser_download_url");
                                                 break;
                                             }

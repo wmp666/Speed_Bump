@@ -1,7 +1,7 @@
 package com.wmp.downloader.tools.web;
 
 import com.wmp.downloader.Run;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.ui.Downloader;
 import org.apache.log4j.Logger;

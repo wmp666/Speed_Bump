@@ -1,6 +1,7 @@
 package com.wmp.downloader.tools.platform;
 
 import com.wmp.downloader.tools.file.DataControl;
+import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -53,26 +54,26 @@ public class AutoStart {
      * @throws InterruptedException 进程被中断
      */
     public static void setAutoStart(boolean enable) throws IOException, InterruptedException {
-        if (GetPlatform.isWindows()) {
+        if (GetPlatformName.isWindows()) {
             if (enable) {
                 enableWindows();
             } else {
                 disableWindows();
             }
-        } else if (GetPlatform.isMac()) {
+        } else if (GetPlatformName.isMac()) {
             if (enable) {
                 enableMac();
             } else {
                 disableMac();
             }
-        } else if (GetPlatform.isLinux()) {
+        } else if (GetPlatformName.isLinux()) {
             if (enable) {
                 enableLinux();
             } else {
                 disableLinux();
             }
         } else {
-            throw new UnsupportedOperationException("暂不支持开机自启动的操作系统: " + GetPlatform.getOSName());
+            throw new UnsupportedOperationException("暂不支持开机自启动的操作系统: " + GetPlatformName.getOSName());
         }
     }
 
@@ -102,11 +103,11 @@ public class AutoStart {
      * @return true 已开启；false 未开启或查询失败
      */
     public static boolean isAutoStart() {
-        if (GetPlatform.isWindows()) {
+        if (GetPlatformName.isWindows()) {
             return isAutoStartWindows();
-        } else if (GetPlatform.isMac()) {
+        } else if (GetPlatformName.isMac()) {
             return isAutoStartMac();
-        } else if (GetPlatform.isLinux()) {
+        } else if (GetPlatformName.isLinux()) {
             return isAutoStartLinux();
         }
         return false;

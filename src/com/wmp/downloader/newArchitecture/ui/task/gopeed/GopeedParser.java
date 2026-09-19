@@ -6,7 +6,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPa
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInfoPanel;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 
 public class GopeedParser extends AbstractParser {
     @Override

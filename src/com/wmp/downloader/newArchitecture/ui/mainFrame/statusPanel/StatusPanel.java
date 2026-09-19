@@ -3,7 +3,7 @@ package com.wmp.downloader.newArchitecture.ui.mainFrame.statusPanel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.ui.Downloader;
@@ -524,6 +524,29 @@ public class StatusPanel extends JPanel {
         Object bounds = rootPane.getClientProperty(
                 FlatClientProperties.FULL_WINDOW_CONTENT_BUTTONS_BOUNDS);
         return (bounds instanceof Rectangle r) ? r.height : 0;
+    }
+
+    // =====================================================================
+    // 外部组件挂载
+    // =====================================================================
+
+    /**
+     * 把一个搜索组件挂到状态栏左侧。
+     *
+     * <p>供主窗口在「搜索框无法放进标题栏」时降级调用——例如没有 FlatLaf 自绘标题栏、
+     * 或标题栏里腾不出位置的情况。重复调用会先移除上一次挂载的组件。</p>
+     *
+     * @param searchComponent 要挂载的组件；传 {@code null} 表示不挂载
+     */
+    public void attachSearchComponent(JComponent searchComponent) {
+        if (searchComponent == null) {
+            return;
+        }
+        // 状态栏自身是 BorderLayout（mainPanel 占 CENTER），这里占用 WEST
+        remove(searchComponent);
+        add(searchComponent, BorderLayout.WEST);
+        revalidate();
+        repaint();
     }
 
     // =====================================================================

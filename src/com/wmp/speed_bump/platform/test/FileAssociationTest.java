@@ -1,4 +1,4 @@
-package com.wmp.downloader.test;
+package com.wmp.speed_bump.platform.test;
 
 
 import static com.wmp.downloader.tools.platform.FileAssociation.register;

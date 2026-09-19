@@ -1,12 +1,10 @@
 package com.wmp.downloader.ui.common;
 
-import com.formdev.flatlaf.FlatLaf;
-import com.sun.nio.sctp.Association;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.file.ResourceLocalizer;
 import com.wmp.downloader.tools.platform.FileAssociation;
-import com.wmp.downloader.tools.platform.GetPlatform;
+import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
@@ -14,7 +12,6 @@ import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 
 public class FileAssociationPanel extends JPanel{
 
@@ -42,9 +39,9 @@ public class FileAssociationPanel extends JPanel{
         this.suffix = suffix;
         this.description = description;
         String iconAssociation;
-        if (GetPlatform.isWindows()) iconAssociation = ".ico";
-        else if (GetPlatform.isLinux()) iconAssociation = ".png";
-        else if (GetPlatform.isMac()) iconAssociation = ".icns";
+        if (GetPlatformName.isWindows()) iconAssociation = ".ico";
+        else if (GetPlatformName.isLinux()) iconAssociation = ".png";
+        else if (GetPlatformName.isMac()) iconAssociation = ".icns";
         else iconAssociation = ".png";
 
         suffixLabel.putClientProperty("FlatLaf.style", "font: $h1.font");
@@ -82,7 +79,7 @@ public class FileAssociationPanel extends JPanel{
             var appPath = DataControl.getAppPath();
 
             try {
-                if (appPath == null && !GetPlatform.isWindows()) {
+                if (appPath == null && !GetPlatformName.isWindows()) {
                     ToastMessage.show(null, "当前启动方式无法关联文件", ToastMessage.WARNING);
                     throw new UnsupportedOperationException("当前启动方式无法关联文件");
                 }

@@ -7,7 +7,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.Run;
 import com.wmp.downloader.tools.EasterEggData;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.TestFunctionControl;
 import com.wmp.downloader.tools.ui.SystemThemeDetector;
 import com.wmp.downloader.tools.ui.ToastMessage;
@@ -150,7 +150,8 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.put("version", Run.VERSION);
+        tempDataMap.putIfAbsent("version", Run.VERSION);
+        tempDataMap.putIfAbsent("theme_type", "light");
         // 处理主题数据
         if (key.equals("theme")) {
             if (!EasterEggData.canUseFlatLaf) {

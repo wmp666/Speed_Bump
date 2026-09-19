@@ -3,9 +3,8 @@ package com.wmp.downloader.newArchitecture.abstractTask;
 import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
-import com.wmp.downloader.test.DraggablePanel;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.ui.*;
 import org.apache.log4j.Logger;
 
@@ -22,9 +21,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 

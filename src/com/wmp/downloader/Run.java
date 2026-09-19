@@ -1,21 +1,16 @@
 package com.wmp.downloader;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
-import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.WebSetter;
 import com.wmp.downloader.tools.ui.ThemeChanger;
-import com.wmp.downloader.tools.web.TCPClient;
 import com.wmp.downloader.tools.web.TCPControl;
 import com.wmp.downloader.ui.Downloader;
-import com.wmp.downloader.ui.FunctionDialog;
-import com.wmp.downloader.ui.PreloadDialog;
+import com.wmp.speed_bump.common.ui.PreLoadDialog;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
 public class Run {
@@ -70,8 +65,8 @@ public class Run {
 
         //FlatLightLaf.setup();
 
-        var preloadDialog = new PreloadDialog();
-        preloadDialog.setVisible(true);
+        var preloadDialog = PreLoadDialog.INSTANCE_CREATOR.create();
+        preloadDialog.showDialog();
 
         logger.info("开始加载");
         Downloader downloader = null;
@@ -112,7 +107,7 @@ public class Run {
 
         if (linkPath != null) downloader.showLinkDetectedDialog(linkPath);
 
-        preloadDialog.setVisible(false);
+        preloadDialog.disposeDialog();
 
 
 

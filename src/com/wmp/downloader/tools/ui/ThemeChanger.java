@@ -5,14 +5,12 @@ import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.swingx.FlatSwingXDefaultsAddon;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.EasterEggData;
 import org.apache.log4j.Logger;
-import org.jdesktop.swingx.JXColorSelectionButton;
 
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -136,11 +134,11 @@ public class ThemeChanger {
 
         //主体部分数据更新
         UIManager.put("FlatLaf.addon.swingx", new FlatSwingXDefaultsAddon());
-        UIManager.put("TabbedPane.tabsOpaque", false);
+        //UIManager.put("TabbedPane.tabsOpaque", false);
         //UIManager.put("TabbedPane.background", new Color(0, 0, 0, 100));
         UIManager.put("TabbedPane.contentOpaque", false);
-        FlatLaf.setUseNativeWindowDecorations(true);
-
+        //FlatLaf.setUseNativeWindowDecorations(true);
+        System.setProperty("flatlaf.useFullWindowContent", "true");
         int arc = DataControl.get("is_use_square_component", true)?0:10;
         UIManager.put("Button.arc", arc);
         UIManager.put("Component.arc", arc);   // 影响 ComboBox, Spinner 等

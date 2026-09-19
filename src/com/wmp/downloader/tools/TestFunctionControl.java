@@ -3,6 +3,7 @@ package com.wmp.downloader.tools;
 import com.wmp.speed_bump.common.background.exception.TestFunctionException;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 
 import java.util.*;
 

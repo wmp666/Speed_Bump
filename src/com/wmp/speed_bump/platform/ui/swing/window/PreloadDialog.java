@@ -1,10 +1,11 @@
-package com.wmp.downloader.ui;
+package com.wmp.speed_bump.platform.ui.swing.window;
 
 import com.wmp.downloader.tools.ui.DialogBackdrop;
+import com.wmp.speed_bump.common.ui.PreLoadDialog;
 
 import javax.swing.*;
 
-public class PreloadDialog extends JDialog {
+public class PreloadDialog extends JDialog implements PreLoadDialog {
     private JPanel contentPane;
 
     public PreloadDialog() {
@@ -38,5 +39,15 @@ public class PreloadDialog extends JDialog {
             DialogBackdrop.activate(this);
             // ===== [BACKDROP-END] =====
         }
+    }
+
+    @Override
+    public void showDialog() {
+        setVisible(true);
+    }
+
+    @Override
+    public void disposeDialog() {
+        setVisible(false);
     }
 }

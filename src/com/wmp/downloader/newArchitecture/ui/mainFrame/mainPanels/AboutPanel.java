@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.wmp.downloader.Run;
 import com.wmp.downloader.tools.EasterEggData;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;

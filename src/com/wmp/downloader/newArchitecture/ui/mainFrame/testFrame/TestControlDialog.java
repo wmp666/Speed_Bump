@@ -1,9 +1,6 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame;
 
-import com.wmp.downloader.tools.StringFormat;
 import com.wmp.downloader.tools.TestFunctionControl;
-import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.ui.Downloader;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -1,6 +1,6 @@
-package com.wmp.downloader.tools;
+package com.wmp.speed_bump.common.background.tool;
 
-import com.wmp.downloader.tools.platform.GetPlatform;
+import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
 
 import java.io.File;
 import java.util.Locale;
@@ -51,7 +51,7 @@ public class StringFormat {
         }
 
         String regex;
-        if (GetPlatform.isWindows()) {
+        if (GetPlatformName.isWindows()) {
             regex = "[\\\\/:*?\"<>|]";
         } else {
             // Unix/Linux/macOS：只禁止 '/' 和 NUL 字符

@@ -1,3 +1,12 @@
 Manifest-Version: 1.0
 Main-Class: com.wmp.downloader.Run
+Class-Path: flatlaf-swingx-3.7.2.jar flatlaf-3.7.2.jar commons-net-3.9.0
+ .jar commonmark-0.29.0.jar javase-3.5.3.jar log4j-1.2.17.jar swingx-all
+ -1.6.5-1.jar modal-dialog-2.6.1.jar flatlaf-3.7.1.jar flatlaf-extras-3.
+ 7.1.jar jsvg-2.0.0.jar miglayout-swing-5.3.jar miglayout-core-5.3.jar j
+ libtorrent-windows-2.0.12.9.jar jlibtorrent-linux-arm64-2.0.12.9.jar co
+ re-3.5.3.jar flatlaf-3.7.2.jar flatlaf-extras-3.7.2.jar flatlaf-3.7.2.j
+ ar jsvg-2.1.0.jar fastjson-2.0.15.jar fastjson2-extension-2.0.15.jar fa
+ stjson2-2.0.15.jar jlibtorrent-linux-x86_64-2.0.12.9.jar jsoup-1.15.1.j
+ ar jlibtorrent-2.0.12.9.jar
 

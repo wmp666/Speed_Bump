@@ -1,4 +1,4 @@
-package com.wmp.downloader.test;
+package com.wmp.speed_bump.platform.test;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPFile;

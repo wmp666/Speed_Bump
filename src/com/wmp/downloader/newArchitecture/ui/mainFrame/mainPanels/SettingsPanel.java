@@ -1,7 +1,7 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.platform.AutoStart;
@@ -20,6 +20,7 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -128,7 +129,7 @@ public class SettingsPanel {
                     "繁體中文|臺灣(zh_TW)", "繁體中文|香港地區(zh_HK)"
             };
 
-            var lauguage = DataControl.get("laug", "zh_cn");
+            var lauguage = DataControl.get("laug", Locale.getDefault().getLanguage());
             for (String laug : laugs) {
                 laugComboBox.addItem(laug);
 

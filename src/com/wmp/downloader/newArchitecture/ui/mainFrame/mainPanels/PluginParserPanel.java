@@ -8,7 +8,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.InstallPluginParserInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
 import com.wmp.downloader.newArchitecture.ui.task.PluginParserGithubDownloadTask;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.file.FileOperation;
 import com.wmp.downloader.tools.ui.DropOverlayPanel;

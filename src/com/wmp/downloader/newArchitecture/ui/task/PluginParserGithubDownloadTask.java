@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.ui.task.github.GithubParser;
 import com.wmp.downloader.newArchitecture.ui.task.http.HTTPDownloadTask;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
 
 public class PluginParserGithubDownloadTask extends GithubParser {

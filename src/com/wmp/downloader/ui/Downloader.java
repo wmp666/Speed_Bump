@@ -12,7 +12,7 @@ import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SpecialSetting
 import com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.TestControlDialog;
 import com.wmp.downloader.tools.MicrosoftTranslator;
 import com.wmp.downloader.tools.MicrosoftTranslator.Language;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
@@ -21,6 +21,7 @@ import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.common.LazyTabbedPane;
+import com.wmp.speed_bump.platform.ui.swing.components.SearchTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXBusyLabel;
 
@@ -39,6 +40,13 @@ import java.util.List;
 public class Downloader extends JFrame implements WindowListener{
 
     private static final Logger logger = Logger.getLogger(Downloader.class);
+
+    /**
+     * 显示背景图时标题栏的不透明度（0 全透明 ~ 255 全不透明）。
+     * 数值越小背景图透出越明显，但标题文字与窗口按钮会越难辨认。
+     */
+    private static final int TITLE_BAR_ALPHA = 160;
+
     public static Downloader mainFrame;
     public static TrayIcon trayIcon;
     public static TrayMenu trayMenu;
@@ -47,6 +55,10 @@ public class Downloader extends JFrame implements WindowListener{
     public final GridBagConstraints gbc = new GridBagConstraints();
 
     public JPanel UIPanel;
+
+    /** 内容区顶部的搜索框。搜索行为尚未实现，这里只负责把它显示出来 */
+    private SearchTextField searchTextField;
+
     public JPanel settingsPanel;
     public JTabbedPane mainTabbedPane;
     public JPanel downloaderPanel;
@@ -178,6 +190,9 @@ public class Downloader extends JFrame implements WindowListener{
 
         UIPanel.add(StatusPanel, BorderLayout.SOUTH);
 
+        // 搜索框：优先放进标题栏，标题栏里腾不出位置时降级到状态栏
+        initSearchField();
+
         startClipboardListener();
 
         pack();
@@ -277,6 +292,54 @@ public class Downloader extends JFrame implements WindowListener{
         aboutPanel.repaint();
     }
 
+    /**
+     * 创建搜索框，并放进切换标签页的换页栏右侧。
+     *
+     * <p>搜索行为尚未实现，这里只负责让它显示出来。</p>
+     */
+    private void initSearchField() {
+        searchTextField = new SearchTextField(16);
+        searchTextField.setPlaceholderText("搜索");
+        // 宽度是「最小宽度」，高度由标签区自动决定；见 tryAttachSearchToTabBar()
+        //searchTextField.setPreferredSize(new Dimension(150, 26));
+
+        if (!tryAttachSearchToTabBar()) {
+            // 换页栏不可用（拿不到 mainTabbedPane）→ 兜底到状态栏
+            StatusPanel.attachSearchComponent(searchTextField);
+        }
+    }
+
+    /**
+     * 把搜索框放到换页栏（标签区域）的右侧。
+     *
+     * <p>用的是 FlatLaf 官方支持的扩展点 {@code TABBED_PANE_TRAILING_COMPONENT}：
+     * 组件会被放在标签区域的后缘，高度自动取标签区高度，宽度取可用水平空间
+     * （下限是组件的 preferred width）。不依赖任何 FlatLaf 内部结构，也不会被标签页遮挡。</p>
+     *
+     * @return 是否成功挂到换页栏
+     */
+    private boolean tryAttachSearchToTabBar() {
+        if (mainTabbedPane == null) {
+            return false;
+        }
+
+        // 搜索框保留自身外观（含边框），只把它摆到换页栏右侧
+        searchTextField.setTransparentBackground(false);
+
+        // 不能直接把 SearchTextField 交给 trailing component：FlatLaf 会让它占满可用水平空间
+        // （实测 preferredSize 设 150 会被拉伸到 600+，preferredSize 只是下限）。
+        // 包一层 FlowLayout 容器后，容器被拉伸而内部组件保持自己的尺寸。
+        JPanel holder = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
+        holder.setOpaque(false);
+        holder.add(searchTextField);
+
+        mainTabbedPane.putClientProperty(
+                FlatClientProperties.TABBED_PANE_TRAILING_COMPONENT, holder);
+        mainTabbedPane.revalidate();
+        mainTabbedPane.repaint();
+        return true;
+    }
+
     private void initLayeredPane() {
         // 将UIPanel添加到默认层
         layeredPane.add(UIPanel, JLayeredPane.DEFAULT_LAYER);
@@ -297,7 +360,13 @@ public class Downloader extends JFrame implements WindowListener{
         if (w > 0 && h > 0) {
             UIPanel.setBounds(0, 0, w, h);
             if (backgroundPanel != null && backgroundPanel.isVisible()) {
-                backgroundPanel.setBounds(0, 0, w, h);
+                JRootPane rootPane = getRootPane();
+                if (rootPane != null && backgroundPanel.getParent() == rootPane.getLayeredPane()) {
+                    // 背景层挂在 rootPane 上，要覆盖整个窗口（含标题栏区域）
+                    backgroundPanel.setBounds(0, 0, rootPane.getWidth(), rootPane.getHeight());
+                } else {
+                    backgroundPanel.setBounds(0, 0, w, h);
+                }
             }
             layeredPane.revalidate();
             layeredPane.repaint();
@@ -318,9 +387,11 @@ public class Downloader extends JFrame implements WindowListener{
             }
         }
 
-        // 添加背景面板到最底层
         if (backgroundPanel != null) {
-            layeredPane.add(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
+            // 回退：背景层放回 contentPane 内（不再挂到 rootPane、不再改标题栏透明度）
+            if (backgroundPanel.getParent() != layeredPane) {
+                layeredPane.add(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
+            }
             // FIX 使用统一的边界更新方法
             updateChildBounds();
         }
@@ -344,8 +415,6 @@ public class Downloader extends JFrame implements WindowListener{
                 backgroundPanel.setVisible(true);
                 layeredPane.setLayer(UIPanel, JLayeredPane.DEFAULT_LAYER);
                 layeredPane.setLayer(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
-                // 背景图铺满整个窗口，包括标题栏区域
-                setFullWindowContent(true);
                 // FIX 更新边界并强制重绘
                 updateChildBounds();
                 backgroundPanel.repaint();
@@ -358,12 +427,74 @@ public class Downloader extends JFrame implements WindowListener{
         }
     }
 
+    /**
+     * <b>当前未启用。</b>
+     *
+     * <p>这条路径把背景图挂到 rootPane 铺满整窗、再让标题栏半透明，虽然能让背景图透到标题栏，
+     * 但 {@code BackgroundPanel} 本身是按 {@code background_alpha}（默认 0.3）绘制的，
+     * 两者叠加会让整个界面明显发淡，因此暂时搁置。保留实现供将来参考。</p>
+     *
+     * <p>把背景层挂到 rootPane 的 layeredPane，并放在比 contentPane 与标题栏都低的层。</p>
+     *
+     * <p>背景图原本挂在 contentPane 内，而 contentPane 只占标题栏下方的区域，
+     * 所以背景图永远到不了标题栏。改挂到 rootPane 后，它的可见范围就是整个窗口，
+     * 配合半透明标题栏即可「铺到标题栏、同时保留标题栏」。</p>
+     *
+     * <p>{@code updateBackground()} 会被 {@code backgroundupdateTimer} 每 100ms 调用一次，
+     * 因此这里必须保持幂等。</p>
+     */
+    private void attachBackgroundToRootPane() {
+        if (backgroundPanel == null) {
+            return;
+        }
+        JRootPane rootPane = getRootPane();
+        if (rootPane == null) {
+            return;
+        }
+        JLayeredPane rootLayered = rootPane.getLayeredPane();
+        if (rootLayered == null || backgroundPanel.getParent() == rootLayered) {
+            return;
+        }
+        // 比 FRAME_CONTENT_LAYER（contentPane 所在层）更低，确保位于内容与标题栏之下
+        rootLayered.add(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER - 10);
+    }
+
+    /**
+     * 切换标题栏的半透明状态。
+     *
+     * <p>{@code FlatClientProperties.TITLE_BAR_BACKGROUND} 是 <b>per-window</b> 的
+     * （存在 rootPane 的 client property 上），所以只影响主窗口，其他对话框不受牵连。</p>
+     *
+     * <p>实测：该属性在原生窗口装饰下同样生效，且带 alpha 的颜色会与标题栏下方的
+     * 绘制内容正确混合——这正是背景图能透出来的原因。</p>
+     *
+     * @param translucent true 显示背景图时用半透明；false 恢复主题默认
+     */
+    private void applyTranslucentTitleBar(boolean translucent) {
+        JRootPane rootPane = getRootPane();
+        if (rootPane == null) {
+            return;
+        }
+        if (!translucent) {
+            rootPane.putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, null);
+            return;
+        }
+        Color base = UIManager.getColor("TitlePane.background");
+        if (base == null) {
+            base = UIManager.getColor("Panel.background");
+        }
+        if (base == null) {
+            base = new Color(43, 43, 43);
+        }
+        rootPane.putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND,
+                new Color(base.getRed(), base.getGreen(), base.getBlue(),
+                        Math.max(0, Math.min(255, TITLE_BAR_ALPHA))));
+    }
+
     private void resetBackground() {
         if (backgroundPanel != null) {
             backgroundPanel.setVisible(false);
         }
-        // 没有背景图时恢复正常标题栏
-        setFullWindowContent(false);
         // FIX 刷新界面
         layeredPane.repaint();
     }
@@ -371,11 +502,16 @@ public class Downloader extends JFrame implements WindowListener{
     /**
      * 切换「内容延伸到标题栏」模式（FlatLaf 的 fullWindowContent）。
      *
-     * <p>开启后 {@code contentPane} 会占据整个窗口（含标题栏区域），背景图因此能铺到标题栏；
-     * 标题栏的最小化/最大化/关闭按钮会浮在右上角，窗口顶部仍可作为拖拽区。</p>
+     * <p><b>当前已不再调用。</b>该模式下 FlatLaf 会强制隐藏标题文字——
+     * {@code FlatTitlePane.updateVisibility()} 里写死了
+     * {@code titleLabel.setVisible(... && !isFullWindowContent)}，
+     * 连 {@code TITLE_BAR_SHOW_TITLE} 也覆盖不了，与「保留标题栏」的需求冲突。</p>
      *
-     * <p>实测（Windows 10 + FlatLaf 3.7.2）：该模式与「原生窗口装饰」
-     * （{@code FlatLaf.setUseNativeWindowDecorations(true)}）可以共存，不需要改动全局装饰设置。</p>
+     * <p>现在改用「背景层挂到 rootPane + 标题栏半透明」的方案，见
+     * {@link #attachBackgroundToRootPane()} 与 {@link #applyTranslucentTitleBar(boolean)}：
+     * 标题栏的文字和按钮全部保留，背景图从标题栏后面透出来。</p>
+     *
+     * <p>保留此方法仅为将来可能回退到该方案时使用。</p>
      *
      * @return 是否发生了状态变化
      */

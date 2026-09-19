@@ -1,4 +1,4 @@
-package com.wmp.downloader.test;
+package com.wmp.speed_bump.platform.test;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.swingx.FlatSwingXDefaultsAddon;
 import org.jdesktop.swingx.JXTaskPane;

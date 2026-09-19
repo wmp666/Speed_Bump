@@ -4,10 +4,8 @@ import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
-import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FileDownloadTask;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInfoPanel;
-import com.wmp.downloader.tools.StringFormat;
 import org.apache.log4j.Logger;
 
 import static com.wmp.downloader.tools.download.URLDownloadTool.extractFileName;

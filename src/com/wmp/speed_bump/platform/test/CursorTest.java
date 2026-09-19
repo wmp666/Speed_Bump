@@ -1,4 +1,4 @@
-package com.wmp.downloader.test;
+package com.wmp.speed_bump.platform.test;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;

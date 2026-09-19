@@ -1,7 +1,7 @@
 package com.wmp.downloader.newArchitecture.ui.createTask;
 
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.newArchitecture.ui.createTask.videohandle.CreateMergeTaskFuncPanel;
 import com.wmp.downloader.newArchitecture.ui.createTask.videohandle.ResetVideoInfoPanel;

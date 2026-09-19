@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.task;
 
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.common.PathSelectionPanel;

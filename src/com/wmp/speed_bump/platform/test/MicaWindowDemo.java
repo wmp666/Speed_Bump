@@ -1,4 +1,4 @@
-package com.wmp.downloader.test;
+package com.wmp.speed_bump.platform.test;
 
 import com.wmp.downloader.tools.ui.WindowBackdrop;
 

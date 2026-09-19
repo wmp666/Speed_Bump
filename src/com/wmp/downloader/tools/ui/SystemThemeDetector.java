@@ -1,6 +1,6 @@
 package com.wmp.downloader.tools.ui;
 
-import com.wmp.downloader.tools.platform.GetPlatform;
+import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -15,11 +15,11 @@ public class SystemThemeDetector {
      */
     public static boolean isDarkMode() {
         try {
-            if (GetPlatform.isWindows()) {
+            if (GetPlatformName.isWindows()) {
                 return detectWindows();
-            } else if (GetPlatform.isMac()) {
+            } else if (GetPlatformName.isMac()) {
                 return detectMac();
-            } else if (GetPlatform.isLinux()) {
+            } else if (GetPlatformName.isLinux()) {
                 return detectLinux();
             }
         } catch (Exception e) {
