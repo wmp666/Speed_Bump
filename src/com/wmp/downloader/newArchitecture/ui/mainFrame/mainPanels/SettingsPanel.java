@@ -82,7 +82,7 @@ public class SettingsPanel {
 
         fontSizeSpinner = new JSpinner(new SpinnerNumberModel(DataControl.get("FontSize", 12).intValue(), 1, Integer.MAX_VALUE, 1));
 
-        torrentFileAssociationPanel = new FileAssociationPanel("torrent", StringFormat.translate("file_association.torrent"), "/icon/file_assoication/torrent_file");
+        torrentFileAssociationPanel = new FileAssociationPanel("torrent", StringFormat.translate("file_association.torrent"), "/com/wmp/speed_bump/common/background/resource/icon/file_assoication/torrent_file");
 
         platformSetsScrollPane = UITools.setScrollPaneUnOpaque(new JScrollPane(platformSetsPanel));
     }
