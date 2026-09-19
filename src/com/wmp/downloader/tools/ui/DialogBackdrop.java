@@ -10,7 +10,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -347,6 +350,45 @@ public final class DialogBackdrop {
                 jc.setOpaque(false);
             }
         }
+    }
+
+    /**
+     * 递归把容器内部的「纯容器」组件设为透明。
+     *
+     * <p>{@link #makeTransparent} 只处理传入的组件本身，而调用方塞进对话框的功能面板
+     * （{@code FunctionDialog} 的 {@code functionPanel}）内部往往还有若干层容器——
+     * 滚动面板、视口、嵌套面板、标签页面板——它们默认不透明，会一层层盖住背景材质。
+     * 这个方法负责把整棵容器树里的这类组件都清掉，因此所有调用点都无需各自改动。</p>
+     *
+     * <p><b>只处理容器类组件</b>：按钮、输入框、复选框等有实体外观的组件会保留背景，
+     * 避免被误伤成"看不见的控件"。</p>
+     */
+    public static void makeTreeTransparent(Container container) {
+        if (!isEnabled() || container == null) {
+            return;
+        }
+        for (Component child : container.getComponents()) {
+            if (!(child instanceof JComponent jc) || !isPureContainer(jc)) {
+                continue;
+            }
+            jc.setOpaque(false);
+            if (child instanceof JScrollPane scrollPane) {
+                // 视口是独立组件，不会被上面那句 setOpaque 覆盖
+                scrollPane.getViewport().setOpaque(false);
+            }
+            if (child instanceof Container nested) {
+                makeTreeTransparent(nested);
+            }
+        }
+    }
+
+    /** 是否属于「纯容器」——透明化它们不会破坏控件的实体外观 */
+    private static boolean isPureContainer(JComponent component) {
+        return component instanceof JPanel
+                || component instanceof JScrollPane
+                || component instanceof JViewport
+                || component instanceof JSplitPane
+                || component instanceof JTabbedPane;
     }
 
     /**

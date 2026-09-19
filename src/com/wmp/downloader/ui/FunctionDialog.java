@@ -158,6 +158,10 @@ public class FunctionDialog extends JDialog {
             DialogBackdrop.makeTranslucent(UIPanel);
             DialogBackdrop.makeTranslucent(DialogBackdrop.BUTTONS_ALPHA, ButtonsPanel);
             DialogBackdrop.makeTransparent(taskPanel, northButtonPanel);
+            // 调用方传入的 functionPanel 及其内部容器（滚动面板、视口、嵌套面板、标签页）
+            // 默认都是不透明的，会一层层盖住背景材质。集中在这里递归清掉，
+            // 项目里 13 个 FunctionDialog 调用点因此都不需要各自改动。
+            DialogBackdrop.makeTreeTransparent(taskPanel);
             // functionPanel 里若有标签页，让窗口大小跟随「当前选中页」：
             // JTabbedPane 的 preferredSize 取的是所有页的最大值，切换页不会改变它，
             // 不额外处理的话窗口大小就一直不动。
