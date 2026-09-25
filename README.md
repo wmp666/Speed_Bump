@@ -9,7 +9,7 @@
 
 ## 减速带 · Speed Bump
 
-**多线程下载器 · 可拓展更多其他功能**
+**让你的工作更简单 · 多线程下载器 · 可拓展**
 
 [![Release][release-shield]][release-url]
 [![License][license-shield]][license-url]
