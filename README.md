@@ -17,7 +17,6 @@
 [![Issues][issues-shield]][issues-url]
 [![Downloads][downloads-shield]][release-url]
 [![Java][java-shield]](https://adoptium.net/)
-[![Platform][platform-shield]][build-doc]
 
 ##### [📖 使用文档][docs-url] · [⬇️ 下载安装][release-url] · [🐛 报告问题][issues-url] · [💡 功能建议][issues-url]
 
@@ -129,4 +128,3 @@
 [issues-url]: https://github.com/wmp666/Speed_Bump/issues
 [downloads-shield]: https://img.shields.io/github/downloads/wmp666/Speed_Bump/total?style=for-the-badge
 [java-shield]: https://img.shields.io/badge/Java-25%2B-orange?style=for-the-badge&logo=openjdk&logoColor=white
-[platform-shield]: https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue?style=for-the-badge
