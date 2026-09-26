@@ -221,7 +221,7 @@ public class ParserTaskInfo {
                         jar, supportPlatform));
             }
 
-            if (title.length() > 0) {
+            if (!title.isEmpty()) {
                 conflicts.add(new ParserCompatibilityDialog.Conflict(jar, title.toString(), tooltip.toString()));
             }
         }
@@ -249,7 +249,7 @@ public class ParserTaskInfo {
     }
 
     private static void appendLine(StringBuilder builder, String line) {
-        if (builder.length() > 0) builder.append('\n');
+        if (!builder.isEmpty()) builder.append('\n');
         builder.append(line);
     }
 

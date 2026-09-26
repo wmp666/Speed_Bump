@@ -31,11 +31,14 @@ public class IconControl {
         }
     }
 
-
     public static ImageIcon getIcon(String key) {
+        return getIcon(DataControl.get("theme_type", "light"), key);
+    }
+
+    public static ImageIcon getIcon(String type, String key) {
         logger.info("正在获取" + key + "的对应图标");
         var iconPath = iconProperties.getProperty(key, "/com/wmp/speed_bump/common/background/resource/icon/%theme_type%/12-misc/circle.png");
-        iconPath = iconPath.replace("%theme_type%", DataControl.get("theme_type", "light"));
+        iconPath = iconPath.replace("%theme_type%", type);
         logger.info(iconPath);
 
         URL iconUrl = IconControl.class.getResource(iconPath);

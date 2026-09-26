@@ -114,14 +114,8 @@ public class ThemeChanger {
 
         //主体部分数据更新
         UIManager.put("FlatLaf.addon.swingx", new FlatSwingXDefaultsAddon());
-        // true：填充「切换标签页的顶栏」（tab 区）背景，让它不透明；
-        // 需要与下面的 contentOpaque=false 搭配，且 TabbedPane 自身 opaque=false
-        // （FlatTabbedPaneUI: tabsOpaque && !tabPane.isOpaque() 时才填充 tab 区背景）。
-        // 本项目只有 mainTabbedPane 一个 TabbedPane，所以虽是全局设置，实际只影响它。
         UIManager.put("TabbedPane.tabsOpaque", true);
-        //UIManager.put("TabbedPane.background", new Color(0, 0, 0, 100));
         UIManager.put("TabbedPane.contentOpaque", false);
-        //FlatLaf.setUseNativeWindowDecorations(true);
         System.setProperty("flatlaf.useFullWindowContent", "true");
         int arc = DataControl.get("is_use_square_component", true)?0:10;
         UIManager.put("Button.arc", arc);

@@ -147,6 +147,13 @@ public class StatusPanel extends JPanel {
                 ? String.format(StringFormat.translate("statusbar.running_summary"), run, total)
                 : String.format(StringFormat.translate("statusbar.idle_summary"), total);
 
+        if (Taskbar.isTaskbarSupported()) {
+            var taskbar = Taskbar.getTaskbar();
+            if (taskbar.isSupported(Taskbar.Feature.ICON_BADGE_IMAGE_WINDOW)) {
+                taskbar.setWindowIconBadge(downloader, run > 0 ? IconControl.getIcon(DataControl.get("theme_type", "light").equals("light")?"dark":"light", "task").getImage() : null);
+            }
+        }
+
         taskStatusLabel.setText(text);
         taskStatusLabel.setToolTipText(text);
         //立即重取图标（主题切换时 addInDynamicConverter 里的任务也会刷新）

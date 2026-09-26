@@ -426,26 +426,45 @@ public final class UiSelfTest {
         return problems;
     }
 
-    /** 进度条：确定态填充是强调色，不确定态有扫动带 */
+    /**
+     * 进度条：确定态必须完全交给当前 L&amp;F，不确定态必须由本插件画出扫动带。
+     *
+     * <p>这里刻意用「逐像素对照」而不是「断言某个颜色」：
+     * 后者的前提是「我知道 L&amp;F 该画成什么颜色」，那本身就是一种越权——
+     * 而本次的需求恰恰是「确定态由 L&amp;F 决定」。所以正确的验证方式是
+     * 自己拿组件装一份 L&amp;F 原生 UI 当作参照，两边画出来必须一模一样。</p>
+     */
     private static List<String> assertProgressBar(Gallery g, BufferedImage whole) {
         List<String> problems = new ArrayList<>();
 
-        BufferedImage det = paintComponent(g.determinate, 560, 6);
-        Color at25 = new Color(det.getRGB((int) (560 * 0.25), 3), true);
-        Color at80 = new Color(det.getRGB((int) (560 * 0.80), 3), true);
-        report("[断言] 进度条 60%：25% 处 " + toHex(at25) + "，80% 处 " + toHex(at80));
-        if (colorDistance(at25, FluentColors.accent()) > 24) {
-            problems.add("进度条 60% 处应为强调色，实际 " + toHex(at25));
-        }
-        if (colorDistance(at80, FluentColors.progressTrack()) > 40) {
-            problems.add("进度条 80% 处应仍是轨道色，实际 " + toHex(at80)
-                    + "（期望接近 " + toHex(FluentColors.progressTrack()) + "）");
+        // ---- 1) 确定态：与 L&F 自身绘制逐像素对照 ----
+        int width = 560;
+        int height = 6;
+        javax.swing.JProgressBar reference = new javax.swing.JProgressBar(0, 100);
+        reference.setValue(g.determinate.getValue());
+        reference.setStringPainted(g.determinate.isStringPainted());
+
+        javax.swing.plaf.ComponentUI lafUi =
+                com.wmp.downloader.tools.ui.fluent.FluentProgressBarUI.createLafUi(reference);
+        if (lafUi == null) {
+            report("[断言] 当前 L&F 的进度条 UI 为共享实例或取不到，跳过确定态对照");
+        } else if (!(lafUi instanceof javax.swing.plaf.ProgressBarUI)) {
+            problems.add("LAF 的进度条 UI 类型异常：" + lafUi.getClass().getName());
+        } else {
+            reference.setUI((javax.swing.plaf.ProgressBarUI) lafUi);
+            BufferedImage mine = paintComponent(g.determinate, width, height);
+            BufferedImage theirs = paintComponent(reference, width, height);
+            int diff = countDifferentPixels(mine, theirs);
+            report("[断言] 确定态进度条 vs LAF 自身绘制：差异像素 " + diff + " / " + (width * height));
+            if (diff > 0) {
+                problems.add("确定态进度条没有完全交给 LAF 绘制（与 LAF 自身绘制有 " + diff + " 个像素不同）");
+            }
         }
 
-        // 不确定态：扫动带随时间移动，两个不同时刻应至少有一个位置落在带内
-        BufferedImage ind = paintComponent(g.indeterminate, 560, 6);
+        // ---- 2) 不确定态：必须由本插件画出扫动带 ----
+        BufferedImage ind = paintComponent(g.indeterminate, width, height);
         int accentPixels = countAccentPixels(ind);
-        report("[断言] 不确定进度条强调色像素: " + accentPixels + " / 3360");
+        report("[断言] 不确定进度条强调色像素: " + accentPixels + " / " + (width * height));
         if (accentPixels < 50) {
             problems.add("不确定进度条没有渲染出扫动带（强调色像素仅 " + accentPixels + "）");
         }
@@ -465,20 +484,34 @@ public final class UiSelfTest {
             return problems;
         }
         BufferedImage img = paintComponent(bar, bar.getWidth(), bar.getHeight());
-        // 取纵向中段、横向中心的一列，找出与底色差异最大的像素
+        report("[断言] 滚动条尺寸: " + bar.getWidth() + "×" + bar.getHeight()
+                + "（UI=" + bar.getUI().getClass().getSimpleName() + "）");
+
+        // 统计整张图里与底色不同的像素，而不是只取中间一列：
+        // 滑块很窄（3px）且不同主题的滚动条宽度不同，固定取样点容易取空，
+        // 那会变成「断言假失败」，比漏检更糟
         Color bg = UIManager.getColor("Panel.background");
+        int differing = 0;
         int best = 0;
         Color bestColor = null;
-        for (int y = 4; y < img.getHeight() - 4; y++) {
-            Color c = new Color(img.getRGB(img.getWidth() / 2, y), true);
-            int d = colorDistance(c, bg);
-            if (d > best) {
-                best = d;
-                bestColor = c;
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                Color c = new Color(img.getRGB(x, y), true);
+                int d = colorDistance(c, bg);
+                if (d > 2) {
+                    differing++;
+                }
+                if (d > best) {
+                    best = d;
+                    bestColor = c;
+                }
             }
         }
-        report("[断言] 滚动条滑块最大对比度: " + best + "（颜色 " + toHex(bestColor) + "）");
-        if (best < 6) {
+        report("[断言] 滚动条滑块像素: " + differing + " / " + (img.getWidth() * img.getHeight())
+                + "，最大对比度 " + best + "（颜色 " + toHex(bestColor) + "）");
+        if (differing == 0) {
+            problems.add("滚动条滑块完全没有绘制（整根滚动条与底色完全一致）");
+        } else if (best < 6) {
             problems.add("滚动条滑块几乎不可见（与底色最大差异仅 " + best + "）");
         }
         return problems;
@@ -496,6 +529,13 @@ public final class UiSelfTest {
                 + "，引擎注册数=" + RevealEngine.registeredCount()
                 + "，按钮已注册=" + RevealEngine.isRegistered(g.revealButton)
                 + "，引擎启用=" + RevealEngine.isEnabled());
+
+        // 按钮光晕的 UI 代理继承自 FlatLaf，非 FlatLaf 外观下按设计不安装。
+        // 这不是缺陷，所以跳过而不是报错——否则用 Metal 主题跑自检会得到假失败。
+        if (!(g.revealButton.getUI() instanceof com.wmp.downloader.tools.ui.fluent.RevealButtonUI)) {
+            report("[断言] 当前外观不是 FlatLaf，按钮光晕不适用，跳过本组");
+            return problems;
+        }
         if (RevealEngine.registeredCount() == 0) {
             problems.add("没有组件注册到揭示高亮引擎");
             return problems;
@@ -547,7 +587,12 @@ public final class UiSelfTest {
         checkUiDefault("ScrollBarUI", com.wmp.downloader.tools.ui.fluent.FluentScrollBarUI.class, problems);
         checkUiDefault("ProgressBarUI", com.wmp.downloader.tools.ui.fluent.FluentProgressBarUI.class, problems);
         checkUiDefault("CheckBoxUI", com.wmp.downloader.tools.ui.fluent.FluentSwitchUI.class, problems);
-        checkUiDefault("ButtonUI", com.wmp.downloader.tools.ui.fluent.RevealButtonUI.class, problems);
+
+        // 按钮光晕的 UI 代理继承自 FlatLaf，非 FlatLaf 外观下按设计不安装
+        boolean flatLaf = com.wmp.downloader.tools.ui.fluent.FluentUi.isFlatLaf();
+        if (flatLaf) {
+            checkUiDefault("ButtonUI", com.wmp.downloader.tools.ui.fluent.RevealButtonUI.class, problems);
+        }
 
         // 光看 UIManager 里的字符串还不够：UIDefaults.getUI 是反射调用静态 createUI，
         // 真正要验证的是「新建的组件确实拿到了我们的 UI」
@@ -561,10 +606,12 @@ public final class UiSelfTest {
             problems.add("主题切换后新建的进度条没有拿到 FluentProgressBarUI，而是 "
                     + probeBar.getUI().getClass().getName());
         }
-        JButton probeButton = new JButton("切换后新建的按钮");
-        if (!(probeButton.getUI() instanceof com.wmp.downloader.tools.ui.fluent.RevealButtonUI)) {
-            problems.add("主题切换后新建的按钮没有拿到 RevealButtonUI，而是 "
-                    + probeButton.getUI().getClass().getName());
+        if (flatLaf) {
+            JButton probeButton = new JButton("切换后新建的按钮");
+            if (!(probeButton.getUI() instanceof com.wmp.downloader.tools.ui.fluent.RevealButtonUI)) {
+                problems.add("主题切换后新建的按钮没有拿到 RevealButtonUI，而是 "
+                        + probeButton.getUI().getClass().getName());
+            }
         }
 
         // 还原主题，避免影响后续（以及让 ThemeChanger 的 1 秒定时器保持无操作）
@@ -678,6 +725,24 @@ public final class UiSelfTest {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 if (colorDistance(new Color(image.getRGB(x, y), true), accent) <= 30) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /** 两张同尺寸图像的差异像素数（任一通道相差超过 2 即计为不同） */
+    private static int countDifferentPixels(BufferedImage a, BufferedImage b) {
+        if (a.getWidth() != b.getWidth() || a.getHeight() != b.getHeight()) {
+            return Integer.MAX_VALUE;
+        }
+        int count = 0;
+        for (int y = 0; y < a.getHeight(); y++) {
+            for (int x = 0; x < a.getWidth(); x++) {
+                Color ca = new Color(a.getRGB(x, y), true);
+                Color cb = new Color(b.getRGB(x, y), true);
+                if (colorDistance(ca, cb) > 2) {
                     count++;
                 }
             }

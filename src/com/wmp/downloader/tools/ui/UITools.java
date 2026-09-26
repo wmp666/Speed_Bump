@@ -15,16 +15,12 @@ public class UITools {
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
         // 6px：Fluent 的进度条是「细条 + 上下留白」。
-        // 原来是 12px 且条形填满整个高度，显得笨重。
-        // 注意细度由这里的高度决定，而不是由 UI 代理去画一条细线——
-        // 让组件一部分区域保持透明，会依赖父容器正确重绘，
-        // 在本项目「根面板画背景图 + 大量透明子面板」的结构里容易出残影。
+
         int barHeight = 6;
 
         for (JProgressBar bar : progressBar) {
-            // 这里原本强制 "arc: 0"（方角）。现在不再逐组件锁定形状，
-            // 而是统一服从「方角组件」这个全局设置，避免出现
-            // 「按钮直角、进度条圆角」这种自相矛盾的界面。
+            bar.putClientProperty(FlatClientProperties.STYLE, "arc: 0");
+
             // 形状由 FluentProgressBarUI 按 is_use_square_component 决定。
             bar.setPreferredSize(new Dimension(0, barHeight));   // 宽度0表示由布局决定
             bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, barHeight));
@@ -36,8 +32,6 @@ public class UITools {
             panel.add(bar);
         }
 
-        // 移除最后一个多余间隔（可选）
-        // 或者直接返回
         return panel;
     }
 

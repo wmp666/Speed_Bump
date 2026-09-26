@@ -183,19 +183,66 @@ public final class FluentColors {
         return alpha(isDark() ? Color.WHITE : Color.BLACK, isDark() ? 0x0D : 0x0A);
     }
 
-    /** 滚动条滑块常态色 */
+    /**
+     * 滚动条滑块常态色。
+     *
+     * <p><b>不能直接信任 {@code ScrollBar.thumb}。</b>实测 Windows Classic 外观把它定义成
+     * 与 {@code Panel.background} <b>完全相同</b>的颜色——本项目的滚动条是「悬浮细条」，
+     * 轨道不画、滑块直接叠在面板底色上，于是变成「用底色画在底色上」，
+     * alpha 混合后完全看不出来，滚动条在界面上彻底消失。</p>
+     *
+     * <p>所以这里做一次可见性校验：对比度不足就改用与文字同源的次要色，
+     * 它在任何主题下都天然与底色有对比度。</p>
+     */
     public static Color scrollThumb() {
-        Color c = UIManager.getColor("ScrollBar.thumb");
-        return c != null ? c : isDark() ? new Color(0x9A, 0x9A, 0x9A) : new Color(0x8C, 0x8C, 0x8C);
+        Color candidate = UIManager.getColor("ScrollBar.thumb");
+        if (candidate == null) {
+            candidate = UIManager.getColor("ScrollBar.thumbColor");
+        }
+        return ensureVisible(candidate, textSecondary(), MIN_THUMB_CONTRAST);
     }
 
     /** 滚动条滑块悬停/拖动色 */
     public static Color scrollThumbHover() {
-        Color c = UIManager.getColor("ScrollBar.hoverThumbColor");
-        if (c == null) {
-            c = UIManager.getColor("ScrollBar.pressedThumbColor");
+        Color candidate = UIManager.getColor("ScrollBar.hoverThumbColor");
+        if (candidate == null) {
+            candidate = UIManager.getColor("ScrollBar.pressedThumbColor");
         }
-        return c != null ? c : shade(scrollThumb(), isDark() ? 0.18f : -0.18f);
+        return ensureVisible(candidate, shade(scrollThumb(), isDark() ? 0.18f : -0.18f),
+                MIN_THUMB_CONTRAST);
+    }
+
+    /** 滑块与底色所需的最小通道差 */
+    private static final int MIN_THUMB_CONTRAST = 24;
+
+    /**
+     * 校验候选颜色在「滚动条所处的背景」上是否可见，不可见则改用替代色。
+     *
+     * @param candidate 主题给出的候选色（可能为 {@code null}）
+     * @param fallback  候选色不可用时的替代色
+     * @param minDiff   与背景的最小通道差
+     */
+    private static Color ensureVisible(Color candidate, Color fallback, int minDiff) {
+        Color background = UIManager.getColor("ScrollBar.track");
+        if (background == null || background.getAlpha() == 0) {
+            // 轨道是透明的（本项目就是这样），滑块实际叠在面板底色上
+            background = firstNonNull(
+                    () -> UIManager.getColor("Panel.background"),
+                    () -> UIManager.getColor("control"));
+        }
+        if (candidate != null && contrast(candidate, background) >= minDiff) {
+            return candidate;
+        }
+        return fallback;
+    }
+
+    /** 两个颜色的最大通道差，用作对比度的粗略度量 */
+    private static int contrast(Color a, Color b) {
+        if (a == null || b == null) {
+            return 0;
+        }
+        return Math.max(Math.abs(a.getRed() - b.getRed()),
+                Math.max(Math.abs(a.getGreen() - b.getGreen()), Math.abs(a.getBlue() - b.getBlue())));
     }
 
     /** 进度条轨道色 */

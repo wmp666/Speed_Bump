@@ -142,6 +142,7 @@ public final class ParserCompatibilityDialog {
             checkBox.setOpaque(false);
             checkBox.setToolTipText(toHtml(conflict.tooltip()));
             checkBox.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+            checkBox.setHorizontalAlignment(SwingConstants.TRAILING);
             checkBoxes.add(checkBox);
             listPanel.add(checkBox);
         }
@@ -210,6 +211,6 @@ public final class ParserCompatibilityDialog {
                 .replace("&", "&amp;")
                 .replace("<", "&lt;")
                 .replace(">", "&gt;");
-        return "<html>" + escaped.replace("\n", "<br>") + "</html>";
+        return escaped;
     }
 }
