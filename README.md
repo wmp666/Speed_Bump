@@ -9,7 +9,7 @@
 
 ## 减速带 · Speed Bump
 
-**多线程下载器 · 可拓展更多其他功能**
+**让你的工作更简单 · 多线程下载器 · 可拓展**
 
 [![Release][release-shield]][release-url]
 [![License][license-shield]][license-url]
@@ -17,7 +17,6 @@
 [![Issues][issues-shield]][issues-url]
 [![Downloads][downloads-shield]][release-url]
 [![Java][java-shield]](https://adoptium.net/)
-[![Platform][platform-shield]][build-doc]
 
 ##### [📖 使用文档][docs-url] · [⬇️ 下载安装][release-url] · [🐛 报告问题][issues-url] · [💡 功能建议][issues-url]
 
@@ -40,24 +39,35 @@
 * **可拓展** 一个 jar 就是一个拓展。内置 HTTP、BT、Gopeed、Github 解析器，官方拓展提供哔哩哔哩、抖音、ED2K、图片格式转换等能力；拓展页可查看、启用、禁用、卸载与一键安装 / 更新。
 * **桌面原生体验** 系统托盘、失焦系统通知、拖拽添加任务与拖出文件、开机自启动、种子文件关联、背景图与主题 / 主题色、六种界面语言、单实例与命令行传参。
 
-<!-- ABOUT -->
-## 关于本项目
+## 唠嗑 =)
 
-始于一个自用需求：既要能多线程把文件拉下来，也要能顺手处理音视频，还希望功能可以不断外挂进来——于是有了减速带，以及它的拓展体系。
+### 诞生原因
+
+- 想法：始于很早以前对于电脑上下载器的功能太分散，大多需要付费，因此想做一个简单的下载器
+- 开始：在26年暑假看到了一个很全面的下载器（Ghost Downloader 3），但是由于它的性能问题（Fluent UI对老电脑不友好），所以产生了自己做一个的想法
+- 发展：在制作时，我发现实际使用上，下载文件并非经常性的工作，而我希望他能有一个更多的功能，包括：下载、音视频处理、格式转换，甚至可以进行一些系统管理、优化
+
+### 开发邀请
+
+作者只是一个业余的编程爱好者，因此开发时使用了AI工具将一些个人无法实现的功能完成，所以我希望你也能参与到软件的开发中，哪怕只是一个想法，或者一个你发现的问题，这些都有助于软件的不断进步
+
+
+<!-- ABOUT -->
+## 关于项目
 
 | 平台 | 支持情况 |
 |:--|:--|
 | **Windows** | 完整支持 |
 | **Linux** | 完整支持 |
-| **macOS** | 完整支持 |
+| **macOS** | 完整支持（暂时无法推出相应版本） |
 
 > [!Warning]
 > 对于个平台的支持情况取决于Java 25，对这些平台的支持情况
 
 | 项目 | 值                                                                      |
 |:--|:------------------------------------------------------------------------|
-| 当前版本 | `0.4.5.2`                                                               |
-| 拓展开发版本 | `1.1.2`                                                                 |
+| 当前版本(正在开发) | `0.5＋`                                                               |
+| 拓展开发版本(正在开发) | `2.0＋`                                                                 |
 | 运行环境 | `JDK 25+`                                                               |
 | 拓展仓库 | [wmp666/Speed_Bump_Plugin](https://github.com/wmp666/Speed_Bump_Plugin) |
 | 许可证 | [Apache License 2.0](LICENSE)                                           |
@@ -129,4 +139,3 @@
 [issues-url]: https://github.com/wmp666/Speed_Bump/issues
 [downloads-shield]: https://img.shields.io/github/downloads/wmp666/Speed_Bump/total?style=for-the-badge
 [java-shield]: https://img.shields.io/badge/Java-25%2B-orange?style=for-the-badge&logo=openjdk&logoColor=white
-[platform-shield]: https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue?style=for-the-badge
