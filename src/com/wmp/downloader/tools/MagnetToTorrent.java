@@ -21,12 +21,6 @@ public class MagnetToTorrent {
 
     private static final Logger logger = Logger.getLogger(MagnetToTorrent.class);
 
-    static void main() {
-        System.out.println(magnetToTorrent(
-                "magnet:?xt=urn:btih:3a8a09a5aae8aca84d3990ce62a2c664e2ef5892&dn=zh-cn_windows_10_consumer_editions_version_22h2_updated_oct_2025_x64_dvd_38efd00d.iso&xl=7168839680",
-                DataControl.getDownloadFilePath().getAbsolutePath(),
-                DataControl.getTempPath().getAbsolutePath()));
-    }
 
     public static String magnetToTorrent(String magnetUri, String savePath, String tempPath) {
         logger.info("开始转换磁力链接");

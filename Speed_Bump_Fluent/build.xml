@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Speed_Bump_Fluent 的 Ant 构建脚本（可选）。
+
+  为什么还留着 Ant：原项目（DownLoader）就是用 .build/*.build.xml 打包的，
+  保持同一套工具链，后续把打包流程整体搬过来时不用再换一次。
+  日常开发直接用 build.ps1 / run.ps1 更省事。
+
+  用法：
+    ant compile     编译
+    ant jar         打包可执行 jar
+    ant run         运行
+    ant selftest    离屏自检
+    ant clean       清理
+-->
+<project name="Speed_Bump_Fluent" default="compile" basedir=".">
+
+    <property name="src.dir" value="src"/>
+    <property name="out.dir" value="out/classes"/>
+    <property name="jar.file" value="out/Speed_Bump_Fluent.jar"/>
+    <property name="main.class" value="com.wmp.speedbump.fluent.FluentApp"/>
+    <property name="encoding" value="UTF-8"/>
+
+    <path id="lib.path">
+        <fileset dir="lib" includes="*.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="out"/>
+    </target>
+
+    <target name="compile" description="编译全部源码">
+        <mkdir dir="${out.dir}"/>
+        <javac srcdir="${src.dir}"
+               destdir="${out.dir}"
+               classpathref="lib.path"
+               encoding="${encoding}"
+               includeantruntime="false"
+               debug="true">
+            <compilerarg value="-Xlint:-options"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile" description="打包可执行 jar">
+        <mkdir dir="out/lib"/>
+        <copy todir="out/lib">
+            <fileset dir="lib" includes="*.jar"/>
+        </copy>
+        <manifest file="out/MANIFEST.MF">
+            <attribute name="Main-Class" value="${main.class}"/>
+            <attribute name="Class-Path" value="lib/flatlaf-3.7.2.jar lib/flatlaf-extras-3.7.2.jar lib/jsvg-2.1.0.jar"/>
+            <attribute name="Enable-Native-Access" value="ALL-UNNAMED"/>
+        </manifest>
+        <jar destfile="${jar.file}" manifest="out/MANIFEST.MF" basedir="${out.dir}"/>
+        <echo message="已生成 ${jar.file}"/>
+    </target>
+
+    <target name="run" depends="compile" description="运行应用">
+        <java classname="${main.class}" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="${out.dir}"/>
+                <path refid="lib.path"/>
+            </classpath>
+            <jvmarg value="--enable-native-access=ALL-UNNAMED"/>
+            <sysproperty key="file.encoding" value="UTF-8"/>
+        </java>
+    </target>
+
+    <target name="selftest" depends="compile" description="离屏自检并导出截图">
+        <java classname="${main.class}" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="${out.dir}"/>
+                <path refid="lib.path"/>
+            </classpath>
+            <jvmarg value="--enable-native-access=ALL-UNNAMED"/>
+            <sysproperty key="file.encoding" value="UTF-8"/>
+            <arg value="--selftest"/>
+            <arg value="--dump-tree"/>
+        </java>
+    </target>
+
+</project>

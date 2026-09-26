@@ -1,5 +1,9 @@
 package com.wmp.speed_bump.common.background.tool.platform;
 
+import com.wmp.downloader.tools.file.DataControl;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 public class GetPlatformName {
@@ -31,7 +35,7 @@ public class GetPlatformName {
         }
     }
 
-    public static String getOSName(){
+    public static @NotNull String getOSName(){
         if (isWindows()) {
             return "win";
         }
@@ -45,5 +49,24 @@ public class GetPlatformName {
             return "mac";
         }
         return "null";
+    }
+
+    @Contract(pure = true)
+    public static @NotNull String getUIName(){
+        return isAndroid() ? "android" : DataControl.get("ui.style", "swing");
+    }
+
+    @Contract(pure = true)
+    public static @NotNull String getEquipmentName(){
+        return isAndroid() ? "phone" : "pc" ;
+    }
+
+    public static boolean isSupportPlatform(@NotNull String platform){
+        return platform.equals(getOSName()) ||
+                platform.equals(getEquipmentName());
+    }
+
+    public static boolean isSupportUIPlatform(@NotNull String UIStyle){
+        return UIStyle.equals(getUIName());
     }
 }

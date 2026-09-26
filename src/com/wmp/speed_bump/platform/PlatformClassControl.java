@@ -5,6 +5,7 @@ import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.exception.PlatformCLassFindException;
 import com.wmp.speed_bump.common.background.tool.Creator;
 import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -15,12 +16,12 @@ public class PlatformClassControl {
      * @param className 类名（分平台的名称位置留空为%s）
      * @return 实现类
      */
-    public static <T> Creator<T> getCreator(String className, Type type){
+    public static <T> @NotNull Creator<T> getCreator(String className, @NotNull Type type){
         String newClassName = "";
         switch (type) {
             case UI -> {
                 String[] list = {"swing", "fx", "android"};
-                String typeStr = GetPlatformName.isAndroid()?"android":DataControl.get("ui.style", "swing");
+                String typeStr = GetPlatformName.getUIName();
                 newClassName = String.format(className, typeStr);
             }
             case BACKGROUND -> {
@@ -30,7 +31,7 @@ public class PlatformClassControl {
             }
             case BACKGROUND_SIMPLE -> {
                 String[] list = {"pc", "phone"};
-                newClassName = String.format(className, GetPlatformName.isAndroid()?list[1]:list[0]);
+                newClassName = String.format(className, GetPlatformName.getEquipmentName());
 
             }
             default -> throw new PlatformCLassFindException("出现无法识别的类型：" + type);

@@ -7,7 +7,6 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.EasterEggData;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -103,40 +102,23 @@ public class ThemeChanger {
 
         if (isUseSnapshot) FlatAnimatedLafChange.showSnapshot();
 
-        if (!EasterEggData.canUseFlatLaf) {
-            if (!(newTheme instanceof FlatLaf)) {
-                if (newTheme instanceof LookAndFeel laf)
-                    FlatLaf.setup(laf);
-                else if (newTheme instanceof String className) {
-                    try {
-                        UIManager.setLookAndFeel(className);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-
-            } else {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        } else {
-            if (newTheme instanceof LookAndFeel laf)
-                FlatLaf.setup(laf);
-            else if (newTheme instanceof String className) {
-                try {
-                    UIManager.setLookAndFeel(className);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        if (newTheme instanceof LookAndFeel laf)
+            FlatLaf.setup(laf);
+        else if (newTheme instanceof String className) {
+            try {
+                UIManager.setLookAndFeel(className);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
 
         //主体部分数据更新
         UIManager.put("FlatLaf.addon.swingx", new FlatSwingXDefaultsAddon());
-        //UIManager.put("TabbedPane.tabsOpaque", false);
+        // true：填充「切换标签页的顶栏」（tab 区）背景，让它不透明；
+        // 需要与下面的 contentOpaque=false 搭配，且 TabbedPane 自身 opaque=false
+        // （FlatTabbedPaneUI: tabsOpaque && !tabPane.isOpaque() 时才填充 tab 区背景）。
+        // 本项目只有 mainTabbedPane 一个 TabbedPane，所以虽是全局设置，实际只影响它。
+        UIManager.put("TabbedPane.tabsOpaque", true);
         //UIManager.put("TabbedPane.background", new Color(0, 0, 0, 100));
         UIManager.put("TabbedPane.contentOpaque", false);
         //FlatLaf.setUseNativeWindowDecorations(true);

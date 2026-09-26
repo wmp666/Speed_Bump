@@ -105,7 +105,7 @@
                           </component>
                           <component id="81460" class="javax.swing.JCheckBox" binding="isUseHeavyWeightToastCheckBox">
                             <constraints>
-                              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="settings.personalized.is_use_heavy_weght.toast"/>
@@ -362,7 +362,7 @@
                               </component>
                               <component id="8b733" class="javax.swing.JCheckBox" binding="isStartCheckUpdateCheckBox">
                                 <constraints>
-                                  <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                  <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
                                   <selected value="true"/>

@@ -13,7 +13,6 @@ public class PreloadDialog extends JDialog implements PreLoadDialog {
         setContentPane(contentPane);
         setResizable(false);
         setUndecorated(true);
-        setAlwaysOnTop(true);
 
         // ===== [BACKDROP-START] 背景材质（Mica / 模糊）测试项 =====
         // 整块删除即可彻底移除该功能，加载窗恢复原来的不透明外观。

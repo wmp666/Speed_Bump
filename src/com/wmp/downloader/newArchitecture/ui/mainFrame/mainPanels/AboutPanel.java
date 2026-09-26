@@ -1,11 +1,9 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.wmp.downloader.Run;
-import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
-import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.Downloader;
@@ -72,14 +70,6 @@ public class AboutPanel {
                 panel.add(textArea);
 
             }
-        });
-        FlatLafCheckBox.addActionListener(_ -> {
-            EasterEggData.canUseFlatLaf = FlatLafCheckBox.isSelected();
-            ThemeChanger.easyChanger();
-        });
-        IconPackCheckBox.addActionListener(_ -> {
-            EasterEggData.canUseIcon = IconPackCheckBox.isSelected();
-            IconControl.runDynamicConverters();
         });
 
         checkUpdateButton.addActionListener(_ -> downloader.checkUpdate());

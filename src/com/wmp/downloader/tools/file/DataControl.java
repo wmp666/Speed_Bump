@@ -6,7 +6,6 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.Run;
-import com.wmp.downloader.tools.EasterEggData;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.TestFunctionControl;
 import com.wmp.downloader.tools.ui.SystemThemeDetector;
@@ -78,7 +77,20 @@ public class DataControl {
         try {
             configureLogPath(LOG_DIR.toFile().getAbsolutePath());
         } catch (IOException e) {
-            ToastMessage.show(Downloader.mainFrame, "日志路径配置失败\n因此出现问题后无法查看日志", ToastMessage.ERROR);
+            // 注意：本方法可能在 DataControl 的静态初始化块里被调用，此时主窗口必然还不存在
+            // （Downloader.mainFrame == null）。而 ToastMessage.show(null, ...) 会抛
+            // IllegalArgumentException，异常从静态块冒出去会让整个 DataControl 类初始化失败，
+            // 之后任何访问都变成 NoClassDefFoundError ——「日志目录不可写」这种小事
+            // 不该把整个数据层带走。所以先记日志，只有窗口已存在时才提示用户。
+            logger.error("日志路径配置失败（仅影响日志文件，不影响功能）", e);
+            try {
+                if (Downloader.mainFrame != null) {
+                    ToastMessage.show(Downloader.mainFrame,
+                            "日志路径配置失败\n因此出现问题后无法查看日志", ToastMessage.ERROR);
+                }
+            } catch (Throwable ignored) {
+                // 提示失败无关紧要，绝不能再往上抛
+            }
         }
 
         logger.debug("加载数据...");
@@ -154,10 +166,6 @@ public class DataControl {
         tempDataMap.putIfAbsent("theme_type", "light");
         // 处理主题数据
         if (key.equals("theme")) {
-            if (!EasterEggData.canUseFlatLaf) {
-                tempDataMap.put("theme_type", "light");
-                return;
-            }
 
             switch (value.toString()) {
                 case "Mac Dark", "Dark", "Darcula" -> {

@@ -1,7 +1,6 @@
 package com.wmp.downloader.tools.ui;
 
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.EasterEggData;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -60,17 +59,11 @@ public class IconControl {
     }
 
     public static ImageIcon getIcon(String key, int weight, int height) {
-        if (!EasterEggData.canUseIcon)
-            return new ImageIcon(getIcon("null").getImage().getScaledInstance(1, 1, Image.SCALE_SMOOTH));
-        else
-            return new ImageIcon(getIcon(key).getImage().getScaledInstance(weight, height, Image.SCALE_SMOOTH));
+        return new ImageIcon(getIcon(key).getImage().getScaledInstance(weight, height, Image.SCALE_SMOOTH));
     }
 
     public static Image getImage(String key, int weight, int height) {
-        if (!EasterEggData.canUseIcon)
-            return getIcon("null").getImage().getScaledInstance(1, 1, Image.SCALE_SMOOTH);
-        else
-            return getIcon(key).getImage().getScaledInstance(weight, height, Image.SCALE_SMOOTH);
+        return getIcon(key).getImage().getScaledInstance(weight, height, Image.SCALE_SMOOTH);
     }
 
     /**

@@ -170,6 +170,9 @@ public class Downloader extends JFrame implements WindowListener{
         // 使用JLayeredPane包装主界面
         initLayeredPane();
 
+        // 「切换标签页的顶栏」不透明由 ThemeChanger 里的
+        // UIManager.put("TabbedPane.tabsOpaque", true) 统一处理，这里不再单独设置。
+
         // 初始化背景相关
         initBackgroundSettings();
 
@@ -731,6 +734,7 @@ public class Downloader extends JFrame implements WindowListener{
 
     private void createUIComponents() {
         mainTabbedPane = new LazyTabbedPane();
+        mainTabbedPane.setOpaque(true);
 
         TasksPanel = new JPanel(new GridBagLayout());
         TasksPanel.setOpaque(false);
