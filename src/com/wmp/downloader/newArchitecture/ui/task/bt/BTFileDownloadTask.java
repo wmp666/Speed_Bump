@@ -11,6 +11,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPan
 import com.wmp.speed_bump.common.background.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
@@ -100,9 +101,9 @@ public class BTFileDownloadTask extends FileDownloadTask {
         this.handle = manager.find(sha1);
         handle.renameFile(0, fileName);
 
-        JProgressBar progressBar = new JProgressBar();
-        progressBar.setStringPainted(false);
-        progressBar.setMaximum(100);
+        SBProgressBar progressBar = SBProgressBar.INSTANCE_CREATOR.create();
+        progressBar.setProgressStringPainted(false);
+        progressBar.setProgressMaxValue(100);
         ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
 
         // 4. 监听下载进度和完成事件
@@ -122,7 +123,7 @@ public class BTFileDownloadTask extends FileDownloadTask {
                     // 获取进度
                     TorrentStatus status = handle.status();
                     int progress = (int) (status.progress() * 100);
-                    progressBar.setValue(progress);
+                    progressBar.setProgressValue(progress);
                     DOWNLOAD_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.allTimeDownload()));
                     DOWNLOAD_SPEED_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.downloadRate()) + "/s");
                     SHARE_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.allTimeUpload()));

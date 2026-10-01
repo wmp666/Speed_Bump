@@ -23,6 +23,59 @@ public class ThemeChanger {
     private static String theme = "";
     private static String themeStyle = "";
 
+    /**
+     * 界面上给用户选的「三档主题」。
+     *
+     * <p>{@link #easyChanger} 其实认识十套外观（还有 {@code Darcula} / {@code IntelliJ} /
+     * {@code Metal} / {@code Windows Classic} / {@code System}），但全摊在下拉里对普通用户是负担。
+     * 所以界面只给三档，配置文件里仍然可以写任意一套——{@link #of(String)} 会把它们
+     * 归到最近的一档显示，并<b>不会</b>因此改写配置：使用方按「选中档 == 当前主题所在档」
+     * 判断后直接跳过保存即可（{@code SettingsPanel} 就是这么做的）。</p>
+     *
+     * <p>{@link #toString()} 是渲染时现取的翻译，所以切语言后下拉项会自己跟着变，
+     * 不需要重建列表。</p>
+     */
+    public enum ThemeChoice {
+
+        /** 跟随系统深浅色 */
+        SYSTEM("theme.choice.system", "System Theme Style"),
+        LIGHT("theme.choice.light", "Mac Light"),
+        DARK("theme.choice.dark", "Mac Dark");
+
+        private final String labelKey;
+        private final String themeName;
+
+        ThemeChoice(String labelKey, String themeName) {
+            this.labelKey = labelKey;
+            this.themeName = themeName;
+        }
+
+        /** 写进配置的主题名 */
+        public String themeName() {
+            return themeName;
+        }
+
+        /**
+         * 把配置里的任意主题名归到三档之一。
+         *
+         * <p>认不出来的（{@code Metal} / {@code Windows Classic} / {@code System} 等）
+         * 一律当作浅色——它们要么本来就是浅色外观，要么跟着系统走，
+         * 归到浅色比归到深色更不容易看错。</p>
+         */
+        public static ThemeChoice of(String theme) {
+            return switch (theme == null ? "" : theme) {
+                case "System Theme Style" -> SYSTEM;
+                case "Mac Dark", "Dark", "Darcula" -> DARK;
+                default -> LIGHT;
+            };
+        }
+
+        @Override
+        public String toString() {
+            return StringFormat.translate(labelKey);
+        }
+    }
+
     static {
         timer.start();
 

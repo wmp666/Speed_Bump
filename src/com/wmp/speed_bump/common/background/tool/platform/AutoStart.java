@@ -1,7 +1,6 @@
-package com.wmp.downloader.tools.platform;
+package com.wmp.speed_bump.common.background.tool.platform;
 
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
 import org.apache.log4j.Logger;
 
 import java.io.File;

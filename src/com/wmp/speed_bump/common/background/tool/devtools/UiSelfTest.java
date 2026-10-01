@@ -1,4 +1,4 @@
-package com.wmp.downloader.tools.devtools;
+package com.wmp.speed_bump.common.background.tool.devtools;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -8,7 +8,6 @@ import com.wmp.downloader.tools.ui.fluent.FluentUi;
 import com.wmp.downloader.tools.ui.fluent.FluentToggleSwitch;
 import com.wmp.downloader.tools.ui.fluent.RevealEngine;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;

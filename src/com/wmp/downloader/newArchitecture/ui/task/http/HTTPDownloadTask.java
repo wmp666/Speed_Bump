@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FileDownloadTask;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
@@ -21,7 +22,7 @@ public class HTTPDownloadTask extends FileDownloadTask {
     private final int threadNum;
     private final long fileSize;
     private final int mode;
-    private final ArrayList<JProgressBar> threadProgressBarList = new ArrayList<>();
+    private final ArrayList<SBProgressBar> threadProgressBarList = new ArrayList<>();
     private final URLDownloadTool.PauseController pauseController = new URLDownloadTool.PauseController();
     private final URLDownloadTool.DownloadProgress downloadProgress = new URLDownloadTool.DownloadProgress();
     private Timer progressTimer;
@@ -66,14 +67,14 @@ public class HTTPDownloadTask extends FileDownloadTask {
 
         if (mode == 0 && URLDownloadTool.isCanUseMultithreading(url, fileSize)) {
             for (var i = 0; i < threadNum; i++) {
-                var progressBar = new JProgressBar(0, 100);
-                progressBar.setStringPainted(false);
+                var progressBar = SBProgressBar.INSTANCE_CREATOR.create();
+                progressBar.setProgressStringPainted(false);
                 threadProgressBarList.add(progressBar);
 
             }
             ProgressBarsPanel.add(
                     UITools.createProgressBarsPanel(
-                            UITools.createProgressBarPanel(threadProgressBarList.toArray(JProgressBar[]::new))));
+                            UITools.createProgressBarPanel(threadProgressBarList.toArray(SBProgressBar[]::new))));
             var downloadingInfo = URLDownloadTool.download(url, savePath, fileName, fileSize, threadNum, 10, threadProgressBarList, pauseController, downloadProgress);
 
             var latch = downloadingInfo.latch();
@@ -132,8 +133,8 @@ public class HTTPDownloadTask extends FileDownloadTask {
                             downloadControlButton.setEnabled(false);
 
                             downloadProgress.resetMergedBytes(0);
-                            JProgressBar margePartProgressBar = new JProgressBar(0, 100);
-                            margePartProgressBar.setStringPainted(false);
+                            SBProgressBar margePartProgressBar = SBProgressBar.INSTANCE_CREATOR.create();
+                            margePartProgressBar.setProgressStringPainted(false);
                             ProgressBarsPanel.add(UITools.createProgressBarPanel(margePartProgressBar));
 
                             URLDownloadTool.mergeParts(savePath, fileName, threadNum, fileSize, margePartProgressBar, pauseController, downloadProgress);
@@ -166,8 +167,8 @@ public class HTTPDownloadTask extends FileDownloadTask {
                         }
                     }
                     if (hasError) {
-                        JProgressBar progressBar = new JProgressBar(0, 100);
-                        progressBar.setStringPainted(false);
+                        SBProgressBar progressBar = SBProgressBar.INSTANCE_CREATOR.create();
+                        progressBar.setProgressStringPainted(false);
                         ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
                         URLDownloadTool.deletePartFiles(fileName, progressBar);
                     }
@@ -201,8 +202,8 @@ public class HTTPDownloadTask extends FileDownloadTask {
                         }
                     });
                     progressTimer.start();
-                    JProgressBar progressBar = new JProgressBar(0, 100);
-                    progressBar.setStringPainted(false);
+                    SBProgressBar progressBar = SBProgressBar.INSTANCE_CREATOR.create();
+                    progressBar.setProgressStringPainted(false);
                     threadProgressBarList.add(progressBar);
                     ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
                     var isSuccess = URLDownloadTool.singleThreadDownload(url, savePath, fileName, fileSize, 10, progressBar, pauseController, downloadProgress);

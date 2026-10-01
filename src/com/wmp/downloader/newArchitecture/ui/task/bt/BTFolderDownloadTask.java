@@ -12,6 +12,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FolderDownlo
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
@@ -106,9 +107,9 @@ public class BTFolderDownloadTask extends FolderDownloadTask {
         }
 
         // 6. 创建进度条
-        JProgressBar progressBar = new JProgressBar();
-        progressBar.setStringPainted(false);
-        progressBar.setMaximum(100);
+        SBProgressBar progressBar = SBProgressBar.INSTANCE_CREATOR.create();
+        progressBar.setProgressStringPainted(false);
+        progressBar.setProgressMaxValue(100);
         ProgressBarsPanel.add(UITools.createProgressBarsPanel(
                 UITools.createProgressBarPanel(progressBar)));
 
@@ -143,7 +144,7 @@ public class BTFolderDownloadTask extends FolderDownloadTask {
 
                     // 在 UI 线程中更新组件
                     SwingUtilities.invokeLater(() -> {
-                        progressBar.setValue(progress);
+                        progressBar.setProgressValue(progress);
                         DOWNLOAD_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.allTimeDownload()));
                         DOWNLOAD_SPEED_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.downloadRate()) + "/s");
                         SHARE_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(status.allTimeUpload()));

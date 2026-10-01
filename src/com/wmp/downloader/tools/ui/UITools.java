@@ -1,6 +1,7 @@
 package com.wmp.downloader.tools.ui;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import raven.modal.utils.FlatLafStyleUtils;
@@ -9,7 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UITools {
-    public static JPanel createProgressBarPanel(JProgressBar... progressBar) {
+    /**
+     * 把通用进度条装进一个横向面板。
+     * <p>
+     * 参数用通用端 {@link SBProgressBar}（调用方只需通用能力），
+     * 具体的外观样式只有落到 Swing 实现上时才需要设置。
+     */
+    public static JPanel createProgressBarPanel(SBProgressBar... progressBar) {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -18,18 +25,22 @@ public class UITools {
 
         int barHeight = 6;
 
-        for (JProgressBar bar : progressBar) {
-            bar.putClientProperty(FlatClientProperties.STYLE, "arc: 0");
+        for (SBProgressBar bar : progressBar) {
+            if (!(bar instanceof JProgressBar jProgressBar)) {
+                // 非 Swing 实现没有这段共享外观逻辑，交由该平台自己处理
+                continue;
+            }
+            jProgressBar.putClientProperty(FlatClientProperties.STYLE, "arc: 0");
 
             // 形状由 FluentProgressBarUI 按 is_use_square_component 决定。
-            bar.setPreferredSize(new Dimension(0, barHeight));   // 宽度0表示由布局决定
-            bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, barHeight));
+            jProgressBar.setPreferredSize(new Dimension(0, barHeight));   // 宽度0表示由布局决定
+            jProgressBar.setMaximumSize(new Dimension(Integer.MAX_VALUE, barHeight));
             // 可选：缩小字体，使百分比文本更紧凑
-            bar.setFont(bar.getFont().deriveFont(10f));
+            jProgressBar.setFont(jProgressBar.getFont().deriveFont(10f));
             // 可选：去掉百分比文本（若想节省空间）:
-            bar.setStringPainted(false);
+            jProgressBar.setStringPainted(false);
 
-            panel.add(bar);
+            panel.add(jProgressBar);
         }
 
         return panel;

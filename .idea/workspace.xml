@@ -10,19 +10,52 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加新的平台信息获取方法&#10;将UI加载更新为NutJam架构&#10;通过AI更新UI样式&#10;&#10;引入一个测试模块（用于测试UI）">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加任务栏上的任务状态提示&#10;优化部分内容">
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/ui/components/MultiplePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/ui/components/SBProgressBar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/components/SBProgressBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpDocs/使用指南.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/使用指南.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/helpDocs/界面增强.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/界面增强.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserCompatibilityDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserCompatibilityDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/CreateMergeTaskFuncPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/CreateMergeTaskFuncPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/ResetVideoInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/ResetVideoInfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/MsgCenterPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/devtools/UiSelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/devtools/UiSelfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/IconControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/IconControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/ToastMsgInfoPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/testFrame/TestControlDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/testFrame/TestControlDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFileDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFolderDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/gopeed/GopeedDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/gopeed/GopeedDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/http/HTTPDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/http/HTTPDownloadTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/TestFunctionControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tool/TestFunctionControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/devtools/PngWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tool/devtools/PngWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/devtools/StartupTrace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tool/devtools/StartupTrace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/devtools/UiSelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tool/devtools/UiSelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/ConvergenceTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/download/URLDownloadTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/platform/AutoStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tool/platform/AutoStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/platform/FileAssociation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tool/platform/FileAssociation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/DialogBackdrop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/DialogBackdrop.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ToastMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/UITools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/UITools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentColors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentProgressBarUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentProgressBarUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/TrayMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/TrayMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/FileAssociationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/common/FileAssociationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_en_US.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ja_JP.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ru_RU.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_HK.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_HK.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_TW.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_TW.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/FileAssociationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/FileAssociationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/文档/减速带更新.md" beforeDir="false" afterPath="$PROJECT_DIR$/文档/减速带更新.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +122,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="BEProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4,
@@ -150,6 +183,7 @@
     "应用程序.GetSupportFormat.executor": "Run",
     "应用程序.GopeedClient.executor": "Run",
     "应用程序.MagnetToTorrent.executor": "Run",
+    "应用程序.Run Show Welcome.executor": "Run",
     "应用程序.Run.executor": "Run",
     "应用程序.TCPControl.executor": "Run",
     "应用程序.TaskPaneContainerDemo.executor": "Run",
@@ -182,7 +216,7 @@
       <recent name="com.wmp.downloader.ui.task.createTask" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.Run">
+  <component name="RunManager" selected="应用程序.Run Show Welcome">
     <configuration name="FileDialogTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.FileDialogTest" />
       <module name="DownLoader" />
@@ -202,6 +236,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.wmp.speedbump.fluent.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run Show Welcome" type="Application" factoryName="Application" singleton="false">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
+      <module name="DownLoader" />
+      <option name="PROGRAM_PARAMETERS" value="-noUseTCPServer -showWelcome" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -289,6 +337,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="应用程序.Run Show Welcome" />
       <item itemvalue="应用程序.FluentApp" />
       <item itemvalue="应用程序.Test" />
       <item itemvalue="应用程序.FileDialogTest" />
@@ -356,7 +405,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="完善通知管理页" />
     <MESSAGE value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能" />
     <MESSAGE value="进行大量更新&#10;新增：&#10;增加新的软件信息参数&#10;增加&quot;功能测试&quot;功能&#10;优化：&#10;将通知从下往上添加&#10;删除部分主题&#10;去除灰色通知遮罩&#10;统一JOptionPane的图标样式&#10;修改数据位置&#10;优化通知显示&#10;修复：&#10;修复背景选择时，显示问题&#10;测试：&#10;将“更新界面”移至测试功能&#10;增加更新翻译按钮（还未实现）" />
     <MESSAGE value="进行大量更新&#10;新增：&#10;-&#10;优化：&#10;优化测试项显示不全&#10;优化状态栏UI&#10;修复：&#10;修复通知的滚动条默认滚动到底部&#10;测试：&#10;将&quot;置顶功能&quot;、&quot;剪切板监听&quot;改为测试功能(存在大量问题)" />
@@ -381,7 +429,8 @@
     <MESSAGE value="优化拓展兼容问题的提示窗口" />
     <MESSAGE value="增加新的平台信息获取方法&#10;将UI加载更新为NutJam架构&#10;&#10;引入一个测试模块（用于测试UI）" />
     <MESSAGE value="增加新的平台信息获取方法&#10;将UI加载更新为NutJam架构&#10;通过AI更新UI样式&#10;&#10;引入一个测试模块（用于测试UI）" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加新的平台信息获取方法&#10;将UI加载更新为NutJam架构&#10;通过AI更新UI样式&#10;&#10;引入一个测试模块（用于测试UI）" />
+    <MESSAGE value="增加任务栏上的任务状态提示&#10;优化部分内容" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加任务栏上的任务状态提示&#10;优化部分内容" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -418,13 +467,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java</url>
-          <line>399</line>
+          <line>346</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java</url>
           <line>165</line>
-          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel" method="getJsonInfo">
+          <properties class="com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

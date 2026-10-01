@@ -39,7 +39,7 @@ public class ToastMessage {
                 .setLayoutOption(new ToastLayoutOption())
                 .setHtmlEnabled(true);
         Toast.show(c, type, message, ToastLocation.BOTTOM_TRAILING, toastOption);
-        var msgInfo = new LinkedList<>(DataControl.getMsgInfo().toJavaList(JSONObject.class));
+        /*var msgInfo = new LinkedList<>(DataControl.getMsgInfo().toJavaList(JSONObject.class));
         var jsonObject = new JSONObject();
         jsonObject.put("date", new Date().getTime());
         jsonObject.put("msg", message);
@@ -50,7 +50,7 @@ public class ToastMessage {
             default -> -1;
         });
         msgInfo.addFirst(jsonObject);
-        DataControl.saveMsgInfo(new JSONArray(msgInfo));
+        DataControl.saveMsgInfo(new JSONArray(msgInfo));*/
         var b = !Downloader.mainFrame.isActive();
         if (SystemTray.isSupported() && b && DataControl.get("is_use_system_msg", false)) {
             TrayIcon.MessageType messageType = switch (type) {

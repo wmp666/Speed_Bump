@@ -3,7 +3,7 @@ package com.wmp.downloader.ui.common;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.file.ResourceLocalizer;
-import com.wmp.downloader.tools.platform.FileAssociation;
+import com.wmp.speed_bump.common.background.tool.platform.FileAssociation;
 import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ToastMessage;

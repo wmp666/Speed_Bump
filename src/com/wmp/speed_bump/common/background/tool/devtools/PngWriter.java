@@ -1,4 +1,4 @@
-package com.wmp.downloader.tools.devtools;
+package com.wmp.speed_bump.common.background.tool.devtools;
 
 import javax.imageio.ImageIO;
 import java.io.BufferedOutputStream;

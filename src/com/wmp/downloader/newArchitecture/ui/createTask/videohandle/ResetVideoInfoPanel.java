@@ -5,6 +5,7 @@ import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
@@ -145,11 +146,11 @@ public class ResetVideoInfoPanel extends JPanel {
         @Override
         public void doWhenStart() throws Exception {
             Thread.ofVirtual().start(() -> {
-                JProgressBar progressBar = new JProgressBar();
-                progressBar.setStringPainted(false);
-                progressBar.setMinimum(0);
-                progressBar.setMaximum(100);
-                progressBar.setValue(0);
+                SBProgressBar progressBar = SBProgressBar.INSTANCE_CREATOR.create();
+                progressBar.setProgressStringPainted(false);
+                progressBar.setProgressMinValue(0);
+                progressBar.setProgressMaxValue(100);
+                progressBar.setProgressValue(0);
                 ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
                 exitButton.setEnabled(false);
                 downloadControlButton.setEnabled(false);

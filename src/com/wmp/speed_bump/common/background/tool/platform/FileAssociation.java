@@ -1,4 +1,4 @@
-package com.wmp.downloader.tools.platform;
+package com.wmp.speed_bump.common.background.tool.platform;
 
 import org.apache.log4j.Logger;
 

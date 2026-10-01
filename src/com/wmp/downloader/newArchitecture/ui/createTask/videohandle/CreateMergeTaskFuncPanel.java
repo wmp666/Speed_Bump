@@ -5,6 +5,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.ConvergenceTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
@@ -74,15 +75,15 @@ public class CreateMergeTaskFuncPanel extends JPanel {
 
         @Override
         public void doWhenStart() throws Exception {
-            var jProgressBar = new JProgressBar(0, 100);
-            jProgressBar.setStringPainted(false);
+            var progressBar = SBProgressBar.INSTANCE_CREATOR.create();
+            progressBar.setProgressStringPainted(false);
             removeAllStatusTip();
             addStatusTip(MERGE_TIP_PANEL);
             MERGE_TIP_PANEL.setText(StringFormat.translate("video_handle", "video_handle.create_merge_task.run_tip"));
-            ProgressBarsPanel.add(UITools.createProgressBarPanel(jProgressBar));
+            ProgressBarsPanel.add(UITools.createProgressBarPanel(progressBar));
             exitButton.setEnabled(false);
             downloadControlButton.setEnabled(false);
-            var converged = ConvergenceTool.converge(paths[0], paths[1], new File(paths[2], fileName), jProgressBar);
+            var converged = ConvergenceTool.converge(paths[0], paths[1], new File(paths[2], fileName), progressBar);
             ProgressBarsPanel.removeAll();
             if (converged) {
                 exitButton.setEnabled(true);

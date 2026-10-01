@@ -13,7 +13,7 @@ import com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.TestControlDial
 import com.wmp.downloader.tools.MicrosoftTranslator;
 import com.wmp.downloader.tools.MicrosoftTranslator.Language;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.downloader.tools.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;

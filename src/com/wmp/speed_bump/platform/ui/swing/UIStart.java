@@ -1,15 +1,15 @@
 package com.wmp.speed_bump.platform.ui.swing;
 
 
-import com.wmp.downloader.Run;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.tools.WebSetter;
-import com.wmp.downloader.tools.devtools.StartupTrace;
+import com.wmp.speed_bump.common.background.tool.devtools.StartupTrace;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.fluent.FluentUi;
 import com.wmp.downloader.tools.web.TCPControl;
 import com.wmp.downloader.ui.Downloader;
+import com.wmp.speed_bump.common.ui.WelcomePage;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -35,7 +35,20 @@ public class UIStart implements com.wmp.speed_bump.common.UIStart {
 
         logger.info("开始加载");
         Downloader downloader = null;
+        //后台启动（开机自启）只留在托盘里，不该弹任何界面
+        boolean showUi = !argList.contains("-background");
         try {
+
+            ThemeChanger.easyChanger();
+            StartupTrace.step("应用主题");
+
+            //首次使用（或带 -showWelcome）时先展示欢迎页。
+            //必须赶在主窗口构建之前：Downloader 在构造时就会读取主题色、组件弧度、背景等配置，
+            //在这里改完，主界面第一次画出来就是用户选的样子。
+            if (showUi && showWelcomePage(argList)) {
+                StartupTrace.step("初次使用欢迎页");
+            }
+
             DataControl.load();
             StartupTrace.step("加载配置");
 
@@ -45,10 +58,6 @@ public class UIStart implements com.wmp.speed_bump.common.UIStart {
             WebSetter.SSLControl(DataControl.get("isUseSSL", false));
             WebSetter.proxies(true);
             StartupTrace.step("初始化网络");
-
-
-            ThemeChanger.easyChanger();
-            StartupTrace.step("应用主题");
 
             downloader = new Downloader();
             StartupTrace.step("构建主窗口");
@@ -73,12 +82,46 @@ public class UIStart implements com.wmp.speed_bump.common.UIStart {
 
         }
 
-        if (!argList.contains("-background")){
+        if (showUi){
             downloader.setVisible(true);
             StartupTrace.step("显示主窗口");
         }
 
         if (linkPath != null) downloader.showLinkDetectedDialog(linkPath);
+    }
+
+
+    /**
+     * 按需展示初次使用欢迎页。
+     *
+     * <p>「要不要显示」由 {@link WelcomePage#shouldShow(List)} 判定（配置键
+     * {@code is_show_welcome}，或启动参数 {@code -showWelcome}）；
+     * 这里只负责把它放到界面线程上——{@code Run.main} 是主线程，
+     * 而欢迎页会创建并显示 Swing 窗口，必须在 EDT 上构造。</p>
+     *
+     * <p>欢迎页本身已经兜住全部异常，这里再兜一层是为了「界面线程切换失败」
+     * 这类问题也不至于带着整个启动流程一起挂掉。</p>
+     *
+     * @return 真的显示了欢迎页返回 {@code true}（供启动耗时日志区分这一步有没有发生）
+     */
+    private static boolean showWelcomePage(List<String> argList) {
+        //判定必须在显示之前做：欢迎页关闭时会把 is_show_welcome 写成 false，
+        //显示之后再问就永远是「不需要」了。
+        if (!WelcomePage.shouldShow(argList)) {
+            return false;
+        }
+        Runnable show = () -> WelcomePage.showIfNeeded(argList);
+        try {
+            if (SwingUtilities.isEventDispatchThread()) {
+                show.run();
+            } else {
+                SwingUtilities.invokeAndWait(show);
+            }
+        } catch (Throwable t) {
+            logger.error("欢迎页显示失败，已跳过", t);
+            return false;
+        }
+        return true;
     }
 
 

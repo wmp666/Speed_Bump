@@ -6,6 +6,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPan
 import com.wmp.speed_bump.common.background.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
@@ -24,7 +25,7 @@ public class GopeedDownloadTask extends AbstractTask {
     private static final Logger logger = Logger.getLogger(GopeedDownloadTask.class);
 
     private final String baseUrl;
-    private final JProgressBar progressBar = new JProgressBar(0, 100);
+    private final SBProgressBar progressBar = SBProgressBar.INSTANCE_CREATOR.create();
     private final String content;
     private String taskID = "";
     private long fileSize;
@@ -61,11 +62,11 @@ public class GopeedDownloadTask extends AbstractTask {
             var uploaded = progress.getLongValue("uploaded", 0);
             var uploadSpeed = progress.getLongValue("uploadSpeed", 0);
             var extractProgress = (downloaded * 100) / fileSize;
-            progressBar.setStringPainted(false);
-            if (fileSize <= 0) progressBar.setIndeterminate(true);
+            progressBar.setProgressStringPainted(false);
+            if (fileSize <= 0) progressBar.setProgressIndeterminate(true);
             else {
-                progressBar.setIndeterminate(false);
-                progressBar.setValue((int) extractProgress);
+                progressBar.setProgressIndeterminate(false);
+                progressBar.setProgressValue((int) extractProgress);
             }
 
             DOWNLOAD_SIZE_PANEL.setText(URLDownloadTool.DownloadProgress.formatSize(downloaded));

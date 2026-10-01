@@ -1,6 +1,6 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame;
 
-import com.wmp.downloader.tools.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

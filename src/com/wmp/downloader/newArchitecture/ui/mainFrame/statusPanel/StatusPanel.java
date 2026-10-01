@@ -28,7 +28,6 @@ public class StatusPanel extends JPanel {
     private static final int BOTTOM_MARGIN = 44;
 
     private JPanel mainPanel;
-    private JButton MessageCenterLabel;
     private JButton ToolsLabel;
 
     private final Downloader downloader;
@@ -41,10 +40,6 @@ public class StatusPanel extends JPanel {
     private long lastRun = -1;
     private int lastTotal = -1;
     private final Timer taskStatusTimer;
-
-    // ---------- 消息中心覆盖层 ----------
-    private MsgCenterParts msgParts = null;
-    private boolean msgVisible = false;
 
     // ---------- Tools 覆盖层 ----------
     private JPanel toolsTopPanel = null;
@@ -59,14 +54,11 @@ public class StatusPanel extends JPanel {
         this.add(mainPanel);
 
         ToolsLabel.setText("");
-        MessageCenterLabel.setText("");
 
         //左侧：任务运行计数（替换表单里的“你好世界”）
         setupTaskStatusLabel();
 
         ToolsLabel.addActionListener(e -> toggleTools());
-        MessageCenterLabel.addActionListener(e -> toggleMsgCenter());
-
         //覆盖层与窗口同步缩放
         downloader.addComponentListener(new ComponentAdapter() {
             @Override
@@ -170,7 +162,6 @@ public class StatusPanel extends JPanel {
     }
 
     private void showTools() {
-        if (msgVisible) hideMsgCenter();
 
         if (toolsTopPanel == null) {
             toolsTopPanel = new JPanel(new BorderLayout());
@@ -313,99 +304,6 @@ public class StatusPanel extends JPanel {
     }
 
     // =====================================================================
-    // 消息中心浮层（右上角卡片式）
-    // =====================================================================
-
-    private void toggleMsgCenter() {
-        if (msgVisible) hideMsgCenter();
-        else showMsgCenter();
-    }
-
-    private void showMsgCenter() {
-        if (toolsVisible) hideTools();
-
-        if (msgParts == null) {
-            msgParts = buildMsgParts();
-        } else {
-            msgParts.msgCenterPanel.loadMsg();
-            downloader.getLayeredPane().add(msgParts.topPanel, JLayeredPane.MODAL_LAYER);
-        }
-        scrollMsgTop();
-        fitOverlay(msgParts.topPanel);
-        downloader.revalidate();
-        downloader.repaint();
-        msgVisible = true;
-    }
-
-    private void hideMsgCenter() {
-        if (msgParts != null) {
-            downloader.getLayeredPane().remove(msgParts.topPanel);
-            downloader.revalidate();
-            downloader.repaint();
-        }
-        msgVisible = false;
-    }
-
-    /**
-     * 供外部调用：刷新消息并回到顶部。downloader.StatusPanel.refreshMsgCenter();
-     */
-    public void refreshMsgCenter() {
-        if (msgParts == null) return;
-        msgParts.msgCenterPanel.loadMsg();
-        if (msgVisible) scrollMsgTop();
-    }
-
-    private MsgCenterParts buildMsgParts() {
-        var msgCenterPanel = new MsgCenterPanel();
-        msgCenterPanel.loadMsg();
-
-        //内容右侧固定留白，确保文本绝不会延伸到垂直滚动条下方
-        JPanel padHost = new JPanel(new BorderLayout());
-        padHost.setOpaque(false);
-        padHost.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 12));
-        padHost.add(msgCenterPanel, BorderLayout.CENTER);
-
-        var scrollPane = new JScrollPane(padHost);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getVerticalScrollBar().setUnitIncrement(15);
-
-        JPanel card = newFloatingCard();
-        card.setLayout(new BorderLayout());
-        card.add(buildTitleBar("msg-center", StringFormat.translate("message_center.title"),
-                this::hideMsgCenter), BorderLayout.NORTH);
-        card.add(scrollPane, BorderLayout.CENTER);
-        //EAST 停靠：固定卡片宽度（高度会被 BorderLayout 撑满窗口可用区）
-        card.setPreferredSize(new Dimension(MSG_CARD_WIDTH, MSG_CARD_WIDTH));
-
-        JPanel top = new JPanel(new BorderLayout());
-        top.setOpaque(false);
-        top.add(card, BorderLayout.EAST);
-        //点击卡片以外区域即收起
-        top.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                hideMsgCenter();
-            }
-        });
-
-        downloader.getLayeredPane().add(top, JLayeredPane.MODAL_LAYER);
-        return new MsgCenterParts(top, scrollPane, msgCenterPanel);
-    }
-
-    private void scrollMsgTop() {
-        if (msgParts == null) return;
-        var sp = msgParts.scrollPane;
-        sp.getVerticalScrollBar().setValue(0);
-        sp.getViewport().setViewPosition(new Point(0, 0));
-        SwingUtilities.invokeLater(() -> {
-            sp.getVerticalScrollBar().setValue(0);
-            sp.getViewport().setViewPosition(new Point(0, 0));
-        });
-    }
-
-    // =====================================================================
     // 通用浮层卡片组件
     // =====================================================================
 
@@ -478,7 +376,6 @@ public class StatusPanel extends JPanel {
     // =====================================================================
 
     private void fitOverlays() {
-        if (msgVisible && msgParts != null) fitOverlay(msgParts.topPanel);
         if (toolsVisible && toolsTopPanel != null) fitOverlay(toolsTopPanel);
     }
 
@@ -567,7 +464,6 @@ public class StatusPanel extends JPanel {
 
     private void createUIComponents() {
         ToolsLabel = new StatusButton("tool-kit");
-        MessageCenterLabel = new StatusButton("msg-center");
     }
 
     @Override
@@ -583,11 +479,6 @@ public class StatusPanel extends JPanel {
         g2.dispose();
     }
 
-    /**
-     * 消息中心内部结构引用。
-     */
-    private record MsgCenterParts(JPanel topPanel, JScrollPane scrollPane, MsgCenterPanel msgCenterPanel) {
-    }
 
     /**
      * 工具箱卡片里的可点击行：统一行高、左边距随层级缩进、悬停高亮。

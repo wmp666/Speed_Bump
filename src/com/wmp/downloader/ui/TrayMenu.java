@@ -2,7 +2,7 @@ package com.wmp.downloader.ui;
 
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.downloader.tools.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
 import com.wmp.downloader.tools.ui.DialogBackdrop;
 import com.wmp.downloader.tools.ui.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.FlyoutMenu;

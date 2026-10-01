@@ -3,6 +3,7 @@ package com.wmp.downloader.tools.download;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -28,7 +29,7 @@ public class ConvergenceTool {
      * @param progressBar 用于展示合并进度的进度条组件
      * @return 合并成功返回true，失败返回false
      */
-    public static boolean converge(File videoPath, File audioPath, File destPath, JProgressBar progressBar) {
+    public static boolean converge(File videoPath, File audioPath, File destPath, SBProgressBar progressBar) {
 
         destPath = StringFormat.sanitizeFile(destPath);
         if (!destPath.exists()) {
@@ -53,11 +54,11 @@ public class ConvergenceTool {
      * @param appPath FFmpeg 可执行文件所在的 bin 目录路径
      */
     private static boolean LocalConvergeWithStreamCopy(String appPath, File videoPath, File audioPath,
-                                                       File destPath, JProgressBar progressBar) {
+                                                       File destPath, SBProgressBar progressBar) {
         try {
             if (progressBar != null) {
-                progressBar.setIndeterminate(true);
-                progressBar.setString("正在合并...");
+                progressBar.setProgressIndeterminate(true);
+                progressBar.setProgressString("正在合并...");
             }
 
             String ffmpegExe = findFFmpeg(appPath);
@@ -91,9 +92,9 @@ public class ConvergenceTool {
 
             if (progressBar != null) {
                 SwingUtilities.invokeLater(() -> {
-                    progressBar.setIndeterminate(false);
-                    progressBar.setValue(100);
-                    progressBar.setString("100%");
+                    progressBar.setProgressIndeterminate(false);
+                    progressBar.setProgressValue(100);
+                    progressBar.setProgressString("100%");
                 });
             }
 
@@ -138,7 +139,7 @@ public class ConvergenceTool {
      */
     public static boolean transcodeVideo(File inputFile, File outputFile,
                                          String containerFormat, String videoCodec, String audioCodec,
-                                         JProgressBar progressBar) {
+                                         SBProgressBar progressBar) {
         outputFile = StringFormat.sanitizeFile(outputFile);
         if (!outputFile.exists()) {
             try {
@@ -164,11 +165,11 @@ public class ConvergenceTool {
 
     private static boolean localTranscode(String appPath, File inputFile, File outputFile,
                                           String containerFormat, String videoCodec, String audioCodec,
-                                          JProgressBar progressBar) {
+                                          SBProgressBar progressBar) {
         try {
             if (progressBar != null) {
-                progressBar.setIndeterminate(true);
-                progressBar.setString("正在转码...");
+                progressBar.setProgressIndeterminate(true);
+                progressBar.setProgressString("正在转码...");
             }
 
             String ffmpeg = findFFmpeg(appPath);
@@ -259,9 +260,9 @@ public class ConvergenceTool {
 
             if (progressBar != null) {
                 SwingUtilities.invokeLater(() -> {
-                    progressBar.setIndeterminate(false);
-                    progressBar.setValue(100);
-                    progressBar.setString("100%");
+                    progressBar.setProgressIndeterminate(false);
+                    progressBar.setProgressValue(100);
+                    progressBar.setProgressString("100%");
                 });
             }
             return true;

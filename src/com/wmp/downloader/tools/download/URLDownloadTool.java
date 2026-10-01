@@ -3,6 +3,7 @@ package com.wmp.downloader.tools.download;
 import com.wmp.speed_bump.common.background.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import org.apache.log4j.Logger;
 
@@ -63,7 +64,7 @@ public class URLDownloadTool {
         }
     }
 
-    public static DownloadingInfo download(URI uri, File destFile, String fileName, long fileSize, int numThreads, int maxRetries, List<JProgressBar> progressBarList, PauseController pauseController, DownloadProgress progress) throws Exception {
+    public static DownloadingInfo download(URI uri, File destFile, String fileName, long fileSize, int numThreads, int maxRetries, List<SBProgressBar> progressBarList, PauseController pauseController, DownloadProgress progress) throws Exception {
         return download(uri, destFile, fileName, fileSize, numThreads, maxRetries, progressBarList, pauseController, progress, null);
     }
 
@@ -82,7 +83,7 @@ public class URLDownloadTool {
      * @param headers         头部信息
      * @return 下载信息
      */
-    public static DownloadingInfo download(URI uri, File destFile, String fileName, long fileSize, int numThreads, int maxRetries, List<JProgressBar> progressBarList, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) throws Exception {
+    public static DownloadingInfo download(URI uri, File destFile, String fileName, long fileSize, int numThreads, int maxRetries, List<SBProgressBar> progressBarList, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) throws Exception {
 
         logger.info("下载的链接：" + uri);
 
@@ -90,7 +91,7 @@ public class URLDownloadTool {
         File partsFile = new File(DataControl.getTempPath(), fileName);
         var files = partsFile.listFiles(File::isFile);
         if (files != null && files.length != numThreads) {
-            deletePartFiles(fileName, new JProgressBar(0, 100));
+            deletePartFiles(fileName, SBProgressBar.INSTANCE_CREATOR.create());
         }
 
         // 分段下载
@@ -131,7 +132,7 @@ public class URLDownloadTool {
      * @param progress        进度文字处理
      * @return 是否下载成功
      */
-    public static boolean singleThreadDownload(URI uri, File destPath, String fileName, long fileSize, int maxRetries, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws Exception {
+    public static boolean singleThreadDownload(URI uri, File destPath, String fileName, long fileSize, int maxRetries, SBProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws Exception {
         return singleThreadDownload(uri, destPath, fileName, fileSize, maxRetries, progressBar, pauseController, progress, null);
     }
 
@@ -149,7 +150,7 @@ public class URLDownloadTool {
      * @param headers         头部信息
      * @return 是否下载成功
      */
-    public static boolean singleThreadDownload(URI uri, File destPath, String fileName, long fileSize, int maxRetries, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) throws Exception {
+    public static boolean singleThreadDownload(URI uri, File destPath, String fileName, long fileSize, int maxRetries, SBProgressBar progressBar, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) throws Exception {
 
         logger.info("下载的链接：" + uri);
 
@@ -166,7 +167,7 @@ public class URLDownloadTool {
         if (destFile.exists()) {
             if (destFile.length() == fileSize) {
                 logger.debug("文件已完整下载。");
-                progressBar.setValue(100);
+                progressBar.setProgressValue(100);
                 return true;
             } else if (destFile.length() > fileSize) {
                 var i = JOptionPane.showConfirmDialog(null, StringFormat.translate("task", "task.download_task.delete_err_file.confirm"));
@@ -209,11 +210,11 @@ public class URLDownloadTool {
                             if (pauseController != null) pauseController.checkPause();
                             if (progress != null) progress.addDownloadedBytes(len);
                             long finalTotalRead = totalRead;
-                            SwingUtilities.invokeLater(() -> progressBar.setValue((int) ((double) finalTotalRead / fileSize * 100)));
+                            SwingUtilities.invokeLater(() -> progressBar.setProgressValue((int) ((double) finalTotalRead / fileSize * 100)));
                         }
                         if (totalRead >= fileSize) {
                             logger.debug("单线程下载完成。");
-                            progressBar.setValue(100);
+                            progressBar.setProgressValue(100);
                             return true;
                         } else {
                             downloaded = totalRead;
@@ -237,7 +238,7 @@ public class URLDownloadTool {
         return true;
     }
 
-    private static boolean fullDownload(URI uri, File destPath, JProgressBar progressBar, PauseController pauseController) throws Exception {
+    private static boolean fullDownload(URI uri, File destPath, SBProgressBar progressBar, PauseController pauseController) throws Exception {
 
         logger.info("下载的链接：" + uri);
 
@@ -248,7 +249,7 @@ public class URLDownloadTool {
         }
 
         URL url = uri.toURL();
-        progressBar.setIndeterminate(true);
+        progressBar.setProgressIndeterminate(true);
         try (InputStream in = url.openStream();
              FileOutputStream fos = new FileOutputStream(destPath)) {
             byte[] buffer = new byte[8192];
@@ -275,7 +276,7 @@ public class URLDownloadTool {
      * @param pauseController 暂停管理
      * @param progress        进度文字处理
      */
-    public static void mergeParts(File destPath, String fileName, int partCount, long fileSize, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws IOException {
+    public static void mergeParts(File destPath, String fileName, int partCount, long fileSize, SBProgressBar progressBar, PauseController pauseController, DownloadProgress progress) throws IOException {
         logger.info("合并的路径：" + destPath);
 
         File destFile = StringFormat.sanitizeFile(new File(destPath, fileName));
@@ -290,7 +291,7 @@ public class URLDownloadTool {
         }
 
         if (fileSize <= 0) {
-            progressBar.setIndeterminate(true);
+            progressBar.setProgressIndeterminate(true);
         }
         try (FileOutputStream fos = new FileOutputStream(destFile, true)) {
             int downloadedSize = 0;
@@ -314,7 +315,7 @@ public class URLDownloadTool {
                         SwingUtilities.invokeLater(() -> {
                             if (fileSize > 0) {
 
-                                progressBar.setValue((int) ((double) finalDownloadedSize / fileSize * 100));
+                                progressBar.setProgressValue((int) ((double) finalDownloadedSize / fileSize * 100));
                             }
                         });
                     }
@@ -325,11 +326,11 @@ public class URLDownloadTool {
         logger.debug("合并完成: " + destPath);
     }
 
-    public static void deletePartFiles(String fileName, JProgressBar progressBar) {
+    public static void deletePartFiles(String fileName, SBProgressBar progressBar) {
         File partFile = new File(DataControl.getTempPath(), fileName);
         var files = partFile.listFiles();
         for (int i = 0; i < files.length; i++) {
-            progressBar.setValue((int) ((double) i / partFile.listFiles().length * 100));
+            progressBar.setProgressValue((int) ((double) i / partFile.listFiles().length * 100));
             files[i].delete();
         }
 
@@ -447,18 +448,18 @@ public class URLDownloadTool {
         private final long start;
         private final long end;
         private final int maxRetries;
-        private final JProgressBar progressBar;
+        private final SBProgressBar progressBar;
         private final CountDownLatch latch;
         private final PauseController pauseController;
         private final DownloadProgress progress;
         private final Map<String, String> headers;
         private volatile boolean error = false;
 
-        public DownloadTaskRunnable(URL url, File partFile, long start, long end, int maxRetries, CountDownLatch latch, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress) {
+        public DownloadTaskRunnable(URL url, File partFile, long start, long end, int maxRetries, CountDownLatch latch, SBProgressBar progressBar, PauseController pauseController, DownloadProgress progress) {
             this(url, partFile, start, end, maxRetries, latch, progressBar, pauseController, progress, null);
         }
 
-        public DownloadTaskRunnable(URL url, File partFile, long start, long end, int maxRetries, CountDownLatch latch, JProgressBar progressBar, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) {
+        public DownloadTaskRunnable(URL url, File partFile, long start, long end, int maxRetries, CountDownLatch latch, SBProgressBar progressBar, PauseController pauseController, DownloadProgress progress, Map<String, String> headers) {
             this.url = url;
             this.partFile = partFile;
             this.start = start;
@@ -486,7 +487,7 @@ public class URLDownloadTool {
 
                 if (downloaded == rangeSize) {
                     logger.debug(Thread.currentThread().getName() + " 段已下载完成，跳过。");
-                    progressBar.setValue(100);
+                    progressBar.setProgressValue(100);
                     return;
                 }
 
@@ -494,7 +495,7 @@ public class URLDownloadTool {
                     try {
                         long startPos = start + downloaded;
                         long finalDownloaded = downloaded;
-                        SwingUtilities.invokeLater(() -> progressBar.setValue((int) ((double) finalDownloaded / rangeSize * 100)));
+                        SwingUtilities.invokeLater(() -> progressBar.setProgressValue((int) ((double) finalDownloaded / rangeSize * 100)));
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                         if (headers != null) {
                             for (var entry : headers.entrySet()) {
@@ -518,7 +519,7 @@ public class URLDownloadTool {
                                     downloaded = totalRead;
                                     if (progress != null) progress.addDownloadedBytes(len);
                                     long finalDownloaded1 = downloaded;
-                                    SwingUtilities.invokeLater(() -> progressBar.setValue((int) ((double) finalDownloaded1 / rangeSize * 100)));
+                                    SwingUtilities.invokeLater(() -> progressBar.setProgressValue((int) ((double) finalDownloaded1 / rangeSize * 100)));
                                 }
                                 if (totalRead == rangeSize) {
                                     logger.debug(Thread.currentThread().getName() + " 段下载完成。");

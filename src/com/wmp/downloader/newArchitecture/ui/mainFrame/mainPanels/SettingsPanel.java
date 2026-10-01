@@ -2,9 +2,9 @@ package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.downloader.tools.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.platform.AutoStart;
+import com.wmp.speed_bump.common.background.tool.platform.AutoStart;
 import com.wmp.downloader.tools.ui.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
@@ -34,7 +34,7 @@ public class SettingsPanel {
     private JButton saveButton;
     private JTabbedPane tabbedPane2;
     private JScrollPane personalizedSetsScrollPane;
-    private JComboBox<String> themeComboBox;
+    private JComboBox<ThemeChanger.ThemeChoice> themeComboBox;
     private JCheckBox isUseHeavyWeightToastCheckBox;
     private JTextField accentColorTextField;
     private JButton accentColorChooseButton;
@@ -144,19 +144,21 @@ public class SettingsPanel {
 
         //初始化主题设置项
         {
-            themeComboBox.addItem("System Theme Style");
-            themeComboBox.addItem("Mac Dark");
-            themeComboBox.addItem("Mac Light");
-            themeComboBox.addItem("Dark");
-            themeComboBox.addItem("Light");
-            themeComboBox.addItem("Darcula");
-            themeComboBox.addItem("IntelliJ");
-
-            themeComboBox.setSelectedItem(DataControl.get("theme", "Mac Light"));
+            //只给「跟随系统 / 浅色 / 深色」三档。easyChanger 认识的另外几套
+            //（Darcula / IntelliJ / Metal / Windows Classic / System）仍然可以写在配置文件里，
+            //这里会把它们归到最近的一档显示，并且不会因此改写配置（见下面的监听器）。
+            themeComboBox.removeAllItems();
+            for (ThemeChanger.ThemeChoice choice : ThemeChanger.ThemeChoice.values()) {
+                themeComboBox.addItem(choice);
+            }
+            themeComboBox.setSelectedItem(ThemeChanger.ThemeChoice.of(DataControl.get("theme", "Mac Light")));
         }
 
-        //初始化字体设置项
-        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        //初始化字体设置项。必须用英文名列表：中文系统下 getAvailableFontFamilyNames()
+        //给的是「微软雅黑」，而配置里存的是 "Microsoft YaHei"，两边对不上，
+        //下拉会悄悄退到列表第一项，用户一保存就把字体改错了。
+        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getAvailableFontFamilyNames(Locale.ENGLISH);
         for (String font : fonts) FontListComboBox.addItem(font);
         FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
 
@@ -225,8 +227,13 @@ public class SettingsPanel {
         });
         themeComboBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                var themeStr = e.getItem().toString();
-                DataControl.putAndSave("theme", themeStr);
+                var choice = (ThemeChanger.ThemeChoice) e.getItem();
+                //当前配置本来就属于这一档（例如 Darcula 显示为「深色」）时直接跳过：
+                //否则用户只是把选择挪开再挪回来，就会把配置文件里那套高级主题降级成 Mac Dark
+                if (choice == ThemeChanger.ThemeChoice.of(DataControl.get("theme", "Mac Light"))) {
+                    return;
+                }
+                DataControl.putAndSave("theme", choice.themeName());
                 ThemeChanger.easyChanger();
                 ToastMessage.Utils.createSaveAndApplyMsg();
             }
@@ -316,7 +323,7 @@ public class SettingsPanel {
             tempPathSelectionPanel.setPath(DataControl.get("TempFilePath", DataControl.getDataPath().getAbsolutePath()));
             FontListComboBox.setSelectedItem(DataControl.get("Font", "Microsoft YaHei"));
             fontSizeSpinner.setValue(DataControl.get("FontSize", 12));
-            themeComboBox.setSelectedItem(DataControl.get("theme", "Mac Light"));
+            themeComboBox.setSelectedItem(ThemeChanger.ThemeChoice.of(DataControl.get("theme", "Mac Light")));
 
             accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
 

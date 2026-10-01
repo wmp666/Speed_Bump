@@ -3,11 +3,10 @@ package com.wmp.downloader.tools.file;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.Run;
 import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.downloader.tools.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
 import com.wmp.downloader.tools.ui.SystemThemeDetector;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.Downloader;
@@ -232,58 +231,6 @@ public class DataControl {
     public static File getTempPath() {
         var file = data.containsKey("TempFilePath") ? new File(data.get("TempFilePath").toString()) : getDefaultTempPath();
         return file;
-    }
-
-    //--------------通知数据--------------
-
-    public static JSONArray getMsgInfo(){
-        var file = new File(DATA_DIR.toFile(), "msgsInfo.json");
-        if (file.exists()){
-            try {
-                var string = Files.readString(file.toPath(), StandardCharsets.UTF_8);
-                return JSONArray.parse(string);
-            } catch (Exception e) {
-                logger.error("数据获取错误", e);
-            }
-        }
-        return new JSONArray();
-    }
-
-    public static void saveMsgInfo(JSONArray jsonArray){
-        //限制被保存的通知数量（最多20条），超出时移除最早的通知
-        while (jsonArray.size() > 20) {
-            jsonArray.removeLast();
-        }
-        var file = new File(DATA_DIR.toFile(), "msgsInfo.json");
-        if (!file.exists()){
-            try {
-                if (!file.createNewFile()) {
-                    return;
-                }
-            } catch (Exception _) {
-                return;
-            }
-        }
-        try {
-            Files.writeString(file.toPath(), JSON.toJSONString(jsonArray, SerializerFeature.PrettyFormat), StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            logger.error("数据获取错误", e);
-        }
-    }
-
-    /**
-     * 按时间戳删除一条通知并保存
-     *
-     * @param date 通知的时间戳（毫秒）
-     */
-    public static void deleteMsgInfo(long date){
-        var result = new JSONArray();
-        for (Object o : getMsgInfo()) {
-            if (o instanceof JSONObject jsonObject && jsonObject.getLongValue("date") != date) {
-                result.add(o);
-            }
-        }
-        saveMsgInfo(result);
     }
 
     //--------------删除相关--------------
