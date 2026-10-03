@@ -281,14 +281,12 @@ public class FluentSwitchUI extends BasicCheckBoxUI {
             g2.setColor(knobColor);
             g2.fillOval(Math.round(knobX), Math.round(knobY), knobOuter, knobOuter);
 
-            // 文字
-            if (!text.isEmpty()) {
-                Rectangle textRect = new Rectangle(trackWidth + gap,
-                        (height - fm.getHeight()) / 2,
-                        Math.max(0, width - trackWidth - gap),
-                        fm.getHeight());
-                paintText(g2, b, textRect, text);
-            }
+            // 文字：禁用色、HTML 文本与助记符下划线全部交给 FluentPainting.paintLabel。
+            // 千万不要用 BasicButtonUI.paintText —— 它的禁用态是拿背景色 brighter/darker
+            // 双描边的老式画法，在 FlatLaf 下会把禁用文字画成黑色（详见 paintLabel 注释）。
+            FluentPainting.paintLabel(g2, b, text,
+                    new Rectangle(trackWidth + gap, 0,
+                            Math.max(0, width - trackWidth - gap), height));
 
             if (b.isFocusOwner() && b.isFocusPainted()) {
                 FluentPainting.focusRing(g2, b, FluentMetrics.RADIUS_SMALL);
@@ -342,15 +340,10 @@ public class FluentSwitchUI extends BasicCheckBoxUI {
             RevealEngine.paint(b, g2,
                     FluentPainting.roundRect(0, 0, b.getWidth(), height, FluentMetrics.RADIUS_SMALL));
 
-            FontMetrics fm = g2.getFontMetrics(fontOf(b));
-            String text = textOf(b);
-            if (!text.isEmpty()) {
-                Rectangle textRect = new Rectangle(size + FluentMetrics.SWITCH_GAP,
-                        (height - fm.getHeight()) / 2,
-                        Math.max(0, b.getWidth() - size - FluentMetrics.SWITCH_GAP),
-                        fm.getHeight());
-                paintText(g2, b, textRect, text);
-            }
+            // 文字（同样交给 paintLabel，理由见开关样式那一处）
+            FluentPainting.paintLabel(g2, b, textOf(b),
+                    new Rectangle(size + FluentMetrics.SWITCH_GAP, 0,
+                            Math.max(0, b.getWidth() - size - FluentMetrics.SWITCH_GAP), height));
         } finally {
             g2.dispose();
         }

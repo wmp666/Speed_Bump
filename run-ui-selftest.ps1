@@ -41,7 +41,7 @@ $outRoot = Join-Path $root 'out'
 $classesDir = Join-Path $outRoot 'ui-selftest-classes'
 $selftestOut = Join-Path $outRoot 'ui-selftest'
 $isolatedHome = Join-Path $outRoot 'ui-selftest-home'
-$mainClass = 'com.wmp.downloader.tools.devtools.UiSelfTest'
+$mainClass = 'com.wmp.speed_bump.common.background.tool.devtools.UiSelfTest'
 
 function Write-Step($text) { Write-Host "[ui-selftest] $text" -ForegroundColor Cyan }
 

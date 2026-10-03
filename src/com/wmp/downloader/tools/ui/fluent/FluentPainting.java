@@ -94,4 +94,123 @@ public final class FluentPainting {
         b.setFocusPainted(false);
         b.setContentAreaFilled(false);
     }
+
+    // ==================================================================
+    // 按钮族文字绘制
+    // ==================================================================
+
+    /**
+     * 按钮族（复选框 / 开关 / 单选框 / 按钮）文字的目标颜色。
+     *
+     * <p>禁用态优先取主题自己的禁用文字色（FlatLaf 用的是
+     * {@code CheckBox.disabledText} 这类键），取不到才退化为与主文字同源的淡化色。</p>
+     */
+    public static Color labelColor(javax.swing.AbstractButton b) {
+        if (b.isEnabled()) {
+            Color foreground = b.getForeground();
+            return foreground != null ? foreground : FluentColors.text();
+        }
+        Color disabled = firstNonNullColor("CheckBox.disabledText", "Button.disabledText",
+                "Label.disabledForeground");
+        return disabled != null ? disabled : FluentColors.textDisabled();
+    }
+
+    /**
+     * 绘制按钮族文字，自动处理三件事：禁用色、助记符下划线、HTML 文本。
+     *
+     * <h3>为什么不能交给 {@code BasicButtonUI.paintText}</h3>
+     * <p>JDK 里那个方法的禁用态分支是<b>老式浮雕画法</b>：用
+     * {@code background.brighter()} 先在原位画一遍，再用 {@code background.darker()}
+     * 向左上偏移 1px 画第二遍。它<b>完全不读主题的禁用文字色</b>——
+     * 在 FlatLaf 这类把控件背景设成深色的外观下，{@code darker()} 出来的结果近乎纯黑，
+     * 于是「禁用组件的文字反而显示为黑色」。自绘组件必须自己选色。</p>
+     *
+     * <h3>HTML 文本必须走 View</h3>
+     * <p>{@code BasicButtonUI} 在安装时会用 {@code BasicHTML.updateRenderer} 给含 HTML 的
+     * 文本挂一个 {@code View}，真正的 HTML 绘制由该 View 完成。
+     * 如果无条件调用 {@code paintText}，HTML 文本会被当成普通字符串，
+     * 界面上会直接显示出一串标签原文（{@code <html>…}）。
+     * 而 View 取色用的是组件前景色，它并不知道「禁用态该用哪个颜色」，
+     * 所以绘制期间临时替换前景色，画完立刻还原。</p>
+     *
+     * @param g        图形上下文
+     * @param b        目标按钮
+     * @param text     文本（非 HTML 时使用）
+     * @param textArea 可供文字使用的区域（通常是图标右侧的整块区域，整高）
+     */
+    public static void paintLabel(Graphics2D g, javax.swing.AbstractButton b, String text,
+                                  java.awt.Rectangle textArea) {
+        if (textArea == null || textArea.width <= 0 || textArea.height <= 0) {
+            return;
+        }
+        if (text == null || text.isEmpty()) {
+            return;
+        }
+        Color color = labelColor(b);
+
+        javax.swing.text.View htmlView =
+                (javax.swing.text.View) b.getClientProperty(javax.swing.plaf.basic.BasicHTML.propertyKey);
+        if (htmlView != null) {
+            Color old = b.getForeground();
+            try {
+                b.setForeground(color);
+                float viewHeight = htmlView.getPreferredSpan(javax.swing.text.View.Y_AXIS);
+                java.awt.Rectangle rect = new java.awt.Rectangle(
+                        textArea.x,
+                        textArea.y + Math.max(0, Math.round((textArea.height - viewHeight) / 2f)),
+                        textArea.width,
+                        Math.max(1, Math.round(viewHeight)));
+                htmlView.paint(g, rect);
+            } catch (Throwable ignored) {
+                // HTML 视图绘制失败时退回普通文本，至少内容不丢
+                g.setColor(color);
+                g.drawString(text, textArea.x, textArea.y + g.getFontMetrics().getAscent());
+            } finally {
+                b.setForeground(old);
+            }
+            return;
+        }
+
+        java.awt.Font font = b.getFont();
+        if (font != null) {
+            g.setFont(font);
+        }
+        g.setColor(color);
+        java.awt.FontMetrics fm = g.getFontMetrics();
+        int baseline = textArea.y + (textArea.height - fm.getHeight()) / 2 + fm.getAscent();
+        javax.swing.plaf.basic.BasicGraphicsUtils.drawStringUnderlineCharAt(
+                g, text, mnemonicIndex(b), textArea.x, baseline);
+    }
+
+    /**
+     * 助记符下划线位置。
+     *
+     * <p>FlatLaf 默认「按 Alt 才显示助记符」，直接取
+     * {@code getDisplayedMnemonicIndex()} 会一直画下划线，与主题行为不一致，
+     * 所以先问一下 FlatLaf；非 FlatLaf 外观则沿用 Swing 自己的判断。</p>
+     */
+    private static int mnemonicIndex(javax.swing.AbstractButton b) {
+        try {
+            if (!com.formdev.flatlaf.FlatLaf.isShowMnemonics()) {
+                return -1;
+            }
+        } catch (Throwable ignored) {
+            // 非 FlatLaf：走下面的通用逻辑
+        }
+        return b.getDisplayedMnemonicIndex();
+    }
+
+    private static Color firstNonNullColor(String... keys) {
+        for (String key : keys) {
+            try {
+                Color c = javax.swing.UIManager.getColor(key);
+                if (c != null) {
+                    return c;
+                }
+            } catch (Throwable ignored) {
+                // 忽略单个键的取值失败
+            }
+        }
+        return null;
+    }
 }

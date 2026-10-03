@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.fluent.FluentColors;
+import com.wmp.downloader.tools.ui.fluent.FluentMetrics;
 import com.wmp.downloader.tools.ui.fluent.FluentUi;
 import com.wmp.downloader.tools.ui.fluent.FluentToggleSwitch;
 import com.wmp.downloader.tools.ui.fluent.RevealEngine;
@@ -185,6 +186,8 @@ public final class UiSelfTest {
         // 自检工具最忌讳「第一个问题把后面全挡住」——那样每次只能修一个发现一个。
         runAssertion("开关外观", problems, () -> assertSwitch(gallery, image));
         runAssertion("传统复选框退出开关", problems, () -> assertClassicCheckBox(gallery));
+        runAssertion("禁用态文字灰化", problems, () -> assertDisabledText(gallery));
+        runAssertion("HTML 复选框文本", problems, () -> assertHtmlCheckBox(gallery));
         runAssertion("表格 Boolean 渲染器回退", problems, () -> assertTableBooleanRenderer(gallery));
         runAssertion("进度条", problems, () -> assertProgressBar(gallery, image));
         runAssertion("滚动条", problems, () -> assertScrollBar(gallery, image));
@@ -217,6 +220,9 @@ public final class UiSelfTest {
         JCheckBox switchOn;
         JCheckBox switchOff;
         JCheckBox classicBox;
+        JCheckBox textEnabledProbe;
+        JCheckBox textDisabledProbe;
+        JCheckBox htmlProbe;
         FluentToggleSwitch explicitSwitch;
         JProgressBar determinate;
         JProgressBar indeterminate;
@@ -261,6 +267,26 @@ public final class UiSelfTest {
         g.explicitSwitch.setName("explicit-switch");
         g.explicitSwitch.setAlignmentX(Component.LEFT_ALIGNMENT);
         column.add(g.explicitSwitch);
+
+        // 禁用态文字对照：两个文案完全相同的复选框，一个启用一个禁用。
+        // 「禁用后文字仍是黑的」这个 bug 就是因为原来没有覆盖禁用态而漏掉的
+        g.textEnabledProbe = new JCheckBox("禁用态文字对照", true);
+        g.textEnabledProbe.setName("text-enabled");
+        g.textEnabledProbe.setAlignmentX(Component.LEFT_ALIGNMENT);
+        column.add(g.textEnabledProbe);
+
+        g.textDisabledProbe = new JCheckBox("禁用态文字对照", true);
+        g.textDisabledProbe.setName("text-disabled");
+        g.textDisabledProbe.setAlignmentX(Component.LEFT_ALIGNMENT);
+        g.textDisabledProbe.setEnabled(false);
+        column.add(g.textDisabledProbe);
+
+        // HTML 文本：设计器里确实有用 HTML 的复选框（ParserCompatibilityDialog），
+        // 自绘 UI 必须把绘制交给 BasicHTML 的 View，否则会把标签原文画在界面上
+        g.htmlProbe = new JCheckBox("<html><b>加粗</b>与<font color='#C42B1C'>着色</font></html>", true);
+        g.htmlProbe.setName("html-checkbox");
+        g.htmlProbe.setAlignmentX(Component.LEFT_ALIGNMENT);
+        column.add(g.htmlProbe);
         column.add(Box.createVerticalStrut(12));
 
         // ---- 进度条 ----
@@ -384,6 +410,92 @@ public final class UiSelfTest {
             if (bbox.width > 26) {
                 problems.add("标记为传统复选框的组件仍被渲染成开关（强调色宽度 " + bbox.width + "px）");
             }
+        }
+        return problems;
+    }
+
+    /**
+     * 禁用态文字必须「灰化」，且颜色取自主题的禁用文字色。
+     *
+     * <h3>为什么专门加这一组</h3>
+     * <p>自绘 UI 一开始把文字交给 {@code BasicButtonUI.paintText} 绘制，
+     * 而它在禁用态用的是 {@code background.brighter()} / {@code background.darker()}
+     * 双描边的老式画法，<b>完全不读主题的禁用文字色</b>——
+     * 在 FlatLaf 下 {@code darker()} 出来近乎纯黑，于是「禁用组件的文字反而显示为黑色」。
+     * 原来的自检只看了选中/未选中，没有覆盖禁用态，所以没抓到。</p>
+     *
+     * <p>判定标准刻意做成与主题无关：<b>禁用态文字与背景的对比度必须小于启用态</b>。
+     * 这比「断言某个具体颜色」更稳，也正好对应「灰化」这个词的语义。</p>
+     */
+    private static List<String> assertDisabledText(Gallery g) {
+        List<String> problems = new ArrayList<>();
+        int width = 260;
+        int height = 32;
+        // 只看文字区域，跳过左侧的开关轨道（轨道是强调色/控件色，会干扰取样）
+        int textStart = FluentMetrics.SWITCH_WIDTH + FluentMetrics.SWITCH_GAP - 4;
+        Color background = UIManager.getColor("Panel.background");
+
+        BufferedImage enabled = paintComponent(g.textEnabledProbe, width, height);
+        BufferedImage disabled = paintComponent(g.textDisabledProbe, width, height);
+
+        Color enabledText = mostContrastingColor(enabled, textStart, width, background);
+        Color disabledText = mostContrastingColor(disabled, textStart, width, background);
+
+        Color expected = UIManager.getColor("CheckBox.disabledText");
+        if (expected == null) {
+            expected = UIManager.getColor("Button.disabledText");
+        }
+        int enabledContrast = colorDistance(enabledText, background);
+        int disabledContrast = colorDistance(disabledText, background);
+        report("[断言] 启用态文字 " + toHex(enabledText) + "（对比度 " + enabledContrast + "）"
+                + "，禁用态文字 " + toHex(disabledText) + "（对比度 " + disabledContrast + "）"
+                + "，主题禁用色 " + toHex(expected));
+
+        if (enabledText == null || disabledText == null) {
+            problems.add("取不到文字颜色，无法判定禁用态灰化");
+            return problems;
+        }
+        if (disabledContrast >= enabledContrast) {
+            problems.add("禁用态文字没有灰化：它与背景的对比度（" + disabledContrast
+                    + "）不小于启用态（" + enabledContrast + "），字体看起来仍是正常色甚至更深");
+        }
+        if (expected != null && colorDistance(disabledText, expected) > 60) {
+            problems.add("禁用态文字颜色与主题的禁用文字色不符：实际 " + toHex(disabledText)
+                    + "，主题 " + toHex(expected));
+        }
+        return problems;
+    }
+
+    /**
+     * HTML 文本的复选框不能被画成标签原文。
+     *
+     * <p>{@code BasicHTML} 会给 HTML 文本挂一个 {@code View}，由它负责绘制。
+     * 自绘 UI 如果无条件调用 {@code paintText}，界面上就会出现一串 {@code <html>…}。</p>
+     */
+    private static List<String> assertHtmlCheckBox(Gallery g) {
+        List<String> problems = new ArrayList<>();
+        BufferedImage img = paintComponent(g.htmlProbe, 300, 32);
+        Color background = UIManager.getColor("Panel.background");
+        int textStart = FluentMetrics.SWITCH_WIDTH + FluentMetrics.SWITCH_GAP - 4;
+
+        // HTML 里显式指定了 #C42B1C 的着色，画出来必须能找到这个颜色
+        Color red = new Color(0xC4, 0x2B, 0x1C);
+        int redPixels = 0;
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = textStart; x < img.getWidth(); x++) {
+                if (colorDistance(new Color(img.getRGB(x, y), true), red) <= 40) {
+                    redPixels++;
+                }
+            }
+        }
+        boolean hasText = mostContrastingColor(img, textStart, 300, background) != null;
+        report("[断言] HTML 复选框：着色像素 " + redPixels + "，文字区有内容=" + hasText);
+        if (!hasText) {
+            problems.add("HTML 复选框没有绘制出任何文本");
+        }
+        if (redPixels == 0) {
+            problems.add("HTML 复选框里 <font color='#C42B1C'> 的着色没有生效，"
+                    + "怀疑 HTML 文本被当成普通字符串绘制（会把标签原文画出来）");
         }
         return problems;
     }
@@ -716,6 +828,35 @@ public final class UiSelfTest {
             }
         }
         return maxX < 0 ? null : new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
+    }
+
+    /**
+     * 在指定横向区间内找出与背景差异最大的像素颜色——用它代表「文字颜色」。
+     *
+     * <p>取最对比的像素而不是取平均或众数：文字是抗锯齿的，笔画核心才是真正的文字色，
+     * 边缘像素是它与背景的混合色。这样得到的颜色可以直接与主题里的颜色比较。</p>
+     *
+     * @param image  图像
+     * @param fromX  起始列（含）
+     * @param toX    结束列（不含）
+     * @param background 背景色
+     * @return 最对比的像素颜色；区间内没有任何与背景不同的像素时返回 {@code null}
+     */
+    private static Color mostContrastingColor(BufferedImage image, int fromX, int toX, Color background) {
+        int best = 0;
+        Color bestColor = null;
+        int y1 = Math.max(0, image.getHeight());
+        for (int y = 0; y < y1; y++) {
+            for (int x = Math.max(0, fromX); x < Math.min(toX, image.getWidth()); x++) {
+                Color c = new Color(image.getRGB(x, y), true);
+                int d = colorDistance(c, background);
+                if (d > best) {
+                    best = d;
+                    bestColor = c;
+                }
+            }
+        }
+        return best > 2 ? bestColor : null;
     }
 
     private static int countAccentPixels(BufferedImage image) {

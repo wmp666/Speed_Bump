@@ -13,7 +13,7 @@ import java.util.List;
 public class Run {
     private static final Logger logger = Logger.getLogger(Run.class);
 
-    public static String VERSION = "0.5.1";
+    public static String VERSION = "0.5.2";
 
     public static String PLUGIN_SUPPORT_VERSION = "2.0.0";
 

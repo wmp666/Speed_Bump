@@ -23,11 +23,6 @@ public class AboutPanel {
     private JButton ProjectLinkButton;
     private JScrollPane aboutInfoScrollPane;
     private JPanel aboutInfoPanel;
-    private JScrollPane aboutScrollPane;
-    private JCheckBox FlatLafCheckBox;
-    private JCheckBox IconPackCheckBox;
-    private JCheckBox alibabaFastjsonCheckBox;
-    private JCheckBox log4jLog4jCheckBox;
     private JCheckBox authorCheckBox;
     private JLabel licenseLabel;
     private JButton issueButton;
@@ -35,6 +30,10 @@ public class AboutPanel {
     private JLabel PluginSupportVersionLabel;
     private JLabel JavaVersionLabel;
     private JLabel JavaRuntimeLabel;
+    private JCheckBox FlatLafCheckBox;
+    private JCheckBox IconPackCheckBox;
+    private JCheckBox alibabaFastjsonCheckBox;
+    private JCheckBox log4jLog4jCheckBox;
 
     private final Downloader downloader;
 
@@ -91,7 +90,6 @@ public class AboutPanel {
             }
         });
 
-        aboutScrollPane.getViewport().setOpaque(false);
 
         UITools.setScrollPaneUnOpaque(aboutInfoScrollPane);
     }
