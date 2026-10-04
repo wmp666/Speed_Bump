@@ -1,6 +1,6 @@
 package com.wmp.downloader.tools.ui;
 
-import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;

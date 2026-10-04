@@ -4,9 +4,11 @@ import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.ui.*;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractTask extends JPanel {
-    private static final Logger logger = Logger.getLogger(AbstractTask.class);
+    private static final SBLogger logger = SBLogger.getLogger(AbstractTask.class);
     protected JPanel mainPanel;
     protected JLabel iconPanel;
     protected JLabel nameLabel;
@@ -96,12 +98,12 @@ public abstract class AbstractTask extends JPanel {
         nameLabel.putClientProperty("FlatLaf.style", "font: $h2.font");
 
         //按钮设置
-        IconDynamicConverterTasks = IconControl.addInDynamicConverter(
+        IconDynamicConverterTasks = IconControl.INSTANCE.addInDynamicConverter(
                 () -> iconPanel.setIcon(getIcon(iconSize.getFont().getSize())),
-                () -> exitButton.setIcon(IconControl.getIcon("close", iconSize.getFont().getSize())),
-                () -> openButton.setIcon(IconControl.getIcon("file", iconSize.getFont().getSize())),
-                () -> downloadControlButton.setIcon(IconControl.getIcon(isFinally || isStart ? "pause" : "start", iconSize.getFont().getSize())),
-                () -> openInFolderButton.setIcon(IconControl.getIcon("folder", iconSize.getFont().getSize()))
+                () -> exitButton.setIcon(IconControl.INSTANCE.getIcon("close", iconSize.getFont().getSize())),
+                () -> openButton.setIcon(IconControl.INSTANCE.getIcon("file", iconSize.getFont().getSize())),
+                () -> downloadControlButton.setIcon(IconControl.INSTANCE.getIcon(isFinally || isStart ? "pause" : "start", iconSize.getFont().getSize())),
+                () -> openInFolderButton.setIcon(IconControl.INSTANCE.getIcon("folder", iconSize.getFont().getSize()))
         );
         downloadControlButton.addActionListener(e -> {
             if (isStart) {
@@ -173,7 +175,7 @@ public abstract class AbstractTask extends JPanel {
                     this.setVisible(false);
                     isCanExit = true;
 
-                    IconControl.removeInDynamicConverter(IconDynamicConverterTasks);
+                    IconControl.INSTANCE.removeInDynamicConverter(IconDynamicConverterTasks);
                     ThemeChanger.removeDynamicConverter(ThemeDynamicConverterTasks);
                     //清除已有的进度条
                     ProgressBarsPanel.removeAll();
@@ -482,7 +484,7 @@ public abstract class AbstractTask extends JPanel {
     }
 
     protected ImageIcon getIcon(int size) {
-        return IconControl.getIcon("file", size);
+        return IconControl.INSTANCE.getIcon("file", size);
     }
 
     /**

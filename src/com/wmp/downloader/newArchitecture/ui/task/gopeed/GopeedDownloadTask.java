@@ -5,13 +5,13 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
 import com.wmp.speed_bump.common.background.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.FunctionDialog;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
@@ -22,7 +22,7 @@ import java.io.IOException;
 
 public class GopeedDownloadTask extends AbstractTask {
 
-    private static final Logger logger = Logger.getLogger(GopeedDownloadTask.class);
+    private static final SBLogger logger = SBLogger.getLogger(GopeedDownloadTask.class);
 
     private final String baseUrl;
     private final SBProgressBar progressBar = SBProgressBar.INSTANCE_CREATOR.create();

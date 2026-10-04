@@ -12,17 +12,16 @@ import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SpecialSetting
 import com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.TestControlDialog;
 import com.wmp.downloader.tools.MicrosoftTranslator;
 import com.wmp.downloader.tools.MicrosoftTranslator.Language;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
-import com.wmp.downloader.ui.common.LazyTabbedPane;
 import com.wmp.speed_bump.platform.ui.swing.components.SearchTextField;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 import org.jdesktop.swingx.JXBusyLabel;
 
 import javax.swing.*;
@@ -39,7 +38,7 @@ import java.util.List;
 
 public class Downloader extends JFrame implements WindowListener{
 
-    private static final Logger logger = Logger.getLogger(Downloader.class);
+    private static final SBLogger logger = SBLogger.getLogger(Downloader.class);
 
     /**
      * 显示背景图时标题栏的不透明度（0 全透明 ~ 255 全不透明）。
@@ -60,7 +59,7 @@ public class Downloader extends JFrame implements WindowListener{
     private SearchTextField searchTextField;
 
     public JPanel settingsPanel;
-    public JTabbedPane mainTabbedPane;
+    public javax.swing.JTabbedPane mainTabbedPane;
     public JPanel downloaderPanel;
     public JButton createTaskButton;
     public JPanel TaskButtonPanel;
@@ -139,8 +138,8 @@ public class Downloader extends JFrame implements WindowListener{
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-        IconControl.addInDynamicConverter(
-                () -> this.setIconImage(IconControl.getImage("icon", 256))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> this.setIconImage(IconControl.INSTANCE.getIcon("icon", 256).getImage())
         );
         this.addWindowListener(this);
 
@@ -156,14 +155,14 @@ public class Downloader extends JFrame implements WindowListener{
         gbc.insets = new Insets(5, 0, 5, 0);    // 上下各 5px 间距
 
 
-        IconControl.addInDynamicConverter(
+        IconControl.INSTANCE.addInDynamicConverter(
                 () -> {
                     var size = mainTabbedPane.getFont().getSize();
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(downloaderPanel), IconControl.getIcon("task", size));
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(settingsPanel), IconControl.getIcon("settings", size));
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(SpecialSettingsPanel), IconControl.getIcon("settings", size));
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(pluginParserControlPanel), IconControl.getIcon("plugin", size));
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(aboutPanel), IconControl.getIcon("about", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(downloaderPanel), IconControl.INSTANCE.getIcon("task", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(settingsPanel), IconControl.INSTANCE.getIcon("settings", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(SpecialSettingsPanel), IconControl.INSTANCE.getIcon("settings", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(pluginParserControlPanel), IconControl.INSTANCE.getIcon("plugin", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(aboutPanel), IconControl.INSTANCE.getIcon("about", size));
                 }
         );
 
@@ -554,11 +553,11 @@ public class Downloader extends JFrame implements WindowListener{
             trayMenu = null;
         }
 
-        trayIcon = new TrayIcon(IconControl.getImage("download"), StringFormat.translate("common", "app_name"));
+        trayIcon = new TrayIcon(IconControl.INSTANCE.getIcon("download").getImage(), StringFormat.translate("common", "app_name"));
 
         trayIcon.setImageAutoSize(true);
-        IconControl.addInDynamicConverter(
-                () -> trayIcon.setImage(IconControl.getImage("icon"))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> trayIcon.setImage(IconControl.INSTANCE.getIcon("icon").getImage())
         );
 
         // TrayIcon#setPopupMenu 只接受 AWT 的 PopupMenu，无法跟随 FlatLaf 主题，
@@ -588,8 +587,8 @@ public class Downloader extends JFrame implements WindowListener{
     }
 
     private static void setMenuItemIcon(JMenuItem item, String iconKey) {
-        IconControl.addInDynamicConverter(
-                () -> item.setIcon(IconControl.getIcon(iconKey, 16)));
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> item.setIcon(IconControl.INSTANCE.getIcon(iconKey, 16)));
     }
 
     private void initMenuBar() {
@@ -733,7 +732,7 @@ public class Downloader extends JFrame implements WindowListener{
     }
 
     private void createUIComponents() {
-        mainTabbedPane = new LazyTabbedPane();
+        mainTabbedPane = new JTabbedPane();
         mainTabbedPane.setOpaque(true);
 
         TasksPanel = new JPanel(new GridBagLayout());
@@ -893,10 +892,10 @@ public class Downloader extends JFrame implements WindowListener{
         allStartButton.putClientProperty("FlatLaf.style", "font: $h2.font");
         allPauseButton.putClientProperty("FlatLaf.style", "font: $h2.font");
 
-        IconControl.addInDynamicConverter(
-                () -> createTaskButton.setIcon(IconControl.getIcon("new", createTaskButton.getFont().getSize())),
-                () -> allStartButton.setIcon(IconControl.getIcon("start", allStartButton.getFont().getSize())),
-                () -> allPauseButton.setIcon(IconControl.getIcon("pause", allPauseButton.getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> createTaskButton.setIcon(IconControl.INSTANCE.getIcon("new", createTaskButton.getFont().getSize())),
+                () -> allStartButton.setIcon(IconControl.INSTANCE.getIcon("start", allStartButton.getFont().getSize())),
+                () -> allPauseButton.setIcon(IconControl.INSTANCE.getIcon("pause", allPauseButton.getFont().getSize()))
         );
 
         createTaskButton.addActionListener(e -> {

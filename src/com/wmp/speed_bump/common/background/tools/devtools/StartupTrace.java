@@ -1,4 +1,4 @@
-package com.wmp.speed_bump.common.background.tool.devtools;
+package com.wmp.speed_bump.common.background.tools.devtools;
 
 /**
  * 启动分步耗时追踪。

@@ -1,6 +1,6 @@
-package com.wmp.speed_bump.common.background.tool;
+package com.wmp.speed_bump.common.background.tools;
 
-import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
+import com.wmp.speed_bump.common.background.tools.platform.GetPlatformName;
 
 import java.io.File;
 import java.util.Locale;

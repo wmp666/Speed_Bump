@@ -1,6 +1,6 @@
 package com.wmp.downloader.tools.ui;
 
-import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
+import com.wmp.speed_bump.common.background.tools.platform.GetPlatformName;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

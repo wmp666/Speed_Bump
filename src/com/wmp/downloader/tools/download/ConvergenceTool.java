@@ -1,10 +1,10 @@
 package com.wmp.downloader.tools.download;
 
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.speed_bump.common.ui.components.SBProgressBar;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class ConvergenceTool {
 
-    private static final Logger logger = Logger.getLogger(ConvergenceTool.class);
+    private static final SBLogger logger = SBLogger.getLogger(ConvergenceTool.class);
     // ---------- 硬件加速自动检测 ----------
     private static HardwareAccelConfig cachedConfig = null;
 

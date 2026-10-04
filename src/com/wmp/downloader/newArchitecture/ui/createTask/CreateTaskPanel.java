@@ -8,10 +8,10 @@ import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLin
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInfoPanel;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
-import com.wmp.downloader.ui.common.PathSelectionPanel;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.platform.ui.swing.components.PathSelectionPanel;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CreateTaskPanel {
     private final ArrayList<AbstractLinkInfoPanel> linkInfoPanels = new ArrayList<>();
-    private final Logger logger = Logger.getLogger(CreateTaskPanel.class);
+    private final SBLogger logger = SBLogger.getLogger(CreateTaskPanel.class);
     // ---------- 新增：增量解析状态 ----------
     private final Map<String, JPanel> linkPanelMap = new LinkedHashMap<>();      // 链接 -> 已解析的面板
     private final Set<String> parsingLinks = ConcurrentHashMap.newKeySet();      // 正在解析的链接集合

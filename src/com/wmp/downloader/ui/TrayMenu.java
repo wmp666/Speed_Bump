@@ -1,13 +1,13 @@
 package com.wmp.downloader.ui;
 
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
 import com.wmp.downloader.tools.ui.DialogBackdrop;
-import com.wmp.downloader.tools.ui.DynamicConverterTask;
+import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.FlyoutMenu;
-import com.wmp.downloader.tools.ui.IconControl;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class TrayMenu {
 
-    private static final Logger logger = Logger.getLogger(TrayMenu.class);
+    private static final SBLogger logger = SBLogger.getLogger(TrayMenu.class);
 
     private final Downloader frame;
     private final FlyoutMenu menu = new FlyoutMenu();
@@ -95,7 +95,7 @@ public class TrayMenu {
         exitItem = menu.addItem("power_switch", translate("frame.exit"), () -> System.exit(0));
 
         // 图标随主题 / 图标包变化刷新
-        iconTasks = IconControl.addInDynamicConverter(
+        iconTasks = IconControl.INSTANCE.addInDynamicConverter(
                 () -> menu.setHeaderIconKey("icon"),
                 () -> showItem.setIconKey("icon"),
                 () -> startAllItem.setIconKey("start"),
@@ -148,7 +148,7 @@ public class TrayMenu {
      */
     public void dispose() {
         menu.dispose();
-        IconControl.removeInDynamicConverter(iconTasks);
+        IconControl.INSTANCE.removeInDynamicConverter(iconTasks);
         iconTasks = new DynamicConverterTask[0];
     }
 

@@ -3,7 +3,7 @@ package com.wmp.speed_bump.platform.test;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wmp.downloader.tools.file.DataControl;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class BiliVideoInfo {
 
-    private static Logger logger = Logger.getLogger(BiliVideoInfo.class);
+    private static SBLogger logger = SBLogger.getLogger(BiliVideoInfo.class);
 
     static void main() {
         var bv = IO.readln("输入BV：");

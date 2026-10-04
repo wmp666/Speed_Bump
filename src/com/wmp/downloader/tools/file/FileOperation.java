@@ -1,8 +1,8 @@
 package com.wmp.downloader.tools.file;
 
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.ui.ToastMessage;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class FileOperation {
 
-    public static final Logger logger = Logger.getLogger(FileOperation.class);
+    public static final SBLogger logger = SBLogger.getLogger(FileOperation.class);
 
     /**
      * 复制文件或文件夹

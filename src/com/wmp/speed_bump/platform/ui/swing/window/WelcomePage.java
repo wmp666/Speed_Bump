@@ -2,12 +2,12 @@ package com.wmp.speed_bump.platform.ui.swing.window;
 
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.DialogBackdrop;
-import com.wmp.downloader.tools.ui.DynamicConverterTask;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.fluent.FluentColors;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -69,7 +69,7 @@ import java.text.MessageFormat;
 public class WelcomePage extends JDialog
         implements com.wmp.speed_bump.common.ui.WelcomePage, WelcomePageHost {
 
-    private static final Logger logger = Logger.getLogger(WelcomePage.class);
+    private static final SBLogger logger = SBLogger.getLogger(WelcomePage.class);
 
     /** 页眉应用图标的边长 */
     private static final int ICON_SIZE = 56;
@@ -141,7 +141,7 @@ public class WelcomePage extends JDialog
         addPage(KEY_SECTION_GENERAL, generalPage);
 
         setTitle(pageTitle());
-        setIconImage(IconControl.getImage("icon"));
+        setIconImage(IconControl.INSTANCE.getIcon("icon").getImage());
         setModal(true);
         setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -231,7 +231,7 @@ public class WelcomePage extends JDialog
     @Override
     public void dispose() {
         if (iconTasks != null) {
-            IconControl.removeInDynamicConverter(iconTasks);
+            IconControl.INSTANCE.removeInDynamicConverter(iconTasks);
             iconTasks = null;
         }
         if (themeTasks != null) {
@@ -395,8 +395,8 @@ public class WelcomePage extends JDialog
     // ==================================================================
 
     private void registerThemeHooks() {
-        iconTasks = IconControl.addInDynamicConverter(
-                () -> iconLabel.setIcon(IconControl.getIcon("icon", ICON_SIZE)));
+        iconTasks = IconControl.INSTANCE.addInDynamicConverter(
+                () -> iconLabel.setIcon(IconControl.INSTANCE.getIcon("icon", ICON_SIZE)));
         themeTasks = ThemeChanger.addInDynamicConverter(this::refreshWindow);
 
         skipButton.addActionListener(e -> close(false));

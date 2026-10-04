@@ -1,6 +1,5 @@
-package com.wmp.downloader.tools.file;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+package com.wmp.speed_bump.platform.background.pc.tools;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,11 +9,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 /**
- * 资源本地化工具类（从Kotlin转换）
+ * 资源本地化工具类
  */
 public class ResourceLocalizer {
 
-    private static final Logger logger = Logger.getLogger(ResourceLocalizer.class);
+    private static final SBLogger logger = SBLogger.getLogger(ResourceLocalizer.class);
 
     /**
      * 将内置文件复制到指定目录

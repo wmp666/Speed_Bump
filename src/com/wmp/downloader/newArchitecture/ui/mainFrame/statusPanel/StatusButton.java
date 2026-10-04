@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.mainFrame.statusPanel;
 
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,8 +39,8 @@ public class StatusButton extends JButton {
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // ---------- 图标（动态转换） ----------
-        IconControl.addInDynamicConverter(
-                () -> setIcon(IconControl.getIcon(iconKey, getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> setIcon(IconControl.INSTANCE.getIcon(iconKey, getFont().getSize()))
         );
 
         // ---------- 文本 ----------
@@ -111,8 +111,8 @@ public class StatusButton extends JButton {
     // ---------- 可选的便捷方法 ----------
     public void setIconKey(String iconKey) {
         this.iconKey = iconKey;
-        IconControl.addInDynamicConverter(
-                () -> setIcon(IconControl.getIcon(iconKey, getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> setIcon(IconControl.INSTANCE.getIcon(iconKey, getFont().getSize()))
         );
         repaint();
     }

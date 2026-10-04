@@ -1,6 +1,6 @@
-package com.wmp.speed_bump.common.background.tool.platform;
+package com.wmp.speed_bump.common.background.tools.platform;
 
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.io.*;
 import java.nio.file.*;
@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class FileAssociation {
     
-    private static final Logger logger = Logger.getLogger(FileAssociation.class);
+    private static final SBLogger logger = SBLogger.getLogger(FileAssociation.class);
 
     /**
      * 注册文件关联（自动检测操作系统）

@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture.abstractTask.downloadTask;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 
 import javax.swing.*;
 
@@ -14,6 +14,6 @@ public abstract class FolderDownloadTask extends AbstractTask {
 
     @Override
     protected ImageIcon getIcon(int size) {
-        return IconControl.getIcon("folder", size);
+        return IconControl.INSTANCE.getIcon("folder", size);
     }
 }

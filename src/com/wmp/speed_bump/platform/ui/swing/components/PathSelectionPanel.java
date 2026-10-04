@@ -1,8 +1,8 @@
-package com.wmp.downloader.ui.common;
+package com.wmp.speed_bump.platform.ui.swing.components;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -49,8 +49,8 @@ public class PathSelectionPanel extends JPanel {
 
             }
         });
-        IconControl.addInDynamicConverter(
-                () -> LocationChooseButton.setIcon(IconControl.getIcon("folder", DownloadFileLocationLabel.getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> LocationChooseButton.setIcon(IconControl.INSTANCE.getIcon("folder", DownloadFileLocationLabel.getFont().getSize()))
         );
 
 

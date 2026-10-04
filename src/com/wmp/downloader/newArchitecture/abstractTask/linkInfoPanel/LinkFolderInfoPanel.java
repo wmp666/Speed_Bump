@@ -5,9 +5,9 @@ import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
 import com.wmp.downloader.newArchitecture.ui.createTask.TaskFileEditPanel;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.downloader.tools.ui.DynamicConverterTask;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.ui.FunctionDialog;
 
@@ -80,10 +80,10 @@ public abstract class LinkFolderInfoPanel extends AbstractLinkInfoPanel {
 
         ThemeChanger.addInDynamicConverter(task);
 
-        IconControl.addInDynamicConverter(
-                () -> IconLabel.setIcon(IconControl.getIcon("folder", folderNameLabel.getFont().getSize())),
-                () -> fileChooseButton.setIcon(IconControl.getIcon("choose", folderNameLabel.getFont().getSize())),
-                () -> editButton.setIcon(IconControl.getIcon("edit", folderNameLabel.getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> IconLabel.setIcon(IconControl.INSTANCE.getIcon("folder", folderNameLabel.getFont().getSize())),
+                () -> fileChooseButton.setIcon(IconControl.INSTANCE.getIcon("choose", folderNameLabel.getFont().getSize())),
+                () -> editButton.setIcon(IconControl.INSTANCE.getIcon("edit", folderNameLabel.getFont().getSize()))
         );
         folderNameLabel.setText(folderName);
         modeLabel.setText(mode);

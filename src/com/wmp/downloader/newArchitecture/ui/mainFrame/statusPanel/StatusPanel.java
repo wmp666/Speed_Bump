@@ -3,9 +3,9 @@ package com.wmp.downloader.newArchitecture.ui.mainFrame.statusPanel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.ui.Downloader;
 
 import javax.swing.*;
@@ -92,8 +92,8 @@ public class StatusPanel extends JPanel {
         taskStatusLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
 
         //图标跟随主题与运行状态动态刷新
-        IconControl.addInDynamicConverter(() ->
-                taskStatusLabel.setIcon(IconControl.getIcon(runStateIconKey, statusIconSize())));
+        IconControl.INSTANCE.addInDynamicConverter(() ->
+                taskStatusLabel.setIcon(IconControl.INSTANCE.getIcon(runStateIconKey, statusIconSize())));
         taskStatusLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         //点击跳转到“任务中心”页
@@ -142,14 +142,14 @@ public class StatusPanel extends JPanel {
         if (Taskbar.isTaskbarSupported()) {
             var taskbar = Taskbar.getTaskbar();
             if (taskbar.isSupported(Taskbar.Feature.ICON_BADGE_IMAGE_WINDOW)) {
-                taskbar.setWindowIconBadge(downloader, run > 0 ? IconControl.getIcon(DataControl.get("theme_type", "light").equals("light")?"dark":"light", "task").getImage() : null);
+                taskbar.setWindowIconBadge(downloader, run > 0 ? IconControl.INSTANCE.getIcon(DataControl.get("theme_type", "light").equals("light")?"dark":"light", "task").getImage() : null);
             }
         }
 
         taskStatusLabel.setText(text);
         taskStatusLabel.setToolTipText(text);
         //立即重取图标（主题切换时 addInDynamicConverter 里的任务也会刷新）
-        taskStatusLabel.setIcon(IconControl.getIcon(runStateIconKey, statusIconSize()));
+        taskStatusLabel.setIcon(IconControl.INSTANCE.getIcon(runStateIconKey, statusIconSize()));
     }
 
     // =====================================================================
@@ -340,8 +340,8 @@ public class StatusPanel extends JPanel {
      */
     private JPanel buildTitleBar(String iconKey, String title, Runnable onClose) {
         JLabel icon = new JLabel();
-        IconControl.addInDynamicConverter(
-                () -> icon.setIcon(IconControl.getIcon(iconKey, statusIconSize())));
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> icon.setIcon(IconControl.INSTANCE.getIcon(iconKey, statusIconSize())));
 
         JLabel titleLabel = new JLabel(title);
         titleLabel.putClientProperty("FlatLaf.style", "font: bold $h3.font");

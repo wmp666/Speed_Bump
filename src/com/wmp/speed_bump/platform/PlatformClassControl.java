@@ -1,13 +1,9 @@
 package com.wmp.speed_bump.platform;
 
-import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
-import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.exception.PlatformCLassFindException;
-import com.wmp.speed_bump.common.background.tool.Creator;
-import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
+import com.wmp.speed_bump.common.background.exception.NotFoundPlatformFunctionException;
+import com.wmp.speed_bump.common.background.tools.Creator;
+import com.wmp.speed_bump.common.background.tools.platform.GetPlatformName;
 import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class PlatformClassControl {
 
@@ -34,10 +30,10 @@ public class PlatformClassControl {
                 newClassName = String.format(className, GetPlatformName.getEquipmentName());
 
             }
-            default -> throw new PlatformCLassFindException("出现无法识别的类型：" + type);
+            default -> throw new NotFoundPlatformFunctionException("出现无法识别的类型：" + type);
         }
         if (newClassName.isBlank()) {
-            throw new PlatformCLassFindException("找不到类:" + className + " 类型:" + type + "平台:" + GetPlatformName.getOSName());
+            throw new NotFoundPlatformFunctionException("找不到类:" + className + " 类型:" + type + "平台:" + GetPlatformName.getOSName());
         }else {
             try {
                 var clazz = Class.forName(newClassName);
@@ -45,12 +41,12 @@ public class PlatformClassControl {
                     try {
                         return (T) clazz.getDeclaredConstructor().newInstance();
                     } catch (Exception e) {
-                        throw new PlatformCLassFindException("类加载异常：" + e.getMessage());
+                        throw new NotFoundPlatformFunctionException("类加载异常：" + e.getMessage());
                     }
                 };
 
             } catch (Exception e) {
-                throw new PlatformCLassFindException("类加载异常：" + e.getMessage());
+                throw new NotFoundPlatformFunctionException("类加载异常：" + e.getMessage());
             }
         }
     }

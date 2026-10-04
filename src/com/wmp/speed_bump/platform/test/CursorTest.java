@@ -1,9 +1,7 @@
 package com.wmp.speed_bump.platform.test;
 
-import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.ui.FlatUIUtils;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +21,7 @@ public class CursorTest {
             // 在 Windows 上通常为 32x32
 
             // 1. 加载图片 (请将 "my_hand.png" 替换为你的图片路径)
-            Image cursorImage = IconControl.getImage("cursor_text_select", bestSize.width, bestSize.height);
+            Image cursorImage = IconControl.INSTANCE.getIcon("cursor_text_select", bestSize.width, bestSize.height).getImage();
             // 若图片在 JAR 包里, 可用:
             // URL imgUrl = CustomCursorDemo.class.getResource("my_hand.png");
             // Image cursorImage = Toolkit.getDefaultToolkit().getImage(imgUrl);

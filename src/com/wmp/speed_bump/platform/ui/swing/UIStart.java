@@ -3,14 +3,14 @@ package com.wmp.speed_bump.platform.ui.swing;
 
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.tools.WebSetter;
-import com.wmp.speed_bump.common.background.tool.devtools.StartupTrace;
+import com.wmp.speed_bump.common.background.tools.devtools.StartupTrace;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.fluent.FluentUi;
 import com.wmp.downloader.tools.web.TCPControl;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.common.ui.WelcomePage;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class UIStart implements com.wmp.speed_bump.common.UIStart {
 
 
-    private static final Logger logger = Logger.getLogger(UIStart.class);
+    private static final SBLogger logger = SBLogger.getLogger(UIStart.class);
 
     @Override
     public void show(List<String> argList, String linkPath) {

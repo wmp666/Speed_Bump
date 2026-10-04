@@ -2,7 +2,7 @@ package com.wmp.downloader.tools.download;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class GopeedClient {
 
-    private static final Logger logger = Logger.getLogger(GopeedClient.class);
+    private static final SBLogger logger = SBLogger.getLogger(GopeedClient.class);
 
     private final String baseUrl;
 

@@ -5,8 +5,9 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson2.JSONArray;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.Run;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
+import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
 import com.wmp.downloader.tools.ui.SystemThemeDetector;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.ui.Downloader;
@@ -32,7 +33,7 @@ public class DataControl {
     public static final String PLUGIN_GITHUB_API_HEAD = "https://api.github.com/repos/wmp666/Speed_Bump_Plugin";
 
     public static final ArrayList<String> themeList = new ArrayList<>();
-    private static final Logger logger = Logger.getLogger(DataControl.class);
+    private static final SBLogger logger = SBLogger.getLogger(DataControl.class);
     private static final Path BASE_DIR = Paths.get(
             System.getProperty("user.home"), ".speed-bump"
     );

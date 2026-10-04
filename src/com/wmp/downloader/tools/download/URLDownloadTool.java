@@ -2,10 +2,10 @@ package com.wmp.downloader.tools.download;
 
 import com.wmp.speed_bump.common.background.exception.DownloadException;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.ui.ToastMessage;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.io.*;
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class URLDownloadTool {
 
-    private static final Logger logger = Logger.getLogger(URLDownloadTool.class);
+    private static final SBLogger logger = SBLogger.getLogger(URLDownloadTool.class);
 
     public static boolean isCanUseMultithreading(URI uri, long fileSize){
         return isCanUseMultithreading(uri, fileSize, null);

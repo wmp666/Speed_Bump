@@ -1,18 +1,18 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.speed_bump.common.background.tool.TestFunctionControl;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.platform.AutoStart;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.platform.AutoStart;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.Downloader;
-import com.wmp.downloader.ui.common.FileAssociationPanel;
-import com.wmp.downloader.ui.common.PathSelectionPanel;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.platform.ui.swing.components.FileAssociationPanel;
+import com.wmp.speed_bump.platform.ui.swing.components.PathSelectionPanel;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 import org.jdesktop.swingx.color.EyeDropperColorChooserPanel;
 
 import javax.swing.*;
@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 
 public class SettingsPanel {
 
-    private static final Logger logger = Logger.getLogger(SettingsPanel.class);
+    private static final SBLogger logger = SBLogger.getLogger(SettingsPanel.class);
 
     public JPanel settingsPanel;
     private JButton refreshButton;
@@ -179,15 +179,15 @@ public class SettingsPanel {
         });
 
         //添加图标
-        IconControl.addInDynamicConverter(
-                () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize())),
-                () -> downloadFilesPathButton.setIcon(IconControl.getIcon("folder", downloadFilesPathButton.getFont().getSize())),
-                () -> deleteTempFolderDataButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
-                () -> accentColorChooseButton.setIcon(IconControl.getIcon("eyedropper", accentColorChooseButton.getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> dataPathButton.setIcon(IconControl.INSTANCE.getIcon("folder", dataPathButton.getFont().getSize())),
+                () -> downloadFilesPathButton.setIcon(IconControl.INSTANCE.getIcon("folder", downloadFilesPathButton.getFont().getSize())),
+                () -> deleteTempFolderDataButton.setIcon(IconControl.INSTANCE.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
+                () -> accentColorChooseButton.setIcon(IconControl.INSTANCE.getIcon("eyedropper", accentColorChooseButton.getFont().getSize()))
         );
-        IconControl.addInDynamicConverter(
-                () -> refreshButton.setIcon(IconControl.getIcon("refresh", refreshButton.getFont().getSize())),
-                () -> saveButton.setIcon(IconControl.getIcon("save", saveButton.getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> refreshButton.setIcon(IconControl.INSTANCE.getIcon("refresh", refreshButton.getFont().getSize())),
+                () -> saveButton.setIcon(IconControl.INSTANCE.getIcon("save", saveButton.getFont().getSize()))
         );
 
         //添加监听

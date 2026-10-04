@@ -2,11 +2,11 @@ package com.wmp.downloader.newArchitecture.ui.task;
 
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
-import com.wmp.downloader.ui.common.PathSelectionPanel;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.platform.ui.swing.components.PathSelectionPanel;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ import java.net.URI;
 
 public class FFmpegSettings extends AbstractSpecialSettingsPage {
 
-    private static final Logger logger = Logger.getLogger(FFmpegSettings.class);
+    private static final SBLogger logger = SBLogger.getLogger(FFmpegSettings.class);
 
     private JPanel mainPanel;
     private PathSelectionPanel localFFmpegPathPanel;
@@ -44,8 +44,8 @@ public class FFmpegSettings extends AbstractSpecialSettingsPage {
         this.add(mainPanel, BorderLayout.CENTER);
 
         //初始化图标
-        IconControl.addInDynamicConverter(() -> {
-            downloadButton.setIcon(IconControl.getIcon("link", downloadButton.getFont().getSize()));
+        IconControl.INSTANCE.addInDynamicConverter(() -> {
+            downloadButton.setIcon(IconControl.INSTANCE.getIcon("link", downloadButton.getFont().getSize()));
         });
 
         isUseHardwareAccelerationCheckBox.setSelected(DataControl.get("is_use_hardware_acceleration", true));

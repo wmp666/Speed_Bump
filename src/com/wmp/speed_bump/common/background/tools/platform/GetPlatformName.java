@@ -1,4 +1,4 @@
-package com.wmp.speed_bump.common.background.tool.platform;
+package com.wmp.speed_bump.common.background.tools.platform;
 
 import com.wmp.downloader.tools.file.DataControl;
 import org.jetbrains.annotations.Contract;

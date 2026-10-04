@@ -1,6 +1,6 @@
 package com.wmp.downloader.tools.web;
 
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.net.ServerSocket;
 import java.net.InetSocketAddress;
@@ -12,7 +12,7 @@ import java.util.logging.Handler;
 
 public class TCPServer {
 
-    private static final Logger logger = Logger.getLogger(TCPServer.class);
+    private static final SBLogger logger = SBLogger.getLogger(TCPServer.class);
 
     public static void create(String host, int port, Handler handler) throws Exception {
         InetSocketAddress address = new InetSocketAddress(host, port);

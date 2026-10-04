@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.wmp.downloader.ui.common.PathSelectionPanel">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.wmp.speed_bump.platform.ui.swing.components.PathSelectionPanel">
   <grid id="27dc6" binding="PathSelectionPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="20" width="500" height="46"/>

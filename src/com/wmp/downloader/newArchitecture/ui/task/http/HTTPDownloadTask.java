@@ -3,12 +3,12 @@ package com.wmp.downloader.newArchitecture.ui.task.http;
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.FileDownloadTask;
 import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPanel;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.URLDownloadTool;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class HTTPDownloadTask extends FileDownloadTask {
 
-    private static final Logger logger = Logger.getLogger(HTTPDownloadTask.class);
+    private static final SBLogger logger = SBLogger.getLogger(HTTPDownloadTask.class);
     private final URI url;
     private final int threadNum;
     private final long fileSize;

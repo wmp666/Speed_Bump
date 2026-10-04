@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.task.github;
 
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

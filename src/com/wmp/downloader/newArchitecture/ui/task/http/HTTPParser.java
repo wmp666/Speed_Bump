@@ -6,14 +6,14 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPa
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInfoPanel;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import static com.wmp.downloader.tools.download.URLDownloadTool.extractFileName;
 import static com.wmp.downloader.tools.download.URLDownloadTool.getFileSize;
 
 public class HTTPParser extends AbstractParser {
 
-    private static final Logger logger = Logger.getLogger(HTTPParser.class);
+    private static final SBLogger logger = SBLogger.getLogger(HTTPParser.class);
 
     @Override
     public String getID() {

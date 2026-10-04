@@ -1,10 +1,10 @@
 package com.wmp.downloader.tools.web;
 
 import com.wmp.downloader.Run;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.ui.Downloader;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.net.ServerSocket;
 
 public class TCPControl {
 
-    private static final Logger logger = Logger.getLogger(TCPControl.class);
+    private static final SBLogger logger = SBLogger.getLogger(TCPControl.class);
 
     private static int port = Integer.parseInt(DataControl.get("port", "5465"));
 

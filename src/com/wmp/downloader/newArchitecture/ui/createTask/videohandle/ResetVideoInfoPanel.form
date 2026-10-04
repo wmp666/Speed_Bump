@@ -120,12 +120,12 @@
           </component>
         </children>
       </grid>
-      <nested-form id="f465b" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="FilePathSelectionPanel" custom-create="true">
+      <nested-form id="f465b" form-file="com/wmp/speed_bump/platform/ui/swing/components/PathSelectionPanel.form" binding="FilePathSelectionPanel" custom-create="true">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </nested-form>
-      <nested-form id="b703e" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="outPathSelectionPanel" custom-create="true">
+      <nested-form id="b703e" form-file="com/wmp/speed_bump/platform/ui/swing/components/PathSelectionPanel.form" binding="outPathSelectionPanel" custom-create="true">
         <constraints>
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>

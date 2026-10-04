@@ -1,9 +1,9 @@
 package com.wmp.speed_bump.platform.ui.swing.window;
 
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.platform.AutoStart;
+import com.wmp.speed_bump.common.background.tools.platform.AutoStart;
 import com.wmp.downloader.tools.ui.ThemeChanger;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
@@ -18,7 +18,7 @@ import java.util.Locale;
  */
 final class WelcomeSettings {
 
-    private static final Logger logger = Logger.getLogger(WelcomeSettings.class);
+    private static final SBLogger logger = SBLogger.getLogger(WelcomeSettings.class);
 
     static final String DEFAULT_THEME = "Mac Light";
     static final String DEFAULT_ACCENT = "05E666";

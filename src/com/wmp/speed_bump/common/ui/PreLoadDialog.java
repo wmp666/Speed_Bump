@@ -1,6 +1,6 @@
 package com.wmp.speed_bump.common.ui;
 
-import com.wmp.speed_bump.common.background.tool.Creator;
+import com.wmp.speed_bump.common.background.tools.Creator;
 import com.wmp.speed_bump.platform.PlatformClassControl;
 
 /**

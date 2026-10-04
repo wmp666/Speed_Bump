@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.tools.file.DataControl;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class MicrosoftTranslator {
 
-    private static final Logger logger = Logger.getLogger(MicrosoftTranslator.class);
+    private static final SBLogger logger = SBLogger.getLogger(MicrosoftTranslator.class);
 
     public static final String KEY_DATA = "translate.azure_key";
     public static final String REGION_DATA = "translate.azure_region";

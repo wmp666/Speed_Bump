@@ -3,10 +3,10 @@ package com.wmp.downloader.tools.update;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.wmp.downloader.Run;
-import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
+import com.wmp.speed_bump.common.background.tools.platform.GetPlatformName;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class GetUpdateInfo {
 
-    private static final Logger logger = Logger.getLogger(GetUpdateInfo.class);
+    private static final SBLogger logger = SBLogger.getLogger(GetUpdateInfo.class);
 
     /**
      * 获取更新信息
@@ -288,6 +288,12 @@ public class GetUpdateInfo {
         return null;
     }
 
+    /**
+     * 版本信息拼接
+     * @param versions
+     * @param updateInfos
+     * @return
+     */
     private static String IntegrationUpdateInfo(String[] versions, String[] updateInfos) {
 
         //### 新增功能

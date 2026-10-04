@@ -1,6 +1,6 @@
 package com.wmp.speed_bump.common.ui.components;
 
-import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
+import com.wmp.speed_bump.common.background.tools.platform.GetPlatformName;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -2,8 +2,8 @@ package com.wmp.downloader.newArchitecture;
 
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.FunctionDialog;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public final class ParserCompatibilityDialog {
 
-    private static final Logger logger = Logger.getLogger(ParserCompatibilityDialog.class);
+    private static final SBLogger logger = SBLogger.getLogger(ParserCompatibilityDialog.class);
 
     /**
      * 勾选列表的宽度

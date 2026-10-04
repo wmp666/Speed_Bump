@@ -4,9 +4,9 @@ import com.alibaba.fastjson2.JSONObject;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractParser;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import com.wmp.downloader.tools.ui.DynamicConverterTask;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.downloader.newArchitecture.ui.createTask.TaskFileEditPanel;
@@ -53,9 +53,9 @@ public abstract class LinkFileInfoPanel extends AbstractLinkInfoPanel {
                 task
         );
 
-        IconControl.addInDynamicConverter(
-                () -> nameLabel.setIcon(IconControl.getIcon("file", nameLabel.getFont().getSize())),
-                () -> editButton.setIcon(IconControl.getIcon("edit", nameLabel.getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> nameLabel.setIcon(IconControl.INSTANCE.getIcon("file", nameLabel.getFont().getSize())),
+                () -> editButton.setIcon(IconControl.INSTANCE.getIcon("edit", nameLabel.getFont().getSize()))
         );
         nameLabel.setText(name);
         modeLabel.setText(mode);

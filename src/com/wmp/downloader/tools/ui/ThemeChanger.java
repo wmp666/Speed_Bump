@@ -5,9 +5,11 @@ import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.swingx.FlatSwingXDefaultsAddon;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,7 @@ import java.util.List;
 public class ThemeChanger {
 
     private static final List<DynamicConverterTask> dynamicConverterTasks = new ArrayList<>();
-    private static final Logger logger = Logger.getLogger(ThemeChanger.class);
+    private static final SBLogger logger = SBLogger.getLogger(ThemeChanger.class);
     private static final Timer timer = new Timer(1000, e -> easyThemeRefresh());
     private static String theme = "";
     private static String themeStyle = "";
@@ -182,14 +184,14 @@ public class ThemeChanger {
         runDynamicConverters();
 
         //图标更新
-        IconControl.runDynamicConverters();
+        IconControl.INSTANCE.runDynamicConverters();
         //部分内置图标刷新
         var icon = UIManager.getIcon("OptionPane.informationIcon");
 
-        UIManager.put("OptionPane.errorIcon", IconControl.getIcon("error", icon.getIconWidth(), icon.getIconHeight()));
-        UIManager.put("OptionPane.informationIcon", IconControl.getIcon("info", icon.getIconWidth(), icon.getIconHeight()));
-        UIManager.put("OptionPane.warningIcon", IconControl.getIcon("warn", icon.getIconWidth(), icon.getIconHeight()));
-        UIManager.put("OptionPane.questionIcon", IconControl.getIcon("question", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.errorIcon", IconControl.INSTANCE.getIcon("error", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.informationIcon", IconControl.INSTANCE.getIcon("info", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.warningIcon", IconControl.INSTANCE.getIcon("warn", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.questionIcon", IconControl.INSTANCE.getIcon("question", icon.getIconWidth(), icon.getIconHeight()));
 
         if (isUseSnapshot) {
             for (var window : JWindow.getOwnerlessWindows()) {

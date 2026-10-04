@@ -1,7 +1,7 @@
 package com.wmp.speed_bump.platform.test;
 
 
-import static com.wmp.speed_bump.common.background.tool.platform.FileAssociation.register;
+import static com.wmp.speed_bump.common.background.tools.platform.FileAssociation.register;
 
 public class FileAssociationTest {
     // 测试示例

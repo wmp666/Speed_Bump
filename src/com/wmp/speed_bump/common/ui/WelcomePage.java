@@ -1,10 +1,10 @@
 package com.wmp.speed_bump.common.ui;
 
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.Creator;
+import com.wmp.speed_bump.common.background.tools.Creator;
 import com.wmp.speed_bump.common.ui.components.MultiplePanel;
 import com.wmp.speed_bump.platform.PlatformClassControl;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public interface WelcomePage {
             INSTANCE_CREATOR.create().showPage();
             return true;
         } catch (Throwable t) {
-            Logger.getLogger(WelcomePage.class).error("欢迎页显示失败，已跳过", t);
+            SBLogger.getLogger(WelcomePage.class).error("欢迎页显示失败，已跳过", t);
             return false;
         }
     }

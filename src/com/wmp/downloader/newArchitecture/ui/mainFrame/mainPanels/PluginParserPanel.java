@@ -8,17 +8,17 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.InstallPluginParserInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.PluginParserInfo;
 import com.wmp.downloader.newArchitecture.ui.task.PluginParserGithubDownloadTask;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.file.FileOperation;
 import com.wmp.downloader.tools.ui.DropOverlayPanel;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.Downloader;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PluginParserPanel {
 
-    private static final Logger logger = Logger.getLogger(PluginParserPanel.class);
+    private static final SBLogger logger = SBLogger.getLogger(PluginParserPanel.class);
 
     public JPanel pluginParserControlPanel;
     private JTabbedPane tabbedPane1;
@@ -491,8 +491,8 @@ public class PluginParserPanel {
         importLocalButton.setToolTipText(
                 StringFormat.translate("plugins.control_tool_bar.import_local")
         );
-        IconControl.addInDynamicConverter(() ->
-                importLocalButton.setIcon(IconControl.getIcon("import",
+        IconControl.INSTANCE.addInDynamicConverter(() ->
+                importLocalButton.setIcon(IconControl.INSTANCE.getIcon("import",
                         importLocalButton.getFont().getSize())));
         importLocalButton.addActionListener(e -> {
             var path = DataControl.getPath(downloader, SystemFileChooser.OPEN_DIALOG, SystemFileChooser.FILES_ONLY);
@@ -512,8 +512,8 @@ public class PluginParserPanel {
 
         JButton refreshButton = new JButton();
         refreshButton.setToolTipText(StringFormat.translate("refresh"));
-        IconControl.addInDynamicConverter(() ->
-                refreshButton.setIcon(IconControl.getIcon("refresh",
+        IconControl.INSTANCE.addInDynamicConverter(() ->
+                refreshButton.setIcon(IconControl.INSTANCE.getIcon("refresh",
                         refreshButton.getFont().getSize())));
         refreshButton.addActionListener(e -> {
             ParserTaskInfo.loadParsers();
@@ -525,8 +525,8 @@ public class PluginParserPanel {
     }
 
     private void initInstalledPluginParserComponents() {
-        IconControl.addInDynamicConverter(
-                () -> installPluginParserListRefreshButton.setIcon(IconControl.getIcon("refresh", installPluginParserListRefreshButton.getFont().getSize()))
+        IconControl.INSTANCE.addInDynamicConverter(
+                () -> installPluginParserListRefreshButton.setIcon(IconControl.INSTANCE.getIcon("refresh", installPluginParserListRefreshButton.getFont().getSize()))
         );
 
         PluginInfoPanel.setVisible(false);

@@ -6,7 +6,7 @@ import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.Downloader;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class SpecialSettingsPanel {
 
-    private static final Logger logger = Logger.getLogger(SpecialSettingsPanel.class);
+    private static final SBLogger logger = SBLogger.getLogger(SpecialSettingsPanel.class);
 
     public JPanel specialSettingsPanel;
     private JTabbedPane SpecialSettingsTabbedPane;

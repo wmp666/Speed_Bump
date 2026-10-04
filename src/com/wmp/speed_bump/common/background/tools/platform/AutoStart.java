@@ -1,7 +1,7 @@
-package com.wmp.speed_bump.common.background.tool.platform;
+package com.wmp.speed_bump.common.background.tools.platform;
 
 import com.wmp.downloader.tools.file.DataControl;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.nio.file.Paths;
  */
 public class AutoStart {
 
-    private static final Logger logger = Logger.getLogger(AutoStart.class);
+    private static final SBLogger logger = SBLogger.getLogger(AutoStart.class);
 
     /** Windows 当前用户的开机启动注册表键 */
     private static final String RUN_KEY = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";

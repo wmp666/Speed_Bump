@@ -7,10 +7,9 @@ import com.frostwire.jlibtorrent.alerts.MetadataReceivedAlert;
 import com.frostwire.jlibtorrent.swig.create_torrent;
 import com.frostwire.jlibtorrent.swig.entry;
 import com.frostwire.jlibtorrent.swig.error_code;
-import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,7 +18,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class MagnetToTorrent {
 
-    private static final Logger logger = Logger.getLogger(MagnetToTorrent.class);
+    private static final SBLogger logger = SBLogger.getLogger(MagnetToTorrent.class);
 
 
     public static String magnetToTorrent(String magnetUri, String savePath, String tempPath) {

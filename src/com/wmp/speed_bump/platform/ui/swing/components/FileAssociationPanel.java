@@ -1,13 +1,13 @@
-package com.wmp.downloader.ui.common;
+package com.wmp.speed_bump.platform.ui.swing.components;
 
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.file.ResourceLocalizer;
-import com.wmp.speed_bump.common.background.tool.platform.FileAssociation;
-import com.wmp.speed_bump.common.background.tool.platform.GetPlatformName;
-import com.wmp.downloader.tools.ui.IconControl;
+import com.wmp.speed_bump.platform.background.pc.tools.ResourceLocalizer;
+import com.wmp.speed_bump.common.background.tools.platform.FileAssociation;
+import com.wmp.speed_bump.common.background.tools.platform.GetPlatformName;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ToastMessage;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.io.File;
 
 public class FileAssociationPanel extends JPanel{
 
-    private static final Logger logger = Logger.getLogger(FileAssociationPanel.class);
+    private static final SBLogger logger = SBLogger.getLogger(FileAssociationPanel.class);
 
     private JButton associationButton;
     private JButton unAssociationButton;
@@ -53,7 +53,7 @@ public class FileAssociationPanel extends JPanel{
                             .getScaledInstance(suffixLabel.getFont().getSize(), suffixLabel.getFont().getSize(), Image.SCALE_SMOOTH)));
         } catch (Exception e) {
             logger.error("", e);
-            suffixLabel.setIcon(IconControl.getIcon("null", suffixLabel.getFont().getSize()));
+            suffixLabel.setIcon(IconControl.INSTANCE.getIcon("null", suffixLabel.getFont().getSize()));
         }
 
         localIconPath = new File(DataControl.getDataPath(), "/file_icon/" + suffix + iconAssociation).getAbsolutePath();

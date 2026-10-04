@@ -1,4 +1,4 @@
-package com.wmp.speed_bump.common.background.tool.devtools;
+package com.wmp.speed_bump.common.background.tools.devtools;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -8,6 +8,7 @@ import com.wmp.downloader.tools.ui.fluent.FluentMetrics;
 import com.wmp.downloader.tools.ui.fluent.FluentUi;
 import com.wmp.downloader.tools.ui.fluent.FluentToggleSwitch;
 import com.wmp.downloader.tools.ui.fluent.RevealEngine;
+import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -678,7 +679,7 @@ public final class UiSelfTest {
      * <p>这是整个移植里<b>最容易静默失效</b>的一环：{@code FlatLaf.setup()} 会重建整张
      * {@code UIManager} 默认值表，我们塞进去的 {@code ScrollBarUI} 等会被一并抹掉。
      * 之所以能活下来，全靠 {@link FluentUi} 把自己注册成了
-     * {@link com.wmp.downloader.tools.ui.DynamicConverterTask}，
+     * {@link DynamicConverterTask}，
      * 每次主题刷新都会重新灌入——一旦这个挂钩断了，
      * 表现是「启动时滚动条是新的，切一次主题就变回旧样式」，
      * 不主动验证根本发现不了。</p>

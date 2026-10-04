@@ -207,7 +207,7 @@
                           <color color="-3025959"/>
                         </border>
                         <children>
-                          <nested-form id="68c8e" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="backgroundSelectionPanel" custom-create="true">
+                          <nested-form id="68c8e" form-file="com/wmp/speed_bump/platform/ui/swing/components/PathSelectionPanel.form" binding="backgroundSelectionPanel" custom-create="true">
                             <constraints>
                               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -405,7 +405,7 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <nested-form id="4200d" form-file="com/wmp/downloader/ui/common/FileAssociationPanel.form" binding="torrentFileAssociationPanel" custom-create="true">
+                          <nested-form id="4200d" form-file="com/wmp/speed_bump/platform/ui/swing/components/FileAssociationPanel.form" binding="torrentFileAssociationPanel" custom-create="true">
                             <constraints>
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -547,12 +547,12 @@
                           </component>
                         </children>
                       </grid>
-                      <nested-form id="aa722" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="pathSelectionPanel" custom-create="true">
+                      <nested-form id="aa722" form-file="com/wmp/speed_bump/platform/ui/swing/components/PathSelectionPanel.form" binding="pathSelectionPanel" custom-create="true">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                       </nested-form>
-                      <nested-form id="69fa5" form-file="com/wmp/downloader/ui/common/PathSelectionPanel.form" binding="tempPathSelectionPanel" custom-create="true">
+                      <nested-form id="69fa5" form-file="com/wmp/speed_bump/platform/ui/swing/components/PathSelectionPanel.form" binding="tempPathSelectionPanel" custom-create="true">
                         <constraints>
                           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>

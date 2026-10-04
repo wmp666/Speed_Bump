@@ -1,6 +1,7 @@
 package com.wmp.downloader.tools.ui;
 
 import com.wmp.downloader.tools.file.DataControl;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -153,7 +154,7 @@ public class DropOverlayPanel extends JPanel {
     private Icon loadIcon() {
         if (iconKey == null) return null;
         try {
-            return IconControl.getIcon(iconKey, ICON_SIZE);
+            return IconControl.INSTANCE.getIcon(iconKey, ICON_SIZE);
         } catch (Exception _) {
             return null;
         }

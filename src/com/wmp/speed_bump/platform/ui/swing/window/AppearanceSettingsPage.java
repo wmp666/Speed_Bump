@@ -3,7 +3,7 @@ package com.wmp.speed_bump.platform.ui.swing.window;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.fluent.FluentColors;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.ui.components.MultiplePanel;
 
 import javax.swing.Box;

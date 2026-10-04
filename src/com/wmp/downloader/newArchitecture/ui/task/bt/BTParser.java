@@ -10,14 +10,14 @@ import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInf
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.MagnetToTorrent;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import java.io.File;
 import java.util.Arrays;
 
 public class BTParser extends AbstractParser {
 
-    private static final Logger logger = Logger.getLogger(BTParser.class);
+    private static final SBLogger logger = SBLogger.getLogger(BTParser.class);
 
     @Override
     public String getID() {

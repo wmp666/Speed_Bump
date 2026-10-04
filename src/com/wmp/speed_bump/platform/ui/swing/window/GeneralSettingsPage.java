@@ -2,12 +2,12 @@ package com.wmp.speed_bump.platform.ui.swing.window;
 
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.speed_bump.common.background.tool.platform.AutoStart;
-import com.wmp.downloader.tools.ui.DynamicConverterTask;
-import com.wmp.downloader.tools.ui.IconControl;
-import com.wmp.speed_bump.common.background.tool.StringFormat;
+import com.wmp.speed_bump.common.background.tools.platform.AutoStart;
+import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
+import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.ui.components.MultiplePanel;
-import org.apache.log4j.Logger;
+import com.wmp.speed_bump.common.background.tools.SBLogger;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -35,7 +35,7 @@ import java.awt.event.ItemEvent;
  */
 final class GeneralSettingsPage extends MultiplePanel implements SettingsPage {
 
-    private static final Logger logger = Logger.getLogger(GeneralSettingsPage.class);
+    private static final SBLogger logger = SBLogger.getLogger(GeneralSettingsPage.class);
 
     /** 界面语言候选，与设置页保持一致 */
     private static final String[][] LANGUAGES = {
@@ -107,8 +107,8 @@ final class GeneralSettingsPage extends MultiplePanel implements SettingsPage {
         autoStartCheckBox.setToolTipText(autoStartUsable ? null
                 : StringFormat.translate("welcome.auto_start.unavailable"));
 
-        iconTasks = IconControl.addInDynamicConverter(
-                () -> browseButton.setIcon(IconControl.getIcon("folder", browseButton.getFont().getSize())));
+        iconTasks = IconControl.INSTANCE.addInDynamicConverter(
+                () -> browseButton.setIcon(IconControl.INSTANCE.getIcon("folder", browseButton.getFont().getSize())));
 
         languageCombo.addItemListener(e -> {
             if (host.isRebuilding() || e.getStateChange() != ItemEvent.SELECTED) {
@@ -167,7 +167,7 @@ final class GeneralSettingsPage extends MultiplePanel implements SettingsPage {
     @Override
     public void dispose() {
         if (iconTasks != null) {
-            IconControl.removeInDynamicConverter(iconTasks);
+            IconControl.INSTANCE.removeInDynamicConverter(iconTasks);
             iconTasks = null;
         }
     }
