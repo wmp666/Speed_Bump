@@ -19,6 +19,7 @@ import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
+import org.jdesktop.swingx.JXBusyLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,11 +65,11 @@ public class PluginParserPanel {
     private JPanel installPluginInfoIntroductionPanel;
     private JButton PluginParserInstallButton;
     private JButton installPluginParserListRefreshButton;
-    private JScrollPane installPluginParserScrollPane;
+    private JScrollPane installPluginParserListScrollPane;
     private JList<InstallPluginParserInfo> installPluginParserList;
     private JToolBar PluginControlToolBar;
     private JPanel installPluginListPanel;
-    private JProgressBar installPluginParserListProgressBar;
+    //private JProgressBar installPluginParserListProgressBar;
 
     /**
      * 叠层容器，把页面内容与拖拽遮罩叠放在一起
@@ -104,7 +105,7 @@ public class PluginParserPanel {
     }
 
     public void initPluginParserComponents() {
-        UITools.setScrollPaneUnOpaque(installPluginParserScrollPane);
+        UITools.setScrollPaneUnOpaque(installPluginParserListScrollPane);
         UITools.setScrollPaneUnOpaque(PluginParserScrollPane);
 
         initToolBar();
@@ -328,8 +329,7 @@ public class PluginParserPanel {
         installPluginParserList.putClientProperty("FlatLaf.style", "font: $h3.font");
 
         //进度条默认不显示；安装列表只在切到「安装」页时才联网拉取
-        installPluginParserListProgressBar.setIndeterminate(false);
-        installPluginParserListProgressBar.setVisible(false);
+        setInstallPluginParserListProgressBarVisible(false);
         tabbedPane1.addChangeListener(e -> {
             if (tabbedPane1.getSelectedComponent() == installPluginsPanel) {
                 ensureInstallPluginParserListLoaded();
@@ -463,6 +463,25 @@ public class PluginParserPanel {
                 }
             });
         });
+    }
+
+    private final JXBusyLabel busyLabel = new JXBusyLabel();
+
+    private void setInstallPluginParserListProgressBarVisible(boolean newValue) {
+        //installPluginParserListProgressBar.setIndeterminate(newValue);
+        //installPluginParserListProgressBar.setVisible(newValue);
+
+        JPanel busyPanel = new JPanel(new GridBagLayout());
+        busyPanel.setOpaque(false);
+        busyPanel.add(busyLabel);
+
+        if (newValue) {
+            busyLabel.setBusy(true);
+            installPluginParserListScrollPane.setViewportView(busyPanel);
+        }else{
+            busyLabel.setBusy(false);
+            installPluginParserListScrollPane.setViewportView(installPluginParserList);
+        }
     }
 
     /**
@@ -668,8 +687,7 @@ public class PluginParserPanel {
         if (!installPluginListLoading.compareAndSet(false, true)) return;
 
         runOnEdt(() -> {
-            installPluginParserListProgressBar.setIndeterminate(true);
-            installPluginParserListProgressBar.setVisible(true);
+            setInstallPluginParserListProgressBarVisible(true);
         });
 
         //受网络影响，将加载安装列表数据的过程放入独立的虚拟线程
@@ -685,8 +703,7 @@ public class PluginParserPanel {
             runOnEdt(() -> {
                 //无论成功、失败还是超时，都要结束加载状态：
                 //否则没有网络时进度条会一直转，看上去就像卡死了
-                installPluginParserListProgressBar.setIndeterminate(false);
-                installPluginParserListProgressBar.setVisible(false);
+                setInstallPluginParserListProgressBarVisible(false);
                 installPluginListLoading.set(false);
 
                 if (result == null) {

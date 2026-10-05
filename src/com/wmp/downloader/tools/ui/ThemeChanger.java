@@ -182,12 +182,7 @@ public class ThemeChanger {
         UIManager.put("TabbedPane.tabsOpaque", true);
         UIManager.put("TabbedPane.contentOpaque", false);
         System.setProperty("flatlaf.useFullWindowContent", "true");
-        int arc = DataControl.get("is_use_square_component", true)?0:10;
-        UIManager.put("Button.arc", arc);
-        UIManager.put("Component.arc", arc);   // 影响 ComboBox, Spinner 等
-        UIManager.put("CheckBox.arc", arc);
-        UIManager.put("ProgressBar.arc", arc);
-        UIManager.put("TextComponent.arc", arc);
+        refreshComponentArc();
 
 
         //组件更新
@@ -204,7 +199,7 @@ public class ThemeChanger {
         UIManager.put("OptionPane.questionIcon", IconControl.INSTANCE.getIcon("question", icon.getIconWidth(), icon.getIconHeight()));
 
         if (isUseSnapshot) {
-            for (var window : JWindow.getOwnerlessWindows()) {
+            for (var window : JWindow.getWindows()) {
                 try {
                     SwingUtilities.updateComponentTreeUI(window);
                 } catch (Exception e) {
@@ -214,6 +209,15 @@ public class ThemeChanger {
 
             FlatAnimatedLafChange.hideSnapshotWithAnimation();
         }
+    }
+
+    public static void refreshComponentArc() {
+        int arc = DataControl.get("is_use_square_component", true)?0:DataControl.get("component_arc", 10);
+        UIManager.put("Button.arc", arc);
+        UIManager.put("Component.arc", arc);   // 影响 ComboBox, Spinner 等
+        UIManager.put("CheckBox.arc", arc);
+        UIManager.put("ProgressBar.arc", arc);
+        UIManager.put("TextComponent.arc", arc);
     }
 
     private static boolean isSameTheme(Object newTheme) {

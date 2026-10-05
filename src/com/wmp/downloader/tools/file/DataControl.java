@@ -54,7 +54,9 @@ public class DataControl {
 
         Logger rootLogger = Logger.getRootLogger();
 
-        PatternLayout layout = new PatternLayout("[%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS} method:%l%n%m%n");
+        var properties = new Properties();
+        properties.load(DataControl.class.getResourceAsStream("/log4j.properties"));
+        PatternLayout layout = new PatternLayout(properties.getProperty("log4j.appender.stdout.layout.ConversionPattern"));
 
         DailyRollingFileAppender fileAppender = new DailyRollingFileAppender(layout, logDir + "/app.log", "'.'yyyy-MM-dd");
         fileAppender.setThreshold(Level.DEBUG);
@@ -207,6 +209,12 @@ public class DataControl {
             }
 
         }
+        //组件圆角程度
+        else if (key.equals("component_arc")) {
+            var i = Integer.parseInt(value.toString());
+            tempDataMap.put("is_use_square_component", i == 0);
+
+        }
     }
 
     public static void save() {
@@ -232,6 +240,10 @@ public class DataControl {
     public static File getTempPath() {
         var file = data.containsKey("TempFilePath") ? new File(data.get("TempFilePath").toString()) : getDefaultTempPath();
         return file;
+    }
+
+    public static File getLogPath(){
+        return LOG_DIR.toFile();
     }
 
     //--------------删除相关--------------

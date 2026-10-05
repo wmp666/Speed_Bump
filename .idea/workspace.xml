@@ -10,24 +10,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新BusyLabelUI">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新BusyLabelUI&#10;修复部分问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpDocs/界面增强.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/界面增强.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run-ui-selftest.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/run-ui-selftest.ps1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/app.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/snail.log.2026.07.19" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/AboutPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/AboutPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentUi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/UIStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/UIStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_en_US.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ja_JP.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ru_RU.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_HK.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_HK.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_TW.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_TW.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/devtools/UiSelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/devtools/UiSelfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/log4j.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/文档/减速带更新.md" beforeDir="false" afterPath="$PROJECT_DIR$/文档/减速带更新.md" afterDir="false" />
     </list>
@@ -379,7 +373,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="amazing" />
     <MESSAGE value="修复通知过多时，新的不显示" />
     <MESSAGE value="测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
@@ -404,7 +397,8 @@
     <MESSAGE value="更新欢迎设置页的页面&#10;删除通知中心&#10;进行进度条的去UI化" />
     <MESSAGE value="修复问题" />
     <MESSAGE value="跟进新架构（IconControl，日志输出）" />
-    <option name="LAST_COMMIT_MESSAGE" value="跟进新架构（IconControl，日志输出）" />
+    <MESSAGE value="更新BusyLabelUI&#10;修复部分问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新BusyLabelUI&#10;修复部分问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -441,7 +435,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java</url>
-          <line>347</line>
+          <line>359</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">

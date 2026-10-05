@@ -1,5 +1,8 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import com.formdev.flatlaf.icons.FlatAnimatedIcon;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
@@ -19,6 +22,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
@@ -38,7 +42,6 @@ public class SettingsPanel {
     private JCheckBox isUseHeavyWeightToastCheckBox;
     private JTextField accentColorTextField;
     private JButton accentColorChooseButton;
-    private JCheckBox IsUseSquareComponentCheckBox;
     private JComboBox FunctionDialogStyleComboBox;
     private JScrollPane platformSetsScrollPane;
     private JPanel platformSetsPanel;
@@ -69,6 +72,8 @@ public class SettingsPanel {
     private PathSelectionPanel pathSelectionPanel;
     private PathSelectionPanel tempPathSelectionPanel;
     private JCheckBox isUseSystemMsgCheckBox;
+    private JButton deleteLogButton;
+    private JSlider componentArcSlider;
 
     private final Downloader downloader;
 
@@ -106,7 +111,7 @@ public class SettingsPanel {
         alphaSlider.setValue((int) (DataControl.get("background_alpha", new java.math.BigDecimal("0.3")).floatValue() * 100));
         isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
         accentColorTextField.setText(DataControl.get("accent_color", "05E666"));
-        IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
+        componentArcSlider.setValue(DataControl.get("component_arc", 10));
         portTextField.setText(String.valueOf(DataControl.get("port", 5465)));
         isAutoStartCheckBox.setSelected(AutoStart.isAutoStart());
         isUseSystemMsgCheckBox.setSelected(DataControl.get("is_use_system_msg", false));
@@ -183,6 +188,7 @@ public class SettingsPanel {
                 () -> dataPathButton.setIcon(IconControl.INSTANCE.getIcon("folder", dataPathButton.getFont().getSize())),
                 () -> downloadFilesPathButton.setIcon(IconControl.INSTANCE.getIcon("folder", downloadFilesPathButton.getFont().getSize())),
                 () -> deleteTempFolderDataButton.setIcon(IconControl.INSTANCE.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
+                () -> deleteLogButton.setIcon(IconControl.INSTANCE.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
                 () -> accentColorChooseButton.setIcon(IconControl.INSTANCE.getIcon("eyedropper", accentColorChooseButton.getFont().getSize()))
         );
         IconControl.INSTANCE.addInDynamicConverter(
@@ -317,7 +323,8 @@ public class SettingsPanel {
             isUseHeavyWeightToastCheckBox.setSelected(DataControl.get("is_use_heavy_weight.toast", false));
             FunctionDialogStyleComboBox.setSelectedIndex(DataControl.get("function_dialog.style", 0));
             isStartCheckUpdateCheckBox.setSelected(DataControl.get("is_start_check_update", true));
-            IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
+            componentArcSlider.setValue(DataControl.get("component_arc", 10));
+            //IsUseSquareComponentCheckBox.setSelected(DataControl.get("is_use_square_component", true));
             isUseSystemMsgCheckBox.setSelected(DataControl.get("is_use_system_msg", false));
 
             ThreadNumSlider.setValue(DataControl.get("ThreadNum", 64));
@@ -383,6 +390,15 @@ public class SettingsPanel {
             DataControl.deleteFolder(tempPath);
         });
 
+        deleteLogButton.addActionListener(e -> {
+            var tempPaths = DataControl.getLogPath().listFiles(
+                    (dir, name) -> !(name.equals("error.log") || name.equals("app.log"))
+            );
+            for (var tempPath : tempPaths) {
+                DataControl.delete(tempPath);
+            }
+        });
+
         saveButton.addActionListener(e -> {
             DataControl.put("isUseSSL", isUseSSLCheckBox.isSelected());
             DataControl.put("isUseClipBoardListener", isUseClipBoardListenerCheckBox.isSelected());
@@ -393,7 +409,8 @@ public class SettingsPanel {
             DataControl.put("is_use_heavy_weight.toast", isUseHeavyWeightToastCheckBox.isSelected());
             DataControl.put("is_start_check_update", isStartCheckUpdateCheckBox.isSelected());
             DataControl.put("accent_color", accentColorTextField.getText());
-            DataControl.put("is_use_square_component", IsUseSquareComponentCheckBox.isSelected());
+            DataControl.put("component_arc", componentArcSlider.getValue());
+
 
             DataControl.save();
             DataControl.load();

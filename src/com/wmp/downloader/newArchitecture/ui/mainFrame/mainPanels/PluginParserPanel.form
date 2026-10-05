@@ -366,14 +366,7 @@
                           <text resource-bundle="com/wmp/speed_bump/common/background/resource/laug/laug" key="plugins.install.list_resfresh"/>
                         </properties>
                       </component>
-                      <component id="a3b1c" class="javax.swing.JProgressBar" binding="installPluginParserListProgressBar">
-                        <constraints border-constraint="North"/>
-                        <properties>
-                          <opaque value="false"/>
-                          <visible value="false"/>
-                        </properties>
-                      </component>
-                      <scrollpane id="6be2" binding="installPluginParserScrollPane">
+                      <scrollpane id="6be2" binding="installPluginParserListScrollPane">
                         <constraints border-constraint="Center"/>
                         <properties>
                           <opaque value="false"/>
