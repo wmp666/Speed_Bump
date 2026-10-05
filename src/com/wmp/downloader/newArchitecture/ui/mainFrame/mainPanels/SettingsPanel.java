@@ -191,7 +191,10 @@ public class SettingsPanel {
         );
 
         //添加监听
-        downloader.mainTabbedPane.addChangeListener(e -> downloader.updateDefaultButton());
+        //注意：这里曾经注册过 `downloader.mainTabbedPane.addChangeListener(...updateDefaultButton)`。
+        //该监听器注册在共享的标签栏上、且从不摘除，而本面板每次重载都会新建实例，
+        //于是每重开一次主界面就多留一个监听器，并把它所属的旧面板整棵组件树钉在内存里。
+        //「切换标签页更新默认按钮」已统一挪到 Downloader.regeditLazyLoadPanel() 里只注册一次。
         ThreadNumSlider.addChangeListener(e -> {
             ThreadNumLabel.setText(String.valueOf(ThreadNumSlider.getValue()));
             ThreadNumLabel.setSize(ThreadNumLabel.getPreferredSize());

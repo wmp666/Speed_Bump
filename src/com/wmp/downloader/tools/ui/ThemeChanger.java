@@ -104,6 +104,16 @@ public class ThemeChanger {
         dynamicConverterTasks.removeAll(List.of(tasks));
     }
 
+    /**
+     * 取当前已注册任务的快照（副本）。
+     *
+     * <p>供调用方通过「注册前后取差集」的方式，把某一批组件注册过的任务原样收回来。
+     * 返回副本而不是内部列表本身，避免调用方在遍历时并发修改/被 1000ms 的主题定时器改到。</p>
+     */
+    public static List<DynamicConverterTask> dynamicConverterTasksSnapshot() {
+        return new ArrayList<>(dynamicConverterTasks);
+    }
+
 
     /**
      * 运行动态转换部分组件在不同主题下的状态

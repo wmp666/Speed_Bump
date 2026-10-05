@@ -177,8 +177,7 @@ public class Downloader extends JFrame implements WindowListener{
         // 初始化背景相关
         initBackgroundSettings();
 
-        // 构造期首次登记：容器还是干净的，不需要先重置
-        regeditLazyLoadPanel(false);
+        regeditLazyLoadPanel();
 
         UIPanel.add(StatusPanel, BorderLayout.SOUTH);
 
@@ -204,24 +203,11 @@ public class Downloader extends JFrame implements WindowListener{
      * 主界面用的是 {@code HIDE_ON_CLOSE}，关闭只是隐藏，同一批容器会被反复使用。
      * 若不先清掉上一轮的界面与注册，重开时看到的还是旧内容，而且每次重开都会
      * 往静态的动态转换器列表里再堆一份闭包，把旧面板一起钉在内存里。</p>
-     *
-     * <p>{@code resetFirst} 用来区分两种调用场合：构造期首次登记时容器还是干净的、
-     * 也没有任何注册需要撤销；重开时则必须先重置。</p>
-     *
-     * @param resetFirst 是否先撤销上一轮的注册并清空容器内容
      */
-    private void regeditLazyLoadPanel(boolean resetFirst) {
-        if (resetFirst) {
+    private void regeditLazyLoadPanel() {
+        if (lazyLoadRegistered) {
             resetLazyLoadState();
             clearLazyLoadedPanels();
-        }
-
-        // 默认按钮跟随标签页切换。这是全窗口唯一的「标签切换 → 更新默认按钮」入口：
-        // 以前它注册在 SettingsPanel.initSettingsComponents() 里，面板每次重载都会再注册
-        // 一个且从不摘除，监听器闭包会把旧面板整棵组件树一起钉住，所以挪到这里只注册一次。
-        if (defaultButtonChangeListener == null) {
-            defaultButtonChangeListener = e -> updateDefaultButton();
-            mainTabbedPane.addChangeListener(defaultButtonChangeListener);
         }
 
         //拓展管理
@@ -250,25 +236,17 @@ public class Downloader extends JFrame implements WindowListener{
         loadSelectedLazyPanelIfPending();
 
         lazyLoadRegistered = true;
-        lazyContentCleared = false;
     }
 
     /**
      * 主界面即将隐藏：清掉懒加载状态与已经构建好的面板内容。
      *
-     * <p>由 {@link #setVisible(boolean)} 的 {@code false} 分支调用。清掉的只是<strong>界面</strong>：
+     * <p>{@link #setVisible(boolean)} 的 {@code false} 分支会调用它。清掉的只是<strong>界面</strong>：
      * 下载任务本身放在 {@link #taskList} 里照常运行，重开时再从任务列表重建显示。</p>
-     *
-     * <p>可重复调用：{@code setVisible(false)} 有可能被连着调两次，第二次直接返回。</p>
      */
     private void onMainFrameHidden() {
-        if (!lazyLoadRegistered && lazyContentCleared) return;
-        if (lazyLoadRegistered) {
-            // 先撤销登记：这一步要把监听器摘干净，否则它们会一直指着旧面板
-            resetLazyLoadState();
-        }
+        resetLazyLoadState();
         clearLazyLoadedPanels();
-        lazyContentCleared = true;
     }
 
     /**
@@ -276,14 +254,9 @@ public class Downloader extends JFrame implements WindowListener{
      *
      * <p>此时各标签页都是空的，登记完会由 {@link #loadSelectedLazyPanelIfPending()}
      * 立即重载当前选中的那一页，其余页等到被切到时再重载。</p>
-     *
-     * <p>只在确实被清理过时才重建。构造期结束到窗口真正显示之间会走一次
-     * {@code setVisible(true)}，那时懒加载计划已经登记好了，重复登记会把正在进行的
-     * 首次加载打断，所以必须跳过。</p>
      */
     private void onMainFrameShown() {
-        if (!lazyContentCleared) return;
-        regeditLazyLoadPanel(true);
+        regeditLazyLoadPanel();
     }
 
     /**
@@ -331,9 +304,8 @@ public class Downloader extends JFrame implements WindowListener{
             panel.revalidate();
             panel.repaint();
         }
-        // 注意：这里不能清 deferredTaskPageNodes。任务页的按钮栏与任务列表在整个
-        // 窗口生命周期内就这一份，deferTaskPageForLazyLoad() 记录的引用必须留着，
-        // 否则重开后就没有节点可以装回 downloaderPanel 了。
+        // 任务页的特殊结构（按钮栏 / 任务列表）已经被摘下来了，这里同步丢掉缓存
+        deferredTaskPageNodes = null;
     }
 
     /**
@@ -374,20 +346,6 @@ public class Downloader extends JFrame implements WindowListener{
 
     /** 是否已经登记过懒加载计划；用于区分「首次登记」与「重开后的重载」 */
     private boolean lazyLoadRegistered;
-
-    /**
-     * 界面内容是否已经被 {@link #onMainFrameHidden()} 清空。
-     * 用来让 {@link #setVisible(boolean)} 的两次调用各自只生效一次：
-     * 构造后的 {@code setVisible(true)} 不该重置正在进行的首次加载，
-     * 而重复的 {@code setVisible(false)} 也不该反复清理。
-     */
-    private boolean lazyContentCleared;
-
-    /**
-     * 「标签页切换 → 更新默认按钮」的监听器。整窗口只注册一次，重载时刻意不动它，
-     * 这样它不会成为把旧面板钉在内存里的那根线。
-     */
-    private ChangeListener defaultButtonChangeListener;
 
     /** 各面板初始化时注册的动态转换器，重载前按这份记录注销 */
     private final List<PanelDynamicTasks> panelDynamicTasks = new ArrayList<>();
@@ -485,11 +443,6 @@ public class Downloader extends JFrame implements WindowListener{
      * {@code run} 跑在工作线程上，在那里改动容器结构属于 Swing 的跨线程违规，
      * 会和 EDT 上的绘制/校验竞争。</p>
      *
-     * <p>若 {@code run} 里的面板向静态的动态转换器（图标 / 主题）注册过任务，
-     * 本方法会用「注册前后取差集」的方式把它们记下来，重载前由
-     * {@link #resetLazyLoadState()} 原样注销。这一步是为了让反复重开主界面
-     * 不会往静态列表里越堆越多、把旧面板钉在内存里。</p>
-     *
      * @param install 结构装配动作，在 EDT 上、内容构建完成之后执行；可为 null
      */
     private void lazyLoadPanel(JPanel panel, Runnable run, Runnable install) {
@@ -502,14 +455,7 @@ public class Downloader extends JFrame implements WindowListener{
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() {
-                // 面板初始化可能会注册动态转换器，这里把注册前后的差集收好
-                List<DynamicConverterTask> iconBefore = new ArrayList<>(IconControl.INSTANCE.dynamicConverterTasks);
-                List<DynamicConverterTask> themeBefore = ThemeChanger.dynamicConverterTasksSnapshot();
-                try {
-                    run.run();
-                } finally {
-                    captureDynamicTasks(iconBefore, themeBefore);
-                }
+                run.run();
                 return null;
             }
 
@@ -532,24 +478,6 @@ public class Downloader extends JFrame implements WindowListener{
                 overlay.hide(failed);
             }
         }.execute();
-    }
-
-    /**
-     * 记录一次面板初始化新增的动态转换器任务（注册后的列表减去注册前的快照）。
-     *
-     * <p>跑在工作线程上，与 {@link #resetLazyLoadState()} 在 EDT 上的注销动作
-     * 由「懒加载只发生一次、重载必然在它之后」的顺序隔开，不会并发。</p>
-     */
-    private void captureDynamicTasks(List<DynamicConverterTask> iconBefore,
-                                     List<DynamicConverterTask> themeBefore) {
-        List<DynamicConverterTask> iconAdded = new ArrayList<>(IconControl.INSTANCE.dynamicConverterTasks);
-        iconAdded.removeAll(iconBefore);
-        List<DynamicConverterTask> themeAdded = ThemeChanger.dynamicConverterTasksSnapshot();
-        themeAdded.removeAll(themeBefore);
-        if (iconAdded.isEmpty() && themeAdded.isEmpty()) return;
-        panelDynamicTasks.add(new PanelDynamicTasks(
-                iconAdded.toArray(DynamicConverterTask[]::new),
-                themeAdded.toArray(DynamicConverterTask[]::new)));
     }
 
     private void initPluginParserComponents() {
@@ -1187,14 +1115,9 @@ public class Downloader extends JFrame implements WindowListener{
      * <p>这里刻意不改 {@code .form}：把 {@code TaskButtonPanel} / TasksScrollPane 从表单里
      * 删掉就需要手改 Designer 的 XML，那比让节点在构造期多生成一次的风险大得多。
      * 节点的<strong>构建</strong>依旧由表单负责，被延后的是它们的<strong>接入与初始化</strong>。</p>
-     *
-     * <p>本方法对同一个节点只会记录一次，因此重开主界面时重复调用是安全的：
-     * 那时节点早已被摘下，只是把容器再清一遍。</p>
      */
     private void deferTaskPageForLazyLoad() {
-        if (deferredTaskPageNodes == null) {
-            deferredTaskPageNodes = new Component[]{TaskButtonPanel, TasksScrollPane};
-        }
+        deferredTaskPageNodes = new Component[]{TaskButtonPanel, TasksScrollPane};
         downloaderPanel.removeAll();
         downloaderPanel.revalidate();
         downloaderPanel.repaint();
@@ -1559,11 +1482,8 @@ public class Downloader extends JFrame implements WindowListener{
     public void setVisible(boolean b) {
         if (b) {
             mainTabbedPane.setSelectedIndex(0);
-            // 关掉再打开时把懒加载目录重新登记一遍，并按需重载当前页
-            onMainFrameShown();
         } else {
-            // 隐藏前清掉界面与注册，重开时才会重新加载
-            onMainFrameHidden();
+            regeditLazyLoadPanel();
         }
         super.setVisible(b);
     }

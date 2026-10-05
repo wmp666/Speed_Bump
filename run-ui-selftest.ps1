@@ -41,7 +41,14 @@ $outRoot = Join-Path $root 'out'
 $classesDir = Join-Path $outRoot 'ui-selftest-classes'
 $selftestOut = Join-Path $outRoot 'ui-selftest'
 $isolatedHome = Join-Path $outRoot 'ui-selftest-home'
-$mainClass = 'com.wmp.speed_bump.common.background.tool.devtools.UiSelfTest'
+# 由源文件路径推导主类名，而不是写死。
+# 这个包已经被搬过几次（tools/tool、devtools），写死会在每次重构后静默失效
+$selfTestFile = Get-ChildItem (Join-Path $root 'src') -Recurse -Filter 'UiSelfTest.java' -File -ErrorAction SilentlyContinue |
+    Select-Object -First 1
+if (-not $selfTestFile) { throw "在 src/ 下找不到 UiSelfTest.java" }
+$srcRoot = Join-Path $root 'src'
+$relative = $selfTestFile.FullName.Substring($srcRoot.Length + 1)
+$mainClass = ($relative -replace '\.java$', '') -replace '\\', '.'
 
 function Write-Step($text) { Write-Host "[ui-selftest] $text" -ForegroundColor Cyan }
 

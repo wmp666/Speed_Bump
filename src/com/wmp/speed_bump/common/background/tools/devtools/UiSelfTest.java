@@ -150,8 +150,11 @@ public final class UiSelfTest {
                 + (FluentColors.isDark() ? "（深色）" : "（浅色）"));
         report("强调色      : " + toHex(FluentColors.accent()));
 
-        // 2) 安装 Fluent 增强（必须在 L&F 之后，否则默认值会被 FlatLaf.setup 抹掉）
+        // 2) 安装 Fluent 增强与忙碌标签外观。
+        //    实测结论：UIManager.put 写的是「用户默认值」，UIManager.setLookAndFeel 会保留它，
+        //    所以放在 L&F 之后只是习惯，放在之前其实也不会被抹掉（见文档排查手册第 4 条）
         FluentUi.install();
+        com.wmp.downloader.tools.ui.swingx.LoadingBusyLabelUI.install();
         report("UI 默认值   : ScrollBarUI=" + shortName(UIManager.getString("ScrollBarUI"))
                 + "  ProgressBarUI=" + shortName(UIManager.getString("ProgressBarUI"))
                 + "  CheckBoxUI=" + shortName(UIManager.getString("CheckBoxUI"))
@@ -189,6 +192,7 @@ public final class UiSelfTest {
         runAssertion("传统复选框退出开关", problems, () -> assertClassicCheckBox(gallery));
         runAssertion("禁用态文字灰化", problems, () -> assertDisabledText(gallery));
         runAssertion("HTML 复选框文本", problems, () -> assertHtmlCheckBox(gallery));
+        runAssertion("忙碌标签加载动画", problems, () -> assertBusyLabel(gallery));
         runAssertion("表格 Boolean 渲染器回退", problems, () -> assertTableBooleanRenderer(gallery));
         runAssertion("进度条", problems, () -> assertProgressBar(gallery, image));
         runAssertion("滚动条", problems, () -> assertScrollBar(gallery, image));
@@ -224,6 +228,7 @@ public final class UiSelfTest {
         JCheckBox textEnabledProbe;
         JCheckBox textDisabledProbe;
         JCheckBox htmlProbe;
+        org.jdesktop.swingx.JXBusyLabel busyLabel;
         FluentToggleSwitch explicitSwitch;
         JProgressBar determinate;
         JProgressBar indeterminate;
@@ -288,6 +293,15 @@ public final class UiSelfTest {
         g.htmlProbe.setName("html-checkbox");
         g.htmlProbe.setAlignmentX(Component.LEFT_ALIGNMENT);
         column.add(g.htmlProbe);
+        column.add(Box.createVerticalStrut(12));
+
+        // ---- 忙碌标签（SwingX JXBusyLabel，用 LoadingBusyLabelUI 画滚动横杠） ----
+        // Downloader 的空白页居中等待动画用的就是它；这里固定一帧来画静态截图，
+        // 不调用 setBusy，避免自检期间有 Timer 在后台推帧导致截图不确定
+        g.busyLabel = new org.jdesktop.swingx.JXBusyLabel(new Dimension(48, 48));
+        g.busyLabel.setName("busy-label");
+        g.busyLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        column.add(g.busyLabel);
         column.add(Box.createVerticalStrut(12));
 
         // ---- 进度条 ----
@@ -478,27 +492,184 @@ public final class UiSelfTest {
         BufferedImage img = paintComponent(g.htmlProbe, 300, 32);
         Color background = UIManager.getColor("Panel.background");
         int textStart = FluentMetrics.SWITCH_WIDTH + FluentMetrics.SWITCH_GAP - 4;
+        Object htmlView = g.htmlProbe.getClientProperty(
+                javax.swing.plaf.basic.BasicHTML.propertyKey);
 
-        // HTML 里显式指定了 #C42B1C 的着色，画出来必须能找到这个颜色
-        Color red = new Color(0xC4, 0x2B, 0x1C);
+        // 主判据：文字的横向范围。
+        // HTML 生效时画出来的是「加粗与着色」5 个字；若把标签原文当普通字符串画，
+        // 画出来的是 50+ 字符的 `<html><b>…</b>…`，会被可用宽度截断，横向范围宽得多。
+        // 两者相差数倍，比比对具体颜色稳得多。
+        //
+        // 副判据：偏红像素数。它不能写成「等于 #C42B1C」——文字是否走 LCD 次像素抗锯齿
+        // 由外观与桌面设置决定（FlatLaf 显式关掉，Windows 系外观不关），一旦走 LCD，
+        // 笔画会被冲淡成 #E3B8B4 这类浅红，离纯色差 150 开外（实测如此）。
+        // 真正要区分的是「彩色文字」与「灰黑文字」，所以只看红色分量是否明显压过绿蓝。
+        int minX = Integer.MAX_VALUE;
+        int maxX = -1;
         int redPixels = 0;
         for (int y = 0; y < img.getHeight(); y++) {
             for (int x = textStart; x < img.getWidth(); x++) {
-                if (colorDistance(new Color(img.getRGB(x, y), true), red) <= 40) {
+                int argb = img.getRGB(x, y);
+                if (colorDistance(new Color(argb, true), background) <= 6) {
+                    continue;
+                }
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x);
+                int r = (argb >> 16) & 0xFF;
+                if (r - Math.max((argb >> 8) & 0xFF, argb & 0xFF) >= 25) {
                     redPixels++;
                 }
             }
         }
-        boolean hasText = mostContrastingColor(img, textStart, 300, background) != null;
-        report("[断言] HTML 复选框：着色像素 " + redPixels + "，文字区有内容=" + hasText);
-        if (!hasText) {
+        int textWidth = maxX < 0 ? 0 : maxX - minX + 1;
+        report("[断言] HTML 复选框：BasicHTML 视图=" + (htmlView != null)
+                + "，文字宽度=" + textWidth + "px，偏红像素=" + redPixels);
+
+        if (textWidth == 0) {
             problems.add("HTML 复选框没有绘制出任何文本");
+        } else if (textWidth > 180) {
+            problems.add("HTML 复选框的文字横向范围过宽（" + textWidth + "px，可用宽度仅 "
+                    + (300 - textStart) + "px），怀疑把 <html> 标签原文当普通字符串画了出来");
         }
-        if (redPixels == 0) {
-            problems.add("HTML 复选框里 <font color='#C42B1C'> 的着色没有生效，"
-                    + "怀疑 HTML 文本被当成普通字符串绘制（会把标签原文画出来）");
+        if (htmlView != null && redPixels == 0) {
+            problems.add("HTML 复选框里 <font color='#C42B1C'> 的着色没有生效"
+                    + "（没有任何偏红像素），怀疑绕过了 BasicHTML 的 View");
         }
         return problems;
+    }
+
+    /**
+     * 忙碌标签（SwingX {@code JXBusyLabel}）：必须用 {@code LoadingBusyLabelUI} 画滚动横杠。
+     *
+     * <p>这里要验证的核心是<b>「画面由帧驱动」</b>：{@code JXBusyLabel} 自己有个 Timer
+     * 每拍把 painter 的 {@code frame} 加一并重绘（项目里的空白页等待动画还额外用了一个
+     * 80ms 的手动泵帧）。如果换成一个不读 {@code frame} 的实现，画面会静止不动，
+     * 加载指示就变成了「假死」——而且它不抛异常、不报错，只能靠像素发现。</p>
+     *
+     * <p>另外验证两个集成点：停止态 {@code frame=-1} 不能崩，
+     * 以及墨色必须跟随标签前景色（否则切换主题后会串色）。</p>
+     */
+    private static List<String> assertBusyLabel(Gallery g) {
+        List<String> problems = new ArrayList<>();
+        org.jdesktop.swingx.JXBusyLabel label = g.busyLabel;
+        label.setSize(48, 48);
+
+        String uiName = label.getUI().getClass().getSimpleName();
+        org.jdesktop.swingx.painter.BusyPainter painter = label.getBusyPainter();
+        String painterName = painter == null ? "null" : painter.getClass().getSimpleName();
+        report("[断言] 忙碌标签 UI=" + uiName + "  painter=" + painterName
+                + "  points=" + (painter == null ? "-" : painter.getPoints())
+                + "  delay=" + label.getDelay() + "ms");
+
+        if (!"LoadingBusyLabelUI".equals(uiName)) {
+            problems.add("忙碌标签没有用上 LoadingBusyLabelUI，实际是 " + uiName
+                    + "（SwingX 默认的 BasicBusyLabelUI 画的是旋转圆点）");
+            return problems;
+        }
+        if (painter == null || !"LoadingBusyPainter".equals(painterName)) {
+            problems.add("忙碌标签的 painter 不是 LoadingBusyPainter，实际是 " + painterName);
+            return problems;
+        }
+
+        // 自然尺寸：加载窗用的就是「new JXBusyLabel() 且不设尺寸」这种写法。
+        // 曾因父类把轨迹/点形状按 26px 缩放，JXBusyLabel 反推出来的尺寸只有 26×26，
+        // 图标小到几乎看不清、窗口 pack() 也跟着缩窄——而且它不抛异常，只能靠尺寸发现。
+        org.jdesktop.swingx.JXBusyLabel bare = new org.jdesktop.swingx.JXBusyLabel();
+        Dimension bareSize = bare.getPreferredSize();
+        int expected = com.wmp.downloader.tools.ui.swingx.LoadingBusyPainter.DEFAULT_ICON_SIZE;
+        report("[断言] 未设尺寸的忙碌标签自然尺寸=" + bareSize.width + "×" + bareSize.height
+                + "（期望 " + expected + "×" + expected + "）");
+        if (Math.min(bareSize.width, bareSize.height) < 32) {
+            problems.add("未设尺寸的忙碌标签自然尺寸过小（" + bareSize.width + "×" + bareSize.height
+                    + "），加载窗里的图标会小到看不清");
+        }
+
+        // 帧驱动：不同 frame 必须画出不同画面
+        BufferedImage f0 = paintBusyLabel(label, 0);
+        BufferedImage f10 = paintBusyLabel(label, 10);
+        int ink0 = countOpaquePixels(f0);
+        int frameDiff = countDifferentPixels(f0, f10);
+        report("[断言] 忙碌标签 48×48：frame0 墨色像素=" + ink0 + "，frame0↔frame10 差异像素=" + frameDiff);
+        if (ink0 < 20) {
+            problems.add("忙碌标签几乎没有画出内容（墨色像素 " + ink0 + "）");
+        }
+        if (frameDiff == 0) {
+            problems.add("忙碌标签的画面不随 frame 变化，动画是静止的（加载指示会假死）");
+        }
+
+        // 停止态：JXBusyLabel.stopAnimation 会把 frame 设成 -1
+        try {
+            int inkStopped = countOpaquePixels(paintBusyLabel(label, -1));
+            report("[断言] 忙碌标签 frame=-1（停止态）墨色像素=" + inkStopped);
+            if (inkStopped < 20) {
+                problems.add("忙碌标签在 frame=-1（停止态）没有画出内容（" + inkStopped + " 像素）");
+            }
+        } catch (Throwable t) {
+            problems.add("忙碌标签在 frame=-1 时抛出异常：" + rootCause(t));
+        }
+
+        // 颜色跟随：墨色应取标签当前前景色，这样切换主题才会跟着变
+        Color probe = new Color(0xC4, 0x2B, 0x1C);
+        Color old = label.getForeground();
+        try {
+            label.setForeground(probe);
+            int matched = countColorPixels(paintBusyLabel(label, 5), probe, 30);
+            report("[断言] 忙碌标签墨色跟随前景色：匹配像素=" + matched);
+            if (matched < 20) {
+                problems.add("忙碌标签没有用标签的前景色作为墨色（匹配像素 " + matched
+                        + "），切换主题后颜色不会跟着变");
+            }
+        } finally {
+            label.setForeground(old);
+        }
+        return problems;
+    }
+
+    /** 把忙碌标签按指定帧画到透明底图上（{@code JLabel} 非不透明，所以只会有图标被画出来）。 */
+    private static BufferedImage paintBusyLabel(org.jdesktop.swingx.JXBusyLabel label, int frame) {
+        org.jdesktop.swingx.painter.BusyPainter painter = label.getBusyPainter();
+        if (painter != null) {
+            painter.setFrame(frame);
+        }
+        BufferedImage img = new BufferedImage(Math.max(1, label.getWidth()), Math.max(1, label.getHeight()),
+                BufferedImage.TYPE_INT_ARGB);
+        java.awt.Graphics2D g2 = img.createGraphics();
+        try {
+            label.paint(g2);
+        } finally {
+            g2.dispose();
+        }
+        return img;
+    }
+
+    /** 统计非透明像素（透明底图上「画了东西」的像素）。 */
+    private static int countOpaquePixels(BufferedImage img) {
+        int n = 0;
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                if ((img.getRGB(x, y) >>> 24) != 0) {
+                    n++;
+                }
+            }
+        }
+        return n;
+    }
+
+    /** 统计与目标颜色接近的非透明像素。 */
+    private static int countColorPixels(BufferedImage img, Color target, int tolerance) {
+        int n = 0;
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                int argb = img.getRGB(x, y);
+                if ((argb >>> 24) == 0) {
+                    continue;
+                }
+                if (colorDistance(new Color(argb, true), target) <= tolerance) {
+                    n++;
+                }
+            }
+        }
+        return n;
     }
 
     /**
@@ -873,7 +1044,16 @@ public final class UiSelfTest {
         return count;
     }
 
-    /** 两张同尺寸图像的差异像素数（任一通道相差超过 2 即计为不同） */
+    /**
+     * 两张同尺寸图像的差异像素数。
+     *
+     * <p><b>必须把 alpha 也算进去。</b>自绘控件的「槽位」是透明像素，
+     * 而透明像素的 RGB 也是 0——只比 RGB 的话，「墨色恰好是纯黑」的外观
+     * （Windows Classic 就是）下槽位移动会被判成「毫无变化」，动画断言假绿。
+     * Mac Light 之所以能过，只是因为它的墨色 #262626 与 0 差 38，属于运气。</p>
+     *
+     * <p>判据：任一 RGB 通道相差超过 2，<b>或 alpha 不同</b>，即计为不同。</p>
+     */
     private static int countDifferentPixels(BufferedImage a, BufferedImage b) {
         if (a.getWidth() != b.getWidth() || a.getHeight() != b.getHeight()) {
             return Integer.MAX_VALUE;
@@ -881,9 +1061,10 @@ public final class UiSelfTest {
         int count = 0;
         for (int y = 0; y < a.getHeight(); y++) {
             for (int x = 0; x < a.getWidth(); x++) {
-                Color ca = new Color(a.getRGB(x, y), true);
-                Color cb = new Color(b.getRGB(x, y), true);
-                if (colorDistance(ca, cb) > 2) {
+                int pa = a.getRGB(x, y);
+                int pb = b.getRGB(x, y);
+                if ((pa >>> 24) != (pb >>> 24)
+                        || colorDistance(new Color(pa, true), new Color(pb, true)) > 2) {
                     count++;
                 }
             }

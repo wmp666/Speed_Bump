@@ -12,7 +12,7 @@ import java.util.List;
 public class Run {
     private static final SBLogger logger = SBLogger.getLogger(Run.class);
 
-    public static String VERSION = "0.5.2";
+    public static String VERSION = "0.5.3";
 
     public static String PLUGIN_SUPPORT_VERSION = "2.0.0";
 
@@ -59,6 +59,12 @@ public class Run {
                 System.exit(-1);
             }
         }
+
+        //界面准备必须在加载窗之前：加载窗的 PreloadDialog.form 里有一个 JXBusyLabel，
+        //而 Swing 组件的 UI 是构造时就取定的。晚一步会同时踩两个坑——
+        //加载动画还是 SwingX 默认的旋转圆点，窗口也按 Metal 外观 pack() 过一次。
+        //走 common 层的 UIStart 接口（平台实现在 platform.ui.swing），不直接引用 Swing 实现。
+        UIStart.INSTANCE.prepareUi();
 
         var preloadDialog = PreLoadDialog.INSTANCE_CREATOR.create();
         preloadDialog.showDialog();

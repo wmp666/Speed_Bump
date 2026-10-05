@@ -7,6 +7,7 @@ import com.wmp.speed_bump.common.background.tools.devtools.StartupTrace;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.downloader.tools.ui.fluent.FluentUi;
+import com.wmp.downloader.tools.ui.swingx.LoadingBusyLabelUI;
 import com.wmp.downloader.tools.web.TCPControl;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.common.ui.WelcomePage;
@@ -20,8 +21,24 @@ public class UIStart implements com.wmp.speed_bump.common.UIStart {
 
     private static final SBLogger logger = SBLogger.getLogger(UIStart.class);
 
+    /** 早期界面准备只做一次（{@link #prepareUi} 会被 {@code Run} 与 {@link #show} 各调一次）。 */
+    private static boolean prepared;
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>顺序不能颠倒：先切外观，再装界面增强。因为 {@code FluentUi} 里
+     * 「揭示高亮按钮」是否安装要看当前外观是不是 FlatLaf——
+     * 启动阶段这里还是系统外观（Windows），那个条件不成立，
+     * 等 {@code ThemeChanger.easyChanger()} 换成 FlatLaf 后由主题回调补装。</p>
+     */
     @Override
-    public void show(List<String> argList, String linkPath) {
+    public void prepareUi() {
+        if (prepared) {
+            return;
+        }
+        prepared = true;
+
         //加载窗口（以及启动阶段可能出现的弹窗）在此之前就要用上系统外观，
         //否则它们会使用 Swing 默认的 Metal 外观，和主界面差别很大
         applySystemLookAndFeel();
@@ -31,7 +48,18 @@ public class UIStart implements com.wmp.speed_bump.common.UIStart {
         //必须赶在任何界面组件创建之前装好：这样新组件的 updateUI 会直接拿到
         //ScrollBarUI / ProgressBarUI / CheckBoxUI；晚一步就会出现「新窗口是旧样式」的割裂。
         FluentUi.install();
+        //加载窗里的 JXBusyLabel：把 SwingX 默认的旋转圆点换成滚动横杠加载图标。
+        //同样必须早于加载窗的构造——Swing 组件的 UI 在构造时就取定了。
+        LoadingBusyLabelUI.install();
         StartupTrace.step("安装 Fluent 界面增强");
+    }
+
+    @Override
+    public void show(List<String> argList, String linkPath) {
+        //早期窗口之前 {@code Run} 已经调用过；这里兜底一次，
+        //让「只调 show」的调用方也不会缺了系统外观与界面增强。
+        //prepareUi() 是幂等的，重复调用不会重复记启动耗时。
+        prepareUi();
 
         logger.info("开始加载");
         Downloader downloader = null;

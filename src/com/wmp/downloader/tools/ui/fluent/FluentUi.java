@@ -17,13 +17,15 @@ import javax.swing.UIManager;
  *   <li>挂接主题回调 {@link FluentThemeSupport}，让自绘组件跟随主题刷新。</li>
  * </ol>
  *
- * <h3>为什么必须在每次主题切换后重新灌入</h3>
- * <p>{@code FlatLaf.setup()} 会<b>重建整张 {@code UIManager} 默认值表</b>，
- * 我们塞进去的 {@code ScrollBarUI}/{@code ProgressBarUI}/{@code CheckBoxUI}
- * 会被一并抹掉。所以这里把「灌入默认值」注册成一个
- * {@link DynamicConverterTask}——本项目的 {@link ThemeChanger} 在每次主题刷新时
- * 都会调用它，而且时机正好在 {@code FlatLaf.setup()} 之后、
- * {@code updateComponentTreeUI} 之前，是唯一正确的窗口期。</p>
+ * <h3>为什么还要挂主题回调（不是为了「重新灌入默认值」）</h3>
+ * <p>曾以为 {@code FlatLaf.setup()} 会重建整张 {@code UIManager} 默认值表、把我们的设置抹掉，
+ * 于是挂这个回调来「重新灌入」。<b>实测那个前提不成立</b>：
+ * {@code UIManager.put} 写的是用户默认值，而 {@code UIManager.setLookAndFeel(...)} 会保留它——
+ * 切换主题（含跨 L&amp;F 家族切到 Metal）之后新建的组件拿到的依然是我们的实现。</p>
+ *
+ * <p>这个回调真正的作用是<b>重新评估条件性安装</b>：{@code ButtonUI} 只在 FlatLaf 家族下才装
+ * （{@link RevealButtonUI} 继承自 FlatLaf 的按钮 UI），换成 Metal / Windows Classic 时必须撤掉。
+ * 顺带留一个统一的重算入口，代价只是一次幂等的 {@code UIManager.put}。</p>
  *
  * <h3>用法</h3>
  * <pre>{@code
