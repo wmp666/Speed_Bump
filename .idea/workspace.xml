@@ -9,51 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="更新BusyLabelUI&#10;修复部分问题">
-      <change afterPath="$PROJECT_DIR$/.idea/jsonCatalog.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/image_suffix.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/twelvemonkeys_common_image.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Linux_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Linux_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/DownLoader_Windows_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Image_Converter_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Image_Converter_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/imageio_plugins_3_13_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DownLoader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Speed_Bump.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpDocs/界面增强.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/界面增强.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/DialogBackdrop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/DialogBackdrop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/DropOverlayPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/DropOverlayPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/FlyoutMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/FlyoutMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/LazyLoadOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/LazyLoadOverlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/WindowBackdrop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/WindowBackdrop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentColors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentMetrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentMetrics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentPainting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentPainting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentProgressBarUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentProgressBarUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentScrollBarUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentScrollBarUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentSwitchUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentSwitchUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentThemeSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentThemeSupport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentToggleSwitch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentToggleSwitch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/FluentUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentUi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/RevealButtonUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/RevealButtonUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/fluent/RevealEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/RevealEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/swingx/LoadingBusyLabelUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/swingx/LoadingBusyLabelUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/swingx/LoadingBusyPainter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/swingx/LoadingBusyPainter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="将项目更换至新系统&#10;修复任务页加载问题&#10;将部分文件迁移至NutJam下">
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/TaskPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/TaskPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/DialogBackdrop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/DropOverlayPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/FlyoutMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/LazyLoadOverlay.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/WindowBackdrop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java~RF327eab8.TMP" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java~RF327eab8.TMP" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/TrayMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/TrayMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/下载器.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/devtools/UiSelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/devtools/UiSelfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/MicaWindowDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/MicaWindowDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/AppearanceSettingsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/AppearanceSettingsPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/PreloadDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/PreloadDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/WelcomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/WelcomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/文档/减速带更新.md" beforeDir="false" afterPath="$PROJECT_DIR$/文档/减速带更新.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -414,7 +379,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复通知过多时，新的不显示" />
     <MESSAGE value="测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="增加拖入导入拓展&#10;将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
@@ -439,7 +403,8 @@
     <MESSAGE value="修复问题" />
     <MESSAGE value="跟进新架构（IconControl，日志输出）" />
     <MESSAGE value="更新BusyLabelUI&#10;修复部分问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新BusyLabelUI&#10;修复部分问题" />
+    <MESSAGE value="将项目更换至新系统&#10;修复任务页加载问题&#10;将部分文件迁移至NutJam下" />
+    <option name="LAST_COMMIT_MESSAGE" value="将项目更换至新系统&#10;修复任务页加载问题&#10;将部分文件迁移至NutJam下" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
