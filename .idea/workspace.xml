@@ -311,13 +311,13 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="应用程序.Run Show Welcome" />
-      <item itemvalue="应用程序.FluentApp" />
-      <item itemvalue="应用程序.Test" />
       <item itemvalue="应用程序.FileDialogTest" />
-      <item itemvalue="应用程序.TestControlDialog" />
-      <item itemvalue="应用程序.TCPControl" />
+      <item itemvalue="应用程序.FluentApp" />
+      <item itemvalue="应用程序.Run Show Welcome" />
       <item itemvalue="应用程序.Run" />
+      <item itemvalue="应用程序.TCPControl" />
+      <item itemvalue="应用程序.TestControlDialog" />
+      <item itemvalue="应用程序.Test" />
     </list>
     <recent_temporary>
       <list>

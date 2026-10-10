@@ -12,7 +12,7 @@ import java.util.List;
 public class Run {
     private static final SBLogger logger = SBLogger.getLogger(Run.class);
 
-    public static String VERSION = "0.5.3";
+    public static String VERSION = "0.5.3.1";
 
     public static String PLUGIN_SUPPORT_VERSION = "2.0.0";
 
