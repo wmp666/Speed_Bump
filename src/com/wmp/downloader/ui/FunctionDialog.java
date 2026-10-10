@@ -4,7 +4,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
-import com.wmp.downloader.tools.ui.DialogBackdrop;
+import com.wmp.speed_bump.platform.ui.swing.tools.DialogBackdrop;
 import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import raven.modal.ModalDialog;

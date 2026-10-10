@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/BiliParser/BiliParser.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/BiliParser/BiliParser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/DailyJuzi/DailyJuzi.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/DailyJuzi/DailyJuzi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/DouyinParser.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/DouyinParser/DouyinParser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DownLoader.iml" filepath="$PROJECT_DIR$/DownLoader.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/DownLoader_plugin.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/DownLoader_plugin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/ED2KParser.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/ED2KParser/ED2KParser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/Image_Converter/Image_Converter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/PackageTool/PackageTool.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/PackageTool/PackageTool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/BiliParser.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/BiliParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/DailyJuzi.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/DailyJuzi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/DouyinParser/DouyinParser.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/DouyinParser/DouyinParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/ED2KParser/ED2KParser.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/ED2KParser/ED2KParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/Image_Converter/Image_Converter.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/Image_Converter/Image_Converter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/PackageTool/PackageTool.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/PackageTool/PackageTool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Speed_Bump.iml" filepath="$PROJECT_DIR$/Speed_Bump.iml" />
       <module fileurl="file://$PROJECT_DIR$/Speed_Bump_Fluent/Speed_Bump_Fluent.iml" filepath="$PROJECT_DIR$/Speed_Bump_Fluent/Speed_Bump_Fluent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../DownLoader_plugin/WindowMask/WindowMask.iml" filepath="$PROJECT_DIR$/../DownLoader_plugin/WindowMask/WindowMask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/WindowMask.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/WindowMask.iml" />
     </modules>
   </component>
 </project>

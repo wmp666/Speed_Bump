@@ -1,4 +1,4 @@
-package com.wmp.downloader.tools.ui.fluent;
+package com.wmp.speed_bump.platform.ui.swing.tools.fluent;
 
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
@@ -8,7 +8,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.ProgressBarUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import javax.swing.Timer;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FontMetrics;

@@ -1,4 +1,4 @@
-package com.wmp.downloader.tools.ui.fluent;
+package com.wmp.speed_bump.platform.ui.swing.tools.fluent;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.wmp.downloader.tools.file.DataControl;

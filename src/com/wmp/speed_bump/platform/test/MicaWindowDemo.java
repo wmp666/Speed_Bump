@@ -1,6 +1,6 @@
 package com.wmp.speed_bump.platform.test;
 
-import com.wmp.downloader.tools.ui.WindowBackdrop;
+import com.wmp.speed_bump.platform.ui.swing.tools.WindowBackdrop;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;

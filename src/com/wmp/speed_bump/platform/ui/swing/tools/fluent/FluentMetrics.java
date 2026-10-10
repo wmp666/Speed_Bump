@@ -1,4 +1,4 @@
-package com.wmp.downloader.tools.ui.fluent;
+package com.wmp.speed_bump.platform.ui.swing.tools.fluent;
 
 /**
  * Fluent 风格自绘组件的尺寸与圆角令牌。

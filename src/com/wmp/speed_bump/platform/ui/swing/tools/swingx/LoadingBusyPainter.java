@@ -1,4 +1,4 @@
-package com.wmp.downloader.tools.ui.swingx;
+package com.wmp.speed_bump.platform.ui.swing.tools.swingx;
 
 import org.jdesktop.swingx.painter.BusyPainter;
 

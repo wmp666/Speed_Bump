@@ -3,9 +3,9 @@ package com.wmp.downloader.ui;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
-import com.wmp.downloader.tools.ui.DialogBackdrop;
+import com.wmp.speed_bump.platform.ui.swing.tools.DialogBackdrop;
 import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
-import com.wmp.downloader.tools.ui.FlyoutMenu;
+import com.wmp.speed_bump.platform.ui.swing.tools.FlyoutMenu;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 

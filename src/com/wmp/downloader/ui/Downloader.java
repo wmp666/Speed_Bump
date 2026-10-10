@@ -9,6 +9,7 @@ import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.AboutPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.PluginParserPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SettingsPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SpecialSettingsPanel;
+import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.TaskPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.TestControlDialog;
 import com.wmp.downloader.tools.MicrosoftTranslator;
 import com.wmp.downloader.tools.MicrosoftTranslator.Language;
@@ -18,7 +19,7 @@ import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
-import com.wmp.downloader.tools.ui.LazyLoadOverlay;
+import com.wmp.speed_bump.platform.ui.swing.tools.LazyLoadOverlay;
 import com.wmp.downloader.tools.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
@@ -62,13 +63,8 @@ public class Downloader extends JFrame implements WindowListener{
 
     public JPanel settingsPanel;
     public javax.swing.JTabbedPane mainTabbedPane;
+    /** 任务页的空白容器；真正的内容由 {@link TaskPanel} 在首次选中时装配进来 */
     public JPanel downloaderPanel;
-    public JButton createTaskButton;
-    public JPanel TaskButtonPanel;
-    public JPanel TasksPanel;
-    public JButton allStartButton;
-    public JButton allPauseButton;
-    public JScrollPane TasksScrollPane;
     public JPanel SpecialSettingsPanel;
     public JPanel pluginParserControlPanel;
     public JPanel aboutPanel;
@@ -78,6 +74,7 @@ public class Downloader extends JFrame implements WindowListener{
     public SpecialSettingsPanel specialSettingsPanelInstance;
     public PluginParserPanel pluginParserPanelInstance;
     public AboutPanel aboutPanelInstance;
+    public TaskPanel taskPanelInstance;
 
     public String lastClipboardContent = "";
 
@@ -102,7 +99,8 @@ public class Downloader extends JFrame implements WindowListener{
         taskList.removeIf(DownloadTask ->
         {
             if (DownloadTask.isCanExit()) {
-                TasksPanel.remove(DownloadTask);
+                // 界面上的移除走 TaskPanel：任务页是懒加载的，这里要容忍它还没被构建
+                if (taskPanelInstance != null) taskPanelInstance.removeTask(DownloadTask);
                 taskFinalyTipList.remove(DownloadTask);
                 return true;
             } else return false;
@@ -227,13 +225,14 @@ public class Downloader extends JFrame implements WindowListener{
         //拓展管理
         createLazyLoadPanelInMainFrame(pluginParserControlPanel, this::initPluginParserComponents);
 
-        //任务页也是懒加载的：默认选中的就是它，所以这里先把表单已经生成好的
-        //任务页节点（按钮栏 + 任务列表）摘下来暂存，等首次选中再装回去并初始化。
-        //这样启动时看到的是等待动画，而不是任务列表。
-        //注意两个参数的时机不同：initTaskComponents 跑在工作线程，
-        //restoreTaskPageNodes 必须跑在 EDT，所以走 install 钩子。
-        deferTaskPageForLazyLoad();
-        createLazyLoadPanelInMainFrame(downloaderPanel, this::initTaskComponents, this::restoreTaskPageNodes);
+        //任务页：与其他四页一样，结构与初始化都在自己的类（TaskPanel + TaskPanel.form）里，
+        //这里只登记「首次选中时构建」。
+        taskPanelInstance = new TaskPanel(this);
+        createLazyLoadPanelInMainFrame(downloaderPanel, taskPanelInstance::initTaskComponents, () -> {
+            downloaderPanel.add(taskPanelInstance.taskPanel, BorderLayout.CENTER);
+            downloaderPanel.revalidate();
+            downloaderPanel.repaint();
+        });
 
         //设置
         createLazyLoadPanelInMainFrame(settingsPanel, this::initSettingsComponents);
@@ -315,6 +314,8 @@ public class Downloader extends JFrame implements WindowListener{
         settingsPanelInstance = null;
         specialSettingsPanelInstance = null;
         aboutPanelInstance = null;
+        // 任务页同样要重建：TaskPanel 持有自己的表单实例，重载时重新 new 一份
+        taskPanelInstance = null;
 
         lazyLoadRegistered = false;
     }
@@ -331,9 +332,6 @@ public class Downloader extends JFrame implements WindowListener{
             panel.revalidate();
             panel.repaint();
         }
-        // 注意：这里不能清 deferredTaskPageNodes。任务页的按钮栏与任务列表在整个
-        // 窗口生命周期内就这一份，deferTaskPageForLazyLoad() 记录的引用必须留着，
-        // 否则重开后就没有节点可以装回 downloaderPanel 了。
     }
 
     /**
@@ -346,12 +344,6 @@ public class Downloader extends JFrame implements WindowListener{
         return List.of(downloaderPanel, settingsPanel, SpecialSettingsPanel,
                 pluginParserControlPanel, aboutPanel);
     }
-
-    /**
-     * 任务页被延后接入的节点，顺序为 {TaskButtonPanel, TasksScrollPane}。
-     * 见 {@link #deferTaskPageForLazyLoad()}；装回后置回 null 表示已经装好。
-     */
-    private Component[] deferredTaskPageNodes;
 
     /**
      * 尚未完成懒加载的标签页 → 它的加载动作。
@@ -1028,14 +1020,6 @@ public class Downloader extends JFrame implements WindowListener{
     private void createUIComponents() {
         mainTabbedPane = new JTabbedPane();
         mainTabbedPane.setOpaque(true);
-
-        TasksPanel = new JPanel(new GridBagLayout());
-        TasksPanel.setOpaque(false);
-
-        TasksScrollPane = new JScrollPane(TasksPanel);
-        TasksScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // 关闭水平滚动
-        TasksScrollPane.getViewport().setLayout(new ViewportLayout()); // 默认布局，会拉伸组件
-        UITools.setScrollPaneUnOpaque(TasksScrollPane);
     }
 
     public void checkUpdate() {
@@ -1178,88 +1162,12 @@ public class Downloader extends JFrame implements WindowListener{
     }
 
     /**
-     * 把表单（{@code 下载器.form}）已经生成好的任务页节点从 {@link #downloaderPanel} 上摘下来暂存。
+     * 打开「创建任务」对话框。
      *
-     * <p>任务页是默认选中的标签页，所以它的结构在启动时就已经由 Designer 生成的
-     * {@code $$$setupUI$$$()} 挂好了。既然要把整个任务页改成懒加载，就得先把这些节点
-     * 移出容器，让容器变成空白页——否则启动瞬间用户还是会看到任务列表。</p>
-     *
-     * <p>这里刻意不改 {@code .form}：把 {@code TaskButtonPanel} / TasksScrollPane 从表单里
-     * 删掉就需要手改 Designer 的 XML，那比让节点在构造期多生成一次的风险大得多。
-     * 节点的<strong>构建</strong>依旧由表单负责，被延后的是它们的<strong>接入与初始化</strong>。</p>
-     *
-     * <p>本方法对同一个节点只会记录一次，因此重开主界面时重复调用是安全的：
-     * 那时节点早已被摘下，只是把容器再清一遍。</p>
+     * <p>由任务页的「创建任务」按钮调用，所以必须是 public；
+     * 页面的结构与初始化见 {@link TaskPanel}。</p>
      */
-    private void deferTaskPageForLazyLoad() {
-        if (deferredTaskPageNodes == null) {
-            deferredTaskPageNodes = new Component[]{TaskButtonPanel, TasksScrollPane};
-        }
-        downloaderPanel.removeAll();
-        downloaderPanel.revalidate();
-        downloaderPanel.repaint();
-    }
-
-    /**
-     * 把 {@link #deferTaskPageForLazyLoad()} 摘下的节点装回 {@link #downloaderPanel}。
-     *
-     * <p>顺序必须与表单里声明的一致：{@code TaskButtonPanel} 停 NORTH、
-     * {@code TasksScrollPane} 占 CENTER。</p>
-     *
-     * <p><b>必须在 EDT 上执行</b>，因此它是通过
-     * {@link #lazyLoadPanel(JPanel, Runnable, Runnable)} 的 {@code install} 钩子调用的；
-     * 如果放到后台线程里会与 EDT 的绘制/校验竞争。</p>
-     */
-    private void restoreTaskPageNodes() {
-        if (deferredTaskPageNodes == null) return;
-        downloaderPanel.removeAll();
-        downloaderPanel.add(deferredTaskPageNodes[0], BorderLayout.NORTH);
-        downloaderPanel.add(deferredTaskPageNodes[1], BorderLayout.CENTER);
-        deferredTaskPageNodes = null;
-        downloaderPanel.revalidate();
-        downloaderPanel.repaint();
-        // 结构齐了，此时才能把任务页的按钮设为默认按钮
-        updateDefaultButton();
-    }
-
-    /**
-     * 任务页的懒加载初始化：首次选中任务页时才会执行。
-     *
-     * <p>这里只做「不碰容器结构」的那部分工作（字体、图标、监听器）。
-     * 把被延后的结构装回容器由 {@link #restoreTaskPageNodes()} 负责，
-     * 因为它必须发生在 EDT 上，而本方法跑在工作线程里。</p>
-     */
-    private void initTaskComponents() {
-        ThemeChanger.addInDynamicConverter(
-                this::updateDefaultButton
-        );
-
-        createTaskButton.putClientProperty("FlatLaf.style", "font: $h2.font");
-        allStartButton.putClientProperty("FlatLaf.style", "font: $h2.font");
-        allPauseButton.putClientProperty("FlatLaf.style", "font: $h2.font");
-
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> createTaskButton.setIcon(IconControl.INSTANCE.getIcon("new", createTaskButton.getFont().getSize())),
-                () -> allStartButton.setIcon(IconControl.INSTANCE.getIcon("start", allStartButton.getFont().getSize())),
-                () -> allPauseButton.setIcon(IconControl.INSTANCE.getIcon("pause", allPauseButton.getFont().getSize()))
-        );
-
-        createTaskButton.addActionListener(e -> {
-            createDownloadTask(null);
-        });
-        allStartButton.addActionListener(e -> {
-            for (var urlDownloadTask : taskList) {
-                if (!urlDownloadTask.isFinally()) urlDownloadTask.start();
-            }
-        });
-        allPauseButton.addActionListener(e -> {
-            for (var urlDownloadTask : taskList) {
-                if (!urlDownloadTask.isFinally()) urlDownloadTask.stop();
-            }
-        });
-    }
-
-    private void createDownloadTask(String url) {
+    public void createDownloadTask(String url) {
         createDownloadTask(url, true);
     }
 
@@ -1343,13 +1251,10 @@ public class Downloader extends JFrame implements WindowListener{
         }
         Thread.ofVirtual().start(() -> {
             for (var task : tasks) {
-                task.setAlignmentX(Component.LEFT_ALIGNMENT);
-
                 taskList.add(task);
 
-                TasksPanel.add(task, gbc);
-                TasksPanel.revalidate();
-                TasksPanel.repaint();
+                // 界面部分交给任务页；任务页是懒加载的，可能还没被构建
+                if (taskPanelInstance != null) taskPanelInstance.addTask(task);
 
                 task.start();
             }
@@ -1359,13 +1264,9 @@ public class Downloader extends JFrame implements WindowListener{
     public void addDownloadTask(CreateTaskPanel createTaskPanel) {
         Thread.ofVirtual().start(()->{
             createTaskPanel.getDownloadTasks().forEach(taskPanel -> {
-                taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
                 taskList.add(taskPanel);
 
-                TasksPanel.add(taskPanel, gbc);
-                TasksPanel.revalidate();
-                TasksPanel.repaint();
+                if (taskPanelInstance != null) taskPanelInstance.addTask(taskPanel);
 
                 taskPanel.start();
             });
@@ -1495,7 +1396,7 @@ public class Downloader extends JFrame implements WindowListener{
             // 任务页是懒加载的：它还没被选中过时按钮还不存在。
             // 这个方法会被 ThemeChanger / IconControl 的动态转换器反复调用，
             // 这里必须容忍 null，否则会在任务页初始化之前就抛 NPE。
-            getRootPane().setDefaultButton(createTaskButton);
+            getRootPane().setDefaultButton(taskPanelInstance == null ? null : taskPanelInstance.getCreateTaskButton());
         } else if (selectedIndex == mainTabbedPane.indexOfComponent(settingsPanel)) {
             getRootPane().setDefaultButton(settingsPanelInstance == null ? null : settingsPanelInstance.getSaveButton());
         } else if (selectedIndex == mainTabbedPane.indexOfComponent(SpecialSettingsPanel)) {

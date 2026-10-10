@@ -6,7 +6,7 @@
         <element id="directory" name="META-INF">
           <element id="file-copy" path="$PROJECT_DIR$/src/Linux/META-INF/MANIFEST.MF" />
         </element>
-        <element id="module-output" name="DownLoader" />
+        <element id="module-output" name="Speed_Bump" />
       </element>
       <element id="library" level="project" name="formdev.flatlaf.swingx" />
       <element id="library" level="project" name="commons.net" />

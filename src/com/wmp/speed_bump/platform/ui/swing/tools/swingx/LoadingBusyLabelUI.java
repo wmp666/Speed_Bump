@@ -1,6 +1,7 @@
-package com.wmp.downloader.tools.ui.swingx;
+package com.wmp.speed_bump.platform.ui.swing.tools.swingx;
 
 import com.wmp.downloader.tools.file.DataControl;
+import com.wmp.speed_bump.platform.ui.swing.tools.fluent.FluentScrollBarUI;
 import org.jdesktop.swingx.painter.BusyPainter;
 import org.jdesktop.swingx.plaf.BusyLabelUI;
 
@@ -90,7 +91,7 @@ public class LoadingBusyLabelUI extends BasicLabelUI implements BusyLabelUI {
 
     /**
      * SwingX 通过 {@code UIDefaults.getUI()} 反射调用<b>静态</b> {@code createUI}，
-     * 缺省会继承父类的实现并静默返回错误的 UI。详见 {@link com.wmp.downloader.tools.ui.fluent.FluentScrollBarUI}。
+     * 缺省会继承父类的实现并静默返回错误的 UI。详见 {@link FluentScrollBarUI}。
      */
     public static ComponentUI createUI(JComponent c) {
         return new LoadingBusyLabelUI();

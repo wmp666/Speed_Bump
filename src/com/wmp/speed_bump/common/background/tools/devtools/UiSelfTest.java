@@ -3,12 +3,12 @@ package com.wmp.speed_bump.common.background.tools.devtools;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.wmp.downloader.tools.ui.ThemeChanger;
-import com.wmp.downloader.tools.ui.fluent.FluentColors;
-import com.wmp.downloader.tools.ui.fluent.FluentMetrics;
-import com.wmp.downloader.tools.ui.fluent.FluentUi;
-import com.wmp.downloader.tools.ui.fluent.FluentToggleSwitch;
-import com.wmp.downloader.tools.ui.fluent.RevealEngine;
+import com.wmp.speed_bump.platform.ui.swing.tools.fluent.*;
+import com.wmp.speed_bump.platform.ui.swing.tools.fluent.FluentMetrics;
+import com.wmp.speed_bump.platform.ui.swing.tools.fluent.FluentUi;
 import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
+import com.wmp.speed_bump.platform.ui.swing.tools.swingx.LoadingBusyLabelUI;
+import com.wmp.speed_bump.platform.ui.swing.tools.swingx.LoadingBusyPainter;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -154,7 +154,7 @@ public final class UiSelfTest {
         //    实测结论：UIManager.put 写的是「用户默认值」，UIManager.setLookAndFeel 会保留它，
         //    所以放在 L&F 之后只是习惯，放在之前其实也不会被抹掉（见文档排查手册第 4 条）
         FluentUi.install();
-        com.wmp.downloader.tools.ui.swingx.LoadingBusyLabelUI.install();
+        LoadingBusyLabelUI.install();
         report("UI 默认值   : ScrollBarUI=" + shortName(UIManager.getString("ScrollBarUI"))
                 + "  ProgressBarUI=" + shortName(UIManager.getString("ProgressBarUI"))
                 + "  CheckBoxUI=" + shortName(UIManager.getString("CheckBoxUI"))
@@ -265,7 +265,7 @@ public final class UiSelfTest {
         g.classicBox.setName("classic-box");
         // 通过客户端属性显式退回传统外观，同时也是这条退出开关的自检
         g.classicBox.putClientProperty(
-                com.wmp.downloader.tools.ui.fluent.FluentSwitchUI.DISABLE_KEY, Boolean.TRUE);
+                FluentSwitchUI.DISABLE_KEY, Boolean.TRUE);
         g.classicBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         column.add(g.classicBox);
 
@@ -576,7 +576,7 @@ public final class UiSelfTest {
         // 图标小到几乎看不清、窗口 pack() 也跟着缩窄——而且它不抛异常，只能靠尺寸发现。
         org.jdesktop.swingx.JXBusyLabel bare = new org.jdesktop.swingx.JXBusyLabel();
         Dimension bareSize = bare.getPreferredSize();
-        int expected = com.wmp.downloader.tools.ui.swingx.LoadingBusyPainter.DEFAULT_ICON_SIZE;
+        int expected = LoadingBusyPainter.DEFAULT_ICON_SIZE;
         report("[断言] 未设尺寸的忙碌标签自然尺寸=" + bareSize.width + "×" + bareSize.height
                 + "（期望 " + expected + "×" + expected + "）");
         if (Math.min(bareSize.width, bareSize.height) < 32) {
@@ -728,7 +728,7 @@ public final class UiSelfTest {
         reference.setStringPainted(g.determinate.isStringPainted());
 
         javax.swing.plaf.ComponentUI lafUi =
-                com.wmp.downloader.tools.ui.fluent.FluentProgressBarUI.createLafUi(reference);
+                FluentProgressBarUI.createLafUi(reference);
         if (lafUi == null) {
             report("[断言] 当前 L&F 的进度条 UI 为共享实例或取不到，跳过确定态对照");
         } else if (!(lafUi instanceof javax.swing.plaf.ProgressBarUI)) {
@@ -762,7 +762,7 @@ public final class UiSelfTest {
             problems.add("测试用滚动条的尺寸为 0，无法验证");
             return problems;
         }
-        if (!(bar.getUI() instanceof com.wmp.downloader.tools.ui.fluent.FluentScrollBarUI)) {
+        if (!(bar.getUI() instanceof FluentScrollBarUI)) {
             problems.add("滚动条 UI 不是 FluentScrollBarUI，而是 " + bar.getUI().getClass().getSimpleName());
             return problems;
         }
@@ -815,7 +815,7 @@ public final class UiSelfTest {
 
         // 按钮光晕的 UI 代理继承自 FlatLaf，非 FlatLaf 外观下按设计不安装。
         // 这不是缺陷，所以跳过而不是报错——否则用 Metal 主题跑自检会得到假失败。
-        if (!(g.revealButton.getUI() instanceof com.wmp.downloader.tools.ui.fluent.RevealButtonUI)) {
+        if (!(g.revealButton.getUI() instanceof RevealButtonUI)) {
             report("[断言] 当前外观不是 FlatLaf，按钮光晕不适用，跳过本组");
             return problems;
         }
@@ -867,31 +867,31 @@ public final class UiSelfTest {
             return problems;
         }
 
-        checkUiDefault("ScrollBarUI", com.wmp.downloader.tools.ui.fluent.FluentScrollBarUI.class, problems);
-        checkUiDefault("ProgressBarUI", com.wmp.downloader.tools.ui.fluent.FluentProgressBarUI.class, problems);
-        checkUiDefault("CheckBoxUI", com.wmp.downloader.tools.ui.fluent.FluentSwitchUI.class, problems);
+        checkUiDefault("ScrollBarUI", FluentScrollBarUI.class, problems);
+        checkUiDefault("ProgressBarUI", FluentProgressBarUI.class, problems);
+        checkUiDefault("CheckBoxUI", FluentSwitchUI.class, problems);
 
         // 按钮光晕的 UI 代理继承自 FlatLaf，非 FlatLaf 外观下按设计不安装
-        boolean flatLaf = com.wmp.downloader.tools.ui.fluent.FluentUi.isFlatLaf();
+        boolean flatLaf = FluentUi.isFlatLaf();
         if (flatLaf) {
-            checkUiDefault("ButtonUI", com.wmp.downloader.tools.ui.fluent.RevealButtonUI.class, problems);
+            checkUiDefault("ButtonUI", RevealButtonUI.class, problems);
         }
 
         // 光看 UIManager 里的字符串还不够：UIDefaults.getUI 是反射调用静态 createUI，
         // 真正要验证的是「新建的组件确实拿到了我们的 UI」
         JCheckBox probeCheckBox = new JCheckBox("切换后新建的复选框");
-        if (!(probeCheckBox.getUI() instanceof com.wmp.downloader.tools.ui.fluent.FluentSwitchUI)) {
+        if (!(probeCheckBox.getUI() instanceof FluentSwitchUI)) {
             problems.add("主题切换后新建的复选框没有拿到 FluentSwitchUI，而是 "
                     + probeCheckBox.getUI().getClass().getName());
         }
         JProgressBar probeBar = new JProgressBar();
-        if (!(probeBar.getUI() instanceof com.wmp.downloader.tools.ui.fluent.FluentProgressBarUI)) {
+        if (!(probeBar.getUI() instanceof FluentProgressBarUI)) {
             problems.add("主题切换后新建的进度条没有拿到 FluentProgressBarUI，而是 "
                     + probeBar.getUI().getClass().getName());
         }
         if (flatLaf) {
             JButton probeButton = new JButton("切换后新建的按钮");
-            if (!(probeButton.getUI() instanceof com.wmp.downloader.tools.ui.fluent.RevealButtonUI)) {
+            if (!(probeButton.getUI() instanceof RevealButtonUI)) {
                 problems.add("主题切换后新建的按钮没有拿到 RevealButtonUI，而是 "
                         + probeButton.getUI().getClass().getName());
             }
