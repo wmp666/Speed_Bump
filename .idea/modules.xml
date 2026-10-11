@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/Speed_Bump.iml" filepath="$PROJECT_DIR$/Speed_Bump.iml" />
       <module fileurl="file://$PROJECT_DIR$/Speed_Bump_Fluent/Speed_Bump_Fluent.iml" filepath="$PROJECT_DIR$/Speed_Bump_Fluent/Speed_Bump_Fluent.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/WindowMask.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/WindowMask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Speed_Bump_Plugin/WingetUI/WingetUI.iml" filepath="$PROJECT_DIR$/../Speed_Bump_Plugin/WingetUI/WingetUI.iml" />
     </modules>
   </component>
 </project>

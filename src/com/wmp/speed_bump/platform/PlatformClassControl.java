@@ -52,7 +52,12 @@ public class PlatformClassControl {
     }
 
     public enum Type{
-        UI, BACKGROUND, BACKGROUND_SIMPLE
+        // swing, android
+        UI,
+        // "win", "mac", "linux", "android"
+        BACKGROUND,
+        // pc, phone
+        BACKGROUND_SIMPLE
     }
 
 

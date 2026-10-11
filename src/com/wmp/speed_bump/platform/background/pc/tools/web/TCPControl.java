@@ -1,24 +1,24 @@
-package com.wmp.downloader.tools.web;
+package com.wmp.speed_bump.platform.background.pc.tools.web;
 
 import com.wmp.downloader.Run;
-import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
+import com.wmp.speed_bump.common.background.tools.StringFormat;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class TCPControl {
+public class TCPControl implements com.wmp.speed_bump.common.background.tools.web.TCPControl {
 
-    private static final SBLogger logger = SBLogger.getLogger(TCPControl.class);
+    private static final SBLogger logger = SBLogger.getLogger(com.wmp.speed_bump.common.background.tools.web.TCPControl.class);
 
     private static int port = Integer.parseInt(DataControl.get("port", "5465"));
 
     private static Thread serverThread;
 
-    public static boolean isHasServer() throws Exception{
+    public boolean isHasServer() throws Exception{
         if (Run.argList.contains("-noUseTCPServer")) return false;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             // 能成功绑定，说明端口空闲
@@ -29,7 +29,7 @@ public class TCPControl {
         }
     }
 
-    public static void startServer() throws Exception{
+    public void startServer() throws Exception{
         if (Run.argList.contains("-noUseTCPServer")) return;
         if (isHasServer()) {
             logger.warn("已存在服务端");
@@ -51,11 +51,11 @@ public class TCPControl {
                                 if (Downloader.mainFrame != null) {
                                     Downloader.mainFrame.showLinkDetectedDialog(TaskInfo);
                                 }else{
-                                    JOptionPane.showMessageDialog(null, "服务端未启动,请稍后重试!", StringFormat.translate("warn"), JOptionPane.WARNING_MESSAGE);
+                                    logger.error("主窗口异常，无法打开");
                                 }
 
                             }
-                });
+                        });
             } catch (Exception e) {
                 logger.error("服务端创建失败");
                 JOptionPane.showMessageDialog(null, "服务端创建失败，建议重启程序", StringFormat.translate("error"), JOptionPane.ERROR_MESSAGE);
@@ -68,7 +68,7 @@ public class TCPControl {
      * @param message 信息
      * @return 状态码：-1 - 没有服务端, 0 - 成功, 1 - 发送失败
      */
-    public static int sendToServer(String message) throws Exception{
+    public int sendToServer(String message) throws Exception{
         if (Run.argList.contains("-noUseTCPServer")) return -1;
         if (!isHasServer()) {
             logger.warn("未启动服务，无法发送信息");
@@ -83,8 +83,4 @@ public class TCPControl {
         }
     }
 
-    static void main() throws Exception {
-        var msg = IO.readln("message: ");
-        System.out.println(TCPControl.sendToServer(msg));
-    }
 }

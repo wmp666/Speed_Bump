@@ -2,7 +2,7 @@ package com.wmp.downloader;
 
 import com.wmp.speed_bump.common.UIStart;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
-import com.wmp.downloader.tools.web.TCPControl;
+import com.wmp.speed_bump.common.background.tools.web.TCPControl;
 import com.wmp.speed_bump.common.ui.PreLoadDialog;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 
@@ -34,7 +34,7 @@ public class Run {
                     if (!first.startsWith("-")){
                         linkPath = first;
                         try {
-                            var code = TCPControl.sendToServer("createTask:" + linkPath);
+                            var code = TCPControl.INSTANCE.sendToServer("createTask:" + linkPath);
                             if (code == 1) {
                                 throw new Exception("消息发送失败: " + linkPath);
                             } else if (code == 0) {
@@ -51,8 +51,8 @@ public class Run {
                 }
             }
             try {
-                if (TCPControl.isHasServer()) {
-                    TCPControl.sendToServer("show");
+                if (TCPControl.INSTANCE.isHasServer()) {
+                    TCPControl.INSTANCE.sendToServer("show");
                     System.exit(0);
                 }
             } catch (Exception e) {
