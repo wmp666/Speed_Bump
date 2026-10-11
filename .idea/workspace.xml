@@ -9,20 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="将项目更换至新系统&#10;修复任务页加载问题&#10;将部分文件迁移至NutJam下">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/WingetUI_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/web/TCPControl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPControl.java" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="将部分文件迁移至NutJam下">
       <change afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/WingetUI/WingetUI.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPControl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/web/TCPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/PlatformClassControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/PlatformClassControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPControl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/.idea/modules.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -384,7 +373,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="增加拖入导入拓展&#10;将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="。。。" />
@@ -409,7 +397,8 @@
     <MESSAGE value="跟进新架构（IconControl，日志输出）" />
     <MESSAGE value="更新BusyLabelUI&#10;修复部分问题" />
     <MESSAGE value="将项目更换至新系统&#10;修复任务页加载问题&#10;将部分文件迁移至NutJam下" />
-    <option name="LAST_COMMIT_MESSAGE" value="将项目更换至新系统&#10;修复任务页加载问题&#10;将部分文件迁移至NutJam下" />
+    <MESSAGE value="将部分文件迁移至NutJam下" />
+    <option name="LAST_COMMIT_MESSAGE" value="将部分文件迁移至NutJam下" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

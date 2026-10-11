@@ -52,13 +52,16 @@ public class TCPControl implements com.wmp.speed_bump.common.background.tools.we
                                     Downloader.mainFrame.showLinkDetectedDialog(TaskInfo);
                                 }else{
                                     logger.error("主窗口异常，无法打开");
+                                    //TODO: 迁移JOptionPane为通用UI类
+                                    //JOptionPane.showMessageDialog(null, "服务端未启动,请稍后重试!", StringFormat.translate("warn"), JOptionPane.WARNING_MESSAGE);
                                 }
 
                             }
                         });
             } catch (Exception e) {
                 logger.error("服务端创建失败");
-                JOptionPane.showMessageDialog(null, "服务端创建失败，建议重启程序", StringFormat.translate("error"), JOptionPane.ERROR_MESSAGE);
+                //TODO: 迁移JOptionPane为通用UI类
+                //JOptionPane.showMessageDialog(null, "服务端创建失败，建议重启程序", StringFormat.translate("error"), JOptionPane.ERROR_MESSAGE);
             }
         });
     }
