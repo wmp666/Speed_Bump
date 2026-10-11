@@ -1,0 +1,76 @@
+name: Publish to winget
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "要提交到 winget 的版本号（例如 0.4.6.0）"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: winget-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  WINGET_ID: WMP.SpeedBump
+  INSTALLER_ARCH: x86
+  ASSET_PATTERN: "Speed_Bump_Setup_*.exe"
+
+jobs:
+  submit:
+    runs-on: windows-latest
+    steps:
+      - name: Resolve version and installer URL
+        id: info
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          TAG: ${{ github.event.release.tag_name }}
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+        run: |
+          $version = if ($env:EVENT_NAME -eq 'release') { $env:TAG } else { $env:INPUT_VERSION }
+          $version = $version.Trim().TrimStart('v')
+          if (-not $version) { throw '无法确定版本号。' }
+          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+
+          $url = $null
+          foreach ($tag in @($version, "v$version")) {
+            $raw = gh api "repos/$env:GITHUB_REPOSITORY/releases/tags/$tag" 2>$null
+            if ($LASTEXITCODE -ne 0 -or -not $raw) { continue }
+            $asset = ($raw | ConvertFrom-Json).assets |
+              Where-Object { $_.name -like $env:ASSET_PATTERN } |
+              Select-Object -First 1
+            if ($asset) { $url = $asset.browser_download_url; break }
+          }
+          if (-not $url) { throw "在版本 $version 的 Release 里找不到匹配 '$env:ASSET_PATTERN' 的安装包。" }
+
+          Write-Host "version = $version"
+          Write-Host "url     = $url"
+          "url=$url" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+
+      - name: Download wingetcreate
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri 'https://github.com/microsoft/winget-create/releases/latest/download/wingetcreate.exe' -OutFile 'wingetcreate.exe'
+
+      - name: Submit update to microsoft/winget-pkgs
+        shell: pwsh
+        env:
+          WINGET_TOKEN: ${{ secrets.WINGET_TOKEN }}
+          VERSION: ${{ steps.info.outputs.version }}
+          URL: ${{ steps.info.outputs.url }}
+        run: |
+          if (-not $env:WINGET_TOKEN) { throw '缺少 secrets.WINGET_TOKEN。' }
+          .\wingetcreate.exe update $env:WINGET_ID `
+            --urls "$env:URL|$env:INSTALLER_ARCH" `
+            --version $env:VERSION `
+            --token $env:WINGET_TOKEN `
+            --submit
+          if ($LASTEXITCODE -ne 0) { throw "wingetcreate 退出码 $LASTEXITCODE" }

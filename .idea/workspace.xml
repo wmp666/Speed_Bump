@@ -9,10 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="将部分文件迁移至NutJam下">
-      <change afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/WingetUI/WingetUI.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="同步数据">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.installer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.installer.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.locale.en-US.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.locale.en-US.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.locale.zh-CN.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.locale.zh-CN.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -373,7 +375,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="增加拖入导入拓展&#10;将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
     <MESSAGE value="。。。" />
     <MESSAGE value="测试：增加了一个Mica材质（作用于FunctionDialog）" />
@@ -398,7 +399,8 @@
     <MESSAGE value="更新BusyLabelUI&#10;修复部分问题" />
     <MESSAGE value="将项目更换至新系统&#10;修复任务页加载问题&#10;将部分文件迁移至NutJam下" />
     <MESSAGE value="将部分文件迁移至NutJam下" />
-    <option name="LAST_COMMIT_MESSAGE" value="将部分文件迁移至NutJam下" />
+    <MESSAGE value="同步数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="同步数据" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

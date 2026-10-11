@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.locale.1.12.0.schema.json
 PackageIdentifier: WMP.SpeedBump
 PackageVersion: 0.4.5.1
 PackageLocale: zh-CN
@@ -15,4 +16,4 @@ Tags:
   - download-manager
   - java
 ManifestType: locale
-ManifestVersion: 1.9.0
+ManifestVersion: 1.12.0
