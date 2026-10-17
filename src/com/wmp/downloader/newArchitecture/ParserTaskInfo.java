@@ -135,7 +135,7 @@ public class ParserTaskInfo {
 
         // 6. 把「开发版本不匹配」「推荐平台不匹配」的拓展合并成一个勾选弹窗，
         //    由用户一次决定哪些拓展本次继续加载，哪些跳过
-        Set<File> skippedJars = ParserCompatibilityDialog.confirmSkips(collectConflicts(candidates));
+        Set<File> skippedJars = Run.argList.contains("-ignorePluginVAP")?new TreeSet<>():ParserCompatibilityDialog.confirmSkips(collectConflicts(candidates));
 
         // 7. 加载用户确认保留的解析器
         for (JarParser candidate : candidates) {

@@ -9,11 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="同步数据">
+    <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="增加-ignorePluginVAP默认同意兼容问题拓展">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.installer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/manifests/w/WMP/SpeedBump/0.4.5.1/WMP.SpeedBump.installer.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/web/TCPControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/web/TCPControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/文档/减速带更新.md" beforeDir="false" afterPath="$PROJECT_DIR$/文档/减速带更新.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,63 +95,64 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;false&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;261&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;306&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/Image_Converter/lib&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15426998&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.26498002&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;应用程序.BTTest.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.BiliVideoInfo.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.BilibiliQRLoginWithJsoup.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.BilibiliUserInfo.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.ConvergenceTool.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.CursorTest.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.DraggablePanel.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.FTPDownloader.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.FileDialogTest.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.FluentApp.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.FunctionDialog.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.GetMagnet3.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.GetSupportFormat.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.GopeedClient.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.MagnetToTorrent.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.Run Show Welcome.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.Run.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.TCPControl.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.TaskPaneContainerDemo.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.Test.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.TestControlDialog.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.TikTokDownloader.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.ToastMessage.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.VideoInfoReader.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "261",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "306",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/Image_Converter/lib",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/21348/Desktop/吴鹤轩/Java/DownLoader_plugin/BiliParser/src/Main.java",
+    "project.structure.last.edited": "工件",
+    "project.structure.proportion": "0.15426998",
+    "project.structure.side.proportion": "0.26498002",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "应用程序.BTTest.executor": "Run",
+    "应用程序.BiliVideoInfo.executor": "Run",
+    "应用程序.BilibiliQRLoginWithJsoup.executor": "Run",
+    "应用程序.BilibiliUserInfo.executor": "Run",
+    "应用程序.ConvergenceTool.executor": "Run",
+    "应用程序.CursorTest.executor": "Run",
+    "应用程序.DraggablePanel.executor": "Run",
+    "应用程序.FTPDownloader.executor": "Run",
+    "应用程序.FileDialogTest.executor": "Run",
+    "应用程序.FluentApp.executor": "Run",
+    "应用程序.FunctionDialog.executor": "Run",
+    "应用程序.GetMagnet3.executor": "Run",
+    "应用程序.GetSupportFormat.executor": "Run",
+    "应用程序.GopeedClient.executor": "Run",
+    "应用程序.MagnetToTorrent.executor": "Run",
+    "应用程序.Run Background.executor": "Run",
+    "应用程序.Run Show Welcome.executor": "Run",
+    "应用程序.Run.executor": "Run",
+    "应用程序.TCPControl.executor": "Run",
+    "应用程序.TaskPaneContainerDemo.executor": "Run",
+    "应用程序.Test.executor": "Run",
+    "应用程序.TestControlDialog.executor": "Run",
+    "应用程序.TikTokDownloader.executor": "Run",
+    "应用程序.ToastMessage.executor": "Run",
+    "应用程序.VideoInfoReader.executor": "Run"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\21348\Desktop\吴鹤轩\Java\DownLoader_plugin\Image_Converter\lib" />
@@ -174,7 +175,7 @@
       <recent name="com.wmp.downloader.ui.task.createTask" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.Run">
+  <component name="RunManager" selected="应用程序.Run Background">
     <configuration name="FileDialogTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.FileDialogTest" />
       <module name="Speed_Bump" />
@@ -194,6 +195,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.wmp.speedbump.fluent.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run Background" type="Application" factoryName="Application" singleton="false">
+      <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.Run" />
+      <module name="Speed_Bump" />
+      <option name="PROGRAM_PARAMETERS" value="-noUseTCPServer -background -ignorePluginVAP" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wmp.downloader.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -307,6 +322,7 @@
     </configuration>
     <list>
       <item itemvalue="应用程序.Run Show Welcome" />
+      <item itemvalue="应用程序.Run Background" />
       <item itemvalue="应用程序.FluentApp" />
       <item itemvalue="应用程序.Test" />
       <item itemvalue="应用程序.FileDialogTest" />
@@ -374,8 +390,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加拖入导入拓展&#10;将背景拓展到标题栏&#10;测试：增加了一个Mica材质（作用于PreloadDialog）" />
-    <MESSAGE value="。。。" />
     <MESSAGE value="测试：增加了一个Mica材质（作用于FunctionDialog）" />
     <MESSAGE value="修复默认值问题" />
     <MESSAGE value="重写TrayIcon右键菜单" />
@@ -399,7 +413,9 @@
     <MESSAGE value="将项目更换至新系统&#10;修复任务页加载问题&#10;将部分文件迁移至NutJam下" />
     <MESSAGE value="将部分文件迁移至NutJam下" />
     <MESSAGE value="同步数据" />
-    <option name="LAST_COMMIT_MESSAGE" value="同步数据" />
+    <MESSAGE value="修复奇怪的问题" />
+    <MESSAGE value="增加-ignorePluginVAP默认同意兼容问题拓展" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加-ignorePluginVAP默认同意兼容问题拓展" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

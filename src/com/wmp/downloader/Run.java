@@ -12,7 +12,7 @@ import java.util.List;
 public class Run {
     private static final SBLogger logger = SBLogger.getLogger(Run.class);
 
-    public static String VERSION = "0.5.3.1";
+    public static String VERSION = "0.5.4";
 
     public static String PLUGIN_SUPPORT_VERSION = "2.0.0";
 
@@ -66,14 +66,18 @@ public class Run {
         //走 common 层的 UIStart 接口（平台实现在 platform.ui.swing），不直接引用 Swing 实现。
         UIStart.INSTANCE.prepareUi();
 
+        boolean showUi = !argList.contains("-background");
+
         var preloadDialog = PreLoadDialog.INSTANCE_CREATOR.create();
-        preloadDialog.showDialog();
-
-
+        if (showUi){
+            preloadDialog.showDialog();
+        }
 
         UIStart.INSTANCE.show(argList, linkPath);
 
-        preloadDialog.disposeDialog();
+        if (showUi){
+            preloadDialog.disposeDialog();
+        }
 
 
     }
