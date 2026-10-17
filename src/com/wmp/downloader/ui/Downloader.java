@@ -88,7 +88,7 @@ public class Downloader extends JFrame implements WindowListener{
 
     };
 
-    public JLayeredPane layeredPane = new JLayeredPane();
+    public final JLayeredPane layeredPane = new JLayeredPane();
     public BackgroundPanel backgroundPanel;
     public JPanel backgroundPreviewPanel;
     public Timer backgroundupdateTimer = new Timer(100, e -> {
@@ -392,7 +392,7 @@ public class Downloader extends JFrame implements WindowListener{
      *
      * <ol>
      *   <li>选中事件运行在 EDT 上，所以先 <b>同步</b> 显示遮罩并启动动画；</li>
-     *   <li>再交给 {@link javax.swing.SwingWorker#doInBackground()} 在工作线程里构建组件
+     *   <li>再交给 {@link SwingWorker#doInBackground()} 在工作线程里构建组件
      *       （构建过程耗时长，挤在 EDT 上会连转圈动画一起卡死）；</li>
      *   <li>{@link SwingWorker#done()} 一定在 EDT 上、且一定在 doInBackground
      *       完成 <b>之后</b> 才被调用，在这里取下遮罩并露出真正的内容。</li>
@@ -643,6 +643,7 @@ public class Downloader extends JFrame implements WindowListener{
 
     // FIX 新增方法：更新UIPanel和背景面板的边界
     public void updateChildBounds() {
+        if (layeredPane == null) return;
         int w = layeredPane.getWidth();
         int h = layeredPane.getHeight();
         if (w > 0 && h > 0) {
