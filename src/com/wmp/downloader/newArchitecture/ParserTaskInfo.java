@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.wmp.downloader.Run;
+import com.wmp.speed_bump.platform.background.pc.Run;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
 import com.wmp.downloader.newArchitecture.ui.task.bt.BTParser;
@@ -12,7 +12,7 @@ import com.wmp.downloader.newArchitecture.ui.task.http.HTTPParser;
 import com.wmp.speed_bump.common.background.tools.platform.GetPlatformName;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
-import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.ui.ToastMessage;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 import org.jsoup.Connection;

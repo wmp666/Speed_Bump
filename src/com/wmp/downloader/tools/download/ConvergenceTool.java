@@ -2,7 +2,7 @@ package com.wmp.downloader.tools.download;
 
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
-import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.ui.ToastMessage;
 import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 

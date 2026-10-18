@@ -7,7 +7,7 @@ import com.frostwire.jlibtorrent.alerts.MetadataReceivedAlert;
 import com.frostwire.jlibtorrent.swig.create_torrent;
 import com.frostwire.jlibtorrent.swig.entry;
 import com.frostwire.jlibtorrent.swig.error_code;
-import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.ui.ToastMessage;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 

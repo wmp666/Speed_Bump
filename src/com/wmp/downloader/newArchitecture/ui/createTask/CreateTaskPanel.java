@@ -9,7 +9,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFileInf
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.LinkFolderInfoPanel;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
-import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.ui.ToastMessage;
 import com.wmp.speed_bump.platform.ui.swing.components.PathSelectionPanel;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 

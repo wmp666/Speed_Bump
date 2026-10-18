@@ -5,7 +5,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.ui.task.github.GithubParser;
 import com.wmp.downloader.newArchitecture.ui.task.http.HTTPDownloadTask;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
-import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.ui.ToastMessage;
 
 public class PluginParserGithubDownloadTask extends GithubParser {
     private final Runnable run;

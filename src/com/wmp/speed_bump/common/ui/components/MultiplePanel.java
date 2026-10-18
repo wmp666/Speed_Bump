@@ -50,17 +50,29 @@ public abstract class MultiplePanel {
     /**
      * 登记当前平台的面板。
      *
+     * @param uiName 添加的面板所属UI
      * @param panel 面板实例，<b>不能为 {@code null}</b>
      * @throws IllegalStateException 传了 {@code null}——十有八九是踩了类注释里说的
      *                               「字段初始化器晚于 {@code createPanel()}」那个坑
      */
-    protected final void putPanel(Object panel) {
+    protected final void putPanel(String uiName, Object panel) {
         if (panel == null) {
             throw new IllegalStateException(getClass().getSimpleName()
                     + ".createPanel() 登记了 null：注意 createPanel() 是在构造器里被调用的，"
                     + "此时子类的字段初始化器还没执行，字段必须在 createPanel() 内部赋值");
         }
-        multiplePaneMap.put(GetPlatformName.getUIName(), panel);
+        multiplePaneMap.put(uiName, panel);
+    }
+
+    /**
+     * 登记当前平台的面板。
+     *
+     * @param panel 面板实例，<b>不能为 {@code null}</b>
+     * @throws IllegalStateException 传了 {@code null}——十有八九是踩了类注释里说的
+     *                               「字段初始化器晚于 {@code createPanel()}」那个坑
+     */
+    protected final void putPanel(Object panel) {
+        putPanel(GetPlatformName.getUIName(), panel);
     }
 
     /**
@@ -72,4 +84,24 @@ public abstract class MultiplePanel {
     public final <T> T getPanel() {
         return (T) multiplePaneMap.get(GetPlatformName.getUIName());
     }
+
+    public static MultiplePanel quicklyCreate(QuicklyCreator creator){
+        return new MultiplePanel() {
+            @Override
+            protected void createPanel() {
+                var info = creator.create();
+                putPanel(info.uiName, info.panel);
+            }
+        };
+    }
+
+    public interface QuicklyCreator{
+        /**
+         *
+         * @return 返回值中 {@code uiName} 为null时，默认使用当前正在使用UI名
+         */
+        QuicklyCreatorInfo create();
+    }
+
+    public record QuicklyCreatorInfo(String uiName, Object panel){}
 }

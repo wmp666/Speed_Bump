@@ -1,0 +1,48 @@
+name: 改进建议与新的设想
+description: 提交一个改进建议或新功能设想，帮助项目变得更好
+title: "[建议] "
+labels: ["enhancement", "suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你为项目提出建议！请根据以下提示填写相关信息。
+
+  - type: textarea
+    id: platforms
+    attributes:
+      label: ① 该功能适用于哪些平台？
+      description: 请描述该建议适用的平台，例如：Windows, macOS, Linux, Web, iOS, Android 等
+      placeholder: 例如：Windows, macOS...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: related_content
+    attributes:
+      label: ② 与哪一内容相关？
+      description: 请勾选相关的内容
+      options:
+        - label: PC端
+        - label: UI
+        - label: 交互
+        - label: 内置浏览器
+        - label: 其他（请在主体内容中注明）
+
+  - type: textarea
+    id: main_content
+    attributes:
+      label: ③ 主体内容
+      description: 请详细写下你的想法、建议、详细描述。开发者会根据你的建议进行考虑。
+      placeholder: 详细描述你的设想或建议...
+    validations:
+      required: true
+
+  - type: textarea
+    id: remarks
+    attributes:
+      label: ④ 备注
+      description: 你认为这个想法/建议需要什么帮助/资源？（有利于开发者采纳）
+      placeholder: 可选填...
+    validations:
+      required: false

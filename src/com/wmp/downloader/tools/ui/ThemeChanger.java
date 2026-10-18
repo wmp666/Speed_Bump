@@ -10,6 +10,7 @@ import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
+import com.wmp.speed_bump.common.ui.tools.SystemThemeDetector;
 
 import javax.swing.*;
 import java.awt.*;

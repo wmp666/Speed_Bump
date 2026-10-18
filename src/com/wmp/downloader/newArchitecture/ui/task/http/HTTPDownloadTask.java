@@ -6,7 +6,7 @@ import com.wmp.downloader.newArchitecture.abstractTask.downloadTask.StatusTipPan
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import com.wmp.downloader.tools.download.URLDownloadTool;
-import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: com.wmp.downloader.Run
+Main-Class: com.wmp.speed_bump.platform.background.pc.Run
 Class-Path: jlibtorrent-2.0.12.9.jar core-3.5.3.jar jlibtorrent-windows-
  2.0.12.9.jar commons-net-3.9.0.jar modal-dialog-2.6.1.jar flatlaf-3.7.1
  .jar flatlaf-extras-3.7.1.jar jsvg-2.0.0.jar miglayout-swing-5.3.jar mi

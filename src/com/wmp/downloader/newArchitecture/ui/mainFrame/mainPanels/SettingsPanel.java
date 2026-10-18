@@ -1,8 +1,5 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
-import com.formdev.flatlaf.icons.FlatAnimatedIcon;
 import com.formdev.flatlaf.util.SystemFileChooser;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
@@ -10,7 +7,7 @@ import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.platform.AutoStart;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
-import com.wmp.downloader.tools.ui.ToastMessage;
+import com.wmp.speed_bump.common.ui.ToastMessage;
 import com.wmp.downloader.tools.ui.UITools;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.platform.ui.swing.components.FileAssociationPanel;
@@ -22,7 +19,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;

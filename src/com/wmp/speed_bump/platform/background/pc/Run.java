@@ -1,4 +1,4 @@
-package com.wmp.downloader;
+package com.wmp.speed_bump.platform.background.pc;
 
 import com.wmp.speed_bump.common.UIStart;
 import com.wmp.speed_bump.common.background.tools.StringFormat;

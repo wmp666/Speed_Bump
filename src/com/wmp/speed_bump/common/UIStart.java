@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UIStart {
     UIStart INSTANCE =
-            (UIStart) PlatformClassControl.getCreator("com.wmp.speed_bump.platform.ui.%s.UIStart", PlatformClassControl.Type.UI).create();
+             PlatformClassControl.<UIStart>getCreator("com.wmp.speed_bump.platform.ui.%s.UIStart", PlatformClassControl.Type.UI).create();
 
     /**
      * 在任何窗口（含 {@code PreLoadDialog} 这类启动早期窗口）创建之前完成界面准备：
