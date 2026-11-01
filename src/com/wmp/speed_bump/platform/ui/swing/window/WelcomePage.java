@@ -13,6 +13,7 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -141,7 +142,7 @@ public class WelcomePage extends JDialog
         addPage(KEY_SECTION_GENERAL, generalPage);
 
         setTitle(pageTitle());
-        setIconImage(IconControl.INSTANCE.getIcon("icon").getImage());
+        setIconImage(IconControl.<ImageIcon>getIcon("icon").getImage());
         setModal(true);
         setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -231,7 +232,7 @@ public class WelcomePage extends JDialog
     @Override
     public void dispose() {
         if (iconTasks != null) {
-            IconControl.INSTANCE.removeInDynamicConverter(iconTasks);
+            IconControl.removeInDynamicConverter(iconTasks);
             iconTasks = null;
         }
         if (themeTasks != null) {
@@ -395,8 +396,8 @@ public class WelcomePage extends JDialog
     // ==================================================================
 
     private void registerThemeHooks() {
-        iconTasks = IconControl.INSTANCE.addInDynamicConverter(
-                () -> iconLabel.setIcon(IconControl.INSTANCE.getIcon("icon", ICON_SIZE)));
+        iconTasks = IconControl.addInDynamicConverter(
+                () -> iconLabel.setIcon(IconControl.getIcon("icon", ICON_SIZE)));
         themeTasks = ThemeChanger.addInDynamicConverter(this::refreshWindow);
 
         skipButton.addActionListener(e -> close(false));

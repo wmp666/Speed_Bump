@@ -1,4 +1,4 @@
-package com.wmp.speed_bump.common.background.tools.devtools;
+package com.wmp.speed_bump.platform.background.pc.tools.devtools;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;

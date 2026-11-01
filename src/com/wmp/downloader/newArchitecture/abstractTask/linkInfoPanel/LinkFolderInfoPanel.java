@@ -80,10 +80,10 @@ public abstract class LinkFolderInfoPanel extends AbstractLinkInfoPanel {
 
         ThemeChanger.addInDynamicConverter(task);
 
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> IconLabel.setIcon(IconControl.INSTANCE.getIcon("folder", folderNameLabel.getFont().getSize())),
-                () -> fileChooseButton.setIcon(IconControl.INSTANCE.getIcon("choose", folderNameLabel.getFont().getSize())),
-                () -> editButton.setIcon(IconControl.INSTANCE.getIcon("edit", folderNameLabel.getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> IconLabel.setIcon(IconControl.getIcon("folder", folderNameLabel.getFont().getSize())),
+                () -> fileChooseButton.setIcon(IconControl.getIcon("choose", folderNameLabel.getFont().getSize())),
+                () -> editButton.setIcon(IconControl.getIcon("edit", folderNameLabel.getFont().getSize()))
         );
         folderNameLabel.setText(folderName);
         modeLabel.setText(mode);

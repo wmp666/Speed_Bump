@@ -9,13 +9,13 @@ import java.awt.*;
 
 public class StatusTipPanel extends JPanel {
 
-    public static final Creator DOWNLOAD_SIZE_CREATOR = () -> new StatusTipPanel(IconControl.INSTANCE.getIcon("download_size"), "0Byte", true);
-    public static final Creator DOWNLOAD_SPEED_CREATOR = () -> new StatusTipPanel(IconControl.INSTANCE.getIcon("download_speed"), "0Byte/s", true);
-    public static final Creator SHARE_SIZE_CREATOR = () -> new StatusTipPanel(IconControl.INSTANCE.getIcon("share_size"), "0Byte", true);
-    public static final Creator SHARE_SPEED_CREATOR = () -> new StatusTipPanel(IconControl.INSTANCE.getIcon("share_speed"), "0Byte/s", true);
-    public static final Creator FILE_MERGE_CREATOR = () -> new StatusTipPanel(IconControl.INSTANCE.getIcon("file_merge"), "0Byte", true);
-    public static final Creator DOWNLOAD_FAILED_CREATOR = () -> new StatusTipPanel(IconControl.INSTANCE.getIcon("download_failed"), StringFormat.translate("task.download_task.download_failed"), false);
-    public static final Creator DOWNLOAD_SUCCESS_CREATOR = () -> new StatusTipPanel(IconControl.INSTANCE.getIcon("download_success"), StringFormat.translate("task.download_task.download_success"), false);
+    public static final Creator DOWNLOAD_SIZE_CREATOR = () -> new StatusTipPanel(IconControl.getIcon("download_size"), "0Byte", true);
+    public static final Creator DOWNLOAD_SPEED_CREATOR = () -> new StatusTipPanel(IconControl.getIcon("download_speed"), "0Byte/s", true);
+    public static final Creator SHARE_SIZE_CREATOR = () -> new StatusTipPanel(IconControl.getIcon("share_size"), "0Byte", true);
+    public static final Creator SHARE_SPEED_CREATOR = () -> new StatusTipPanel(IconControl.getIcon("share_speed"), "0Byte/s", true);
+    public static final Creator FILE_MERGE_CREATOR = () -> new StatusTipPanel(IconControl.getIcon("file_merge"), "0Byte", true);
+    public static final Creator DOWNLOAD_FAILED_CREATOR = () -> new StatusTipPanel(IconControl.getIcon("download_failed"), StringFormat.translate("task.download_task.download_failed"), false);
+    public static final Creator DOWNLOAD_SUCCESS_CREATOR = () -> new StatusTipPanel(IconControl.getIcon("download_success"), StringFormat.translate("task.download_task.download_success"), false);
 
     private DynamicConverterTask[] dynamicConverterTask;
     private JLabel textLabel = new JLabel();
@@ -38,7 +38,7 @@ public class StatusTipPanel extends JPanel {
                     iconLabel.setIcon(new ImageIcon(icon.getImage().getScaledInstance(textLabel.getFont().getSize(), textLabel.getFont().getSize(), Image.SCALE_SMOOTH)));
                 }
         };
-        IconControl.INSTANCE.addInDynamicConverter(
+        IconControl.addInDynamicConverter(
                 dynamicConverterTask
         );
         this.add(iconLabel, BorderLayout.WEST);
@@ -54,7 +54,7 @@ public class StatusTipPanel extends JPanel {
     }
 
     public void clear(){
-        IconControl.INSTANCE.removeInDynamicConverter(dynamicConverterTask);
+        IconControl.removeInDynamicConverter(dynamicConverterTask);
     }
 
     public interface Creator extends com.wmp.speed_bump.common.background.tools.Creator<StatusTipPanel> {

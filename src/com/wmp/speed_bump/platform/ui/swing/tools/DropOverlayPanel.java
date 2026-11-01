@@ -154,7 +154,7 @@ public class DropOverlayPanel extends JPanel {
     private Icon loadIcon() {
         if (iconKey == null) return null;
         try {
-            return IconControl.INSTANCE.getIcon(iconKey, ICON_SIZE);
+            return IconControl.getIcon(iconKey, ICON_SIZE);
         } catch (Exception _) {
             return null;
         }

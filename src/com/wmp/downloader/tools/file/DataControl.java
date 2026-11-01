@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson2.JSONArray;
 import com.formdev.flatlaf.util.SystemFileChooser;
-import com.wmp.speed_bump.platform.background.pc.Run;
+import com.wmp.speed_bump.common.background.tools.AppInfo;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
@@ -164,7 +164,7 @@ public class DataControl {
     }
 
     private static void initProcessingData(String key, Object value, HashMap<String, Object> tempDataMap) {
-        tempDataMap.putIfAbsent("version", Run.VERSION);
+        tempDataMap.putIfAbsent("version", AppInfo.VERSION);
         tempDataMap.putIfAbsent("theme_type", "light");
         // 处理主题数据
         if (key.equals("theme")) {

@@ -53,9 +53,9 @@ public abstract class LinkFileInfoPanel extends AbstractLinkInfoPanel {
                 task
         );
 
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> nameLabel.setIcon(IconControl.INSTANCE.getIcon("file", nameLabel.getFont().getSize())),
-                () -> editButton.setIcon(IconControl.INSTANCE.getIcon("edit", nameLabel.getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> nameLabel.setIcon(IconControl.getIcon("file", nameLabel.getFont().getSize())),
+                () -> editButton.setIcon(IconControl.getIcon("edit", nameLabel.getFont().getSize()))
         );
         nameLabel.setText(name);
         modeLabel.setText(mode);

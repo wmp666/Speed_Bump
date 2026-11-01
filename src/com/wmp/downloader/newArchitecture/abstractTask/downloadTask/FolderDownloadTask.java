@@ -14,6 +14,6 @@ public abstract class FolderDownloadTask extends AbstractTask {
 
     @Override
     protected ImageIcon getIcon(int size) {
-        return IconControl.INSTANCE.getIcon("folder", size);
+        return IconControl.getIcon("folder", size);
     }
 }

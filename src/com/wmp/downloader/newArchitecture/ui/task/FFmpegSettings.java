@@ -44,8 +44,8 @@ public class FFmpegSettings extends AbstractSpecialSettingsPage {
         this.add(mainPanel, BorderLayout.CENTER);
 
         //初始化图标
-        IconControl.INSTANCE.addInDynamicConverter(() -> {
-            downloadButton.setIcon(IconControl.INSTANCE.getIcon("link", downloadButton.getFont().getSize()));
+        IconControl.addInDynamicConverter(() -> {
+            downloadButton.setIcon(IconControl.getIcon("link", downloadButton.getFont().getSize()));
         });
 
         isUseHardwareAccelerationCheckBox.setSelected(DataControl.get("is_use_hardware_acceleration", true));

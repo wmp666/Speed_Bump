@@ -53,7 +53,7 @@ public class FileAssociationPanel extends JPanel{
                             .getScaledInstance(suffixLabel.getFont().getSize(), suffixLabel.getFont().getSize(), Image.SCALE_SMOOTH)));
         } catch (Exception e) {
             logger.error("", e);
-            suffixLabel.setIcon(IconControl.INSTANCE.getIcon("null", suffixLabel.getFont().getSize()));
+            suffixLabel.setIcon(IconControl.getIcon("null", suffixLabel.getFont().getSize()));
         }
 
         localIconPath = new File(DataControl.getDataPath(), "/file_icon/" + suffix + iconAssociation).getAbsolutePath();

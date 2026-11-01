@@ -2,6 +2,7 @@ package com.wmp.downloader.tools.update;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.wmp.speed_bump.common.background.tools.AppInfo;
 import com.wmp.speed_bump.platform.background.pc.Run;
 import com.wmp.speed_bump.common.background.tools.platform.GetPlatformName;
 import com.wmp.downloader.tools.file.DataControl;
@@ -63,8 +64,8 @@ public class GetUpdateInfo {
                         }
                     }
                 });
-                if (!targetUrl.get().isEmpty() && compareVersions(Run.VERSION, urlVersion) < 0) {
-                    var infoWithinInterval = getAllUpdateInfoWithinInterval(useGithubAccelerate, Run.VERSION, urlVersion);
+                if (!targetUrl.get().isEmpty() && compareVersions(AppInfo.VERSION, urlVersion) < 0) {
+                    var infoWithinInterval = getAllUpdateInfoWithinInterval(useGithubAccelerate, AppInfo.VERSION, urlVersion);
                     body = infoWithinInterval == null ? body : infoWithinInterval;
                     return new UpdateInfo(urlVersion, body, targetUrl.get());
                 } else if (targetUrl.get().isEmpty()) {
@@ -106,7 +107,7 @@ public class GetUpdateInfo {
                                         }
                                     }
                                     if (downloadUrl != null) {
-                                        if (compareVersions(Run.VERSION, tag) < 0) {
+                                        if (compareVersions(AppInfo.VERSION, tag) < 0) {
                                             foundVersion = tag;
                                             foundUrl = downloadUrl;
                                             break;
@@ -118,7 +119,7 @@ public class GetUpdateInfo {
                                 }
                             }
                             if (foundVersion != null) {
-                                var infoWithinInterval = getAllUpdateInfoWithinInterval(useGithubAccelerate, Run.VERSION, foundVersion);
+                                var infoWithinInterval = getAllUpdateInfoWithinInterval(useGithubAccelerate, AppInfo.VERSION, foundVersion);
                                 body = infoWithinInterval == null ? body : infoWithinInterval;
                                 return new UpdateInfo(foundVersion, body, foundUrl);
                             } else {
@@ -261,7 +262,7 @@ public class GetUpdateInfo {
                         var version = jsonObject.getString("tag_name");
                         // 只收集处于区间内的版本
                         if (isVersionInRange(version, startVersion, lastVersion)) {
-                            if (version.equals(Run.VERSION)) continue;
+                            if (version.equals(AppInfo.VERSION)) continue;
                             versionList.add(version);
                             infoList.add(jsonObject.getString("body"));
                         }

@@ -1,10 +1,9 @@
-package com.wmp.downloader.tools.ui;
+package com.wmp.speed_bump.platform.ui.swing.tools;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.wmp.speed_bump.common.ui.components.SBProgressBar;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-import raven.modal.utils.FlatLafStyleUtils;
 
 import javax.swing.*;
 import java.awt.*;

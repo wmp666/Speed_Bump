@@ -1,16 +1,9 @@
 package com.wmp.speed_bump.common.ui;
 
-import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.wmp.downloader.ui.FunctionDialog;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.ui.components.MultiplePanel;
 import com.wmp.speed_bump.platform.PlatformClassControl;
-import raven.modal.Toast;
-import raven.modal.toast.option.ToastOption;
-
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
-import java.awt.*;
 
 public interface ToastMessage {
 
@@ -110,22 +103,6 @@ public interface ToastMessage {
 
     static String showComponent(MultiplePanel component) {
         return showComponent(null, component);
-    }
-
-    private static JButton createCloseButton(ToastOption option, Runnable stop) {
-        Icon icon = option.getStyle().getCloseIcon();
-        if (icon == null) {
-            icon = new FlatSVGIcon("icon/close.svg", 0.3f);
-        }
-        JButton buttonClose = new JButton(icon);
-        buttonClose.setUI(new BasicButtonUI());
-        buttonClose.setOpaque(false);
-        buttonClose.setFocusable(false);
-        buttonClose.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonClose.setBorder(null);
-        buttonClose.setRolloverEnabled(false);
-        buttonClose.addActionListener(e -> stop.run());
-        return buttonClose;
     }
 
     //--------实现类----------

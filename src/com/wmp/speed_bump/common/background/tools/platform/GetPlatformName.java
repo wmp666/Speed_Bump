@@ -1,6 +1,5 @@
 package com.wmp.speed_bump.common.background.tools.platform;
 
-import com.wmp.downloader.tools.file.DataControl;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +52,7 @@ public class GetPlatformName {
 
     @Contract(pure = true)
     public static @NotNull String getUIName(){
-        return isAndroid() ? "android" : DataControl.get("ui.style", "swing");
+        return isAndroid() ? "android" : "swing";
     }
 
     @Contract(pure = true)

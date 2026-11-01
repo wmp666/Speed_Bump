@@ -39,8 +39,8 @@ public class StatusButton extends JButton {
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // ---------- 图标（动态转换） ----------
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> setIcon(IconControl.INSTANCE.getIcon(iconKey, getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> setIcon(IconControl.getIcon(iconKey, getFont().getSize()))
         );
 
         // ---------- 文本 ----------
@@ -111,8 +111,8 @@ public class StatusButton extends JButton {
     // ---------- 可选的便捷方法 ----------
     public void setIconKey(String iconKey) {
         this.iconKey = iconKey;
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> setIcon(IconControl.INSTANCE.getIcon(iconKey, getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> setIcon(IconControl.getIcon(iconKey, getFont().getSize()))
         );
         repaint();
     }

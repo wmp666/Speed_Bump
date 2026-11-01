@@ -2,6 +2,7 @@ package com.wmp.downloader.newArchitecture;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.wmp.speed_bump.common.background.tools.AppInfo;
 import com.wmp.speed_bump.platform.background.pc.Run;
 import com.wmp.downloader.newArchitecture.abstractTask.*;
 import com.wmp.downloader.newArchitecture.abstractTask.linkInfoPanel.AbstractLinkInfoPanel;
@@ -135,7 +136,7 @@ public class ParserTaskInfo {
 
         // 6. 把「开发版本不匹配」「推荐平台不匹配」的拓展合并成一个勾选弹窗，
         //    由用户一次决定哪些拓展本次继续加载，哪些跳过
-        Set<File> skippedJars = Run.argList.contains("-ignorePluginVAP")?new TreeSet<>():ParserCompatibilityDialog.confirmSkips(collectConflicts(candidates));
+        Set<File> skippedJars = AppInfo.argList.contains("-ignorePluginVAP")?new TreeSet<>():ParserCompatibilityDialog.confirmSkips(collectConflicts(candidates));
 
         // 7. 加载用户确认保留的解析器
         for (JarParser candidate : candidates) {
@@ -200,14 +201,14 @@ public class ParserTaskInfo {
             StringBuilder tooltip = new StringBuilder();
 
             //判断版本是否符合条件
-            if (!GetUpdateInfo.isVersionInRange(Run.PLUGIN_SUPPORT_VERSION,
+            if (!GetUpdateInfo.isVersionInRange(AppInfo.PLUGIN_SUPPORT_VERSION,
                     startVersion, lastVersion)) {
                 appendLine(title, String.format(
                         StringFormat.translate("plugins.load_warning.item_version"),
-                        id, startVersion, lastVersion, Run.PLUGIN_SUPPORT_VERSION));
+                        id, startVersion, lastVersion, AppInfo.PLUGIN_SUPPORT_VERSION));
                 appendLine(tooltip, String.format(
                         StringFormat.translate("load_local_parser.version_error"),
-                        jar, startVersion, lastVersion, Run.PLUGIN_SUPPORT_VERSION));
+                        jar, startVersion, lastVersion, AppInfo.PLUGIN_SUPPORT_VERSION));
             }
 
             //0-all 1-windows 2-linux 3-mac

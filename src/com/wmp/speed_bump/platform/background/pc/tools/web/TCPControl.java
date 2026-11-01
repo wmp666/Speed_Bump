@@ -1,5 +1,6 @@
 package com.wmp.speed_bump.platform.background.pc.tools.web;
 
+import com.wmp.speed_bump.common.background.tools.AppInfo;
 import com.wmp.speed_bump.platform.background.pc.Run;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.downloader.ui.Downloader;
@@ -17,7 +18,7 @@ public class TCPControl implements com.wmp.speed_bump.common.background.tools.we
     private static Thread serverThread;
 
     public boolean isHasServer() throws Exception{
-        if (Run.argList.contains("-noUseTCPServer")) return false;
+        if (AppInfo.argList.contains("-noUseTCPServer")) return false;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             // 能成功绑定，说明端口空闲
             return false;
@@ -28,7 +29,7 @@ public class TCPControl implements com.wmp.speed_bump.common.background.tools.we
     }
 
     public void startServer() throws Exception{
-        if (Run.argList.contains("-noUseTCPServer")) return;
+        if (AppInfo.argList.contains("-noUseTCPServer")) return;
         if (isHasServer()) {
             logger.warn("已存在服务端");
             return;
@@ -70,7 +71,7 @@ public class TCPControl implements com.wmp.speed_bump.common.background.tools.we
      * @return 状态码：-1 - 没有服务端, 0 - 成功, 1 - 发送失败
      */
     public int sendToServer(String message) throws Exception{
-        if (Run.argList.contains("-noUseTCPServer")) return -1;
+        if (AppInfo.argList.contains("-noUseTCPServer")) return -1;
         if (!isHasServer()) {
             logger.warn("未启动服务，无法发送信息");
             return -1;

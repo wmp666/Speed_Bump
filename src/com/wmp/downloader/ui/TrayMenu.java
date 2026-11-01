@@ -95,7 +95,7 @@ public class TrayMenu {
         exitItem = menu.addItem("power_switch", translate("frame.exit"), () -> System.exit(0));
 
         // 图标随主题 / 图标包变化刷新
-        iconTasks = IconControl.INSTANCE.addInDynamicConverter(
+        iconTasks = IconControl.addInDynamicConverter(
                 () -> menu.setHeaderIconKey("icon"),
                 () -> showItem.setIconKey("icon"),
                 () -> startAllItem.setIconKey("start"),
@@ -148,7 +148,7 @@ public class TrayMenu {
      */
     public void dispose() {
         menu.dispose();
-        IconControl.INSTANCE.removeInDynamicConverter(iconTasks);
+        IconControl.removeInDynamicConverter(iconTasks);
         iconTasks = new DynamicConverterTask[0];
     }
 

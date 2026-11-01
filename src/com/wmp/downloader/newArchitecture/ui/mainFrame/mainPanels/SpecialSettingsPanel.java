@@ -4,7 +4,7 @@ import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractSpecialSettingsPage;
 import com.wmp.downloader.newArchitecture.ui.task.FFmpegSettings;
 import com.wmp.speed_bump.common.ui.ToastMessage;
-import com.wmp.downloader.tools.ui.UITools;
+import com.wmp.speed_bump.platform.ui.swing.tools.UITools;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 

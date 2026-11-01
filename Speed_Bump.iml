@@ -6,7 +6,15 @@
       <sourceFolder url="file://$MODULE_DIR$/resource" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/out" />
-      <excludeFolder url="file://$MODULE_DIR$/out/减速带.iss" />
+      <excludeFolder url="file://$MODULE_DIR$/installer" />
+      <excludeFolder url="file://$MODULE_DIR$/%SystemDrive%" />
+      <excludeFolder url="file://$MODULE_DIR$/.build" />
+      <excludeFolder url="file://$MODULE_DIR$/.compilecheck" />
+      <excludeFolder url="file://$MODULE_DIR$/.compilecheck2" />
+      <excludeFolder url="file://$MODULE_DIR$/.wdesktop_tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/build-icons-jar.ps1" />
+      <excludeFolder url="file://$MODULE_DIR$/run-ui-selftest.ps1" />
+      <excludeFolder url="file://$MODULE_DIR$/减速带.iss" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

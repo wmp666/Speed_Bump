@@ -11,8 +11,6 @@ import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SettingsPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.SpecialSettingsPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels.TaskPanel;
 import com.wmp.downloader.newArchitecture.ui.mainFrame.testFrame.TestControlDialog;
-import com.wmp.downloader.tools.MicrosoftTranslator;
-import com.wmp.downloader.tools.MicrosoftTranslator.Language;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.background.tools.TestFunctionControl;
 import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
@@ -21,7 +19,7 @@ import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.speed_bump.platform.ui.swing.tools.LazyLoadOverlay;
 import com.wmp.speed_bump.common.ui.ToastMessage;
-import com.wmp.downloader.tools.ui.UITools;
+import com.wmp.speed_bump.platform.ui.swing.tools.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.speed_bump.platform.ui.swing.components.SearchTextField;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
@@ -138,8 +136,8 @@ public class Downloader extends JFrame implements WindowListener{
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> this.setIconImage(IconControl.INSTANCE.getIcon("icon", 256).getImage())
+        IconControl.addInDynamicConverter(
+                () -> this.setIconImage(IconControl.<ImageIcon>getIcon("icon", 256).getImage())
         );
         this.addWindowListener(this);
 
@@ -155,14 +153,14 @@ public class Downloader extends JFrame implements WindowListener{
         gbc.insets = new Insets(5, 0, 5, 0);    // 上下各 5px 间距
 
 
-        IconControl.INSTANCE.addInDynamicConverter(
+        IconControl.addInDynamicConverter(
                 () -> {
                     var size = mainTabbedPane.getFont().getSize();
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(downloaderPanel), IconControl.INSTANCE.getIcon("task", size));
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(settingsPanel), IconControl.INSTANCE.getIcon("settings", size));
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(SpecialSettingsPanel), IconControl.INSTANCE.getIcon("settings", size));
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(pluginParserControlPanel), IconControl.INSTANCE.getIcon("plugin", size));
-                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(aboutPanel), IconControl.INSTANCE.getIcon("about", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(downloaderPanel), IconControl.getIcon("task", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(settingsPanel), IconControl.getIcon("settings", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(SpecialSettingsPanel), IconControl.getIcon("settings", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(pluginParserControlPanel), IconControl.getIcon("plugin", size));
+                    mainTabbedPane.setIconAt(mainTabbedPane.indexOfComponent(aboutPanel), IconControl.getIcon("about", size));
                 }
         );
 
@@ -301,7 +299,7 @@ public class Downloader extends JFrame implements WindowListener{
 
         for (PanelDynamicTasks entry : panelDynamicTasks) {
             if (entry.icon() != null && entry.icon().length > 0) {
-                IconControl.INSTANCE.removeInDynamicConverter(entry.icon());
+                IconControl.removeInDynamicConverter(entry.icon());
             }
             if (entry.theme() != null && entry.theme().length > 0) {
                 ThemeChanger.removeDynamicConverter(entry.theme());
@@ -495,7 +493,7 @@ public class Downloader extends JFrame implements WindowListener{
             @Override
             protected Void doInBackground() {
                 // 面板初始化可能会注册动态转换器，这里把注册前后的差集收好
-                List<DynamicConverterTask> iconBefore = new ArrayList<>(IconControl.INSTANCE.dynamicConverterTasks);
+                List<DynamicConverterTask> iconBefore = new ArrayList<>(IconControl.dynamicConverterTasks);
                 List<DynamicConverterTask> themeBefore = ThemeChanger.dynamicConverterTasksSnapshot();
                 try {
                     run.run();
@@ -534,7 +532,7 @@ public class Downloader extends JFrame implements WindowListener{
      */
     private void captureDynamicTasks(List<DynamicConverterTask> iconBefore,
                                      List<DynamicConverterTask> themeBefore) {
-        List<DynamicConverterTask> iconAdded = new ArrayList<>(IconControl.INSTANCE.dynamicConverterTasks);
+        List<DynamicConverterTask> iconAdded = new ArrayList<>(IconControl.dynamicConverterTasks);
         iconAdded.removeAll(iconBefore);
         List<DynamicConverterTask> themeAdded = ThemeChanger.dynamicConverterTasksSnapshot();
         themeAdded.removeAll(themeBefore);
@@ -840,11 +838,11 @@ public class Downloader extends JFrame implements WindowListener{
             trayMenu = null;
         }
 
-        trayIcon = new TrayIcon(IconControl.INSTANCE.getIcon("download").getImage(), StringFormat.translate("common", "app_name"));
+        trayIcon = new TrayIcon(IconControl.<ImageIcon>getIcon("download").getImage(), StringFormat.translate("common", "app_name"));
 
         trayIcon.setImageAutoSize(true);
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> trayIcon.setImage(IconControl.INSTANCE.getIcon("icon").getImage())
+        IconControl.addInDynamicConverter(
+                () -> trayIcon.setImage(IconControl.<ImageIcon>getIcon("icon").getImage())
         );
 
         // TrayIcon#setPopupMenu 只接受 AWT 的 PopupMenu，无法跟随 FlatLaf 主题，
@@ -874,8 +872,8 @@ public class Downloader extends JFrame implements WindowListener{
     }
 
     private static void setMenuItemIcon(JMenuItem item, String iconKey) {
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> item.setIcon(IconControl.INSTANCE.getIcon(iconKey, 16)));
+        IconControl.addInDynamicConverter(
+                () -> item.setIcon(IconControl.getIcon(iconKey, 16)));
     }
 
     private void initMenuBar() {
@@ -1043,22 +1041,11 @@ public class Downloader extends JFrame implements WindowListener{
 
                                 panel.add(UITools.createMarkdownPane(update.body()));
 
-                                ArrayList<JButton> buttonList = new ArrayList<>();
-                                TestFunctionControl.run(1001, 1, ()->{
-                                    var translateButton = new JButton(StringFormat.translate("translate"));
-
-                                    TestFunctionControl.run(1001, 2, ()->{
-                                        translateButton.addActionListener(_ -> translateUpdateBody(update.body()));
-                                    }, () -> {});
-
-                                    buttonList.add(translateButton);
-                                }, () -> {});
-
                                 FunctionDialog.showDialog(this, StringFormat.translate("common", "learn"), panel,
                                         _ -> {
                                         },
                                         FunctionDialog.DEFAULT_BUTTONS, 0,
-                                        buttonList.toArray(JButton[]::new), FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
+                                        null, FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
                             } else if (count == 1 && result == 200) {
                                 //创建更新任务
 
@@ -1072,94 +1059,6 @@ public class Downloader extends JFrame implements WindowListener{
             ToastMessage.show(StringFormat.translate("check_update.failed"), ToastMessage.ERROR);
             logger.error("网络数据获取失败");
         }
-    }
-
-    /**
-     * 翻译更新日志正文（源语言为简体中文，微软翻译）。
-     * 先通过 JOptionPane 让用户选择目标语言（记住上次的选择，默认选中当前界面语言），
-     * 翻译完成后用 FunctionDialog 展示结果。
-     */
-    private void translateUpdateBody(String body) {
-        var languages = MicrosoftTranslator.languages();
-
-        // 默认语言：优先上次的选择，否则使用当前界面语言决定的默认目标语言
-        Language initial = null;
-        Object saved = DataControl.get("translate_target_laug", null);
-        if (saved != null) {
-            String code = saved.toString();
-            for (var l : languages) {
-                if (l.code().equalsIgnoreCase(code)) {
-                    initial = l;
-                    break;
-                }
-            }
-        }
-        if (initial == null) initial = MicrosoftTranslator.defaultLanguage();
-
-        Object selected = JOptionPane.showInputDialog(
-                this,
-                StringFormat.translate("translate.select_target"),
-                StringFormat.translate("translate"),
-                JOptionPane.QUESTION_MESSAGE, null,
-                languages.toArray(), initial);
-        if (!(selected instanceof Language target)) return;
-
-        // 记住本次选择
-        DataControl.putAndSave("translate_target_laug", target.code());
-
-        // 确保已配置 Azure 翻译密钥/区域（首次使用时填写一次并保存）
-        if (!MicrosoftTranslator.hasKey()) {
-            if (!configureAzureKey()) return;
-        }
-
-        String source = body == null ? "" : body;
-        Thread.ofVirtual().start(() -> {
-            try {
-                String translated = MicrosoftTranslator.translate(source, target.code());
-                SwingUtilities.invokeLater(() -> {
-                    var panel = new JPanel();
-                    panel.add(UITools.createMarkdownPane(translated));
-
-                    FunctionDialog.showDialog(this,
-                            StringFormat.translate("translate.result_title") + "（" + target.label() + "）",
-                            panel,
-                            _ -> {
-                            },
-                            FunctionDialog.DEFAULT_BUTTONS, 0,
-                            null, FunctionDialog.NORTH_DIRECTION_RIGHT, false, true);
-                });
-            } catch (Exception ex) {
-                logger.error("翻译失败", ex);
-                ToastMessage.show(this, StringFormat.translate("translate.failed"), ToastMessage.ERROR);
-            }
-        });
-    }
-
-    /**
-     * 引导用户填写并保存 Azure Translator 密钥与区域。
-     *
-     * @return 是否已成功完成配置
-     */
-    private boolean configureAzureKey() {
-        Object key = JOptionPane.showInputDialog(this,
-                "尚未配置微软翻译(Azure Translator)密钥。\n请填写你的 Translator 资源的 Subscription Key：",
-                StringFormat.translate("translate") + " - 配置",
-                JOptionPane.QUESTION_MESSAGE);
-        if (key == null) return false;
-        String k = key.toString().trim();
-        if (k.isEmpty()) {
-            ToastMessage.show(this, "密钥不能为空", ToastMessage.WARNING);
-            return false;
-        }
-        DataControl.putAndSave(MicrosoftTranslator.KEY_DATA, k);
-
-        Object region = JOptionPane.showInputDialog(this,
-                "请填写该密钥对应的区域（如 eastasia；global 资源可留空）：",
-                StringFormat.translate("translate") + " - 配置",
-                JOptionPane.QUESTION_MESSAGE, null, null, "eastasia");
-        if (region == null) return false;
-        DataControl.putAndSave(MicrosoftTranslator.REGION_DATA, region.toString().trim());
-        return true;
     }
 
     /**

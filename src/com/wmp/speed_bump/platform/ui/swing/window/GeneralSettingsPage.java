@@ -107,8 +107,8 @@ final class GeneralSettingsPage extends MultiplePanel implements SettingsPage {
         autoStartCheckBox.setToolTipText(autoStartUsable ? null
                 : StringFormat.translate("welcome.auto_start.unavailable"));
 
-        iconTasks = IconControl.INSTANCE.addInDynamicConverter(
-                () -> browseButton.setIcon(IconControl.INSTANCE.getIcon("folder", browseButton.getFont().getSize())));
+        iconTasks = IconControl.addInDynamicConverter(
+                () -> browseButton.setIcon(IconControl.getIcon("folder", browseButton.getFont().getSize())));
 
         languageCombo.addItemListener(e -> {
             if (host.isRebuilding() || e.getStateChange() != ItemEvent.SELECTED) {
@@ -167,7 +167,7 @@ final class GeneralSettingsPage extends MultiplePanel implements SettingsPage {
     @Override
     public void dispose() {
         if (iconTasks != null) {
-            IconControl.INSTANCE.removeInDynamicConverter(iconTasks);
+            IconControl.removeInDynamicConverter(iconTasks);
             iconTasks = null;
         }
     }

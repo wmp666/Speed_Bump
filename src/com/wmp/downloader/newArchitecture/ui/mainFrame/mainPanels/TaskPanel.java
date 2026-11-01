@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.tools.ui.ThemeChanger;
-import com.wmp.downloader.tools.ui.UITools;
+import com.wmp.speed_bump.platform.ui.swing.tools.UITools;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 
@@ -74,10 +74,10 @@ public class TaskPanel {
         allStartButton.putClientProperty("FlatLaf.style", "font: $h2.font");
         allPauseButton.putClientProperty("FlatLaf.style", "font: $h2.font");
 
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> createTaskButton.setIcon(IconControl.INSTANCE.getIcon("new", createTaskButton.getFont().getSize())),
-                () -> allStartButton.setIcon(IconControl.INSTANCE.getIcon("start", allStartButton.getFont().getSize())),
-                () -> allPauseButton.setIcon(IconControl.INSTANCE.getIcon("pause", allPauseButton.getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> createTaskButton.setIcon(IconControl.getIcon("new", createTaskButton.getFont().getSize())),
+                () -> allStartButton.setIcon(IconControl.getIcon("start", allStartButton.getFont().getSize())),
+                () -> allPauseButton.setIcon(IconControl.getIcon("pause", allPauseButton.getFont().getSize()))
         );
 
         createTaskButton.addActionListener(e ->

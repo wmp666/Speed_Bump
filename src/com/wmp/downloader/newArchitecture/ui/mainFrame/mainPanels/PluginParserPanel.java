@@ -2,7 +2,7 @@ package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
 import com.formdev.flatlaf.util.ColorFunctions;
 import com.formdev.flatlaf.util.SystemFileChooser;
-import com.wmp.speed_bump.platform.background.pc.Run;
+import com.wmp.speed_bump.common.background.tools.AppInfo;
 import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.newArchitecture.abstractTask.AbstractTask;
 import com.wmp.downloader.newArchitecture.abstractTask.InstallPluginParserInfo;
@@ -15,7 +15,7 @@ import com.wmp.speed_bump.platform.ui.swing.tools.DropOverlayPanel;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.speed_bump.common.ui.ToastMessage;
-import com.wmp.downloader.tools.ui.UITools;
+import com.wmp.speed_bump.platform.ui.swing.tools.UITools;
 import com.wmp.downloader.tools.update.GetUpdateInfo;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
@@ -411,7 +411,7 @@ public class PluginParserPanel {
                 installPluginParserStartVersionLabel.setText(startVersion);
                 installPluginParserLastVersionLabel.setText(lastVersion);
                 //判断是否适合当前程序
-                if (!GetUpdateInfo.isVersionInRange(Run.PLUGIN_SUPPORT_VERSION,
+                if (!GetUpdateInfo.isVersionInRange(AppInfo.PLUGIN_SUPPORT_VERSION,
                         startVersion, lastVersion)) {
                     installPluginParserStartVersionLabel.setForeground(Color.RED);
                     installPluginParserLastVersionLabel.setForeground(Color.RED);
@@ -510,8 +510,8 @@ public class PluginParserPanel {
         importLocalButton.setToolTipText(
                 StringFormat.translate("plugins.control_tool_bar.import_local")
         );
-        IconControl.INSTANCE.addInDynamicConverter(() ->
-                importLocalButton.setIcon(IconControl.INSTANCE.getIcon("import",
+        IconControl.addInDynamicConverter(() ->
+                importLocalButton.setIcon(IconControl.getIcon("import",
                         importLocalButton.getFont().getSize())));
         importLocalButton.addActionListener(e -> {
             var path = DataControl.getPath(downloader, SystemFileChooser.OPEN_DIALOG, SystemFileChooser.FILES_ONLY);
@@ -531,8 +531,8 @@ public class PluginParserPanel {
 
         JButton refreshButton = new JButton();
         refreshButton.setToolTipText(StringFormat.translate("refresh"));
-        IconControl.INSTANCE.addInDynamicConverter(() ->
-                refreshButton.setIcon(IconControl.INSTANCE.getIcon("refresh",
+        IconControl.addInDynamicConverter(() ->
+                refreshButton.setIcon(IconControl.getIcon("refresh",
                         refreshButton.getFont().getSize())));
         refreshButton.addActionListener(e -> {
             ParserTaskInfo.loadParsers();
@@ -544,8 +544,8 @@ public class PluginParserPanel {
     }
 
     private void initInstalledPluginParserComponents() {
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> installPluginParserListRefreshButton.setIcon(IconControl.INSTANCE.getIcon("refresh", installPluginParserListRefreshButton.getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> installPluginParserListRefreshButton.setIcon(IconControl.getIcon("refresh", installPluginParserListRefreshButton.getFont().getSize()))
         );
 
         PluginInfoPanel.setVisible(false);

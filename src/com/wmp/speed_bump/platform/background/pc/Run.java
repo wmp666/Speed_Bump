@@ -1,6 +1,7 @@
 package com.wmp.speed_bump.platform.background.pc;
 
 import com.wmp.speed_bump.common.UIStart;
+import com.wmp.speed_bump.common.background.tools.AppInfo;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.background.tools.web.TCPControl;
 import com.wmp.speed_bump.common.ui.PreLoadDialog;
@@ -12,24 +13,18 @@ import java.util.List;
 public class Run {
     private static final SBLogger logger = SBLogger.getLogger(Run.class);
 
-    public static String VERSION = "0.5.4";
-
-    public static String PLUGIN_SUPPORT_VERSION = "2.0.0";
-
-    public static List<String> argList;
-
     static void main(String[] args) {
 
-        argList = List.of(args);
+        AppInfo.argList = List.of(args);
         String linkPath = null;
         {
-            if (!argList.isEmpty()) {
+            if (!AppInfo.argList.isEmpty()) {
 
-                var versionIndex = argList.indexOf("-set:version") + 1;
-                VERSION = versionIndex == 0 ? VERSION : argList.get(versionIndex);
+                var versionIndex = AppInfo.argList.indexOf("-set:version") + 1;
+                AppInfo.VERSION = versionIndex == 0 ? AppInfo.VERSION : AppInfo.argList.get(versionIndex);
 
                 {
-                    var first = argList.getFirst();
+                    var first = AppInfo.argList.getFirst();
 
                     if (!first.startsWith("-")){
                         linkPath = first;
@@ -66,14 +61,14 @@ public class Run {
         //走 common 层的 UIStart 接口（平台实现在 platform.ui.swing），不直接引用 Swing 实现。
         UIStart.INSTANCE.prepareUi();
 
-        boolean showUi = !argList.contains("-background");
+        boolean showUi = !AppInfo.argList.contains("-background");
 
         var preloadDialog = PreLoadDialog.INSTANCE_CREATOR.create();
         if (showUi){
             preloadDialog.showDialog();
         }
 
-        UIStart.INSTANCE.show(argList, linkPath);
+        UIStart.INSTANCE.show(AppInfo.argList, linkPath);
 
         if (showUi){
             preloadDialog.disposeDialog();

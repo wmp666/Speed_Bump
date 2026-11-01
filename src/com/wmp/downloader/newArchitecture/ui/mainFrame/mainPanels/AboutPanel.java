@@ -1,11 +1,11 @@
 package com.wmp.downloader.newArchitecture.ui.mainFrame.mainPanels;
 
-import com.wmp.speed_bump.platform.background.pc.Run;
+import com.wmp.speed_bump.common.background.tools.AppInfo;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.speed_bump.common.ui.ToastMessage;
-import com.wmp.downloader.tools.ui.UITools;
+import com.wmp.speed_bump.platform.ui.swing.tools.UITools;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
 
@@ -49,17 +49,17 @@ public class AboutPanel {
         checkUpdateButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
         ProjectLinkButton.putClientProperty("FlatLaf.style", "font: bold $h3.font");
 
-        runVersionLabel.setText(Run.VERSION);
-        PluginSupportVersionLabel.setText(Run.PLUGIN_SUPPORT_VERSION);
+        runVersionLabel.setText(AppInfo.VERSION);
+        PluginSupportVersionLabel.setText(AppInfo.PLUGIN_SUPPORT_VERSION);
         JavaVersionLabel.setText(System.getProperty("java.version"));
         JavaRuntimeLabel.setText(System.getProperty("java.runtime.name"));
 
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> nameLabel.setIcon(IconControl.INSTANCE.getIcon("icon", nameLabel.getFont().getSize())),
-                () -> licenseLabel.setIcon(IconControl.INSTANCE.getIcon("license", licenseLabel.getFont().getSize())),
-                () -> checkUpdateButton.setIcon(IconControl.INSTANCE.getIcon("update", checkUpdateButton.getFont().getSize())),
-                () -> ProjectLinkButton.setIcon(IconControl.INSTANCE.getIcon("link", ProjectLinkButton.getFont().getSize())),
-                () -> issueButton.setIcon(IconControl.INSTANCE.getIcon("issue", issueButton.getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> nameLabel.setIcon(IconControl.getIcon("icon", nameLabel.getFont().getSize())),
+                () -> licenseLabel.setIcon(IconControl.getIcon("license", licenseLabel.getFont().getSize())),
+                () -> checkUpdateButton.setIcon(IconControl.getIcon("update", checkUpdateButton.getFont().getSize())),
+                () -> ProjectLinkButton.setIcon(IconControl.getIcon("link", ProjectLinkButton.getFont().getSize())),
+                () -> issueButton.setIcon(IconControl.getIcon("issue", issueButton.getFont().getSize()))
         );
 
         authorCheckBox.addActionListener(_ -> {

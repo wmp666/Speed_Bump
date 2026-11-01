@@ -49,8 +49,8 @@ public class PathSelectionPanel extends JPanel {
 
             }
         });
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> LocationChooseButton.setIcon(IconControl.INSTANCE.getIcon("folder", DownloadFileLocationLabel.getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> LocationChooseButton.setIcon(IconControl.getIcon("folder", DownloadFileLocationLabel.getFont().getSize()))
         );
 
 

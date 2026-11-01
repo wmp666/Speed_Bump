@@ -164,7 +164,7 @@ public class FlyoutMenu extends JWindow {
 
     /** 按图标键设置头部图标（便于注册到 {@link IconControl} 的主题刷新） */
     public void setHeaderIconKey(String iconKey) {
-        setHeaderIcon(iconKey == null ? null : IconControl.INSTANCE.getIcon(iconKey, HEADER_ICON_SIZE));
+        setHeaderIcon(iconKey == null ? null : IconControl.getIcon(iconKey, HEADER_ICON_SIZE));
     }
 
     /** 当前菜单项列表（分隔线以 {@code null} 占位，与添加顺序一致），供调试/验证使用 */
@@ -499,7 +499,7 @@ public class FlyoutMenu extends JWindow {
 
         public void setIconKey(String iconKey) {
             this.iconKey = iconKey;
-            this.icon = iconKey == null ? null : IconControl.INSTANCE.getIcon(iconKey, ICON_SIZE);
+            this.icon = iconKey == null ? null : IconControl.getIcon(iconKey, ICON_SIZE);
             repaint();
         }
 

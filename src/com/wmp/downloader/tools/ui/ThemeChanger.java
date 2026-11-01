@@ -190,14 +190,14 @@ public class ThemeChanger {
         runDynamicConverters();
 
         //图标更新
-        IconControl.INSTANCE.runDynamicConverters();
+        IconControl.runDynamicConverters();
         //部分内置图标刷新
         var icon = UIManager.getIcon("OptionPane.informationIcon");
 
-        UIManager.put("OptionPane.errorIcon", IconControl.INSTANCE.getIcon("error", icon.getIconWidth(), icon.getIconHeight()));
-        UIManager.put("OptionPane.informationIcon", IconControl.INSTANCE.getIcon("info", icon.getIconWidth(), icon.getIconHeight()));
-        UIManager.put("OptionPane.warningIcon", IconControl.INSTANCE.getIcon("warn", icon.getIconWidth(), icon.getIconHeight()));
-        UIManager.put("OptionPane.questionIcon", IconControl.INSTANCE.getIcon("question", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.errorIcon", IconControl.getIcon("error", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.informationIcon", IconControl.getIcon("info", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.warningIcon", IconControl.getIcon("warn", icon.getIconWidth(), icon.getIconHeight()));
+        UIManager.put("OptionPane.questionIcon", IconControl.getIcon("question", icon.getIconWidth(), icon.getIconHeight()));
 
         if (isUseSnapshot) {
             for (var window : JWindow.getWindows()) {

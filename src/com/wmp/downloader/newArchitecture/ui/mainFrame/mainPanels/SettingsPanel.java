@@ -8,7 +8,7 @@ import com.wmp.speed_bump.common.background.tools.platform.AutoStart;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
 import com.wmp.downloader.tools.ui.ThemeChanger;
 import com.wmp.speed_bump.common.ui.ToastMessage;
-import com.wmp.downloader.tools.ui.UITools;
+import com.wmp.speed_bump.platform.ui.swing.tools.UITools;
 import com.wmp.downloader.ui.Downloader;
 import com.wmp.speed_bump.platform.ui.swing.components.FileAssociationPanel;
 import com.wmp.speed_bump.platform.ui.swing.components.PathSelectionPanel;
@@ -180,16 +180,16 @@ public class SettingsPanel {
         });
 
         //添加图标
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> dataPathButton.setIcon(IconControl.INSTANCE.getIcon("folder", dataPathButton.getFont().getSize())),
-                () -> downloadFilesPathButton.setIcon(IconControl.INSTANCE.getIcon("folder", downloadFilesPathButton.getFont().getSize())),
-                () -> deleteTempFolderDataButton.setIcon(IconControl.INSTANCE.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
-                () -> deleteLogButton.setIcon(IconControl.INSTANCE.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
-                () -> accentColorChooseButton.setIcon(IconControl.INSTANCE.getIcon("eyedropper", accentColorChooseButton.getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> dataPathButton.setIcon(IconControl.getIcon("folder", dataPathButton.getFont().getSize())),
+                () -> downloadFilesPathButton.setIcon(IconControl.getIcon("folder", downloadFilesPathButton.getFont().getSize())),
+                () -> deleteTempFolderDataButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
+                () -> deleteLogButton.setIcon(IconControl.getIcon("trash", deleteTempFolderDataButton.getFont().getSize())),
+                () -> accentColorChooseButton.setIcon(IconControl.getIcon("eyedropper", accentColorChooseButton.getFont().getSize()))
         );
-        IconControl.INSTANCE.addInDynamicConverter(
-                () -> refreshButton.setIcon(IconControl.INSTANCE.getIcon("refresh", refreshButton.getFont().getSize())),
-                () -> saveButton.setIcon(IconControl.INSTANCE.getIcon("save", saveButton.getFont().getSize()))
+        IconControl.addInDynamicConverter(
+                () -> refreshButton.setIcon(IconControl.getIcon("refresh", refreshButton.getFont().getSize())),
+                () -> saveButton.setIcon(IconControl.getIcon("save", saveButton.getFont().getSize()))
         );
 
         //添加监听

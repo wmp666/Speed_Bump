@@ -13,14 +13,14 @@ public class Test {
     static void main() {
         var jFrame = new JFrame("");
 
-        jFrame.setIconImage(IconControl.INSTANCE.getIcon("icon").getImage());
+        jFrame.setIconImage(IconControl.<ImageIcon>getIcon("icon").getImage());
         jFrame.add(new JButton("13123"));
         jFrame.pack();
         jFrame.setVisible(true);
 
         var taskbar = Taskbar.getTaskbar();
         taskbar.setWindowProgressState(jFrame, Taskbar.State.INDETERMINATE);
-        taskbar.setWindowIconBadge(jFrame, IconControl.INSTANCE.getIcon("info").getImage());
+        taskbar.setWindowIconBadge(jFrame, IconControl.<ImageIcon>getIcon("info").getImage());
 
 
     }
