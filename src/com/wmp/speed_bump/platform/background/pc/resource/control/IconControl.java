@@ -34,10 +34,10 @@ public class IconControl implements com.wmp.speed_bump.common.background.tools.r
     }
 
     public MultipleIcon getIconInstance(String type, String key) {
-        logger.info("正在获取" + key + "的对应图标");
+        //logger.info("正在获取" + key + "的对应图标");
         var iconPath = iconProperties.getProperty(key, "/com/wmp/speed_bump/common/background/resource/icon/%theme_type%/12-misc/circle.png");
         iconPath = iconPath.replace("%theme_type%", type);
-        logger.info(iconPath);
+        //logger.info(iconPath);
 
         URL iconUrl = IconControl.class.getResource(iconPath);
         if (iconUrl == null) {

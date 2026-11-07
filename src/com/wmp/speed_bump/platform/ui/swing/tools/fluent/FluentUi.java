@@ -1,6 +1,6 @@
 package com.wmp.speed_bump.platform.ui.swing.tools.fluent;
 
-import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.speed_bump.platform.ui.swing.tools.ThemeChanger;
 
 import javax.swing.UIManager;
 

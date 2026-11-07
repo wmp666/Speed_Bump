@@ -1,7 +1,7 @@
 package com.wmp.speed_bump.platform.ui.swing.tools.fluent;
 
 import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
-import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.speed_bump.platform.ui.swing.tools.ThemeChanger;
 
 import java.util.ArrayList;
 import java.util.List;

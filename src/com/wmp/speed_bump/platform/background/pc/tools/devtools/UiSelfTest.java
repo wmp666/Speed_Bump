@@ -2,7 +2,7 @@ package com.wmp.speed_bump.platform.background.pc.tools.devtools;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.speed_bump.platform.ui.swing.tools.ThemeChanger;
 import com.wmp.speed_bump.platform.ui.swing.tools.fluent.*;
 import com.wmp.speed_bump.platform.ui.swing.tools.fluent.FluentMetrics;
 import com.wmp.speed_bump.platform.ui.swing.tools.fluent.FluentUi;

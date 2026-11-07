@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="DownLoader_Windows:jar" />
+      <artifact name="MinecraftDownloader:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,88 +10,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e26adb01-3985-464d-8125-217249e16a2b" name="更改" comment="跟进框架">
-      <change afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/info/BiliInfoFormat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inno-setup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inno-setup.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/MinecraftDownloader_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/TaskControl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/MinecraftDownloader/MinecraftDownloader.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Speed_Bump.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Speed_Bump.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/downloaded_example.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpDocs/构建与打包.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/构建与打包.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out-cp.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserCompatibilityDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserCompatibilityDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ParserTaskInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.en.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.en.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpDocs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpDocs/使用指南.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/使用指南.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpDocs/拓展开发.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/拓展开发.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpDocs/界面增强.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/界面增强.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpDocs/鸣谢与声明.md" beforeDir="false" afterPath="$PROJECT_DIR$/helpDocs/鸣谢与声明.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/AbstractTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/downloadTask/FolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/downloadTask/FolderDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/downloadTask/StatusTipPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/downloadTask/StatusTipPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFileInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFileInfoPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/abstractTask/linkInfoPanel/LinkFolderInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/CreateMergeTaskFuncPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/CreateMergeTaskFuncPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/ResetVideoInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/createTask/videohandle/ResetVideoInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/AboutPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/AboutPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/PluginParserPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SettingsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SpecialSettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/SpecialSettingsPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/TaskPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/mainPanels/TaskPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/mainFrame/statusPanel/StatusPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/FFmpegSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/FFmpegSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFileDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/bt/BTFolderDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/gopeed/GopeedDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/gopeed/GopeedDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/http/HTTPDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/newArchitecture/ui/task/http/HTTPDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/BiliInfoFormat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/MicrosoftTranslator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/file/DataControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/UITools.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/tools/update/GetUpdateInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/tools/ui/ThemeChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/ThemeChanger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/Downloader.java~RF327eab8.TMP" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/TrayMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/TrayMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/TestFunctionControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/TestFunctionControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/devtools/PngWriter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/devtools/StartupTrace.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/devtools/UiSelfTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/platform/GetPlatformName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/platform/GetPlatformName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/resource/control/IconControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/resource/control/IconControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/ui/ToastMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/ui/ToastMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/downloader/ui/FunctionDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_en_US.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ja_JP.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_ru_RU.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_HK.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_HK.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_TW.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/resource/laug/laug_zh_TW.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/AppInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/common/background/tools/AppInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/resource/control/IconControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/resource/control/IconControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/web/TCPControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/CursorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/CursorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/test/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/devtools/UiSelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/background/pc/tools/devtools/UiSelfTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/UIStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/components/FileAssociationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/components/FileAssociationPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/components/PathSelectionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/components/PathSelectionPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/DropOverlayPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/DropOverlayPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/FlyoutMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/FlyoutMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/GeneralSettingsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/GeneralSettingsPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentThemeSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentThemeSupport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/tools/fluent/FluentUi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/AppearanceSettingsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/AppearanceSettingsPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/WelcomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/WelcomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/文档/减速带更新.md" beforeDir="false" afterPath="$PROJECT_DIR$/文档/减速带更新.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/WelcomeSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/wmp/speed_bump/platform/ui/swing/window/WelcomeSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/减速带.iss" beforeDir="false" afterPath="$PROJECT_DIR$/减速带.iss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/file/BiliFileDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/file/BiliFileDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/file/BiliTaskFileEditPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/file/BiliTaskFileEditPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/folder/BiliFolderDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/folder/BiliFolderDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/folder/BiliLinkFolderInfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/folder/BiliLinkFolderInfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/folder/BiliTaskFolderEditPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/BiliParser/src/com/wmp/parser/bili/folder/BiliTaskFolderEditPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/DailyJuzi.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/src/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/src/com/wmp/juzi/DailyJuzi.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/src/com/wmp/juzi/DailyJuziSettings.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/src/com/wmp/juzi/JuziReminder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/src/com/wmp/resource/text.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/src/info.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DailyJuzi/src/introduction.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/DouyinParser/src/com/wmp/parser/douyin/DouyinImageDownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Speed_Bump_Plugin/DouyinParser/src/com/wmp/parser/douyin/DouyinImageDownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/WindowMask.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/com/wmp/windowmask/MaskOverlay.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/com/wmp/windowmask/MaskWatcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/com/wmp/windowmask/ScreenScale.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/com/wmp/windowmask/WinNative.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/com/wmp/windowmask/WindowMask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/com/wmp/windowmask/WindowMaskSettings.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/info.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Speed_Bump_Plugin/WindowMask/src/introduction.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,8 +61,8 @@
         <option value="module-info" />
         <option value="Record" />
         <option value="Exception" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -253,7 +210,7 @@
       <recent name="com.wmp.downloader.ui.task.createTask" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.Run">
+  <component name="RunManager" selected="应用程序.Run Show Welcome">
     <configuration name="FileDialogTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wmp.downloader.test.FileDialogTest" />
       <module name="Speed_Bump" />
@@ -387,26 +344,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="BiliParser" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="BiliParser" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="应用程序.Run Show Welcome" />
       <item itemvalue="应用程序.Run Background" />
-      <item itemvalue="应用程序.FluentApp" />
-      <item itemvalue="应用程序.Test" />
+      <item itemvalue="应用程序.Run Show Welcome" />
       <item itemvalue="应用程序.FileDialogTest" />
-      <item itemvalue="应用程序.TestControlDialog" />
-      <item itemvalue="应用程序.TCPControl" />
+      <item itemvalue="应用程序.FluentApp" />
       <item itemvalue="应用程序.Run" />
+      <item itemvalue="应用程序.TCPControl" />
+      <item itemvalue="应用程序.TestControlDialog" />
+      <item itemvalue="应用程序.Test" />
     </list>
     <recent_temporary>
       <list>

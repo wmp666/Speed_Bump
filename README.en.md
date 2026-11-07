@@ -33,6 +33,19 @@
 * **Video toolkit.** Audio/video **stream-copy merging** (no re-encoding) and transcoding across `mp4 / mkv / avi / mov / flv / webm` × `h264 / h265` × `aac / mp3 / flac / wav`, with automatic FFmpeg hardware-acceleration detection.
 * **Extensible.** One jar equals one plugin. HTTP, BT, Gopeed and Github parsers are built in; official plugins add Bilibili, Douyin, ED2K and image format conversion. Manage, enable, disable and update plugins in-app.
 * **Native desktop feel.** Tray icon, system notifications when unfocused, drag & drop tasks and files, auto start, torrent file association, custom background/theme, six UI languages, single-instance command line handling.
+* **No data collection.** Tasks, links, files and every setting stay on your machine — no analytics, telemetry, ads or crash reporting; plugins are forbidden from collecting any user data too.
+
+<!-- PRIVACY -->
+## Privacy
+
+**This software does not collect any of your data.** Our promise:
+
+- Download tasks, links, files and every setting stay on this machine; nothing is uploaded or synced to any server
+- No analytics, telemetry, ads or crash reporting — no user profiling, and no data sold or shared with anyone
+- The app only goes online for actions **you** start: downloads, update checks and fetching the plugin list
+- **Plugins are bound by the same rule**: they must not collect or upload user data, or harm your privacy in any way; plugins that violate this are rejected and delisted
+
+Full terms: [Acknowledgements & Disclaimer · Privacy](helpDocs/鸣谢与声明.md#隐私保护) (Chinese). The first page of the welcome dialog shows the same agreement on first launch.
 
 <!-- ABOUT -->
 ## About
@@ -68,7 +81,7 @@ Building from source: see [Build & packaging][build-doc] (Chinese).
 
 Distributed under the [Apache License 2.0](LICENSE).
 
-This tool is intended for **personal learning, technical research and academic exchange** only. See the full disclaimer in [helpDocs](helpDocs/鸣谢与声明.md#声明) (Chinese).
+**This software and its related extensions** (the main program plus any third-party component loaded as a plugin) are intended for **personal learning, technical research and academic exchange** only. See the full disclaimer in [helpDocs](helpDocs/鸣谢与声明.md#声明) (Chinese).
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [docs-url]: helpDocs/README.md

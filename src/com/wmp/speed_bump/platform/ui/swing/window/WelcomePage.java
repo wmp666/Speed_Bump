@@ -4,7 +4,7 @@ import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.platform.ui.swing.tools.DialogBackdrop;
 import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
 import com.wmp.speed_bump.common.background.tools.resource.control.IconControl;
-import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.speed_bump.platform.ui.swing.tools.ThemeChanger;
 import com.wmp.speed_bump.platform.ui.swing.tools.fluent.FluentColors;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.common.background.tools.SBLogger;
@@ -38,11 +38,15 @@ import java.text.MessageFormat;
  *
  * <h3>它做什么</h3>
  * <p>第一次启动时，在主界面出现之前先让用户把几个「一眼就知道自己喜欢哪个」的选项定下来。
- * 具体选项拆成两个设置页（{@link AppearanceSettingsPage} / {@link GeneralSettingsPage}），
- * 本类只负责外壳：页眉、{@link JTabbedPane} 标签栏、页脚按钮、以及「跳过就整体回滚」的语义。</p>
+ * 具体内容拆成三个设置页（{@link PrivacySettingsPage} / {@link AppearanceSettingsPage} /
+ * {@link GeneralSettingsPage}），本类只负责外壳：页眉、{@link JTabbedPane} 标签栏、页脚按钮、
+ * 以及「跳过就整体回滚」的语义。</p>
+ *
+ * <p>「隐私」页排在最前面：用户隐私保护协议要在动手设置之前先被看到，
+ * 而标签栏顺序就是 {@code addPage} 的顺序。本页没有任何选项，不受回滚影响。</p>
  *
  * <h3>标签栏即进度</h3>
- * <p>页面数量少，用一个 {@link JTabbedPane} 就够了：标签名就是分组名（外观 / 语言与启动），
+ * <p>页面数量少，用一个 {@link JTabbedPane} 就够了：标签名就是分组名（隐私 / 外观 / 语言与启动），
  * 当前选中哪个标签本身就是进度指示，不需要再画一套页码圆点。
  * 默认选中的标签页宽高取「所有页里最大的那个」，所以翻页时窗口大小纹丝不动。
  * 底部仍保留「上一步 / 下一步」，最后一页的主按钮变成「开始使用」。</p>
@@ -76,6 +80,7 @@ public class WelcomePage extends JDialog
     private static final int ICON_SIZE = 56;
 
     /** 标签栏标题用的翻译键 */
+    private static final String KEY_SECTION_PRIVACY = "welcome.section.privacy";
     private static final String KEY_SECTION_APPEARANCE = "welcome.section.appearance";
     private static final String KEY_SECTION_GENERAL = "welcome.section.general";
 
@@ -103,6 +108,7 @@ public class WelcomePage extends JDialog
     // 设置页
     // ==================================================================
 
+    private final PrivacySettingsPage privacyPage = new PrivacySettingsPage();
     private final AppearanceSettingsPage appearancePage = new AppearanceSettingsPage();
     private final GeneralSettingsPage generalPage = new GeneralSettingsPage();
 
@@ -138,6 +144,8 @@ public class WelcomePage extends JDialog
         origin = WelcomeSettings.capture();
 
         //登记设置页：顺序即标签栏顺序，标题由 key 在重刷文案时翻译
+        //隐私协议排在第一面，用户先看到承诺，再开始设置
+        addPage(KEY_SECTION_PRIVACY, privacyPage);
         addPage(KEY_SECTION_APPEARANCE, appearancePage);
         addPage(KEY_SECTION_GENERAL, generalPage);
 
@@ -239,6 +247,7 @@ public class WelcomePage extends JDialog
             ThemeChanger.removeDynamicConverter(themeTasks);
             themeTasks = null;
         }
+        privacyPage.dispose();
         appearancePage.dispose();
         generalPage.dispose();
         super.dispose();
@@ -269,6 +278,7 @@ public class WelcomePage extends JDialog
         //语言一变，之前那条错误提示也该让位给常规提示
         showHint(StringFormat.translate("welcome.hint"), false);
 
+        privacyPage.retranslate();
         appearancePage.retranslate();
         generalPage.retranslate();
 

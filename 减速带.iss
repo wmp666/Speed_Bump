@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "SpeedBump"
-#define MyAppVersion "0.5.5"
+#define MyAppVersion "0.5.6"
 #define MyAppPublisher "wmp"
 #define MyAppURL "https://github.com/wmp666/Speed_Bump"
 #define MyAppExeName "SpeedBump.exe"
@@ -31,7 +31,11 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-LicenseFile=C:\Users\21348\Desktop\吴鹤轩\Java\Speed_Bump\LICENSE
+; 协议页展示 helpDocs\鸣谢与声明.md（隐私保护 + 免责声明全文），路径相对脚本所在目录
+; 注意：该 .md 请保持 UTF-8 编码（Inno Setup 7 按 UTF-8 读取；更早的 6.x 需要带 BOM，否则向导里的中文会乱码）
+LicenseFile={#SourcePath}\helpDocs\鸣谢与声明.md
+; 程序属性里也写明不收集数据（显示在「程序和功能」的支持信息中）
+AppComments=本软件及其相关拓展不收集任何用户数据；隐私保护与免责声明见安装时的许可协议页。
 ; Remove the following line to run in administrative install mode (install for all users).
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
@@ -45,6 +49,12 @@ WizardStyle=modern dynamic windows11
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "chinese"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
 Name: "ctchinese"; MessagesFile: "compiler:Languages\CTChinese.isl"
+
+[Messages]
+; 欢迎页提示里补一句隐私说明（按语言分别覆盖，保留原有的 [name/ver] 占位符）
+english.WelcomeLabel2=This will install [name/ver] on your computer.%n%nThis software and its plugins collect no user data — see the privacy terms on the license page.%n%nIt is recommended that you close all other applications before continuing.
+chinese.WelcomeLabel2=即将在您的计算机上安装 [name/ver]。%n%n本软件及其拓展不收集任何用户数据，详见许可协议页的隐私保护条款。%n%n建议您在继续安装前关闭所有其他应用程序。
+ctchinese.WelcomeLabel2=即將在您的電腦上安裝 [name/ver]。%n%n本軟體及其拓展不收集任何使用者資料，詳見許可協議頁的隱私保護條款。%n%n建議您在繼續安裝前關閉所有其他應用程式。
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked

@@ -1,4 +1,4 @@
-package com.wmp.downloader.tools.ui;
+package com.wmp.speed_bump.platform.ui.swing.tools;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;

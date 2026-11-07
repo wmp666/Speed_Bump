@@ -5,7 +5,7 @@ import com.wmp.downloader.newArchitecture.ParserTaskInfo;
 import com.wmp.downloader.tools.WebSetter;
 import com.wmp.speed_bump.platform.background.pc.tools.devtools.StartupTrace;
 import com.wmp.downloader.tools.file.DataControl;
-import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.speed_bump.platform.ui.swing.tools.ThemeChanger;
 import com.wmp.speed_bump.common.background.tools.web.TCPControl;
 import com.wmp.speed_bump.platform.ui.swing.tools.fluent.FluentUi;
 import com.wmp.speed_bump.platform.ui.swing.tools.swingx.LoadingBusyLabelUI;

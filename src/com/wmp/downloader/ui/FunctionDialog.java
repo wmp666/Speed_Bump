@@ -6,7 +6,7 @@ import com.wmp.downloader.tools.file.DataControl;
 import com.wmp.speed_bump.common.background.tools.StringFormat;
 import com.wmp.speed_bump.platform.ui.swing.tools.DialogBackdrop;
 import com.wmp.speed_bump.common.background.tools.DynamicConverterTask;
-import com.wmp.downloader.tools.ui.ThemeChanger;
+import com.wmp.speed_bump.platform.ui.swing.tools.ThemeChanger;
 import raven.modal.ModalDialog;
 import raven.modal.component.SimpleModalBorder;
 import raven.modal.option.ModalBorderOption;
